@@ -1,0 +1,39 @@
+ei mini social project er features
+
+
+Pages
+  |
+  |-Home
+  |-Login
+  |-Signup
+  |-Profile
+       |-Profile photo
+       |-cover photo ba banner
+       |-Name
+       |-
+
+
+
+usermodel
+
+fullname
+username
+post
+followers
+following
+profilephoto
+about
+phone
+email
+website
+
+
+
+
+postmodel
+
+image
+content
+likes
+comments
+date
