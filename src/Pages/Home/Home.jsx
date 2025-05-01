@@ -1,25 +1,26 @@
-import FriendSuggested from "../../Components/FriendSuggested/FriendSuggested"
+
 import Posts from "../../Components/Posts/Posts"
-import ProfileActivity from "../../Components/ProfileActivity/ProfileActivity"
 import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
-import SideNavbar from "../../Components/SideNavbar/SideNavbar"
 import Storybox from "../../Components/Storybox/Storybox"
-import UpcommingEvents from "../../Components/UpcommingEvents/UpcommingEvents"
 
 const Home = () => {
   return (
-    <div>
-      <div>
+    <div className="grid grid-cols-3 gap-10">
+
+      <div className=" border border-zinc-500 col-span-2">
         <SearchBar />
-        <Storybox />
-        <Posts />
+
+        <div className="border border-zinc-500">
+          <Storybox />
+          <Posts />
+        </div>
       </div>
 
-
-      <div>
-        <Sidebar/>
+      <div className=" border border-zinc-500 col-span-1">
+        <Sidebar />
       </div>
+
     </div>
   )
 }

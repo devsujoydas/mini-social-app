@@ -37,3 +37,7 @@ content
 likes
 comments
 date
+
+
+
+https://www.figma.com/design/0ka1rI1AyX80tGHFKeypSV/3-Free-Social-Network-App-UI-Kit--Community-?node-id=5990-68545&p=f&t=xAWnWHJjrhbROCp4-0
