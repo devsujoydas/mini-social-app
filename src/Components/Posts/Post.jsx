@@ -20,7 +20,7 @@ const Post = () => {
       <div className="p-5 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-12" src="/public/post-avatar.png" alt="" />
+            <img className="w-12" src="/post-avatar.png" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">devsujoydas</h1>
@@ -44,7 +44,7 @@ const Post = () => {
         </h1>
 
         <div>
-          <img className="w-full" src="/public/post-image.png" alt="" />
+          <img className="w-full" src="/post-image.png" alt="" />
         </div>
 
         {/* like comment share container  */}
@@ -87,7 +87,7 @@ const Post = () => {
       <div className="p-5 flex justify-between items-center gap-20">
         <div className="flex items-center gap-4 w-full">
           <div className="cursor-pointer">
-            <img className="w-14" src="/public/avatar.png" alt="" />
+            <img className="w-14" src="/avatar.png" alt="" />
           </div>
           <input className="w-full border border-zinc-400 outline-none text-lg py-3 px-4 rounded-full" type="text" placeholder="Write your comment.." />
         </div>

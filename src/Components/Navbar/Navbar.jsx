@@ -64,7 +64,7 @@ const Navbar = () => {
             <div className=" flex justify-between items-center cursor-pointer">
               <Link to={"/profile"}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14" src="/public/Avatar.png" alt="" />
+                  <img className="w-14" src="/Avatar.png" alt="" />
                   <div className="">
                     <h1 className="font-semibold text-xl">Sujoy Das</h1>
                     <p>Basic Member</p>
@@ -127,7 +127,7 @@ const Navbar = () => {
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
               <Link to={"/profile"}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14" src="/public/Avatar.png" alt="" />
+                  <img className="w-14" src="/Avatar.png" alt="" />
                   <div className="">
                     <h1 className="font-semibold text-xl">Sujoy Das</h1>
                     <p>Basic Member</p>

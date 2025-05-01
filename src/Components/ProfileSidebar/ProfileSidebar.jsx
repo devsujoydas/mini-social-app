@@ -14,7 +14,7 @@ const ProfileSidebar = () => {
       <div className=" flex justify-center items-center flex-col gap-8">
 
         <div className="">
-          <img className="w-30" src="/public/profile-avatar.png" alt="" />
+          <img className="w-30" src="/profile-avatar.png" alt="" />
         </div>
 
         <div className=" text-center space-y-1">
@@ -64,7 +64,7 @@ const ProfileSidebar = () => {
             </div>
             <div>
               <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Phone Number</h1>
-              <p className="text-zinc-500">+01303436299</p>
+              <a target="_blank" href="tel:01303436299" className="text-zinc-500">+01303436299</a>
             </div>
           </div>
           <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
@@ -79,7 +79,7 @@ const ProfileSidebar = () => {
             </div>
             <div>
               <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Email Address</h1>
-              <p className="text-zinc-500">devsujoydas@gmail.com</p>
+              <a target="_blank"  href="mailto:devsujoydas@gmail.com" className="text-zinc-500">devsujoydas@gmail.com</a>
             </div>
           </div>
           <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
@@ -94,7 +94,7 @@ const ProfileSidebar = () => {
             </div>
             <div>
               <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Website</h1>
-              <p className="text-zinc-500">www.devsujoydas.verel.app</p>
+              <a href="https://devsujoydas.vercel.app/" target="_blank" className="text-zinc-500">https://devsujoydas.vercel.app</a>
             </div>
           </div>
           <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
@@ -119,7 +119,7 @@ const ProfileSidebar = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer">
-                <img className="w-10" src="/public/friends-avater.png" alt="" />
+                <img className="w-10" src="/friends-avater.png" alt="" />
               </div>
               <div>
                 <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>
@@ -135,7 +135,7 @@ const ProfileSidebar = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer">
-                <img className="w-10" src="/public/friends-avater.png" alt="" />
+                <img className="w-10" src="/friends-avater.png" alt="" />
               </div>
               <div>
                 <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>
@@ -151,7 +151,7 @@ const ProfileSidebar = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer">
-                <img className="w-10" src="/public/friends-avater.png" alt="" />
+                <img className="w-10" src="/friends-avater.png" alt="" />
               </div>
               <div>
                 <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>

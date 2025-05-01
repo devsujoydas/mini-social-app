@@ -12,13 +12,13 @@ const ProfileActivity = () => {
 
       <div className="text-lg p-5 rounded-3xl bg-[#d6e6f7] border border-blue-300 space-y-5">
         <div className="flex items-center">
-          <img className="w-14 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
-          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/public/activity-avatar.png" alt="" />
+          <img className="w-14 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
+          <img className="w-14 -ml-7 border-2 rounded-full border-white" src="/activity-avatar.png" alt="" />
         </div>
 
         <div>

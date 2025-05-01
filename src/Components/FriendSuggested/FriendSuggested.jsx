@@ -21,7 +21,7 @@ const FriendSuggested = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-10" src="/public/friends-avater.png" alt="" />
+            <img className="w-10" src="/friends-avater.png" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>
@@ -37,7 +37,7 @@ const FriendSuggested = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-10" src="/public/friends-avater.png" alt="" />
+            <img className="w-10" src="/friends-avater.png" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>
@@ -53,7 +53,7 @@ const FriendSuggested = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-10" src="/public/friends-avater.png" alt="" />
+            <img className="w-10" src="/friends-avater.png" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all cursor-pointer">Julia Smith</h1>
