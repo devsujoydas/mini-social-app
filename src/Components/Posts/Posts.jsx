@@ -1,7 +1,13 @@
+import Post from "./Post"
 
 const Posts = () => {
   return (
-    <div>Posts</div>
+    <div className='  rounded-2xl  grid gap-5'>
+      <Post />
+      <Post />
+      <Post />
+
+    </div>
   )
 }
 

@@ -6,10 +6,13 @@ import UpcommingEvents from "../UpcommingEvents/UpcommingEvents"
 const Sidebar = () => {
   return (
     <div className="">
-        <SideNavbar />
+      <SideNavbar />
+
+      <div className="p-5 space-y-7">
         <FriendSuggested />
         <ProfileActivity />
         <UpcommingEvents />
+      </div>
     </div>
   )
 }

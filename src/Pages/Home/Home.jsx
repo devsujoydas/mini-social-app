@@ -6,18 +6,19 @@ import Storybox from "../../Components/Storybox/Storybox"
 
 const Home = () => {
   return (
-    <div className="grid grid-cols-3 gap-10">
+    <div className="grid grid-cols-7 bg-[#f1f5fa]">
 
-      <div className=" border border-zinc-500 col-span-2">
-        <SearchBar />
+      <div className="col-span-5">
 
-        <div className="border border-zinc-500">
+          <SearchBar />
+
+        <div className=" py-5 px-10 space-y-5">
           <Storybox />
           <Posts />
         </div>
       </div>
 
-      <div className=" border border-zinc-500 col-span-1">
+      <div className="col-span-2 bg-white border-l border-zinc-300">
         <Sidebar />
       </div>
 

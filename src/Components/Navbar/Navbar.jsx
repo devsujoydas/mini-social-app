@@ -5,7 +5,7 @@ import { TfiMenuAlt } from "react-icons/tfi";
 import { FaUserFriends } from "react-icons/fa";
 import { BsBox } from "react-icons/bs";
 import { GrCreditCard } from "react-icons/gr";
-import { IoMdSettings } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu";
 import { FiAlertTriangle } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
@@ -13,7 +13,7 @@ import { RxExit } from "react-icons/rx";
 
 const Navbar = () => {
   return (
-    <div className="px-5 py-10 flex flex-col ">
+    <div className="px-5 py-10 flex flex-col gap-10 border-r border-zinc-300">
 
       <div className=" space-y-7 ">
 
@@ -30,7 +30,7 @@ const Navbar = () => {
 
 
         {/* nav btn container  */}
-        <div className="space-y-6 px-5">
+        <div className="space-y-5 px-5">
 
           <NavLink to={"/"}
             className="flex justify-between w-full cursor-pointer  border-b pb-1 border-transparent hover:border-black transition-all hover:text-blue-500 ">
@@ -77,7 +77,7 @@ const Navbar = () => {
           <NavLink to={"/"}
             className="flex justify-between w-full cursor-pointer  border-b pb-1 border-transparent hover:border-black transition-all hover:text-blue-500 ">
             <div className="flex items-center gap-2 text-xl ">
-              <IoMdSettings className="text-zinc-500 text-2xl" />
+              <IoSettingsOutline className="text-zinc-500 text-2xl" />
               <span className="font-semibold ">Settings</span>
             </div>
           </NavLink>
@@ -95,7 +95,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="mt-20 space-y-7">
+      <div className=" space-y-7">
         <div className="text-lg p-5 rounded-2xl bg-[#f4f6f8] space-y-5">
           <div className="flex justify-between items-start  text-3xl">
             <div className="font-semibold bg-[#d7dfeb]  rounded-full p-4">
@@ -111,7 +111,6 @@ const Navbar = () => {
         </div>
 
         <hr className="text-zinc-300" />
-        {/* 01619630739 */}
         <div className=" flex justify-between items-center cursor-pointer">
 
           <div className="flex items-center gap-4">
