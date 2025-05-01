@@ -3,13 +3,13 @@ import Navbar from "../../Components/Navbar/Navbar"
 
 const Root = () => {
   return (
-    <div className=" border-orange-500 grid md:grid-cols-10 font-poppins">
+    <div className=" border-orange-500 grid lg:grid-cols-4 font-poppins relative ">
 
-      <div className="md:col-span-2 border-zinc-500 ">
-        <Navbar />
+      <div className="lg:col-span-1 border-zinc-500 relative">
+        <Navbar/>
       </div>
 
-      <div className="md:col-span-8">
+      <div className="lg:col-span-3">
         <Outlet />
       </div>
       

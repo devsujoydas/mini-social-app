@@ -11,20 +11,6 @@ const Storybox = () => {
       </div>
 
       
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
-
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
-      
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
 
       <div>
         <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
@@ -36,21 +22,7 @@ const Storybox = () => {
         <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
       </div>
 
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
-
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
-
-      <div>
-        <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
-        <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>
-      </div>
-
+  
       <div>
         <img className={storyimgstyle} src="/public/Avatar (1).png" alt="" />
         <h1 className='text-xs text-center mt-1'>X_ae-23b</h1>

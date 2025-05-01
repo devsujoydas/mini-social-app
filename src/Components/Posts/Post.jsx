@@ -50,12 +50,12 @@ const Post = () => {
         {/* like comment share container  */}
         <div className="flex justify-between items-center mt-4">
           {/* buttons  */}
-          <div className="flex items-center gap-8">
+          <div className="flex items-center md:gap-8 gap-5">
             <button className="text-xl flex items-center gap-2">
               <div onClick={() => { setlike(!like) }} className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {like ? <BiSolidLike /> : < BiLike />}
               </div>
-              <span>12 Likes</span>
+              <span className="flex items-center gap-2">12 <span className="hidden md:flex">Likes</span></span>
             </button>
 
 
@@ -63,7 +63,7 @@ const Post = () => {
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
-              <span>8 Comments</span>
+              <span className="flex items-center gap-2">8 <span className="hidden md:flex">Comments</span></span>
             </button>
 
 
@@ -71,7 +71,7 @@ const Post = () => {
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>
-              <span>5 Shares</span>
+              <span className="flex items-center gap-2">5 <span className="hidden md:flex">Shares</span></span>
             </button>
 
 
