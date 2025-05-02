@@ -8,16 +8,17 @@ import { useState } from "react";
 import { ImAttachment } from "react-icons/im";
 import { FaRegSmile } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
+import { Link } from "react-router-dom";
 
 
 const Post = () => {
   const [like, setlike] = useState(0)
 
   return (
-    <div className="shadow-xl rounded-3xl bg-white">
+    <div className="shadow-xl rounded-2xl md:rounded-3xl bg-white">
 
       {/* post author details  */}
-      <div className="p-5 flex justify-between items-center">
+      <div className="md:p-5 p-3 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
             <img className="w-12" src="/post-avatar.png" alt="" />
@@ -28,14 +29,14 @@ const Post = () => {
           </div>
         </div>
 
-        <BsThreeDotsVertical className="cursor-pointer active:scale-95 text-xl text-zinc-500 hover:text-black" />
+        <BsThreeDotsVertical className="cursor-pointer active:scale-95 md:text-xl text-zinc-500 hover:text-black" />
       </div>
 
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="p-5 space-y-3">
-        <h1 className="space-x-2">Habitant morbi tristique senectus et netus et. Suspendisse sed nisi lacus sed viverra. Dolor morbi non arcu risus quis varius.
+      <div className="md:p-5 p-3 space-y-3">
+        <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">Habitant morbi tristique senectus et netus et. Suspendisse sed nisi lacus sed viverra. Dolor morbi non arcu risus quis varius.
           <a href="/" className="text-blue-500 ">#amazing</a>
           <a href="/" className="text-blue-500">#great</a>
           <a href="/" className="text-blue-500">#lifetime</a>
@@ -44,14 +45,15 @@ const Post = () => {
         </h1>
 
         <div>
-          <img className="w-full" src="/post-image.png" alt="" />
+          <img className="w-full md:h-fit h-56" src="/post-image.png" alt="" />
         </div>
 
         {/* like comment share container  */}
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between items-center mt-4 ">
           {/* buttons  */}
-          <div className="flex items-center md:gap-8 gap-5">
-            <button className="text-xl flex items-center gap-2">
+          <div className="flex items-center md:gap-8 gap-6">
+            
+            <button className="md:text-xl flex items-center gap-2">
               <div onClick={() => { setlike(!like) }} className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {like ? <BiSolidLike /> : < BiLike />}
               </div>
@@ -59,7 +61,7 @@ const Post = () => {
             </button>
 
 
-            <button className="text-xl flex items-center gap-2">
+            <button className="md:text-xl flex items-center gap-2">
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
@@ -67,7 +69,7 @@ const Post = () => {
             </button>
 
 
-            <button className="text-xl flex items-center gap-2">
+            <button className="md:text-xl flex items-center gap-2">
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>
@@ -84,26 +86,28 @@ const Post = () => {
       <hr className="text-zinc-300" />
 
       {/* comment container  */}
-      <div className="p-5 flex justify-between items-center gap-20">
-        <div className="flex items-center gap-4 w-full">
-          <div className="cursor-pointer">
-            <img className="w-14" src="/avatar.png" alt="" />
-          </div>
-          <input className="w-full border border-zinc-400 outline-none text-lg py-3 px-4 rounded-full" type="text" placeholder="Write your comment.." />
+      <form action="" className="p-5 flex justify-between items-center gap-5 md:gap-20">
+        <div className="flex items-center gap-4 w-full ">
+          <Link to={"/profile"}>
+            <div className="cursor-pointer md:w-14 w-8">
+              <img className="md:w-14 w-8" src="./Avatar.png" alt="" />
+            </div>
+          </Link>
+          <input className="w-full border border-zinc-400 outline-none md:text-lg  md:py-3 py-1 px-4 rounded-full" type="text" placeholder="Write your comment.." />
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="border border-zinc-400 text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+        <div className="flex items-center gap-3 ">
+          <div className="border border-zinc-400 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <ImAttachment />
           </div>
-          <div className="border border-zinc-400 text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+          <div className="border border-zinc-400 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <FaRegSmile />
           </div>
-          <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
+          <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
             <VscSend />
           </div>
         </div>
-      </div>
+      </form>
 
     </div>
   )

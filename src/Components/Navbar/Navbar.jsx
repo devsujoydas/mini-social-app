@@ -15,16 +15,16 @@ const Navbar = () => {
   return (
     <div className="md:sticky left-0 top-0 ">
 
-      <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-8 py-5">
+      <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-8 py-2">
         <Link to={"/"} className="text-3xl font-semibold font-montserrat">Xenon Media</Link>
-        <div onClick={() => setHumbarger(!humbarger)} className="text-6xl cursor-pointer active:scale-95 transition-all">
+        <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
         </div>
       </div>
 
       {/* nav for lg device  */}
       <div className=" ">
-        <div className=" px-5 py-10 hidden lg:flex flex-col justify-between h-[100vh] border-r border-zinc-300">
+        <div className=" px-5 py-5 hidden lg:flex flex-col justify-between h-[100vh] border-r border-zinc-300">
 
           <div className=" space-y-6 ">
 
@@ -106,7 +106,7 @@ const Navbar = () => {
 
           </div>
 
-          <div className=" space-y-7 mt-56  pb-">
+          <div className=" space-y-6 pt-5">
             <div className="text-lg p-5 rounded-2xl bg-[#f4f6f8] space-y-5">
               <div className="flex justify-between items-start  text-3xl">
                 <div className="font-semibold bg-[#d7dfeb]  rounded-full p-4">

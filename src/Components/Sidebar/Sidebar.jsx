@@ -5,9 +5,7 @@ import UpcommingEvents from "../UpcommingEvents/UpcommingEvents"
 
 const Sidebar = () => {
   return (
-    <div className=" h-[100vh] ">
-      
-
+    <div className="">
       <div className="p-5 space-y-7  ">
         <FriendSuggested />
         <ProfileActivity />

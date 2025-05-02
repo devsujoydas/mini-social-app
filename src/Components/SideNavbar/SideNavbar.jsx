@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 
 const SideNavbar = () => {
   return (
-    <div className="sticky left-0 top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
-      <div className=" relative  cursor-pointer active:scale-95 transition-all">
+    <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
+      <div className=" cursor-pointer active:scale-95 transition-all">
       <Link to={"/profile"}>
         <img className="w-15.5" src="/Avatar (1).png" alt="" />
         </Link>
