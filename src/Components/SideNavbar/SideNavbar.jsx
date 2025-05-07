@@ -10,7 +10,7 @@ const SideNavbar = () => {
     <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
       <div className=" cursor-pointer active:scale-95 transition-all">
       <Link to={"/profile"}>
-        <img className="w-15.5" src="/Avatar (1).png" alt="" />
+        <img className="w-15.5 rounded-full" src="/devsujoydas.png" alt="" />
         </Link>
         <h1 className="absolute bottom-0 right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full"></h1>
       </div>
