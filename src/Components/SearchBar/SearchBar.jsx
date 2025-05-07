@@ -1,5 +1,6 @@
 import { IoSearch } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 
 const SearchBar = () => {
@@ -12,7 +13,7 @@ const SearchBar = () => {
       </div>
 
       <button className="text-center ">
-        <a href="/profile" className="lg:w-fit flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white text-center px-6 py-4 rounded-full cursor-pointer active:scale-95 transition-all">Add New Post <IoMdAdd className="text-2xl" /></a>
+        <Link to="/profile" className="lg:w-fit flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white text-center px-6 py-4 rounded-full cursor-pointer active:scale-95 transition-all">Add New Post <IoMdAdd className="text-2xl" /></Link>
       </button>
 
     </div>

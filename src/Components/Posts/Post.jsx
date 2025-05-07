@@ -21,7 +21,7 @@ const Post = () => {
       <div className="md:p-5 p-3 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-12" src="/post-avatar.png" alt="" />
+            <img className="w-12 rounded-full" src="/devsujoydas.png" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">devsujoydas</h1>
@@ -90,7 +90,7 @@ const Post = () => {
         <div className="flex items-center gap-4 w-full ">
           <Link to={"/profile"}>
             <div className="cursor-pointer md:w-14 w-8">
-              <img className="md:w-14 w-8" src="./Avatar.png" alt="" />
+              <img className="md:w-14 w-8 rounded-full" src="/devsujoydas.png" alt="" />
             </div>
           </Link>
           <input className="w-full border border-zinc-400 outline-none md:text-lg  md:py-3 py-1 px-4 rounded-full" type="text" placeholder="Write your comment.." />
