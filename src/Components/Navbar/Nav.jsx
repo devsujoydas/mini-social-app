@@ -1,4 +1,3 @@
-import React from 'react'
 import { BsBox } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
 import { GrCreditCard } from 'react-icons/gr';

@@ -1,11 +1,6 @@
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
 
-
-
-
-
-
 const FriendSuggested = () => {
   return (
     <div>

@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const Storybox = () => {
   const storyimgstyle = 'w-18 border-3 border-purple-500 hover:border-red-500 cursor-pointer transition-all rounded-full'
