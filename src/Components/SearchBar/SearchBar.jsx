@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const SearchBar = () => {
   return (
-    <div className=" md:mt-0 mt-16  bg-white lg:py-5 py-8 px-10  flex gap-5 justify-between items-center lg:flex-row flex-col border-b border-zinc-400">
+    <div className=" md:mt-0 mt-16 bg-white lg:py-5 py-8 px-10  flex gap-5 justify-between items-center lg:flex-row flex-col border-b border-zinc-400">
 
       <div className="lg:w-7/12  flex items-center gap-2 relative">
         <input className=" text-lg border placeholder:text-zinc-600 border-zinc-300 py-2 pl-4 pr-10 w-full rounded-full outline-zinc-300" type="text" placeholder="Search for friends, groups, pages" />

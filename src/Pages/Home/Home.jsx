@@ -10,7 +10,7 @@ const Home = () => {
 
       <div className="lg:col-span-6 relative">
 
-        <div className="md:sticky top-0">
+        <div className="md:sticky top-0 z-10">
           <SearchBar />
         </div>
 
