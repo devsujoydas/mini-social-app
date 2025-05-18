@@ -20,7 +20,7 @@ const Nav = () => {
                 <p className="border  rounded-full p-1 px-2 bg-[#cad1f5]">10</p>
             </NavLink>
 
-            <NavLink to={"/"}
+            <NavLink to={"/login"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <TfiMenuAlt className="text-zinc-500 text-2xl" />
@@ -28,7 +28,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <NavLink to={"/"}
+            <NavLink to={"/signup"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />

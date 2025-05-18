@@ -2,7 +2,18 @@
 
 const Login = () => {
   return (
-    <div class="w-full bg-zinc-900 text-white p-10 font-poppins h-screen flex justify-center items-center flex-col">
+    <div className="w-full bg-zinc-900 text-white font-poppins min-h-screen flex "> 
+
+            <div className="border  h-screen w-full bg-blue-500 flex justify-center items-center flex-col">
+                <h1 className="text-4xl font-semibold">XENON MEDIA</h1>
+            
+                <p>Wellcome to our social media platform</p>
+
+                <p>Log 
+                  in Now</p>
+            </div>
+
+            <div class="  border h-screen w-full flex justify-center items-center flex-col">
 
       <a href="/" class="text-green-500  hover:text-green-600 transition-all mb-5">--Back to home</a>
 
@@ -26,6 +37,7 @@ const Login = () => {
           <a href="/signup" class="text-green-500  hover:text-green-600 transition-all"> Sign Up</a>
         </h1>
       </div>
+    </div>
     </div>
   )
 }
