@@ -24,7 +24,8 @@ const Nav = () => {
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <TfiMenuAlt className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Task</span>
+                    {/* <span className="font-semibold ">Task</span> */}
+                    <span className="font-semibold ">Log In</span>
                 </div>
             </NavLink>
 
@@ -32,7 +33,8 @@ const Nav = () => {
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Users</span>
+                    {/* <span className="font-semibold ">Users</span> */}
+                    <span className="font-semibold ">Sign Up</span>
                 </div>
                 <p className="border  rounded-full p-1 px-2 bg-[#cad1f5]">2</p>
             </NavLink>

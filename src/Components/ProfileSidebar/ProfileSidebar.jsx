@@ -30,7 +30,7 @@ const ProfileSidebar = () => {
           </div>
           <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
             <h1 className="text-2xl font-semibold">1.5M</h1>
-            <h1 className="text-xl font-medium text-zinc-500">Followes</h1>
+            <h1 className="text-xl font-medium text-zinc-500">Followers</h1>
           </div>
           <div className="text-center">
             <h1 className="text-2xl font-semibold">8</h1>
