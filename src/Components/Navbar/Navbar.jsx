@@ -3,14 +3,27 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Nav from "./Nav";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 
 const Navbar = () => {
   const [humbarger, setHumbarger] = useState(1)
+  const { user, signOutUser } = useContext(AuthContext)
+  // console.log(user)
 
+  const signOutHander = () => {
+    signOutUser()
+      .then(() => {
+        console.log("Sign Out Successfull");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    navigate("/login")
+  }
 
   return (
     <div className="md:sticky left-0 top-0 ">
@@ -71,7 +84,11 @@ const Navbar = () => {
                   </div>
                 </div>
               </Link>
-              <RxExit className="text-3xl cursor-pointer m-3" />
+
+
+              <button onClick={() => signOutHander()}>
+                <RxExit className="text-3xl cursor-pointer m-3" />
+              </button>
             </div>
           </div>
 

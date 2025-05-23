@@ -27,7 +27,7 @@ const Profile = () => {
       </div>
 
 
-      <div className="lg:col-span-3 border-l border-zinc-300 bg-[#f1f5f7] p-8">
+      <div className=" lg:col-span-3 border-l border-zinc-300 bg-[#f1f5f7] p-8">
         <ProfileSidebar />
       </div>
     </div>

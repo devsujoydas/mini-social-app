@@ -14,11 +14,9 @@ Pages
 
 
 
-usermodel
-
-fullname
+name
 username
-post
+posts
 followers
 following
 profilephoto

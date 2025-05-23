@@ -10,7 +10,7 @@ const PostForm = () => {
 
       <form action="">
         <div className="flex w-full items-start gap-2">
-          <label for="dropzone-file" className=" text-3xl p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+          <label htmlFor="dropzone-file" className=" text-3xl p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <ImAttachment className="text-2xl text-zinc-400 cursor-pointer " />
           <input type="file" id="dropzone-file" className="hidden" />
           </label>

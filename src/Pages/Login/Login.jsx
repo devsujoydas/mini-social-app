@@ -1,65 +1,92 @@
 import { Link, useNavigate } from "react-router-dom"
+import { AuthContext } from "../PrivateRoute/AuthProvider";
+import { useContext } from "react";
 
 
 const Login = () => {
   const navigate = useNavigate()
+  const { logInUser, user, setUser, setLoading, signInWithGoogle } = useContext(AuthContext)
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+
     const formData = { email, password }
-    console.log("formData", formData)
-    
-    try {
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+    if (user) {
+      console.log("User Already Exist")
+      return
+    }
+
+    logInUser(email, password)
+      .then((result) => {
+
+        setUser(result.user)
+        console.log("Log in successfully")
+        navigate(`/updateInfo/${email}`)
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error.message);
       });
-      const result = await response.json();
-      console.log(result);
-      navigate("/profile")
-    }
-    catch (err) {
-      console.error('Error:', err);
-    }
+
+
   }
 
+
   return (
-    <div className="w-full h-screen md:p-0 p-5 font-poppins flex items-center  md:flex-row flex-col">
-      <div className="w-full  flex justify-center items-center flex-col">
-        <h1 className="md:text-8xl text-4xl text-blue-500 font-semibold">XENON MEDIA</h1>
-        <p>Wellcome to our social media platform</p>
+    <div className="w-full h-screen md:p-0 p-5 flex md:flex-row flex-col items-center justify-center md:gap-0 gap-5">
+
+
+      <div className="md:w-1/2 w-full h-full flex justify-center items-center">
+        <img className="h-full" src="/login.png" alt="" />
       </div>
 
-      <div className=" w-full flex justify-center items-center flex-col">
+      <div className=" md:w-1/2 w-full h-full">
+        <div className="flex flex-col justify-center sm:h-screen md:p-4">
+          <div className="max-w-md w-full mx-auto border border-slate-300 rounded-2xl p-8">
+            <div className="text-center mb-8">
+              <h1 className="font-semibold text-4xl font-family-secondary text-blue-600">Log In</h1>
+            </div>
 
-        <div className="flex justify-center items-center">
-          <Link to="/" className="text-green-500 text-center hover:text-green-600 transition-all mb-5">--Back to home</Link>
-        </div>
+            <form onSubmit={submitHandler}>
+              <div className="space-y-3 md:space-y-5">
 
-        <div className="border md:w-fit w-full hover:shadow-lg transition-all border-zinc-700 p-5 rounded-md">
-          <form action="/login" onSubmit={submitHandler} className="space-y-4 md:min-w-96 grid">
-            <h1 className="text-3xl ">Log In</h1>
+                <div>
+                  <label className="text-slate-800 text-sm font-medium mb-2 block">Email</label>
+                  <input required name="email" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter email" />
+                </div>
+                <div>
+                  <label className="text-slate-800 text-sm font-medium mb-2 block">Password</label>
+                  <input required name="password" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter password" />
+                </div>
 
-            <input required className="border border-zinc-700 outline-none md:px-4 px-2 md:py-3 py-2 w-full rounded-md" type="email"
-              name="email" placeholder="email" />
 
-            <input required className="border border-zinc-700 outline-none md:px-4 px-2 md:py-3 py-2 w-full rounded-md" type="password"
-              name="password" placeholder="password" />
+                <div className="flex items-center ">
+                  <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
+                  <label htmlFor="remember-me" className="text-slate-800 ml-3 block text-sm cursor-pointer">
+                    I accept the <a href="/signup" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
+                  </label>
+                </div>
+              </div>
 
-            <input
-              className="bg-blue-500 text-white cursor-pointer hover:bg-blue-400 active:scale-95 transition-all  py-3 rounded-md"
-              type="submit" value="Login" />
-          </form>
+              <div className="mt-8">
+                <button type="submit" className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer active:scale-95 transition-all">
+                  Login
+                </button>
+              </div>
+              <p className="text-slate-800 text-sm mt-6 text-center">Dont have any account?
+                <Link to={"/signup"} className="text-blue-600 font-medium hover:underline ml-1">Signup</Link>
+              </p>
 
-          <h1 className="mt-5">
-            Create new account
-            <Link to={"/signup"} className="text-green-500  hover:text-green-600 transition-all"> Sign Up</Link>
-          </h1>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+
+
+
+    </div >
   )
 }
 

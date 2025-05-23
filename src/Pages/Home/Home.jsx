@@ -4,6 +4,7 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
+
 const Home = () => {
   return (
     <div className="grid  grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] ">
