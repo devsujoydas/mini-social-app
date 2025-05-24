@@ -4,15 +4,18 @@ import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ImAttachment } from "react-icons/im";
 import { FaRegSmile } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 
 const Post = () => {
   const [like, setlike] = useState(0)
+  const { userData } = useContext(AuthContext)
+  const { name, username, profilephotourl } = userData
 
   return (
     <div className="shadow-xl rounded-2xl md:rounded-3xl bg-white">
@@ -20,12 +23,12 @@ const Post = () => {
       {/* post author details  */}
       <div className="md:p-5 p-3 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-12 rounded-full" src="/devsujoydas.png" alt="" />
+          <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
+            <img className=" rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
           </div>
           <div>
-            <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">devsujoydas</h1>
-            <p className="text-zinc-500">Product Designer, IT</p>
+            <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">{userData.name ?`${name}`: "Your Name" }</h1>
+            <p className="text-zinc-500">@{userData.username ?`${username}`: "username" }</p>
           </div>
         </div>
 
@@ -52,7 +55,7 @@ const Post = () => {
         <div className="flex justify-between items-center mt-4 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-8 gap-6">
-            
+
             <button className="md:text-xl flex items-center gap-2">
               <div onClick={() => { setlike(!like) }} className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {like ? <BiSolidLike /> : < BiLike />}
@@ -89,8 +92,8 @@ const Post = () => {
       <form action="" className="p-5 flex justify-between items-center gap-5 md:gap-20">
         <div className="flex items-center gap-4 w-full ">
           <Link to={"/profile"}>
-            <div className="cursor-pointer md:w-14 w-8">
-              <img className="md:w-14 w-8 rounded-full" src="/devsujoydas.png" alt="" />
+            <div className="cursor-pointer md:w-14 w-8 md:h-14 h-8 overflow-hidden rounded-full">
+              <img className="" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
             </div>
           </Link>
           <input className="w-full border border-zinc-400 outline-none md:text-lg  md:py-3 py-1 px-4 rounded-full" type="text" placeholder="Write your comment.." />

@@ -4,8 +4,14 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
+import { AuthContext } from "../PrivateRoute/AuthProvider"
+import { useContext } from "react"
 
 const Home = () => {
+  
+const { userData } = useContext(AuthContext)
+console.log("Logged user from home",userData)
+
   return (
     <div className="grid  grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] ">
 

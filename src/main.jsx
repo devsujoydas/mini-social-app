@@ -25,13 +25,15 @@ const router = createBrowserRouter([
 
       },
       {
-        path: "/profile",
+        path: "/profile/:id",
         element: <PrivateRoute><Profile /></PrivateRoute>,
-      }, {
+        hydrateFallbackElement: <loader />,
+        loader: ({ params }) => fetch(`http://localhost:3000/profile/${params.id}`)
+      },
+      {
         path: "/updateInfo/:id",
         element: <PrivateRoute><UpdateInfo /></PrivateRoute>,
         hydrateFallbackElement: <loader />,
-
         loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
       },
     ]
@@ -43,6 +45,8 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: < Signup />,
+    hydrateFallbackElement: <loader />,
+    loader: () => fetch(`http://localhost:3000/`)
   },
 
 ])

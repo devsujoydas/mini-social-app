@@ -6,7 +6,13 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
+    const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(true)
+
+
+    const handleSetUserData = (username) => {
+        console.log(username)
+    }
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -23,20 +29,19 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return signInWithPopup(auth, provider)
     }
-    
+
     const signOutUser = () => {
         setLoading(true)
         return signOut(auth)
     }
-    
+
     const deleteAccount = () => {
         return deleteUser(user)
     }
-    
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
-            // console.log("State Change Hoitase")
             setLoading(false)
         })
         return () => {
@@ -44,9 +49,13 @@ const AuthProvider = ({ children }) => {
         }
     }, [])
 
+
+
     const dataList = {
         user,
         setUser,
+        userData,
+        setUserData,
         signUpUser,
         loading,
         setLoading,
@@ -54,6 +63,7 @@ const AuthProvider = ({ children }) => {
         signOutUser,
         signInWithGoogle,
         deleteAccount,
+        handleSetUserData,
     }
 
     return (

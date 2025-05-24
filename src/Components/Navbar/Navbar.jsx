@@ -11,7 +11,8 @@ import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 const Navbar = () => {
   const [humbarger, setHumbarger] = useState(1)
-  const { user, signOutUser } = useContext(AuthContext)
+  const { user, userData, signOutUser } = useContext(AuthContext)
+  const { name, username, profilephotourl } = userData
   // console.log(user)
 
   const signOutHander = () => {
@@ -29,7 +30,7 @@ const Navbar = () => {
     <div className="md:sticky left-0 top-0 ">
 
       <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-8 py-2">
-        <Link to={"/"} className="text-3xl font-semibold font-montserrat">Xenon Media</Link>
+        <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
         </div>
@@ -43,7 +44,7 @@ const Navbar = () => {
 
             {/* nav logo  */}
             <div className="">
-              <Link to={"/"} className="text-3xl font-semibold font-montserrat">Xenon Media</Link>
+              <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
             </div>
 
             {/* search box  */}
@@ -75,11 +76,11 @@ const Navbar = () => {
             <hr className="text-zinc-300" />
 
             <div className=" flex justify-between items-center cursor-pointer">
-              <Link to={"/profile"}>
+              <Link to={`/profile/${user.email}`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14 rounded-full" src="/devsujoydas.png" alt="" />
+                  <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold text-xl">Sujoy Das</h1>
+                    <h1 className="font-semibold text-xl">{userData.name ?`${name}`: "Your Name" }</h1>
                     <p>Basic Member</p>
                   </div>
                 </div>
@@ -105,7 +106,7 @@ const Navbar = () => {
           <div className=" space-y-7 ">
             {/* nav logo  */}
             <div className=" flex justify-between items-center">
-              <Link to={"/"} className="text-3xl font-semibold font-montserrat">Xenon Media</Link>
+              <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
               <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="text-5xl" />
             </div>
 
@@ -142,11 +143,11 @@ const Navbar = () => {
 
 
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
-              <Link to={"/profile"}>
+              <Link to={`/profile/${user.email}`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14 rounded-full" src="/devsujoydas.png" alt="" />
+                  <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold text-xl">Sujoy Das</h1>
+                    <h1 className="font-semibold text-xl">{userData.name ?`${name}`: "Your Name" }</h1>
                     <p>Basic Member</p>
                   </div>
                 </div>

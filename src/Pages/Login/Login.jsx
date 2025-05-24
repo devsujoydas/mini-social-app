@@ -13,17 +13,17 @@ const Login = () => {
     const password = e.target.password.value;
 
     const formData = { email, password }
-    if (user) {
-      console.log("User Already Exist")
-      return
-    }
+    // if (user) {
+    //   console.log("User Already Exist")
+    //   return
+    // }
 
     logInUser(email, password)
       .then((result) => {
 
         setUser(result.user)
         console.log("Log in successfully")
-        navigate(`/updateInfo/${email}`)
+        navigate(`/profile/${email}`)
       })
       .catch((error) => {
         setLoading(false)
@@ -65,7 +65,7 @@ const Login = () => {
                 <div className="flex items-center ">
                   <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
                   <label htmlFor="remember-me" className="text-slate-800 ml-3 block text-sm cursor-pointer">
-                    I accept the <a href="/signup" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
+                    I accept the <a href="/" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
                   </label>
                 </div>
               </div>

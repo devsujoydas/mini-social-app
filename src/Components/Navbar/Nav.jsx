@@ -1,76 +1,79 @@
-import { BsBox } from 'react-icons/bs';
 import { FaUserFriends } from 'react-icons/fa';
-import { GrCreditCard } from 'react-icons/gr';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { LuMessageCircleMore } from 'react-icons/lu';
-import { RiHomeLine } from 'react-icons/ri';
-import { TfiMenuAlt } from 'react-icons/tfi';
+import { BiSolidMessageRounded } from "react-icons/bi";
+import { FaLightbulb } from "react-icons/fa";
+import { MdWebStories } from "react-icons/md";
+import { IoHome } from "react-icons/io5";
+import { FaTicketAlt } from "react-icons/fa";
+
 import { NavLink } from "react-router-dom";
+import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
+import { useContext } from 'react';
 
 const Nav = () => {
+    const { user, userData } = useContext(AuthContext)
+    const { name, username, profilephotourl } = userData
+
     return (
         <div className="space-y-7 px-5">
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
-                    <RiHomeLine className="text-zinc-500 text-2xl" />
+                    <IoHome className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Home</span>
                 </div>
-                <p className="border  rounded-full p-1 px-2 bg-[#cad1f5]">10</p>
             </NavLink>
 
-            <NavLink to={"/login"}
+            <NavLink to={`/profile/${user.email}`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
-                    <TfiMenuAlt className="text-zinc-500 text-2xl" />
-                    {/* <span className="font-semibold ">Task</span> */}
-                    <span className="font-semibold ">Log In</span>
+                    <img className="w-7 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                    <span className="font-semibold ">Profile</span>
                 </div>
             </NavLink>
 
-            <NavLink to={"/signup"}
+            <div className='bg-zinc-200 h-1.5'></div>
+
+            <NavLink to={"/"}
+                className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
+                <div className="flex items-center gap-2 text-xl ">
+                    <BiSolidMessageRounded className="text-zinc-500 text-2xl" />
+                    <span className="font-semibold ">Message</span>
+                </div>
+            </NavLink>
+
+            <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />
-                    {/* <span className="font-semibold ">Users</span> */}
-                    <span className="font-semibold ">Sign Up</span>
+                    <span className="font-semibold ">Firends</span>
                 </div>
-                <p className="border  rounded-full p-1 px-2 bg-[#cad1f5]">2</p>
             </NavLink>
+
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
-                    <BsBox className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">APIs</span>
-                </div>
-            </NavLink>
-
-            <NavLink to={"/"}
-                className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
-                    <GrCreditCard className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Subscription</span>
+                    <MdWebStories className="text-zinc-500 text-2xl" />
+                    <span className="font-semibold ">Stories</span>
                 </div>
             </NavLink>
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
-                    <IoSettingsOutline className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Settings</span>
+                    <FaTicketAlt className="text-zinc-500 text-2xl" />
+                    <span className="font-semibold ">Events</span>
                 </div>
             </NavLink>
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
-                    <LuMessageCircleMore className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Help & Support</span>
+                    <FaLightbulb className="text-zinc-500 text-2xl" />
+                    <span className="font-semibold ">Memories</span>
                 </div>
             </NavLink>
-
         </div>
     )
 }

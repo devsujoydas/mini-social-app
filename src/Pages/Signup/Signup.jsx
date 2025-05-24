@@ -15,12 +15,13 @@ const Signup = () => {
         const username = e.target.username.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const address = "";
         const profilephotourl = "";
         const phone = "";
         const website = "";
         const posts = [];
 
-        const formData = { name, username, email, password, profilephotourl, phone, website, posts }
+        const formData = { name, username, email, address, profilephotourl, phone, website, posts }
 
 
         fetch(`http://localhost:3000/signup`, {
@@ -35,6 +36,7 @@ const Signup = () => {
                     signUpUser(email, password)
                         .then((result) => {
                             setUser(result.user)
+
                             console.log("Result from Firebase: ", result.user);
                             navigate("/login")
                         })
@@ -83,9 +85,9 @@ const Signup = () => {
 
 
                                 <div className="flex items-center ">
-                                    <input required type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
+                                    <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
                                     <label htmlFor="remember-me" className="text-slate-800 ml-3 block text-sm cursor-pointer">
-                                        I accept the <a href="/signup" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
+                                        I accept the <a href="/" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
                                     </label>
                                 </div>
                             </div>

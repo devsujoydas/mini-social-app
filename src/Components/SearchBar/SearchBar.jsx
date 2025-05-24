@@ -1,9 +1,13 @@
 import { IoSearch } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { useContext } from "react";
 
 
 const SearchBar = () => {
+  const { user, userData } = useContext(AuthContext)
+
   return (
     <div className=" md:mt-0 mt-16 bg-white lg:py-5 py-8 px-10  flex gap-5 justify-between items-center lg:flex-row flex-col border-b border-zinc-400">
 
@@ -13,7 +17,7 @@ const SearchBar = () => {
       </div>
 
       <button className="text-center ">
-        <Link to="/profile" className="lg:w-fit flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white text-center px-6 py-4 rounded-full cursor-pointer active:scale-95 transition-all">Add New Post <IoMdAdd className="text-2xl" /></Link>
+        <Link to={`/profile/${user.email}`} className="lg:w-fit flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white text-center px-6 py-4 rounded-full cursor-pointer active:scale-95 transition-all">Add New Post <IoMdAdd className="text-2xl" /></Link>
       </button>
 
     </div>
