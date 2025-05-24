@@ -5,14 +5,23 @@ import auth from '../../Firebase/firebase.config'
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
+
+
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(true)
 
 
-    const handleSetUserData = (username) => {
-        console.log(username)
-    }
+    const [postsData, setPostsData] = useState([])
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/post`)
+            .then(res => res.json())
+            .then(data => {
+                setPostsData(data)
+            })
+    }, [])
+
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -41,8 +50,11 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser)
-            setLoading(false)
+            if (currentUser != {}) {
+                setUser(currentUser)
+                setLoading(false)
+                // console.log("From AUthstae", currentUser)    
+            }
         })
         return () => {
             unSubscribe();
@@ -52,18 +64,16 @@ const AuthProvider = ({ children }) => {
 
 
     const dataList = {
-        user,
-        setUser,
-        userData,
-        setUserData,
+        user, setUser,
+        userData, setUserData,
+        loading, setLoading,
+        postsData, setPostsData,
+        
         signUpUser,
-        loading,
-        setLoading,
         logInUser,
         signOutUser,
         signInWithGoogle,
         deleteAccount,
-        handleSetUserData,
     }
 
     return (

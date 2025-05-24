@@ -10,7 +10,7 @@ import { useContext } from "react";
 
 
 const ProfileSidebar = () => {
-  const { signOutUser, userData } = useContext(AuthContext)
+  const { signOutUser, userData, postsData } = useContext(AuthContext)
   const { name, username, email, address, profilephotourl, phone, website, posts } = userData;
 
 
@@ -50,7 +50,7 @@ const ProfileSidebar = () => {
         <div className=" flex justify-center items-center gap-5">
           <div className="text-center">
             {/* <h1 className="text-2xl font-semibold">{posts.length}</h1> */}
-            <h1 className="text-2xl font-semibold">1</h1>
+            <h1 className="text-2xl font-semibold">{postsData.length}</h1>
             <h1 className="text-xl font-medium text-zinc-500">Post</h1>
           </div>
           <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
@@ -184,7 +184,7 @@ const ProfileSidebar = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <div className="active:scale-95 transition-all cursor-pointer">
-                  <img className="w-10 h-10 rounded-full" src="/Enamul.jpg" alt="" />
+                  <img className="w-10 h-10 rounded-full" src="/enamul.jpg" alt="" />
                 </div>
                 <div>
                   <h1 className="font-semibold active:underline transition-all cursor-pointer">Enamul Hoque</h1>

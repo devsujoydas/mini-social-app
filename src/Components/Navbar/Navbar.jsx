@@ -5,15 +5,15 @@ import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import { useContext, useState } from "react";
 import Nav from "./Nav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 
 const Navbar = () => {
   const [humbarger, setHumbarger] = useState(1)
   const { user, userData, signOutUser } = useContext(AuthContext)
-  const { name, username, profilephotourl } = userData
-  // console.log(user)
+  const { name, profilephotourl } = userData;
+  const navigate = useNavigate()
 
   const signOutHander = () => {
     signOutUser()
@@ -29,7 +29,7 @@ const Navbar = () => {
   return (
     <div className="md:sticky left-0 top-0 ">
 
-      <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-8 py-2">
+      <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 md:hidden flex justify-between items-center px-8 py-2">
         <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-4">
                   <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold text-xl">{userData.name ?`${name}`: "Your Name" }</h1>
+                    <h1 className="font-semibold text-xl">{userData.name ? `${name}` : "Your Name"}</h1>
                     <p>Basic Member</p>
                   </div>
                 </div>
@@ -99,7 +99,7 @@ const Navbar = () => {
 
 
       {/* nav for sm device  */}
-      <div className={humbarger ? 'bg-white md:hidden fixed z-20 top-0 -left-121 w-full  opacity-0 duration-700 transition-all' : 'bg-white md:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
+      <div className={humbarger ? 'bg-white lg:hidden fixed z-20 top-0 -left-121 w-full  opacity-0 duration-700 transition-all' : 'bg-white md:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
 
         <div className="p-5 bg-white border ">
 
@@ -147,7 +147,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-4">
                   <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold text-xl">{userData.name ?`${name}`: "Your Name" }</h1>
+                    <h1 className="font-semibold text-xl">{userData.name ? `${name}` : "Your Name"}</h1>
                     <p>Basic Member</p>
                   </div>
                 </div>

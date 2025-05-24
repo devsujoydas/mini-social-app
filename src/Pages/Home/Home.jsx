@@ -1,4 +1,3 @@
-
 import Posts from "../../Components/Posts/Posts"
 import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
@@ -8,12 +7,11 @@ import { AuthContext } from "../PrivateRoute/AuthProvider"
 import { useContext } from "react"
 
 const Home = () => {
-  
-const { userData } = useContext(AuthContext)
-console.log("Logged user from home",userData)
+
+  const { userData } = useContext(AuthContext)
 
   return (
-    <div className="grid  grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] ">
+    <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa]  ">
 
       <div className="lg:col-span-6 relative">
 
@@ -23,12 +21,17 @@ console.log("Logged user from home",userData)
 
         <div className=" py-5 lg:px-10 px-5 space-y-5">
           <Storybox />
-          <Posts />
+
+          <div>
+            <Posts />
+          </div>
+          
         </div>
       </div>
 
       <div className="lg:col-span-3 bg-white border-l border-zinc-300 ">
         <SideNavbar />
+
         <Sidebar />
       </div>
 

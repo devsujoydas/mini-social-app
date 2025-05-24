@@ -7,9 +7,9 @@ const Sidebar = () => {
   return (
     <div className="">
       <div className="p-5 space-y-7  ">
-        <FriendSuggested />
-        <ProfileActivity />
-        <UpcommingEvents />
+        <FriendSuggested /> 
+          <ProfileActivity />
+          <UpcommingEvents /> 
       </div>
     </div>
   )

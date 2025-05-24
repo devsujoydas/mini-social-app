@@ -1,15 +1,15 @@
-import Loader from "../../Components/Loader/Loader"
+import Loader from "../../Components/Loading/Loading"
 import Navbar from "../../Components/Navbar/Navbar"
 import { AuthContext } from "../PrivateRoute/AuthProvider"
 import { Outlet } from "react-router-dom"
 import { useContext } from "react"
 
 const Root = () => {
-  const { user } = useContext(AuthContext)
+  const { user, loading } = useContext(AuthContext)
 
   return (
     <div>
-      {user == {}
+      {loading && user != {}
         ?
         <Loader />
         :

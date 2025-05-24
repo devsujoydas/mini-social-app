@@ -4,13 +4,10 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const UpdateInfo = () => {
 
-    const { user, loading, setLoading } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
 
     const loaderUser = useLoaderData()
-    console.log(loaderUser)
-
     const navigate = useNavigate()
-
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -52,13 +49,13 @@ const UpdateInfo = () => {
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Name</label>
                         <input defaultValue={loaderUser.name} required name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
                     </div>
-                    <div>
+                    <div className=''>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Username</label>
-                        <input disabled={true} defaultValue={loaderUser.username} required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Username" />
+                        <input disabled={true} defaultValue={loaderUser.username} required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 cursor-not-allowed" placeholder="Enter Username" />
                     </div>
-                    <div>
+                    <div className=''>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Email</label>
-                        <input disabled={true} defaultValue={loaderUser.email} required type="email" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter email" />
+                        <input disabled={true} defaultValue={loaderUser.email} required type="email" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 cursor-not-allowed" placeholder="Enter email" />
                     </div>
                     <div>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Address</label>

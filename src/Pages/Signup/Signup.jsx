@@ -36,8 +36,7 @@ const Signup = () => {
                     signUpUser(email, password)
                         .then((result) => {
                             setUser(result.user)
-
-                            console.log("Result from Firebase: ", result.user);
+                            console.log("Signup Successfully: ", result.user);
                             navigate("/login")
                         })
                         .catch((error) => {

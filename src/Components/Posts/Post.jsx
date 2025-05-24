@@ -1,36 +1,44 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { Link } from "react-router-dom";
+
+
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CiBookmark } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
-import { useContext, useState } from "react";
 import { ImAttachment } from "react-icons/im";
 import { FaRegSmile } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 
-const Post = () => {
+const Post = ({ post }) => {
+
+
   const [like, setlike] = useState(0)
-  const { userData } = useContext(AuthContext)
+  const {user, userData } = useContext(AuthContext)
   const { name, username, profilephotourl } = userData
 
   return (
     <div className="shadow-xl rounded-2xl md:rounded-3xl bg-white">
 
       {/* post author details  */}
-      <div className="md:p-5 p-3 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
-            <img className=" rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+      <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
+
+        <Link to={`/profile/${user.email}`}>
+          <div className="flex items-center gap-3">
+            <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
+              <img className=" rounded-full " src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+            </div>
+
+            <div>
+              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${name}` : "Your Name"}</h1>
+              <p className="text-zinc-500 text-sm">{new Date(post?.createdDate)?.toLocaleString()}</p>
+            </div>
           </div>
-          <div>
-            <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">{userData.name ?`${name}`: "Your Name" }</h1>
-            <p className="text-zinc-500">@{userData.username ?`${username}`: "username" }</p>
-          </div>
-        </div>
+        </Link>
 
         <BsThreeDotsVertical className="cursor-pointer active:scale-95 md:text-xl text-zinc-500 hover:text-black" />
       </div>
@@ -38,21 +46,15 @@ const Post = () => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:p-5 p-3 space-y-3">
-        <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">Habitant morbi tristique senectus et netus et. Suspendisse sed nisi lacus sed viverra. Dolor morbi non arcu risus quis varius.
-          <a href="/" className="text-blue-500 ">#amazing</a>
-          <a href="/" className="text-blue-500">#great</a>
-          <a href="/" className="text-blue-500">#lifetime</a>
-          <a href="/" className="text-blue-500">#uiux</a>
-          <a href="/" className="text-blue-500">#machinelearning</a>
-        </h1>
+      <div className="md:p-5 p-3 space-y-2">
+        <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
 
-        <div>
-          <img className="w-full md:h-fit h-56" src="/post-image.png" alt="" />
-        </div>
+        <Link to={`/post/${post._id}`}>
+          <img className="w-full object-cover rounded-lg md:h-96 h-56" src={`${post?.postImageUrl}`} alt="" />
+        </Link>
 
         {/* like comment share container  */}
-        <div className="flex justify-between items-center mt-4 ">
+        <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-8 gap-6">
 
@@ -89,30 +91,30 @@ const Post = () => {
       <hr className="text-zinc-300" />
 
       {/* comment container  */}
-      <form action="" className="p-5 flex justify-between items-center gap-5 md:gap-20">
+      <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
         <div className="flex items-center gap-4 w-full ">
-          <Link to={"/profile"}>
-            <div className="cursor-pointer md:w-14 w-8 md:h-14 h-8 overflow-hidden rounded-full">
+          <Link to={`/profile/${user.email}`}>
+            <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
               <img className="" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
             </div>
           </Link>
-          <input className="w-full border border-zinc-400 outline-none md:text-lg  md:py-3 py-1 px-4 rounded-full" type="text" placeholder="Write your comment.." />
+          <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
         </div>
 
         <div className="flex items-center gap-3 ">
-          <div className="border border-zinc-400 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+          <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <ImAttachment />
           </div>
-          <div className="border border-zinc-400 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+          <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <FaRegSmile />
           </div>
-          <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 md:text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
+          <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
             <VscSend />
           </div>
         </div>
       </form>
 
-    </div>
+    </div >
   )
 }
 

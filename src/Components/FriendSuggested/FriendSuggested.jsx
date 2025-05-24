@@ -48,7 +48,7 @@ const FriendSuggested = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
-            <img className="w-10 h-10 rounded-full" src="/Enamul.jpg" alt="" />
+            <img className="w-10 h-10 rounded-full" src="/enamul.jpg" alt="" />
           </div>
           <div>
             <h1 className="font-semibold active:underline transition-all cursor-pointer">Enamul Haque</h1>

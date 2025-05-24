@@ -10,6 +10,7 @@ import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx'
 import AuthProvider from './Pages/PrivateRoute/AuthProvider.jsx'
 import Home from './Pages/Home/Home.jsx'
 import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
+import PostDetails from './Components/Posts/PostDetails.jsx'
 
 
 
@@ -22,19 +23,21 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-
       },
       {
         path: "/profile/:id",
         element: <PrivateRoute><Profile /></PrivateRoute>,
-        hydrateFallbackElement: <loader />,
         loader: ({ params }) => fetch(`http://localhost:3000/profile/${params.id}`)
       },
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute><UpdateInfo /></PrivateRoute>,
-        hydrateFallbackElement: <loader />,
         loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+      },
+      {
+        path: "/post/:id",
+        element: <PrivateRoute><PostDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
       },
     ]
   },
@@ -44,9 +47,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: < Signup />,
-    hydrateFallbackElement: <loader />,
-    loader: () => fetch(`http://localhost:3000/`)
+    element: < Signup />
   },
 
 ])

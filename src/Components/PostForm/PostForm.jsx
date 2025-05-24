@@ -1,22 +1,47 @@
 import { FaRegSmile } from "react-icons/fa"
-import { ImAttachment } from "react-icons/im"
 import { VscSend } from "react-icons/vsc"
 import { IoMicOutline } from "react-icons/io5";
-
+import { useContext } from "react";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import Swal from 'sweetalert2'
 
 const PostForm = () => {
 
+  const { postsData, setPostsData } = useContext(AuthContext)
+
   const handlePostSubmit = (e) => {
     e.preventDefault()
-    const postImageUrl = e.target.postImageUrl.value;
-    const postContent = e.target.postContent.value;
-    const postData = { postImageUrl, postContent }
+    const form = e.target;
+
+    const postContent = form.postContent.value;
+    const postImageUrl = form.postImageUrl.value;
+    // const author = `${userData.username}`
+    const createdDate = new Date();
+    const likes = [];
+    const comments = [];
+    const shares = []
+
+
+    const postData = { postImageUrl, postContent, createdDate, likes, comments, shares }
     console.log(postData)
+
+    fetch(`http://localhost:3000/post`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(postData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        form.reset()
+        setPostsData([...postsData, data])
+        console.log("Post Upload Successfully")
+      })
+
   }
   return (
     <div className=" p-5  border border-zinc-300 ">
 
-      <form onSubmit={handlePostSubmit} className="space-y-6">
+      <form onSubmit={handlePostSubmit} className="space-y-4">
         {/* <div className="flex w-full items-start gap-2">
           <label htmlFor="dropzone-file" className=" text-3xl p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
             <ImAttachment className="text-2xl text-zinc-400 cursor-pointer " />
@@ -26,10 +51,11 @@ const PostForm = () => {
           <textarea name="" id="" className=" outline-none p-2 w-full" placeholder="Whats on your mind right now?"></textarea>
         </div> */}
 
-        <div className="flex w-full flex-col items-start gap-2">
-          <input required name="postImageUrl" type="text" className="outline-none bg-white border border-zinc-300 rounded-sm w-full text-sm px-4 py-3 " placeholder="Image Url" />
+        <div className="flex w-full flex-col items-start gap-2 text-sm">
+          <input required name="postImageUrl" type="text" className="outline-none p-2 bg-white border border-zinc-300 rounded-sm w-full  " placeholder="Image Url" />
 
-          <textarea name="postContent" className=" outline-none p-2 w-full border border-zinc-300 rounded-sm" placeholder="Whats on your mind right now?"></textarea>
+          <input required name="postContent" type="text" className="outline-none p-2 bg-white h-14 border border-zinc-300 rounded-sm w-full  " placeholder="Whats on your mind right now?" />
+
         </div>
 
 

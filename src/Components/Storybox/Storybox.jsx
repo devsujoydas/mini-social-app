@@ -7,7 +7,7 @@ import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
 import { useContext } from 'react';
 
 const Storybox = () => {
-  const storyimgstyle = 'w-20 border-3 border-purple-500 hover:border-red-500 active:scale-95 transition-all duration-500 cursor-pointer rounded-full'
+  const storyimgstyle = 'w-20 h-20 border-3 border-purple-500 hover:border-red-500 active:scale-95 transition-all duration-500 cursor-pointer rounded-full'
   const { user, userData, signOutUser } = useContext(AuthContext)
   const { profilephotourl } = userData
   return (
@@ -15,7 +15,7 @@ const Storybox = () => {
 
       <div className='w-full rounded-full overflow-hidden' >
         <Swiper
-          slidesPerView={5}
+          slidesPerView={4}
           spaceBetween={10}
           freeMode={true}
           loop={true}
@@ -30,18 +30,16 @@ const Storybox = () => {
           modules={[FreeMode, Autoplay]}
           className=''
         >
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/ahadul.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/maksudur.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/devsujoydas.png`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/enamul.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/mubarok.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/tamim.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/sohan.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/arman.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/kausar.jpg`} alt="" /></SwiperSlide>
+          <SwiperSlide><img className={storyimgstyle} src={`/kawsar.jpg`} alt="" /></SwiperSlide>
         
         </Swiper>
       </div>

@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 const Login = () => {
   const navigate = useNavigate()
-  const { logInUser, user, setUser, setLoading, signInWithGoogle } = useContext(AuthContext)
+  const { logInUser, user, setUser, setUserData, setLoading, signInWithGoogle } = useContext(AuthContext)
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -20,6 +20,14 @@ const Login = () => {
 
     logInUser(email, password)
       .then((result) => {
+        console.log(result)
+
+        fetch(`http://localhost:3000/profile/${result.user.email}`)
+          .then(res => res.json())
+          .then(data => {
+            console.log(data)
+            setUserData(data)
+          })
 
         setUser(result.user)
         console.log("Log in successfully")
