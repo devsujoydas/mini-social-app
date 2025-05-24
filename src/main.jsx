@@ -11,6 +11,8 @@ import AuthProvider from './Pages/PrivateRoute/AuthProvider.jsx'
 import Home from './Pages/Home/Home.jsx'
 import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
 import PostDetails from './Components/Posts/PostDetails.jsx'
+import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
+import Friends from './Components/Friends/Friends.jsx'
 
 
 
@@ -38,6 +40,15 @@ const router = createBrowserRouter([
         path: "/post/:id",
         element: <PrivateRoute><PostDetails /></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+      },
+      {
+        path: "/post/update/:id",
+        element: <PrivateRoute><PostDetailsUpdate /></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+      },
+      {
+        path: "/friends",
+        element: <PrivateRoute><Friends /></PrivateRoute>,
       },
     ]
   },

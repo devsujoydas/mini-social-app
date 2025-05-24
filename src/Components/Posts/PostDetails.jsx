@@ -1,61 +1,55 @@
 import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 
 
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { CiBookmark } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import { VscSend } from "react-icons/vsc";
+import { FaBookmark } from "react-icons/fa";
+import { CiBookmark } from "react-icons/ci";
+import { FaRegSmile } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
+import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
-import { ImAttachment } from "react-icons/im";
-import { FaRegSmile } from "react-icons/fa";
-import { VscSend } from "react-icons/vsc";
-import { Link } from "react-router-dom";
-
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoSettings } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
+import { FaArchive } from "react-icons/fa";
+import { IoMicOutline } from "react-icons/io5";
 
 const PostDetails = () => {
+  const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
+
   const post = useLoaderData()
+  const { userData, user, postsData, setPostsData } = useContext(AuthContext)
+  const { name, username, profilephotourl } = userData;
+  const navigate = useNavigate()
 
-  const handlePostSubmit = (e) => {
+  const deletePost = () => {
+    fetch(`http://localhost:3000/post/delete/${post._id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(data => {
 
-    e.preventDefault()
-    const form = e.target;
-    const postContent = form.postContent.value;
-    const postImageUrl = form.postImageUrl.value;
-    const createdDate = new Date();
-    const likes = [];
-    const comments = [];
-    const shares = []
+        const remaining = postsData.filter(post => post._id != data._id)
+        setPostsData(remaining)
 
-    const postData = { postImageUrl, postContent, createdDate, likes, comments, shares }
-    console.log(postData)
-
-    // fetch(`http://localhost:3000/post`, {
-    //   method: 'PUT',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(postData)
-    // })
-    //   .then(res => res.json())
-    //   .then(data => { console.log("Post Updated Successfully") })
-
+        navigate(`/profile/${user.email}`)
+        console.log("Post Delete Successfully", data)
+      })
   }
 
-  const { userData } = useContext(AuthContext)
-  const { name, username, profilephotourl } = userData
-
-
   const [like, setlike] = useState(0)
+  const [showEdit, setShowEdit] = useState(1)
 
   return (
-    <div className='h-screen  md:mx-auto mx-5 p-10 space-y-5 '>
+    <div className='h-screen md:px-10 md:pt-5 pt-20 pb-3 scroll-auto md:mx-auto mx-3  space-y-5  flex justify-center items-center md:flex-row flex-col md:gap-10'>
 
-      <div className='rounded-lg md:w-full '>
-        <img className=" transition-all h-[60vh] w-full" src={`${post?.postImageUrl}`} alt="" />
-      </div>
-
-      <div className="md:w-full shadow-xl rounded-2xl md:rounded-3xl bg-white">
+      {/* post container */}
+      <div className="md:w-full shadow-xl border border-zinc-300 rounded-2xl md:rounded-3xl bg-white">
 
         {/* post author details  */}
         <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -73,29 +67,63 @@ const PostDetails = () => {
             </div>
           </Link>
 
-          <BsThreeDotsVertical className="cursor-pointer active:scale-95 md:text-xl text-zinc-500 hover:text-black" />
+          <div className='relative'>
+            <button onClick={() => { setShowEdit(!showEdit) }}>
+              <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
+            </button>
+
+
+            <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-9 bg-white w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
+              </button>
+              <Link to={`/post/update/${post?._id}`} className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+              </Link>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
+              </button>
+              <hr />
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+              </button>
+              <button onClick={() => { deletePost() }} className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+              </button>
+            </div>
+
+
+          </div>
+
+
         </div>
 
         <hr className="text-zinc-300" />
 
         {/* post content and image like comment share bookmark */}
         <div className="md:p-5 p-3 space-y-2">
-          <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
+
+          <div className='rounded-lg md:w-full space-y-3 '>
+            <h1 className="space-x-2 md:text-md flex flex-wrap">{post?.postContent}</h1>
+            <div className="rounded-lg overflow-hidden">
+              <img className="hover:scale-105 w-full h-full active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
+            </div>
+          </div>
 
           {/* like comment share container  */}
           <div className="flex justify-between items-center mt-3 ">
             {/* buttons  */}
             <div className="flex items-center md:gap-8 gap-6">
 
-              <button className="md:text-xl flex items-center gap-2">
-                <div onClick={() => { setlike(!like) }} className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+              <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
+                <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   {like ? <BiSolidLike /> : < BiLike />}
                 </div>
                 <span className="flex items-center gap-2">12 <span className="hidden md:flex">Likes</span></span>
               </button>
 
 
-              <button className="md:text-xl flex items-center gap-2">
+              <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   <BiCommentDots />
                 </div>
@@ -103,7 +131,7 @@ const PostDetails = () => {
               </button>
 
 
-              <button className="md:text-xl flex items-center gap-2">
+              <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   <PiShareFatBold />
                 </div>
@@ -145,7 +173,9 @@ const PostDetails = () => {
 
       </div>
 
-      {/* <div className='border md:w-1/2 w-full'></div> */}
+      <div className='md:w-1/3 w-full flex justify-center items-center border border-zinc-300 h-full shadow-2xl rounded-md'>
+        <h1>Comment Loading</h1>
+      </div>
     </div>
   )
 }

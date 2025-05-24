@@ -3,11 +3,13 @@ import { VscSend } from "react-icons/vsc"
 import { IoMicOutline } from "react-icons/io5";
 import { useContext } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 const PostForm = () => {
 
   const { postsData, setPostsData } = useContext(AuthContext)
+  const navigate = useNavigate()
+
 
   const handlePostSubmit = (e) => {
     e.preventDefault()
@@ -17,12 +19,13 @@ const PostForm = () => {
     const postImageUrl = form.postImageUrl.value;
     // const author = `${userData.username}`
     const createdDate = new Date();
+    const lastUpdateDate = "";
     const likes = [];
     const comments = [];
     const shares = []
 
 
-    const postData = { postImageUrl, postContent, createdDate, likes, comments, shares }
+    const postData = { postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
     console.log(postData)
 
     fetch(`http://localhost:3000/post`, {
@@ -33,6 +36,7 @@ const PostForm = () => {
       .then(res => res.json())
       .then(data => {
         form.reset()
+        window.reload()
         setPostsData([...postsData, data])
         console.log("Post Upload Successfully")
       })

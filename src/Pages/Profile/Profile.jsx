@@ -26,7 +26,7 @@ const Profile = () => {
   const inactiveBtn = "border-b-2 border-transparent w-2/5 py-2 cursor-pointer transition-all"
 
   return (
-    <div className="grid lg:grid-cols-9 lg:mt-0 mt- bg-[#f1f5fa]">
+    <div className="grid lg:grid-cols-9 lg:mt-0 mt-18 bg-[#f1f5fa]">
 
       <div className="lg:col-span-6 ">
 
@@ -40,7 +40,7 @@ const Profile = () => {
           <PostForm />
         </div>
 
-        <div className="p-6 ">
+        <div className="md:p-5 p-3 ">
           <Posts />
         </div>
       </div>

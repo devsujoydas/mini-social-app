@@ -1,25 +1,49 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { CiBookmark } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import { VscSend } from "react-icons/vsc";
+import { FaBookmark } from "react-icons/fa";
+import { CiBookmark } from "react-icons/ci";
+import { FaRegSmile } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
+import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
-import { ImAttachment } from "react-icons/im";
-import { FaRegSmile } from "react-icons/fa";
-import { VscSend } from "react-icons/vsc";
-
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoSettings } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
+import { FaArchive } from "react-icons/fa";
 
 const Post = ({ post }) => {
+  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
+  const navigate = useNavigate()
+  const [like, setlike] = useState(1)
+  const [showEdit, setShowEdit] = useState(1)
+  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+  const { name, profilephotourl } = userData
 
 
-  const [like, setlike] = useState(0)
-  const {user, userData } = useContext(AuthContext)
-  const { name, username, profilephotourl } = userData
+  const deletePost = () => {
+    setShowEdit(0)
+    fetch(`http://localhost:3000/post/delete/${post._id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(data => {
+
+        const remaining = postsData.filter(post => post._id != data._id)
+        setPostsData(remaining)
+
+        navigate(`/profile/${user.email}`)
+        console.log("Post Delete Successfully", data)
+      })
+  }
+
+
 
   return (
     <div className="shadow-xl rounded-2xl md:rounded-3xl bg-white">
@@ -35,12 +59,43 @@ const Post = ({ post }) => {
 
             <div>
               <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${name}` : "Your Name"}</h1>
-              <p className="text-zinc-500 text-sm">{new Date(post?.createdDate)?.toLocaleString()}</p>
+
+              <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
+                <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
+              <span className="text-emerald-700 font-semibold">{!post.lastUpdateDate == "" && "Updated"}</span>
+              </div>
+
             </div>
           </div>
         </Link>
 
-        <BsThreeDotsVertical className="cursor-pointer active:scale-95 md:text-xl text-zinc-500 hover:text-black" />
+        <div className='relative'>
+          <button onClick={() => { setShowEdit(!showEdit) }}>
+            <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
+          </button>
+
+
+          <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+            <button className={likeCommentStyle}>
+              <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
+            </button>
+            <Link to={`/post/update/${post?._id}`} className={likeCommentStyle}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+            </Link>
+            <button className={likeCommentStyle}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
+            </button>
+            <hr />
+            <button className={likeCommentStyle}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+            </button>
+            <button onClick={() => { deletePost() }} className={likeCommentStyle}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+            </button>
+          </div>
+
+
+        </div>
       </div>
 
       <hr className="text-zinc-300" />
@@ -56,17 +111,17 @@ const Post = ({ post }) => {
         {/* like comment share container  */}
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
-          <div className="flex items-center md:gap-8 gap-6">
+          <div className="flex items-center md:gap-6 gap-6">
 
-            <button className="md:text-xl flex items-center gap-2">
-              <div onClick={() => { setlike(!like) }} className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+            <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
+              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {like ? <BiSolidLike /> : < BiLike />}
               </div>
               <span className="flex items-center gap-2">12 <span className="hidden md:flex">Likes</span></span>
             </button>
 
 
-            <button className="md:text-xl flex items-center gap-2">
+            <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
@@ -74,7 +129,7 @@ const Post = ({ post }) => {
             </button>
 
 
-            <button className="md:text-xl flex items-center gap-2">
+            <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>

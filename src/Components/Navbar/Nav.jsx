@@ -42,7 +42,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <NavLink to={"/"}
+            <NavLink to={"/friends"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />

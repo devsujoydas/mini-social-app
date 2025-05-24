@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 const Storybox = () => {
   const storyimgstyle = 'w-20 h-20 border-3 border-purple-500 hover:border-red-500 active:scale-95 transition-all duration-500 cursor-pointer rounded-full'
-  const { user, userData, signOutUser } = useContext(AuthContext)
+  const { user, friends, userData, signOutUser } = useContext(AuthContext)
   const { profilephotourl } = userData
   return (
     <div className='bg-white p-5 rounded-xl shadow-xl'>
@@ -30,17 +30,10 @@ const Storybox = () => {
           modules={[FreeMode, Autoplay]}
           className=''
         >
-          <SwiperSlide><img className={storyimgstyle} src={`/ahadul.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/maksudur.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/devsujoydas.png`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/enamul.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/mubarok.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/tamim.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/sohan.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/arman.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/kausar.jpg`} alt="" /></SwiperSlide>
-          <SwiperSlide><img className={storyimgstyle} src={`/kawsar.jpg`} alt="" /></SwiperSlide>
-        
+          {friends.map((friend, idx) => (
+            <SwiperSlide key={idx}><img className={storyimgstyle} src={friend.imgURL} alt="" /></SwiperSlide>
+          ))}
+          
         </Swiper>
       </div>
 

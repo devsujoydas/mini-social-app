@@ -19,7 +19,7 @@ const Home = () => {
           <SearchBar />
         </div>
 
-        <div className=" py-5 lg:px-10 px-5 space-y-5">
+        <div className="md:py-5 py-3 lg:px-5 px-3 space-y-5">
           <Storybox />
 
           <div>

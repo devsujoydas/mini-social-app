@@ -9,8 +9,8 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
+    const [friends, setFriends] = useState([])
     const [loading, setLoading] = useState(true)
-
 
     const [postsData, setPostsData] = useState([])
 
@@ -19,6 +19,13 @@ const AuthProvider = ({ children }) => {
             .then(res => res.json())
             .then(data => {
                 setPostsData(data)
+            })
+    }, [])
+    useEffect(() => {
+        fetch(`http://localhost:3000/friends`)
+            .then(res => res.json())
+            .then(data => {
+                setFriends(data)
             })
     }, [])
 
@@ -68,7 +75,7 @@ const AuthProvider = ({ children }) => {
         userData, setUserData,
         loading, setLoading,
         postsData, setPostsData,
-        
+        friends,
         signUpUser,
         logInUser,
         signOutUser,

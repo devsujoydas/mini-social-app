@@ -1,5 +1,6 @@
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const FriendSuggested = () => {
   return (
@@ -7,7 +8,7 @@ const FriendSuggested = () => {
 
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">Friend Suggested</h1>
-        <a href="/" className="flex items-center text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="text-2xl" /></a>
+        <Link to="/friends" className="flex items-center text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="text-2xl" /></Link>
       </div>
 
       <hr className="text-zinc-300 my-5" />
