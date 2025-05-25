@@ -14,7 +14,7 @@ const FriendSuggested = () => {
       <hr className="text-zinc-300 my-5" />
 
       {/* Friend 1 */}
-      <div className="flex justify-between items-center">
+      <Link to={`/profiles/devahadul`} className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
             <img className="w-10 h-10 rounded-full" src="/ahadul.jpg" alt="" />
@@ -25,12 +25,12 @@ const FriendSuggested = () => {
           </div>
         </div>
         <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-      </div>
+      </Link>
 
       <hr className="text-zinc-300 my-5" />
 
       {/* Friend 2 */}
-      <div className="flex justify-between items-center">
+      <Link to={`/profiles/devmaksudur`} className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
             <img className="w-10 h-10 rounded-full" src="/maksudur.jpg" alt="" />
@@ -41,12 +41,12 @@ const FriendSuggested = () => {
           </div>
         </div>
         <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-      </div>
+      </Link>
 
       <hr className="text-zinc-300 my-5" />
 
       {/* Friend 3 */}
-      <div className="flex justify-between items-center">
+      <Link to={`/profiles/devenamul`} className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer">
             <img className="w-10 h-10 rounded-full" src="/enamul.jpg" alt="" />
@@ -57,7 +57,7 @@ const FriendSuggested = () => {
           </div>
         </div>
         <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-      </div>
+      </Link>
 
       <hr className="text-zinc-300 my-5" />
 

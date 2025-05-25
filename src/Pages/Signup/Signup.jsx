@@ -6,7 +6,7 @@ import { useContext } from "react";
 const Signup = () => {
 
     const navigate = useNavigate()
-    const { signUpUser, setUser, signInWithGoogle } = useContext(AuthContext)
+    const { signUpUser, setUser } = useContext(AuthContext)
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -23,8 +23,8 @@ const Signup = () => {
 
         const formData = { name, username, email, address, profilephotourl, phone, website, posts }
 
-
-        fetch(`http://localhost:3000/signup`, {
+        // fetch(`http://localhost:3000/signup`, {
+        fetch(`https://mini-social-app-backend.vercel.app/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)

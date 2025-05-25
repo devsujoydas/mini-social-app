@@ -3,17 +3,20 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
+import { useLoaderData } from "react-router-dom"
 import { AuthContext } from "../PrivateRoute/AuthProvider"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const Home = () => {
+  const { setFriendsData } = useContext(AuthContext)
+  const friends = useLoaderData()
+  setFriendsData(friends)
 
-  const { userData } = useContext(AuthContext)
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa]  ">
+    <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] relative  ">
 
-      <div className="lg:col-span-6 relative">
+      <div className="lg:col-span-6 ">
 
         <div className="md:sticky top-0 z-10">
           <SearchBar />
@@ -25,7 +28,7 @@ const Home = () => {
           <div>
             <Posts />
           </div>
-          
+
         </div>
       </div>
 

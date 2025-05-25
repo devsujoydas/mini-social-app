@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { AuthContext } from '../PrivateRoute/AuthProvider'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const UpdateInfo = () => {
 
     const { user } = useContext(AuthContext)
-
     const loaderUser = useLoaderData()
     const navigate = useNavigate()
 
@@ -24,7 +23,8 @@ const UpdateInfo = () => {
 
         console.log("formData", formData)
 
-        fetch(`http://localhost:3000/update`, {
+        // fetch(`http://localhost:3000/update`, {
+        fetch(`https://mini-social-app-backend.vercel.app/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)

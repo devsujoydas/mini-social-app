@@ -6,28 +6,11 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
 
-
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
-    const [friends, setFriends] = useState([])
+    const [friendsData, setFriendsData] = useState([])
     const [loading, setLoading] = useState(true)
-
     const [postsData, setPostsData] = useState([])
-
-    useEffect(() => {
-        fetch(`http://localhost:3000/post`)
-            .then(res => res.json())
-            .then(data => {
-                setPostsData(data)
-            })
-    }, [])
-    useEffect(() => {
-        fetch(`http://localhost:3000/friends`)
-            .then(res => res.json())
-            .then(data => {
-                setFriends(data)
-            })
-    }, [])
 
 
     const signUpUser = (email, password) => {
@@ -60,7 +43,6 @@ const AuthProvider = ({ children }) => {
             if (currentUser != {}) {
                 setUser(currentUser)
                 setLoading(false)
-                // console.log("From AUthstae", currentUser)    
             }
         })
         return () => {
@@ -75,7 +57,7 @@ const AuthProvider = ({ children }) => {
         userData, setUserData,
         loading, setLoading,
         postsData, setPostsData,
-        friends,
+        friendsData, setFriendsData,
         signUpUser,
         logInUser,
         signOutUser,

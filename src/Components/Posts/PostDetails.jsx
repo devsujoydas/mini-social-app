@@ -2,7 +2,6 @@ import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 
-
 import { BiLike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
@@ -17,18 +16,19 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
-import { IoMicOutline } from "react-icons/io5";
+
 
 const PostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
 
   const post = useLoaderData()
   const { userData, user, postsData, setPostsData } = useContext(AuthContext)
-  const { name, username, profilephotourl } = userData;
+  const { name, profilephotourl } = userData;
   const navigate = useNavigate()
 
   const deletePost = () => {
-    fetch(`http://localhost:3000/post/delete/${post._id}`, {
+    // fetch(`http://localhost:3000/post/delete/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
       method: 'DELETE',
     })
       .then(res => res.json())

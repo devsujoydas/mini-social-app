@@ -22,39 +22,47 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <PrivateRoute><Root /></PrivateRoute>,
+    loader: () => fetch(`https://mini-social-app-backend.vercel.app/posts`),
     children: [
       {
         path: "/",
         element: <Home />,
+        loader: () => fetch(`https://mini-social-app-backend.vercel.app/friends`)
       },
       {
         path: "/profile/:id",
         element: <PrivateRoute><Profile /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profile/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:3000/profile/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profile/${params.id}`)
       },
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute><UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
         element: <PrivateRoute><PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute><PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/update/${params.id}`)
       },
       {
         path: "/friends",
         element: <PrivateRoute><Friends /></PrivateRoute>,
+        loader: () => fetch(`https://mini-social-app-backend.vercel.app/friends`)
       },
       {
         path: "/profiles/:id",
         element: <PrivateRoute><FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profiles/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:3000/profiles/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profiles/${params.id}`)
       },
     ]
   },

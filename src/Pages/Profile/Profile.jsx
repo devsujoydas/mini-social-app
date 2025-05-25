@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import PostForm from "../../Components/PostForm/PostForm"
 import Posts from "../../Components/Posts/Posts"
 import ProfileSidebar from "../../Components/ProfileSidebar/ProfileSidebar"
-import { Link, useLoaderData } from "react-router-dom"
+import { useLoaderData } from "react-router-dom"
 import { AuthContext } from "../PrivateRoute/AuthProvider"
 
 const Profile = () => {
@@ -18,7 +18,6 @@ const Profile = () => {
 
   useEffect(() => {
     setUserData({ ...userData, ...user })
-
   }, [])
 
 
@@ -26,7 +25,7 @@ const Profile = () => {
   const inactiveBtn = "border-b-2 border-transparent w-2/5 py-2 cursor-pointer transition-all"
 
   return (
-    <div className="grid lg:grid-cols-9 lg:mt-0 mt-18 bg-[#f1f5fa]">
+    <div className="relative grid lg:grid-cols-9 lg:mt-0 mt-18 bg-[#f1f5fa]">
 
       <div className="lg:col-span-6 ">
 
@@ -46,7 +45,7 @@ const Profile = () => {
       </div>
 
 
-      <div className=" lg:col-span-3 border-l border-zinc-300 bg-white p-8">
+      <div className="  lg:col-span-3 border-l border-zinc-300 bg-white ">
 
         <ProfileSidebar />
       </div>

@@ -1,12 +1,11 @@
-
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider"
 import Post from "./Post"
 
 const Posts = () => {
-  const { postsData } = useContext(AuthContext)
-  
+  const { postsData, setPostsData } = useContext(AuthContext)
 
+  
 
   return (
     <div className=' rounded-2xl  '>

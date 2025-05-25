@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
-
 import { BiLike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
@@ -29,7 +28,8 @@ const Post = ({ post }) => {
 
   const deletePost = () => {
     setShowEdit(0)
-    fetch(`http://localhost:3000/post/delete/${post._id}`, {
+    // fetch(`http://localhost:3000/post/delete/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
       method: 'DELETE',
     })
       .then(res => res.json())
@@ -105,7 +105,7 @@ const Post = ({ post }) => {
         <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/post/${post._id}`}>
-          <img className="w-full object-cover rounded-lg md:h-96 h-56" src={`${post?.postImageUrl}`} alt="" />
+          <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
         </Link>
 
         {/* like comment share container  */}

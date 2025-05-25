@@ -8,7 +8,6 @@ const PostDetailsUpdate = () => {
   const post = useLoaderData()
   const navigate = useNavigate()
 
-
   const handlePostDetailsUpdate = (e) => {
     e.preventDefault()
     const form = e.target;
@@ -19,7 +18,8 @@ const PostDetailsUpdate = () => {
     const postData = { postImageUrl, postContent, lastUpdateDate }
     console.log(postData)
 
-    fetch(`http://localhost:3000/post/update/${post._id}`, {
+    // fetch(`http://localhost:3000/post/update/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/update/${post._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)
@@ -45,7 +45,6 @@ const PostDetailsUpdate = () => {
         <h1 className="">{post.postContent}</h1>
       </div>
 
-
       <div className='w-full'>
         <form onSubmit={handlePostDetailsUpdate} className="space-y-4  border  md:p-10 p-5 rounded-md">
 
@@ -59,9 +58,7 @@ const PostDetailsUpdate = () => {
 
             <label className="w-full" htmlFor="">Content</label>
             <textarea defaultValue={post?.postContent} required name="postContent" type="text" className="outline-none p-2 bg-white  border border-zinc-300 rounded-sm w-full  " placeholder="Whats on your mind right now?"></textarea>
-
           </div>
-
 
           <div className="flex items-center justify-end gap-2 ">
             <label className="border border-zinc-400 text-xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">

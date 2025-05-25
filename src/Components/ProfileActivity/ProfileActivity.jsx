@@ -1,7 +1,6 @@
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FaArrowTrendUp } from "react-icons/fa6";
 
-
 const ProfileActivity = () => {
   return (
     <div className="space-y-5">

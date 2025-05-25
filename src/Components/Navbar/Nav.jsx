@@ -11,7 +11,7 @@ import { useContext } from 'react';
 
 const Nav = () => {
     const { user, userData } = useContext(AuthContext)
-    const { name, username, profilephotourl } = userData
+    const { profilephotourl } = userData
 
     return (
         <div className="space-y-7 px-5">

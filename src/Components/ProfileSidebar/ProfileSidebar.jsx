@@ -1,18 +1,27 @@
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbWorldWww } from "react-icons/tb";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import { useContext } from "react";
-
+import { FiLogOut } from "react-icons/fi";
+import { FaUserEdit } from "react-icons/fa";
+import { FaUserSlash } from "react-icons/fa";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const ProfileSidebar = () => {
-  const { signOutUser, userData, postsData } = useContext(AuthContext)
+  const { user, signOutUser, userData, postsData, friendsData } = useContext(AuthContext)
   const { name, username, email, address, profilephotourl, phone, website, posts } = userData;
+  const [showEdit, setShowEdit] = useState(1)
+  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
 
+
+  const accountDeleteHandle = () => {
+
+  }
 
   const signOutHander = () => {
     signOutUser()
@@ -25,183 +34,141 @@ const ProfileSidebar = () => {
     navigate("/login")
   }
 
-
   return (
-    <div className="relative h-full  space-y-6">
+    <div className="space-y-6 relative h-full ">
 
-      {/* profile section  */}
-      <div className=" flex justify-center items-center flex-col gap-8">
-        <div className="flex justify-between items-end w-full text-lg font-semibold">
-          <Link to={`/updateInfo/${email}`} className="text-emerald-700 cursor-pointer hover:text-emerald-500 active:scale-95 transition-all ">Update Profile</Link>
-          <button onClick={() => signOutHander()} className="text-red-700 cursor-pointer hover:text-red-500 active:scale-95 transition-all ">Log Out</button>
-        </div>
-
-        <div className="w-30 h-30 overflow-hidden relative  ">
-          <img className="rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
-          <h1 className="absolute right-3 bottom-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></h1>
-        </div>
-
-        <div className=" text-center space-y-1">
-          <h1 className="font-semibold text-xl">{userData ? `${name}` : "Your Name"}</h1>
-          <h1 className="">@{userData ? `${username}` : "username"}</h1>
-          <p className="text-zinc-500">{userData.address == "" ? "Address" : address}</p>
-        </div>
-
-        <div className=" flex justify-center items-center gap-5">
-          <div className="text-center">
-            {/* <h1 className="text-2xl font-semibold">{posts.length}</h1> */}
-            <h1 className="text-2xl font-semibold">{postsData.length}</h1>
-            <h1 className="text-xl font-medium text-zinc-500">Post</h1>
-          </div>
-          <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
-            <h1 className="text-2xl font-semibold">36</h1>
-            <h1 className="text-xl font-medium text-zinc-500">Followers</h1>
-          </div>
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold">8</h1>
-            <h1 className="text-xl font-medium text-zinc-500">Following</h1>
-          </div>
-        </div>
-
-      </div>
-
-      <div className="sticky top-0">
-
-        {/* about me */}
-        <div className="space-y-3">
-          <h1 className="font-semibold text-xl ">About Me</h1>
-          <p className="text-zinc-500">Hi there! 👋 I'm {name}, an AI enthusiast and fitness aficionado. When I'm not crunching numbers or optimizing algorithms, you can find me hitting the gym.</p>
-          <a className="text-blue-600 font-semibold text-lg hover:text-blue-500" href="/profile" >Read More</a>
-        </div>
+      <div className="sticky top-0 ">
+        {/* profile section  */}
+        <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
 
 
-        {/* contact  */}
-        <div>
-          <div className="flex justify-between items-center pt-2">
-            <h1 className="text-xl font-semibold">Contact Infomation</h1>
-            <BsThreeDotsVertical className="cursor-pointer active:scale-95 text-xl text-zinc-500 hover:text-black" />
-          </div>
+          <div style={{ backgroundImage: `url('https://scontent.fdac99-1.fna.fbcdn.net/v/t39.30808-6/473326143_1322682159089048_7420844185670091157_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=86c6b0&_nc_ohc=IM9Upbmo0K8Q7kNvwHr2znN&_nc_oc=Adn41UK7Jj6liKjXSgpGn8EB2uRrPPTqhvPlM7eH90g_WJ52Cs7S-j6F1sZd6qed-Lc&_nc_zt=23&_nc_ht=scontent.fdac99-1.fna&_nc_gid=lPtI8qRBm7o5K8o-PL08Dw&oh=00_AfLw4s9nJgQbWjbIRdW72IGzEH8fhUBhZeqMgNWDdhbxNA&oe=6839778A')` }} className="border h-45 w-full bg-center bg-cover absolute top-0">
+            <div className=" h-full p-5">
 
-          <hr className="text-zinc-300 my-5" />
-
-          <a target="_blank" href={`tel:${phone}`}>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
-                  <IoCallOutline />
+              <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
+                <div className="border w-fit border-zinc-400 text-2xl p-3 rounded-full cursor-pointer  transition-all bg-zinc-200 ">
+                  <IoSettingsOutline className="active:scale-95 transition-all" />
                 </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Phone Number</h1>
-                  <p className="text-zinc-500">+{phone}</p>
+
+                <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-0 top-14 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 font-semibold transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+                  <Link to={`/updateInfo/user`} className={likeCommentStyle}>
+                    <h1 className='flex justify-center items-center gap-2  text-sm text-emerald-700  '> {<FaUserEdit />} Edit Profile</h1>
+                  </Link>
+                  <button onClick={() => signOutHander()} className={likeCommentStyle}>
+                    <h1 className='flex justify-center items-center gap-2 text-sm '> {<FiLogOut />} LogOut</h1>
+                  </button>
+                  <button onClick={() => accountDeleteHandle()} className={likeCommentStyle}>
+                    <h1 className='flex text-red-500 justify-center items-center gap-2 text-sm '> {<FaUserSlash />} Delete Account</h1>
+                  </button>
                 </div>
               </div>
-              <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+
             </div>
-          </a>
-
-          <hr className="text-zinc-300 my-5" />
-
-          <a target="_blank" href={`mailto:${email}`} >
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
-                  <MdOutlineEmail />
-                </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Email Address</h1>
-                  <p className="text-zinc-500"> {email}</p>
-                </div>
-              </div>
-              <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-            </div>
-          </a>
-
-          <hr className="text-zinc-300 my-5" />
-
-          <a target="_blank" href={website}>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
-                  <TbWorldWww />
-                </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all text-lg cursor-pointer">Website</h1>
-                  <p className="text-zinc-500">{website}</p>
-                </div>
-              </div>
-              <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-            </div>
-          </a>
-
-          <hr className="text-zinc-300 my-5" />
-
-        </div >
-
-        {/* Friends */}
-        <div className="space-y-3  ">
-          <div className="flex justify-between items-center pt-2">
-            <h1 className="text-xl font-semibold">Friends</h1>
-            <BsThreeDotsVertical className="cursor-pointer active:scale-95 text-xl text-zinc-500 hover:text-black" />
           </div>
 
+          <div className="w-30 h-30 mt-24 overflow-hidden relative ">
+            <img className="rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+            <h1 className="absolute right-3 bottom-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></h1>
+          </div>
 
+          <div className=" text-center space-y-1">
+            <h1 className="font-semibold text-xl">{userData ? `${name}` : "Your Name"}</h1>
+            <h1 className="">@{userData ? `${username}` : "username"}</h1>
+            <p className="text-zinc-500">{userData.address == "" ? "Address" : address}</p>
+          </div>
+
+          <div className=" flex justify-center items-center gap-5">
+            <div className="text-center">
+              {/* <h1 className="text-2xl font-semibold">{posts.length}</h1> */}
+              <h1 className="md:text-2xl font-semibold">{postsData.length}</h1>
+              <h1 className="md:text-xl font-medium text-zinc-500">Post</h1>
+            </div>
+            <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
+              <Link to={'/friends'}>
+              <h1 className="md:text-2xl font-semibold">{friendsData.length}</h1>
+                <h1 className="md:text-xl hover:text-black transition-all font-medium text-zinc-500">Followers</h1>
+              </Link>
+            </div>
+            <div className="text-center">
+              <h1 className="md:text-2xl font-semibold">8</h1>
+              <h1 className="md:text-xl font-medium text-zinc-500">Following</h1>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="px-6 space-y-4">
+
+          {/* about me */}
+          <div className="">
+            <div className="space-y-3">
+              <h1 className="font-semibold text-xl ">About Me</h1>
+              <p className="text-zinc-500 ">Hi there! 👋 I'm {name}, an AI enthusiast and fitness aficionado. When I'm not crunching numbers or optimizing algorithms, you can find me hitting the gym.</p>
+            </div>
+          </div>
+
+          {/* contact  */}
           <div>
-            <hr className="text-zinc-300 my-5" />
-
-            {/* Friend 1 */}
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="active:scale-95 transition-all cursor-pointer">
-                  <img className="w-10 h-10 rounded-full" src="/ahadul.jpg" alt="" />
-                </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all cursor-pointer">Ahadul Islam</h1>
-                  <p className="text-zinc-500 text-sm">@devahadulislam</p>
-                </div>
-              </div>
-              <RiDeleteBin6Line className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+            <div className="flex justify-between items-center pt-2">
+              <h1 className="text-xl font-semibold">Contact Infomation</h1>
+              <BsThreeDotsVertical className="cursor-pointer active:scale-95 text-xl text-zinc-500 hover:text-black" />
             </div>
 
-            <hr className="text-zinc-300 my-5" />
+            <hr className="text-zinc-300 my-3" />
 
-            {/* Friend 2 */}
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="active:scale-95 transition-all cursor-pointer">
-                  <img className="w-10 h-10 rounded-full" src="/maksudur.jpg" alt="" />
+            <a target="_blank" href={`tel:${phone}`}>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                    <IoCallOutline />
+                  </div>
+                  <div>
+                    <h1 className="font-semibold active:underline transition-all  cursor-pointer">Phone Number</h1>
+                    <p className="text-zinc-500 text-sm">+{phone}</p>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all cursor-pointer">Maksudur Rahman</h1>
-                  <p className="text-zinc-500 text-sm">@devmaksudur</p>
-                </div>
+                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </div>
-              <RiDeleteBin6Line className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-            </div>
+            </a>
 
-            <hr className="text-zinc-300 my-5" />
+            <hr className="text-zinc-300 my-3" />
 
-            {/* Friend 3 */}
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="active:scale-95 transition-all cursor-pointer">
-                  <img className="w-10 h-10 rounded-full" src="/enamul.jpg" alt="" />
+            <a target="_blank" href={`mailto:${email}`} >
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                    <MdOutlineEmail />
+                  </div>
+                  <div>
+                    <h1 className="font-semibold active:underline transition-all  cursor-pointer">Email Address</h1>
+                    <p className="text-zinc-500 text-sm">{email}</p>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="font-semibold active:underline transition-all cursor-pointer">Enamul Hoque</h1>
-                  <p className="text-zinc-500 text-sm">@devenamul</p>
-                </div>
+                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </div>
-              <RiDeleteBin6Line className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
-            </div>
-            <hr className="text-zinc-300 my-5" />
+            </a>
 
-          </div>
-          <br />
-          <br />
+            <hr className="text-zinc-300 my-3" />
+
+            <a target="_blank" href={website}>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                    <TbWorldWww />
+                  </div>
+                  <div>
+                    <h1 className="font-semibold active:underline transition-all  cursor-pointer">Website</h1>
+                    <p className="text-zinc-500 text-sm">{website}</p>
+                  </div>
+                </div>
+                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+              </div>
+            </a>
+
+            <hr className="text-zinc-300 my-3" />
+          </div >
         </div>
       </div>
-
-
 
     </div>
   )

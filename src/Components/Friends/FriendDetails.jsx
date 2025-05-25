@@ -1,41 +1,82 @@
-import React from 'react'
+import { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom'
+import FriendPost from './FriendPost';
+import AllFriends from './AllFriends';
+import Loading from '../Loading/Loading';
 
 const FriendDetails = () => {
+    const [friendsData, setFriendsData] = useState([])
+    useEffect(() => {
+        fetch(`https://mini-social-app-backend.vercel.app/friends`)
+            .then(res => res.json())
+            .then(data => {
+                setFriendsData(data)
+            })
+    }, [])
     const data = useLoaderData()
-    console.log(data)
     const friend = data[0]
-    console.log(friend)
 
     return (
-        <div className='h-screen border '>
-            {/* <div className='border w-96 mx-auto cursor-pointer border-zinc-300 rounded-md p-5 flex justify-center items-center flex-col gap-3 hover:shadow-lg active:shadow-none duration-300 transition-all  '>
-                <div className='w-20 rounded-full overflow-auto'>
-                    <img className='w-full  ' src={friend?.imgURL} alt="" />
+        <div className='grid grid-cols-1 lg:grid-cols-9 '>
+
+            {/* profile  */}
+            {
+                friendsData == [] ?
+                    <Loading />
+                    :
+                    <div className='lg:col-span-6 p-5'>
+                        {/* Friends Details  */}
+                        <div className=' mb-5'>
+                            <div className='md:h-96 rounded-lg h-60 bg-no-repeat bg-cover bg-center' style={{ backgroundImage: `url(${friend?.coverPhotoURL})` }}>
+                            </div>
+                            <div className='flex justify-center'>
+                                <div className='w-50 h-50 border-4 border-white rounded-full -mt-23  bg-no-repeat bg-cover bg-center'
+                                    style={{ backgroundImage: `url(${friend?.imgURL})` }}></div>
+                            </div>
+                            <div className='text-center space-y-1 mt-3'>
+                                <h1 className='text-2xl font-semibold'>{friend?.name}</h1>
+                                <h1 className=''>@{friend?.username}</h1>
+                            </div>
+                            <div className=" flex justify-center items-center flex-col gap-8 mt-5">
+                                <div className=" flex justify-center items-center gap-10 ">
+                                    <div className="text-center">
+                                        <h1 className="text-xl font-semibold">{friend?.posts?.length}</h1>
+                                        <h1 className=" font-medium text-zinc-500">Post</h1>
+                                    </div>
+                                    <div className="text-center border-zinc-300 border-r-2 border-l-2 px-8">
+                                        <h1 className="text-xl font-semibold">{friend?.friends}</h1>
+                                        <h1 className=" font-medium text-zinc-500">Followers</h1>
+                                    </div>
+                                    <div className="text-center">
+                                        <h1 className="text-xl font-semibold">0</h1>
+                                        <h1 className=" font-medium text-zinc-500">Following</h1>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* post container  */}
+                        <div className="grid gap-5">
+                            {friend.posts.map((post, idx) => <FriendPost post={post} key={idx} friend={friend} />)}
+                        </div>
                     </div>
-                    <div className='text-center'>
-                    </div>
-                    </div> */}
+            }
 
-            <div>
-                <div className='border h-96 overflow-hidden'>
-                    <img
-                        className='object-cover w-full object-center' src="https://scontent.fdac99-1.fna.fbcdn.net/v/t39.30808-6/501010111_1782992695926401_7171587082084457487_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=TGj4wX9YZoAQ7kNvwE6XVPZ&_nc_oc=AdlPAQsm8wi1XESU5jBVGn-Di1OlusfIphSptLzX0_uHdM1NnhMBVm04Dl7zMZyXi7I&_nc_zt=23&_nc_ht=scontent.fdac99-1.fna&_nc_gid=v2LHccZ_Qn_KcdAY6rueLA&oh=00_AfJD7v0CY3OQajU9eEd6Fwb5Pr1e04PqS0UEDtUIpfB1iw&oe=683885B8" alt=""
-                    />
+
+            {/* All Friends  */}
+            <div className='lg:col-span-3 p-5'>
+
+                <h1 className='text-lg mb-5 font-semibold'>All Friends</h1>
+
+                <div className='grid  gap-2'>
+                    {friendsData.map((friend, idx) => (
+                        <AllFriends key={idx} friend={friend} />
+                    ))}
                 </div>
-
-                <div className=' h-20  flex justify-center items-center overflow-auto relative'>
-                    <div className='w-40 border-5 border-white fixed -mt-20 z-10 rounded-full overflow-hidden'>
-                        <img className=' ' src={friend?.imgURL} alt="" />
-                    </div>
-                </div>
-                <div className='text-center'>
-                    <h1 className='text-2xl font-semibold'>{friend?.name}</h1>
-                    <h1 className=''>@{friend?.username}</h1>
-                </div>
-
-
             </div>
+
+
         </div>
     )
 }

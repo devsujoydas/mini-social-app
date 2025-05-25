@@ -6,7 +6,7 @@ import { useContext } from "react";
 
 
 const SearchBar = () => {
-  const { user, userData } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <div className=" md:mt-0 mt-16 bg-white lg:py-5 py-8 px-10  flex gap-5 justify-between items-center lg:flex-row flex-col border-b border-zinc-400">

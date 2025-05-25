@@ -17,7 +17,6 @@ const PostForm = () => {
 
     const postContent = form.postContent.value;
     const postImageUrl = form.postImageUrl.value;
-    // const author = `${userData.username}`
     const createdDate = new Date();
     const lastUpdateDate = "";
     const likes = [];
@@ -28,7 +27,8 @@ const PostForm = () => {
     const postData = { postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
     console.log(postData)
 
-    fetch(`http://localhost:3000/post`, {
+    // fetch(`http://localhost:3000/post`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)

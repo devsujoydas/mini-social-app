@@ -5,7 +5,6 @@ import { IoMoonOutline } from "react-icons/io5";
 import { GrGroup } from "react-icons/gr";
 import { LuGraduationCap } from "react-icons/lu";
 
-
 const UpcommingEvents = () => {
   return (
     <div>

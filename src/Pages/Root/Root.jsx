@@ -1,11 +1,14 @@
 import Loader from "../../Components/Loading/Loading"
 import Navbar from "../../Components/Navbar/Navbar"
 import { AuthContext } from "../PrivateRoute/AuthProvider"
-import { Outlet } from "react-router-dom"
+import { Outlet, useLoaderData } from "react-router-dom"
 import { useContext } from "react"
 
 const Root = () => {
-  const { user, loading } = useContext(AuthContext)
+  const { postsData, setPostsData, user, loading } = useContext(AuthContext)
+  const posts = useLoaderData()
+  setPostsData(posts)
+
 
   return (
     <div>

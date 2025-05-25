@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 const Login = () => {
   const navigate = useNavigate()
-  const { logInUser, user, setUser, setUserData, setLoading, signInWithGoogle } = useContext(AuthContext)
+  const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -22,7 +22,8 @@ const Login = () => {
       .then((result) => {
         console.log(result)
 
-        fetch(`http://localhost:3000/profile/${result.user.email}`)
+        // fetch(`http://localhost:3000/profile/${result.user.email}`)
+        fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
           .then(res => res.json())
           .then(data => {
             console.log(data)
