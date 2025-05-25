@@ -18,7 +18,7 @@ const Friends = () => {
                         <h1>No friends available...</h1>
                     </div>
                     :
-                    <div className='grid md:grid-cols-4 gap-5'>
+                    <div className='grid md:grid-cols-4 grid-cols-2 gap-5'>
                         {friends.map((friend, idx) => <Friend friend={friend} key={idx} />)}
                     </div>
             }

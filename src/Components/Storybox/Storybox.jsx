@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -31,9 +32,13 @@ const Storybox = () => {
           className=''
         >
           {friends.map((friend, idx) => (
-            <SwiperSlide key={idx}><img className={storyimgstyle} src={friend.imgURL} alt="" /></SwiperSlide>
+            <SwiperSlide key={idx}>
+              <Link to={`/profiles/${friend?.username}`}>
+                <img className={storyimgstyle} src={friend?.imgURL} alt="" />
+              </Link>
+            </SwiperSlide>
           ))}
-          
+
         </Swiper>
       </div>
 

@@ -13,6 +13,7 @@ import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
 import PostDetails from './Components/Posts/PostDetails.jsx'
 import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
 import Friends from './Components/Friends/Friends.jsx'
+import FriendDetails from './Components/Friends/FriendDetails.jsx'
 
 
 
@@ -49,6 +50,11 @@ const router = createBrowserRouter([
       {
         path: "/friends",
         element: <PrivateRoute><Friends /></PrivateRoute>,
+      },
+      {
+        path: "/profiles/:id",
+        element: <PrivateRoute><FriendDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/profiles/${params.id}`)
       },
     ]
   },
