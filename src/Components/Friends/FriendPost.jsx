@@ -121,7 +121,7 @@ const FriendPost = ({ post, friend }) => {
             {/* comment container  */}
             <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
                 <div className="flex items-center gap-4 w-full ">
-                    <Link to={`/profile/${user.email}`}>
+                    <Link to={`/profile`}>
                         <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
                             <img className="" src={!userData.profilephotourl ? `/default.jpg` : `${userData.profilephotourl}`} alt="" />
                         </div>

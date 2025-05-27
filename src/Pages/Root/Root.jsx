@@ -5,7 +5,12 @@ import { useContext, useEffect } from "react"
 import Loading from "../../Components/Loading/Loading"
 
 const Root = () => {
-  const { loading } = useContext(AuthContext)
+  const { loading, setLoading } = useContext(AuthContext)
+
+
+  setTimeout(() => {
+    setLoading(false)
+  }, 1000);
 
   return (
     <div>

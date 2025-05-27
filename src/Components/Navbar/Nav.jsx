@@ -10,7 +10,7 @@ import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
 import { useContext } from 'react';
 
 const Nav = () => {
-    const { user, userData } = useContext(AuthContext)
+    const {  userData } = useContext(AuthContext)
     const { profilephotourl } = userData
 
     return (
@@ -24,7 +24,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <NavLink to={`/profile/${user.email}`}
+            <NavLink to={`/profile`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 text-xl ">
                     <img className="w-7 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />

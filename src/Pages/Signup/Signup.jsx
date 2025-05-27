@@ -23,28 +23,39 @@ const Signup = () => {
         const phone = "";
         const website = "";
         const posts = [];
-        const formData = { name, username, email, address, profilephotourl, phone, website, posts }
-        // fetch(`http://localhost:3000/signup`, {
-        fetch(`https://mini-social-app-backend.vercel.app/signup`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.insertedId) {
-                    console.log("Result from Backend: ", data)
-                    signUpUser(email, password)
-                        .then((result) => {
-                            setUser(result.user)
-                            console.log("Signup Successfully: ", result.user);
-                            navigate("/login")
+
+
+        signUpUser(email, password)
+            .then((result) => {
+
+                const creationTime = result.user.creationTime;
+                const formData = { name, username, email, address, profilephotourl, phone, website, posts, creationTime }
+
+                setUser(result.user)
+                
+                if (result.user) {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                                navigate("/login")
+                            }
                         })
-                        .catch((error) => {
-                            console.log(error.message);
-                        });
                 }
+
+
+
+                console.log("Signup Successfully: ", result.user);
             })
+            .catch((error) => {
+                console.log(error.message);
+            });
+
     };
 
 
@@ -55,7 +66,6 @@ const Signup = () => {
             <div className="md:w-1/2 w-full h-full flex justify-center items-center overflow-hidden">
                 <img className="" src="/signup.png" alt="" />
             </div>
-
 
             <div className=" md:w-1/2 w-full h-full">
                 <div className="flex flex-col justify-center sm:h-screen md:p-4">

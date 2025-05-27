@@ -92,7 +92,7 @@ const Post = ({ post }) => {
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={`/profile/${user.email}`}>
+        <Link to={`/profile`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
               <img className=" rounded-full " src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
@@ -180,7 +180,7 @@ const Post = ({ post }) => {
       {/* comment container  */}
       <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
         <div className="flex items-center gap-4 w-full ">
-          <Link to={`/profile/${user.email}`}>
+          <Link to={`/profile`}>
             <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
               <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>

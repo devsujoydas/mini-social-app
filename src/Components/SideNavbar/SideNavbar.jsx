@@ -12,7 +12,7 @@ const SideNavbar = () => {
   return (
     <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">
       <div className=" cursor-pointer active:scale-95 transition-all">
-        <Link to={`/profile/${user.email}`} className="relative">
+        <Link to={`/profile`} className="relative">
           <img className="w-15.5 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
           <h1 className="absolute bottom-0 right-1 w-4 h-4 bg-green-400 border-2 border-white rounded-full"></h1>
         </Link>

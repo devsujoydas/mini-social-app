@@ -4,6 +4,7 @@ import { IoMicOutline } from "react-icons/io5";
 import { useContext } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PostForm = () => {
 
@@ -27,7 +28,6 @@ const PostForm = () => {
     const postData = { postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
     console.log(postData)
 
-    // fetch(`http://localhost:3000/post`, {
     fetch(`https://mini-social-app-backend.vercel.app/post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -35,9 +35,17 @@ const PostForm = () => {
     })
       .then(res => res.json())
       .then(data => {
+
+        if (data.result.insertedId) {
+          Swal.fire({
+            title: "Post Successfully",
+            icon: "success",
+            draggable: true
+          });
+        }
+
         form.reset()
-        window.reload()
-        setPostsData([...postsData, data])
+        setPostsData([...postsData, postData])
         console.log("Post Upload Successfully")
       })
 

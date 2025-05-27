@@ -33,7 +33,7 @@ const UpdateInfo = () => {
             .then(data => {
                 if (data) {
                     console.log("Result from Backend: ", data)
-                    navigate(`/profile/${email}`)
+                    navigate(`/profile`)
                 }
             })
     }

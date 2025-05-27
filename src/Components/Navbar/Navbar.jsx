@@ -76,7 +76,7 @@ const Navbar = () => {
             <hr className="text-zinc-300" />
 
             <div className=" flex justify-between items-center cursor-pointer">
-              <Link to={`/profile/${user.email}`}>
+              <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
                   <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">
@@ -143,7 +143,7 @@ const Navbar = () => {
 
 
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
-              <Link to={`/profile/${user.email}`}>
+              <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
                   <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                   <div className="">

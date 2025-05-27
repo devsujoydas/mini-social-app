@@ -12,10 +12,11 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const formData = { email, password }
+
+
     logInUser(email, password)
       .then((result) => {
         console.log(result)
-        // fetch(`http://localhost:3000/profile/${result.user.email}`)
         fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
           .then(res => res.json())
           .then(data => {
@@ -24,7 +25,7 @@ const Login = () => {
           })
         setUser(result.user)
         console.log("Log in successfully")
-        navigate(`/profile/${email}`)
+        navigate(`/profile`)
       })
       .catch((error) => {
         setLoading(false)
