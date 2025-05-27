@@ -16,6 +16,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Post = ({ post }) => {
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
@@ -26,21 +27,42 @@ const Post = ({ post }) => {
   const { name, profilephotourl } = userData
 
 
+
   const deletePost = () => {
-    setShowEdit(0)
-    // fetch(`http://localhost:3000/post/delete/${post._id}`, {
-    fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
-      method: 'DELETE',
-    })
-      .then(res => res.json())
-      .then(data => {
 
-        const remaining = postsData.filter(post => post._id != data._id)
-        setPostsData(remaining)
+    Swal.fire({
+      title: "Are you delete sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
 
-        navigate(`/profile/${user.email}`)
-        console.log("Post Delete Successfully", data)
-      })
+        setShowEdit(0)
+        // fetch(`http://localhost:3000/post/delete/${post._id}`, {
+        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+          method: 'DELETE',
+        })
+          .then(res => res.json())
+          .then(data => {
+
+            const remaining = postsData.filter(post => post._id != data._id)
+            setPostsData(remaining)
+
+            navigate(`/profile/${user.email}`)
+            console.log("Post Delete Successfully", data)
+          })
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success"
+        });
+      }
+    });
+
   }
 
 
@@ -62,7 +84,7 @@ const Post = ({ post }) => {
 
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
-              <span className="text-emerald-700 font-semibold">{!post.lastUpdateDate == "" && "Updated"}</span>
+                <span className="text-emerald-700 font-semibold">{!post.lastUpdateDate == "" && "Updated"}</span>
               </div>
 
             </div>
@@ -85,7 +107,7 @@ const Post = ({ post }) => {
             <button className={likeCommentStyle}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
             </button>
-            <hr  className=""/>
+            <hr className="" />
             <button className={likeCommentStyle}>
               <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
             </button>
