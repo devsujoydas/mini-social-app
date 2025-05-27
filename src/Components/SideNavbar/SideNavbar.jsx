@@ -26,7 +26,9 @@ const SideNavbar = () => {
           <LuBell className="" />
         </div>
         <div className="border  border-zinc-400 text-2xl p-3 rounded-full cursor-pointer  transition-all hover:bg-zinc-200 ">
-          <IoSettingsOutline className="active:rotate-45 transition-all" />
+          <Link to={`/profile`}>
+            <IoSettingsOutline className="active:rotate-45 transition-all" />
+          </Link>
         </div>
       </div>
     </div>

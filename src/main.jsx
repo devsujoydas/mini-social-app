@@ -25,34 +25,34 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <PrivateRoute> <Home /></PrivateRoute>,
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <PrivateRoute> <Profile /></PrivateRoute>,
       },
       {
         path: "/updateInfo/:id",
-        element: <UpdateInfo />,
+        element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
         loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
-        element: <PostDetails />,
+        element: <PrivateRoute> <PostDetails /></PrivateRoute>,
         loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
-        element: <PostDetailsUpdate />,
+        element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
         loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/update/${params.id}`)
       },
       {
         path: "/friends",
-        element: <Friends />,
+        element: <PrivateRoute> <Friends /></PrivateRoute>,
       },
       {
         path: "/profiles/:id",
-        element: <FriendDetails />,
+        element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
         loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profiles/${params.id}`)
       },
     ]

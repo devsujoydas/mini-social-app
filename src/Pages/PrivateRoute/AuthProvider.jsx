@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
 import auth from '../../Firebase/firebase.config'
+import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
@@ -11,7 +12,6 @@ const AuthProvider = ({ children }) => {
     const [friendsData, setFriendsData] = useState([])
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
-
 
 
 
@@ -57,14 +57,20 @@ const AuthProvider = ({ children }) => {
 
     const deleteAccount = () => {
         deleteUser(user)
-        // fetch(`http://localhost:3000/post/delete/${post._id}`, {
-        fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
-            method: 'DELETE',
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log("Account Deleted Successfully", data)
-            })
+            .then(() => {
+                fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                              
+navigate("/login")
+                        console.log("Account Deleted Successfully", data)
+                    })
+            }).catch((error) => {
+                console.log(error)
+            });
+
 
     }
 

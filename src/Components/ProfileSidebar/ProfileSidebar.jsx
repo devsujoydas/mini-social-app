@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 import { BsThreeDotsVertical } from "react-icons/bs"
@@ -11,15 +11,53 @@ import { FiLogOut } from "react-icons/fi";
 import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
+import Swal from "sweetalert2";
 
 const ProfileSidebar = () => {
   const { user, signOutUser, userData, postsData, friendsData, deleteAccount } = useContext(AuthContext)
   const { name, username, email, address, profilephotourl, phone, website, posts } = userData;
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
+  const navigate = useNavigate()
 
   const accountDeleteHandle = () => {
-    deleteAccount()
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+
+    swalWithTailwind.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete account!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        deleteAccount()
+        navigate("/login")
+        
+        swalWithTailwind.fire({
+          title: "Account Deleted!",
+          text: "Your account has been deleted.",
+          icon: "success"
+        })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithTailwind.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+      }
+    });
+
+
   }
 
   const signOutHander = () => {
