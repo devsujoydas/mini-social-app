@@ -12,6 +12,10 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
 
+
+
+
+
     useEffect(() => {
         fetch(`https://mini-social-app-backend.vercel.app/posts`)
             .then(res => res.json())
@@ -20,6 +24,7 @@ const AuthProvider = ({ children }) => {
                 setPostsData(data)
             })
     }, [])
+
     useEffect(() => {
         fetch(`https://mini-social-app-backend.vercel.app/friends`)
             .then(res => res.json())
@@ -28,8 +33,6 @@ const AuthProvider = ({ children }) => {
                 setFriendsData(data)
             })
     }, [])
-
-
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -70,6 +73,11 @@ const AuthProvider = ({ children }) => {
             if (currentUser != {}) {
                 setUser(currentUser)
                 setLoading(false)
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser?.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        setUserData(data)
+                    })
             }
         })
         return () => {

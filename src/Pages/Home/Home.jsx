@@ -3,8 +3,13 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
+import Loading from "../../Components/Loading/Loading"
+import { useContext } from "react"
+import { AuthContext } from "../PrivateRoute/AuthProvider"
 
 const Home = () => {
+  
+  const { loading } = useContext(AuthContext)
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] relative  ">
@@ -19,7 +24,7 @@ const Home = () => {
           <Storybox />
 
           <div>
-            <Posts />
+            {loading ? <Loading /> : <Posts />}
           </div>
 
         </div>

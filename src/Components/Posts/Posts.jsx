@@ -3,9 +3,8 @@ import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider"
 import Post from "./Post"
 
 const Posts = () => {
-  const { postsData, setPostsData } = useContext(AuthContext)
+  const { postsData } = useContext(AuthContext)
 
-  
 
   return (
     <div className=' rounded-2xl  '>

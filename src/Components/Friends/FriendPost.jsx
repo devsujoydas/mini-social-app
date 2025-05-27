@@ -21,7 +21,7 @@ import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 const FriendPost = ({ post, friend }) => {
     const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-    const navigate = useNavigate()
+    const [likesCount, setlikesCount] = useState(0)
     const [like, setlike] = useState(1)
     const [showEdit, setShowEdit] = useState(1)
     const { user, userData, postsData, setPostsData } = useContext(AuthContext)
@@ -87,11 +87,11 @@ const FriendPost = ({ post, friend }) => {
                     {/* buttons  */}
                     <div className="flex items-center md:gap-6 gap-6">
 
-                        <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
+                        <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
                             <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                                {like ? <BiSolidLike /> : < BiLike />}
+                            {like ? < BiLike/> : <  BiSolidLike/>}
                             </div>
-                            <span className="flex items-center gap-2">0 <span className="hidden md:flex">Likes</span></span>
+                            <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
                         </button>
 
 

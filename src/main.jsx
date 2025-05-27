@@ -28,9 +28,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/profile/:id",
+        path: "/profile",
         element: <Profile />,
-        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profile/${params.id}`)
       },
       {
         path: "/updateInfo/:id",

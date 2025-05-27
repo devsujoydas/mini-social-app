@@ -9,18 +9,6 @@ const Profile = () => {
   const { userData, setUserData, } = useContext(AuthContext)
   const [btnStyle, setbtnStyle] = useState(1)
 
-  const user = useLoaderData()
-
-
-  // if (user != {}) {
-  //   return <div>Loading</div>
-  // }
-
-  useEffect(() => {
-    setUserData({ ...userData, ...user })
-  }, [])
-
-
   const activeBtn = "border-b-2 border-blue-600 w-2/5 py-2 cursor-pointer transition-all"
   const inactiveBtn = "border-b-2 border-transparent w-2/5 py-2 cursor-pointer transition-all"
 

@@ -13,11 +13,10 @@ import { FaUserSlash } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const ProfileSidebar = () => {
-  const { user, signOutUser, userData, postsData, friendsData ,deleteAccount} = useContext(AuthContext)
+  const { user, signOutUser, userData, postsData, friendsData, deleteAccount } = useContext(AuthContext)
   const { name, username, email, address, profilephotourl, phone, website, posts } = userData;
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-
 
   const accountDeleteHandle = () => {
     deleteAccount()

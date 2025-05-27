@@ -19,49 +19,68 @@ import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Post = ({ post }) => {
+  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
+
   const [like, setlike] = useState(1)
+  const [likesCount, setlikesCount] = useState(0)
   const [showEdit, setShowEdit] = useState(1)
-  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
-  const { name, profilephotourl } = userData
+
 
 
 
   const deletePost = () => {
 
-    Swal.fire({
-      title: "Are you delete sure?",
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+
+    swalWithTailwind.fire({
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
 
-        setShowEdit(0)
-        // fetch(`http://localhost:3000/post/delete/${post._id}`, {
+
         fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
           .then(data => {
 
-            const remaining = postsData.filter(post => post._id != data._id)
-            setPostsData(remaining)
+            setShowEdit(!showEdit)
+            if (data.deletedCount > 0) {
+              swalWithTailwind.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+              const remaining = postsData.filter(posts => posts._id != post._id)
+              setPostsData(remaining)
+            }
 
-            navigate(`/profile/${user.email}`)
-            console.log("Post Delete Successfully", data)
           })
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success"
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithTailwind.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
         });
       }
     });
+
 
   }
 
@@ -76,11 +95,11 @@ const Post = ({ post }) => {
         <Link to={`/profile/${user.email}`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
-              <img className=" rounded-full " src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+              <img className=" rounded-full " src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
 
             <div>
-              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${name}` : "Your Name"}</h1>
+              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${userData?.name}` : "Your Name"}</h1>
 
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
@@ -115,8 +134,6 @@ const Post = ({ post }) => {
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
             </button>
           </div>
-
-
         </div>
       </div>
 
@@ -134,23 +151,23 @@ const Post = ({ post }) => {
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-6 gap-6">
-            <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
+            <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                {like ? <BiSolidLike /> : < BiLike />}
+                {!like ? <BiSolidLike /> : < BiLike />}
               </div>
-              <span className="flex items-center gap-2">12 <span className="hidden md:flex">Likes</span></span>
+              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
             </button>
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
-              <span className="flex items-center gap-2">8 <span className="hidden md:flex">Comments</span></span>
+              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Comments</span></span>
             </button>
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>
-              <span className="flex items-center gap-2">5 <span className="hidden md:flex">Shares</span></span>
+              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Shares</span></span>
             </button>
           </div>
 
@@ -165,7 +182,7 @@ const Post = ({ post }) => {
         <div className="flex items-center gap-4 w-full ">
           <Link to={`/profile/${user.email}`}>
             <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
-              <img className="" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+              <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
           </Link>
           <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
