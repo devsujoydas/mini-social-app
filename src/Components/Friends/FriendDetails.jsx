@@ -6,13 +6,7 @@ import Loading from '../Loading/Loading';
 
 const FriendDetails = () => {
     const [friendsData, setFriendsData] = useState([])
-    useEffect(() => {
-        fetch(`https://mini-social-app-backend.vercel.app/friends`)
-            .then(res => res.json())
-            .then(data => {
-                setFriendsData(data)
-            })
-    }, [])
+   
     const data = useLoaderData()
     const friend = data[0]
 
@@ -53,7 +47,6 @@ const FriendDetails = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         {/* post container  */}

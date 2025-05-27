@@ -3,17 +3,8 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
-import { useLoaderData } from "react-router-dom"
-import { AuthContext } from "../PrivateRoute/AuthProvider"
-import { useContext, useEffect } from "react"
 
 const Home = () => {
-  const { setFriendsData } = useContext(AuthContext)
-  const friends = useLoaderData()
-  useEffect(() => {
-    setFriendsData(friends)
-  }, []);
-
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] relative  ">

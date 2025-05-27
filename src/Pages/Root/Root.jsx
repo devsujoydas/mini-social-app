@@ -5,13 +5,8 @@ import { Outlet, useLoaderData } from "react-router-dom"
 import { useContext, useEffect } from "react"
 
 const Root = () => {
-  const { postsData, setPostsData, user, loading } = useContext(AuthContext)
-  const posts = useLoaderData()
-  useEffect(() => {
-    setPostsData(posts)
-  }, []);
-
-
+  const { loading } = useContext(AuthContext)
+  
   return (
     <div>
       <div className=" border-orange-500 grid lg:grid-cols-4 font-family-primary relative ">
