@@ -75,7 +75,7 @@ const Post = ({ post }) => {
           </button>
 
 
-          <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+          <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-4 md:right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
             <button className={likeCommentStyle}>
               <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
             </button>
@@ -85,9 +85,9 @@ const Post = ({ post }) => {
             <button className={likeCommentStyle}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
             </button>
-            <hr />
+            <hr  className=""/>
             <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+              <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
             </button>
             <button onClick={() => { deletePost() }} className={likeCommentStyle}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
@@ -112,31 +112,24 @@ const Post = ({ post }) => {
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-6 gap-6">
-
             <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {like ? <BiSolidLike /> : < BiLike />}
               </div>
               <span className="flex items-center gap-2">12 <span className="hidden md:flex">Likes</span></span>
             </button>
-
-
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
               <span className="flex items-center gap-2">8 <span className="hidden md:flex">Comments</span></span>
             </button>
-
-
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>
               <span className="flex items-center gap-2">5 <span className="hidden md:flex">Shares</span></span>
             </button>
-
-
           </div>
 
           <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />

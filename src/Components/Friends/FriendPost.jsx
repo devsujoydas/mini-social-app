@@ -49,7 +49,7 @@ const FriendPost = ({ post, friend }) => {
                     </button>
 
 
-                    <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute md:right-9 right-4  bg-white  md:w-84 w-84 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+                    <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute md:right-9 right-4  bg-white  md:w-84 w-74 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
                         <button className={likeCommentStyle}>
                             <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
                         </button>
@@ -64,7 +64,7 @@ const FriendPost = ({ post, friend }) => {
                         </button>
                         <hr />
                         <button className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block {friend.name}'s Profile</h1>
+                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block {friend.name}</h1>
                         </button>
                     </div>
 

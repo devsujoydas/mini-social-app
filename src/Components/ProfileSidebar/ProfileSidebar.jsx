@@ -82,18 +82,18 @@ const ProfileSidebar = () => {
           <div className=" flex justify-center items-center gap-5">
             <div className="text-center">
               {/* <h1 className="text-2xl font-semibold">{posts.length}</h1> */}
-              <h1 className="md:text-2xl font-semibold">{postsData.length}</h1>
-              <h1 className="md:text-xl font-medium text-zinc-500">Post</h1>
+              <h1 className="md:text-xl font-semibold">{postsData.length}</h1>
+              <h1 className="md:text-lg font-medium text-zinc-500">Post</h1>
             </div>
             <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
               <Link to={'/friends'}>
-                <h1 className="md:text-2xl font-semibold">{friendsData.length}</h1>
-                <h1 className="md:text-xl hover:text-black transition-all font-medium text-zinc-500">Followers</h1>
+                <h1 className="md:text-xl font-semibold">{friendsData.length}</h1>
+                <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Followers</h1>
               </Link>
             </div>
             <div className="text-center">
-              <h1 className="md:text-2xl font-semibold">8</h1>
-              <h1 className="md:text-xl font-medium text-zinc-500">Following</h1>
+              <h1 className="md:text-xl font-semibold">8</h1>
+              <h1 className="md:text-lg font-medium text-zinc-500">Following</h1>
             </div>
           </div>
 
@@ -103,9 +103,9 @@ const ProfileSidebar = () => {
 
           {/* about me */}
           <div className="">
-            <div className="space-y-3">
+            <div className="space-y-1">
               <h1 className="font-semibold text-xl ">About Me</h1>
-              <p className="text-zinc-500 ">Hi there! 👋 I'm {name}, an AI enthusiast and fitness aficionado. When I'm not crunching numbers or optimizing algorithms, you can find me hitting the gym.</p>
+              <p className="text-zinc-500 ">Professional Web Developer || Software Engineers</p>
             </div>
           </div>
 
