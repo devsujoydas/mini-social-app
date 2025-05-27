@@ -10,7 +10,9 @@ import { useContext, useEffect } from "react"
 const Home = () => {
   const { setFriendsData } = useContext(AuthContext)
   const friends = useLoaderData()
-  setFriendsData(friends)
+  useEffect(() => {
+    setFriendsData(friends)
+  }, []);
 
 
   return (

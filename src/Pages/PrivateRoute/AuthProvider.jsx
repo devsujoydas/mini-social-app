@@ -35,7 +35,16 @@ const AuthProvider = ({ children }) => {
     }
 
     const deleteAccount = () => {
-        return deleteUser(user)
+        deleteUser(user)
+        // fetch(`http://localhost:3000/post/delete/${post._id}`, {
+        fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("Account Deleted Successfully", data)
+            })
+
     }
 
     useEffect(() => {

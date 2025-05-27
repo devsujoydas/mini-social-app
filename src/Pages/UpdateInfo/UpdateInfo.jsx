@@ -36,13 +36,12 @@ const UpdateInfo = () => {
                     navigate(`/profile/${email}`)
                 }
             })
-
     }
     return (
         <div className='max-w-7xl md:mx-auto mx-5 h-screen flex flex-col justify-center items-center  '>
 
 
-            <form onSubmit={submitHandler} className='border md:w-1/2  p-10 rounded-md space-y-5'>
+            <form onSubmit={submitHandler} className='border md:w-1/2  md:p-10 p-5 rounded-md md:space-y-5 space-y-3'>
                 <h1 className="font-semibold text-4xl text-center font-family-secondary text-blue-600">Complete Your Profile</h1>
                 <div className=" grid grid-cols-2 md:gap-5 gap-3">
                     <div>
@@ -59,22 +58,22 @@ const UpdateInfo = () => {
                     </div>
                     <div>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Address</label>
-                        <input defaultValue={loaderUser.address} required name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
+                        <input defaultValue={loaderUser.address} name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
                     </div>
                     <div>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Phone</label>
-                        <input defaultValue={loaderUser.phone} required name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
+                        <input defaultValue={loaderUser.phone} name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
                     </div>
                     <div>
                         <label className="text-slate-800 text-sm font-medium mb-2 block">Website</label>
-                        <input defaultValue={loaderUser.website} required name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
+                        <input defaultValue={loaderUser.website} name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
                     </div>
 
                 </div>
 
                 <div>
                     <label className="text-slate-800 text-sm font-medium mb-2 block">Profile Photo URL</label>
-                    <input defaultValue={loaderUser.profilephotourl} required name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+                    <input defaultValue={loaderUser.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
                 </div>
 
                 <div className="mt-8">

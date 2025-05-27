@@ -2,30 +2,27 @@ import Loader from "../../Components/Loading/Loading"
 import Navbar from "../../Components/Navbar/Navbar"
 import { AuthContext } from "../PrivateRoute/AuthProvider"
 import { Outlet, useLoaderData } from "react-router-dom"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const Root = () => {
   const { postsData, setPostsData, user, loading } = useContext(AuthContext)
   const posts = useLoaderData()
-  setPostsData(posts)
+  useEffect(() => {
+    setPostsData(posts)
+  }, []);
 
 
   return (
     <div>
-      {loading && user != {}
-        ?
-        <Loader />
-        :
-        <div className=" border-orange-500 grid lg:grid-cols-4 font-family-primary relative ">
-          <div className="lg:col-span-1 border-zinc-500 relative">
-            <Navbar />
-          </div>
-
-          <div className="lg:col-span-3">
-            <Outlet />
-          </div>
+      <div className=" border-orange-500 grid lg:grid-cols-4 font-family-primary relative ">
+        <div className="lg:col-span-1 border-zinc-500 relative">
+          <Navbar />
         </div>
-      }
+
+        <div className="lg:col-span-3">
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }
