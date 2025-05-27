@@ -14,11 +14,11 @@ const Nav = () => {
     const { profilephotourl } = userData
 
     return (
-        <div className="space-y-7 px-5">
+        <div className="md:space-y-7 space-y-4 md:px-5 px-3">
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <IoHome className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Home</span>
                 </div>
@@ -26,7 +26,7 @@ const Nav = () => {
 
             <NavLink to={`/profile`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <img className="w-7 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                     <span className="font-semibold ">Profile</span>
                 </div>
@@ -36,7 +36,7 @@ const Nav = () => {
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <BiSolidMessageRounded className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Message</span>
                 </div>
@@ -44,7 +44,7 @@ const Nav = () => {
 
             <NavLink to={"/friends"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Firends</span>
                 </div>
@@ -53,7 +53,7 @@ const Nav = () => {
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <MdWebStories className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Stories</span>
                 </div>
@@ -61,7 +61,7 @@ const Nav = () => {
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <FaTicketAlt className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Events</span>
                 </div>
@@ -69,7 +69,7 @@ const Nav = () => {
 
             <NavLink to={"/"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 text-xl ">
+                <div className="flex items-center gap-2 md:text-xl ">
                     <FaLightbulb className="text-zinc-500 text-2xl" />
                     <span className="font-semibold ">Memories</span>
                 </div>

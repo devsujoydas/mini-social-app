@@ -7,12 +7,12 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
 
+    // const navigate = useNavigate()
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
-
 
 
 
@@ -25,11 +25,11 @@ const AuthProvider = ({ children }) => {
             })
     }, [])
 
+
     useEffect(() => {
         fetch(`https://mini-social-app-backend.vercel.app/friends`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
                 setFriendsData(data)
             })
     }, [])
@@ -63,8 +63,8 @@ const AuthProvider = ({ children }) => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                              
-navigate("/login")
+
+                        navigate("/login")
                         console.log("Account Deleted Successfully", data)
                     })
             }).catch((error) => {
@@ -74,24 +74,55 @@ navigate("/login")
 
     }
 
+    // useEffect(() => {
+    //     const unSubscribe = onAuthStateChanged(auth, currentUser => {
+    //         if (currentUser != {}) {
+    //             setUser(currentUser)
+    //             setLoading(false)
+    //             fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser?.email}`)
+    //                 .then(res => res.json())
+    //                 .then(data => {
+    //                     setUserData(data)
+    //                 })
+    //         }
+    //     })
+    //     return () => {
+    //         unSubscribe();
+    //     }
+    // }, [])
+
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            if (currentUser != {}) {
-                setUser(currentUser)
-                setLoading(false)
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser?.email}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        setUserData(data)
+            if (currentUser) {
+                setUser(currentUser);
+                setLoading(false);
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`)
+                    .then(res => {
+                        if (!res.ok) {
+                            // Handle non-2xx responses
+                            console.error(`HTTP error! status: ${res.status}`);
+                            return Promise.reject(`HTTP error! status: ${res.status}`);
+                        }
+                        return res.json();
                     })
+                    .then(data => {
+                        setUserData(data);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                        // Optionally set some error state here
+                    });
+            } else {
+                setUser(null);
+                setUserData(null);
+                setLoading(false);
             }
-        })
+        });
         return () => {
             unSubscribe();
-        }
-    }, [])
-
-
+        };
+    }, []);
+    
 
     const dataList = {
         user, setUser,

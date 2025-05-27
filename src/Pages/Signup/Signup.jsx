@@ -29,10 +29,13 @@ const Signup = () => {
             .then((result) => {
 
                 const creationTime = result.user.creationTime;
-                const formData = { name, username, email, address, profilephotourl, phone, website, posts, creationTime }
+
+                console.log(creationTime)
+
+                const formData = { name, username, email, password, address, profilephotourl, phone, website, posts, creationTime }
 
                 setUser(result.user)
-                
+
                 if (result.user) {
                     fetch(`https://mini-social-app-backend.vercel.app/signup`, {
                         method: 'POST',

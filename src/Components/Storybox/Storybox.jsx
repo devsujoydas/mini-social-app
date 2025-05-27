@@ -12,7 +12,7 @@ const Storybox = () => {
   const { friendsData } = useContext(AuthContext)
 
   return (
-    <div className='bg-white p-5 rounded-xl shadow-xl'>
+    <div className='bg-white md:p-5 p-2 rounded-xl shadow-xl'>
       <div className='w-full rounded-full overflow-hidden' >
         {friendsData == "" ?
           <div>
@@ -21,7 +21,7 @@ const Storybox = () => {
           :
           <Swiper
             slidesPerView={4}
-            spaceBetween={10}
+            spaceBetween={4}
             freeMode={true}
             loop={true}
             autoplay={{

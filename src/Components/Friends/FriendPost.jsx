@@ -24,7 +24,7 @@ const FriendPost = ({ post, friend }) => {
     const [likesCount, setlikesCount] = useState(0)
     const [like, setlike] = useState(1)
     const [showEdit, setShowEdit] = useState(1)
-    const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+    const { userData } = useContext(AuthContext)
     return (
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
 
@@ -49,22 +49,22 @@ const FriendPost = ({ post, friend }) => {
                     </button>
 
 
-                    <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute md:right-9 right-4  bg-white  md:w-84 w-74 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+                    <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute md:right-9 right-4  bg-white  md:w-74 w-61 border border-zinc-300 shadow-2xl md:p-3 p-1  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
                         <button className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
+                            <h1 className='flex justify-center items-center gap-2  md:text-sm text-xs '> {<FaBookmark />} Save post</h1>
                         </button>
                         <div className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaWindowClose />} Hide Post</h1>
+                            <h1 className='flex justify-center items-center gap-2 md:text-sm text-xs '> {<FaWindowClose />} Hide Post</h1>
                         </div>
                         <button className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow {friend.name}</h1>
+                            <h1 className='flex justify-center items-center gap-2 md:text-sm text-xs '> {<RiUserUnfollowFill />} Unfollow {friend.name}</h1>
                         </button>
                         <button className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdReport />} Report post</h1>
+                            <h1 className='flex justify-center items-center gap-2 md:text-sm text-xs '> {<MdReport />} Report post</h1>
                         </button>
                         <hr />
                         <button className={likeCommentStyle}>
-                            <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block {friend.name}</h1>
+                            <h1 className='flex justify-center items-center gap-2 md:text-sm text-xs '> {<RiUserForbidFill />} Block {friend.name}</h1>
                         </button>
                     </div>
 

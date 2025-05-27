@@ -26,23 +26,19 @@ const AllFriends = ({ friend }) => {
                 </div>
             </Link>
 
-
             <div className='relative'>
                 <button onClick={() => { setShowEdit(!showEdit) }}>
                     <HiDotsHorizontal className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
                 </button>
-
                 <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-7 top-5 bg-white  w-36 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-                    <button className={likeCommentStyle}>
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdReport />} Report</h1>
+                     <button className={likeCommentStyle}>
+                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow</h1>
                     </button>
                     <hr />
                     <button className={likeCommentStyle}>
-                        {/* <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow {friend.name}</h1> */}
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow</h1>
+                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdReport />} Report</h1>
                     </button>
                     <button className={likeCommentStyle}>
-                        {/* <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block {friend.name}</h1> */}
                         <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block </h1>
                     </button>
                 </div>

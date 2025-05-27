@@ -93,11 +93,11 @@ const PostDetails = () => {
       <div className="md:w-full  shadow-xl border border-zinc-300 rounded-2xl md:rounded-3xl bg-white">
 
         {/* post author details  */}
-        <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
+        <div className="md:px-5 md:py-3 p-2 flex justify-between items-center">
 
           <Link to={`/profile`}>
             <div className="flex items-center gap-3">
-              <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
+              <div className="active:scale-95 transition-all cursor-pointer md:w-12 w-10 h-10 md:h-12 overflow-hidden rounded-full">
                 <img className=" rounded-full " src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
               </div>
 
@@ -139,17 +139,17 @@ const PostDetails = () => {
         {/* post content and image like comment share bookmark */}
         <div className="md:p-5 p-3 space-y-2">
 
-          <div className='rounded-lg md:w-full space-y-3 '>
-            <h1 className="space-x-2 md:text-md flex flex-wrap">{post?.postContent}</h1>
+          <div className='rounded-lg md:w-full md:space-y-3 space-y-2 '>
+            <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
             <div className="rounded-lg overflow-hidden">
-              <img className="hover:scale-105 w-full md:h-[600px]  h-[280px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
+              <img className="hover:scale-105 w-full md:h-[600px]  h-[250px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
             </div>
           </div>
 
           {/* like comment share container  */}
-          <div className="flex justify-between items-center mt-3 ">
+          <div className="flex justify-between items-center md:mt-3 ">
             {/* buttons  */}
-            <div className="flex items-center md:gap-8 gap-6">
+            <div className="flex items-center md:gap-8 ">
 
               <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
@@ -184,7 +184,7 @@ const PostDetails = () => {
         <hr className="text-zinc-300" />
 
         {/* comment container  */}
-        <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
+        <form action="" className="md:p-4 p-2 flex justify-between items-center gap-5 md:gap-20">
           <div className="flex items-center gap-4 w-full ">
             <Link to={`/profile`}>
               <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">

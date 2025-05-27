@@ -1,21 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom'
 import FriendPost from './FriendPost';
 import AllFriends from './AllFriends';
 import Loading from '../Loading/Loading';
+import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
 
 const FriendDetails = () => {
-    const [friendsData, setFriendsData] = useState([])
-   
+    const { friendsData, setFriendsData,loading, setLoading } = useContext(AuthContext)
+    // console.log(friendsData)
+
+    setTimeout(() => {
+        setLoading(false)
+    }, 1000);
+
     const data = useLoaderData()
     const friend = data[0]
+    // console.log(friend)
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-9 '>
 
             {/* profile  */}
             {
-                friendsData == [] ?
+                loading ?
                     <Loading />
                     :
                     <div className='lg:col-span-6 p-3 md:p-5'>
