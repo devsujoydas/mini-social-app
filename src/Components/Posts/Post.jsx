@@ -19,7 +19,7 @@ import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Post = ({ post }) => {
-  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+  const { user,setUserPostsData, userData, postsData, setPostsData } = useContext(AuthContext)
 
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
@@ -27,8 +27,6 @@ const Post = ({ post }) => {
   const [like, setlike] = useState(1)
   const [likesCount, setlikesCount] = useState(0)
   const [showEdit, setShowEdit] = useState(1)
-
-
 
 
   const deletePost = () => {
@@ -68,6 +66,7 @@ const Post = ({ post }) => {
               });
               const remaining = postsData.filter(posts => posts._id != post._id)
               setPostsData(remaining)
+              
             }
 
           })
@@ -87,7 +86,7 @@ const Post = ({ post }) => {
 
 
   return (
-    <div className="shadow-xl rounded-2xl md:rounded-3xl bg-white">
+    <div className="shadow-xl w-fit md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -99,11 +98,11 @@ const Post = ({ post }) => {
             </div>
 
             <div>
-              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${userData?.name}` : "Your Name"}</h1>
+              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
 
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
-                <span className="text-emerald-700 font-semibold">{!post.lastUpdateDate == "" && "Updated"}</span>
+                <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
               </div>
 
             </div>
@@ -141,7 +140,7 @@ const Post = ({ post }) => {
 
       {/* post content and image like comment share bookmark */}
       <div className="md:p-5 p-3 space-y-2">
-        <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
+        <h1 className="space-x-2 md:text-md text-sm flex text-wrap flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />

@@ -123,7 +123,7 @@ const FriendPost = ({ post, friend }) => {
                 <div className="flex items-center gap-4 w-full ">
                     <Link to={`/profile`}>
                         <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
-                            <img className="" src={!userData.profilephotourl ? `/default.jpg` : `${userData.profilephotourl}`} alt="" />
+                            <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                         </div>
                     </Link>
 

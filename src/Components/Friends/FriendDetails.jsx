@@ -7,7 +7,6 @@ import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
 
 const FriendDetails = () => {
     const { friendsData, setFriendsData,loading, setLoading } = useContext(AuthContext)
-    // console.log(friendsData)
 
     setTimeout(() => {
         setLoading(false)

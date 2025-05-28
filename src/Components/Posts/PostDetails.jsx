@@ -22,9 +22,10 @@ import Swal from 'sweetalert2';
 const PostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
   const [likesCount, setlikesCount] = useState(0)
-  const post = useLoaderData()
-  const { userData, user, postsData, setPostsData } = useContext(AuthContext)
-  const { name, profilephotourl } = userData;
+
+  const { post, postAuthor } = useLoaderData()
+
+  const { userData, postsData, setPostsData } = useContext(AuthContext)
   const navigate = useNavigate()
 
 
@@ -81,7 +82,7 @@ const PostDetails = () => {
     });
 
 
-  }
+  } 
 
   const [like, setlike] = useState(0)
   const [showEdit, setShowEdit] = useState(1)
@@ -98,12 +99,12 @@ const PostDetails = () => {
           <Link to={`/profile`}>
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer md:w-12 w-10 h-10 md:h-12 overflow-hidden rounded-full">
-                <img className=" rounded-full " src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                <img className=" rounded-full " src={postAuthor?.profilephotourl} alt="" />
               </div>
 
               <div>
-                <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData.name ? `${name}` : "Your Name"}</h1>
-                <p className="text-zinc-500 text-sm">{new Date(post?.createdDate)?.toLocaleString()}</p>
+                <h1 className="font-semibold active:underline transition-all md:text-md text-sm  cursor-pointer">{postAuthor?.name ? `${postAuthor?.name}` : "Your Name"}</h1>
+                <p className="text-zinc-500 md:text-sm text-xs">{new Date(post?.createdDate)?.toLocaleString()}</p>
               </div>
             </div>
           </Link>
@@ -142,7 +143,7 @@ const PostDetails = () => {
           <div className='rounded-lg md:w-full md:space-y-3 space-y-2 '>
             <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
             <div className="rounded-lg overflow-hidden">
-              <img className="hover:scale-105 w-full md:h-[600px]  h-[250px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
+              <img className="hover:scale-105 w-full md:h-[600px]  h-[250px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post?.postImageUrl} alt="" />
             </div>
           </div>
 
@@ -188,7 +189,7 @@ const PostDetails = () => {
           <div className="flex items-center gap-4 w-full ">
             <Link to={`/profile`}>
               <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
-                <img className="" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
               </div>
             </Link>
             <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />

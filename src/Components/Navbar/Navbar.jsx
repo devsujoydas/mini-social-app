@@ -13,7 +13,6 @@ const Navbar = () => {
   const [gopro, setGopro] = useState(1)
   const [humbarger, setHumbarger] = useState(1)
   const { user, userData, signOutUser } = useContext(AuthContext)
-  const { name, profilephotourl } = userData;
   const navigate = useNavigate()
 
   const signOutHander = () => {
@@ -29,7 +28,6 @@ const Navbar = () => {
 
   return (
     <div className="md:sticky left-0 top-0 ">
-
       <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-2">
         <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">
@@ -82,9 +80,9 @@ const Navbar = () => {
             <div className=" flex justify-between items-center cursor-pointer">
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                  <img className="w-14 rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold text-xl">{userData.name ? `${name}` : "Your Name"}</h1>
+                    <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
                     <p>Basic Member</p>
                   </div>
                 </div>
@@ -126,10 +124,10 @@ const Navbar = () => {
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-12 rounded-full" src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                  <img className="w-12 rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                   <div className="">
-                    <h1 className="font-semibold">{userData.name ? `${name}` : "Your Name"}</h1>
-                    <p className="text-sm">@{userData.username ? `${userData.username}` : "username"}</p>
+                    <h1 className="font-semibold">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
+                    <p className="text-sm">@{userData?.username ? `${userData?.username}` : "username"}</p>
                   </div>
                 </div>
               </Link>

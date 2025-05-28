@@ -16,14 +16,15 @@ const UpdateInfo = () => {
         const email = user.email;
         const address = e.target.address.value;
         const profilephotourl = e.target.profilephotourl.value;
+        const coverphotourl = e.target.coverphotourl.value;
         const phone = e.target.phone.value;
         const website = e.target.website.value;
 
-        const formData = { name, username, email, address, profilephotourl, phone, website }
+        const formData = { name, username, email, address, profilephotourl,coverphotourl, phone, website }
 
         console.log("formData", formData)
 
-        // fetch(`http://localhost:3000/update`, {
+        // fetch(`https://mini-social-app-backend.vercel.app/update`, {
         fetch(`https://mini-social-app-backend.vercel.app/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -74,6 +75,10 @@ const UpdateInfo = () => {
                 <div>
                     <label className="text-slate-800 text-sm font-medium mb-2 block">Profile Photo URL</label>
                     <input defaultValue={loaderUser.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+                </div>
+                <div>
+                    <label className="text-slate-800 text-sm font-medium mb-2 block">Cover Photo URL</label>
+                    <input defaultValue={loaderUser.coverphotourl} name="coverphotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
                 </div>
 
                 <div className="mt-8">

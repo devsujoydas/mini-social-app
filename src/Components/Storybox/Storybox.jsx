@@ -23,7 +23,6 @@ const Storybox = () => {
             slidesPerView={4}
             spaceBetween={4}
             freeMode={true}
-            loop={true}
             autoplay={{
               delay: 1000,
               disableOnInteraction: false
@@ -38,7 +37,7 @@ const Storybox = () => {
             {friendsData.map((friend, idx) => (
               <SwiperSlide key={idx}>
                 <Link to={`/profiles/${friend?.username}`}>
-                  <img className={storyimgstyle} src={friend?.imgURL} alt="" />
+                  <img className={storyimgstyle} src={friend?.profilephotourl} alt="" />
                 </Link>
               </SwiperSlide>
             ))}

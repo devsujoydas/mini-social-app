@@ -1,13 +1,8 @@
 import { IoSearch } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import { useContext } from "react";
-
 
 const SearchBar = () => {
-  const { user } = useContext(AuthContext)
-
   return (
     <div className=" md:mt-0 mt-16 bg-white lg:py-6 py-5 md:px-10 px-5  flex md:gap-5 gap-3 justify-between items-center  border-b border-zinc-400">
 

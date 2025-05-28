@@ -14,6 +14,7 @@ import PostDetails from './Components/Posts/PostDetails.jsx'
 import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
 import Friends from './Components/Friends/Friends.jsx'
 import FriendDetails from './Components/Friends/FriendDetails.jsx'
+import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 
 
 
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <PrivateRoute><Root /></PrivateRoute>,
+    errorElement:<ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",

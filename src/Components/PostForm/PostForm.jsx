@@ -3,19 +3,19 @@ import { VscSend } from "react-icons/vsc"
 import { IoMicOutline } from "react-icons/io5";
 import { useContext } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const PostForm = () => {
 
-  const { postsData, setPostsData } = useContext(AuthContext)
+  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
   const navigate = useNavigate()
-
 
   const handlePostSubmit = (e) => {
     e.preventDefault()
     const form = e.target;
 
+    const userEmail = user.email;
     const postContent = form.postContent.value;
     const postImageUrl = form.postImageUrl.value;
     const createdDate = new Date();
@@ -25,8 +25,8 @@ const PostForm = () => {
     const shares = []
 
 
-    const postData = { postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
-    console.log(postData)
+    const postData = { userEmail, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
+    // console.log("from form", postData)
 
     fetch(`https://mini-social-app-backend.vercel.app/post`, {
       method: 'POST',
@@ -35,6 +35,7 @@ const PostForm = () => {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data.result.insertedId)
 
         if (data.result.insertedId) {
           Swal.fire({
@@ -42,6 +43,7 @@ const PostForm = () => {
             icon: "success",
             draggable: true
           });
+          navigate('/')
         }
 
         form.reset()

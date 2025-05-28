@@ -1,26 +1,23 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
 import auth from '../../Firebase/firebase.config'
-import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
 
-    // const navigate = useNavigate()
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
-
+    const [usersPostsData, setUsersPostsData] = useState([])
 
 
     useEffect(() => {
         fetch(`https://mini-social-app-backend.vercel.app/posts`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
                 setPostsData(data)
             })
     }, [])
@@ -30,6 +27,7 @@ const AuthProvider = ({ children }) => {
         fetch(`https://mini-social-app-backend.vercel.app/friends`)
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 setFriendsData(data)
             })
     }, [])
@@ -70,32 +68,22 @@ const AuthProvider = ({ children }) => {
             }).catch((error) => {
                 console.log(error)
             });
-
-
     }
-
-    // useEffect(() => {
-    //     const unSubscribe = onAuthStateChanged(auth, currentUser => {
-    //         if (currentUser != {}) {
-    //             setUser(currentUser)
-    //             setLoading(false)
-    //             fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser?.email}`)
-    //                 .then(res => res.json())
-    //                 .then(data => {
-    //                     setUserData(data)
-    //                 })
-    //         }
-    //     })
-    //     return () => {
-    //         unSubscribe();
-    //     }
-    // }, [])
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             if (currentUser) {
                 setUser(currentUser);
                 setLoading(false);
+
+                fetch(`https://mini-social-app-backend.vercel.app/posts`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const usersPost = data.filter(post => post.userEmail == currentUser.email)
+                        setUsersPostsData(usersPost)
+                    })
+
+
                 fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`)
                     .then(res => {
                         if (!res.ok) {
@@ -110,7 +98,6 @@ const AuthProvider = ({ children }) => {
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
-                        // Optionally set some error state here
                     });
             } else {
                 setUser(null);
@@ -122,7 +109,7 @@ const AuthProvider = ({ children }) => {
             unSubscribe();
         };
     }, []);
-    
+
 
     const dataList = {
         user, setUser,
@@ -130,6 +117,7 @@ const AuthProvider = ({ children }) => {
         loading, setLoading,
         postsData, setPostsData,
         friendsData, setFriendsData,
+        usersPostsData, setUsersPostsData,
         signUpUser,
         logInUser,
         signOutUser,

@@ -20,6 +20,7 @@ const Signup = () => {
         const password = e.target.password.value;
         const address = "";
         const profilephotourl = "";
+        const coverphotourl = "";
         const phone = "";
         const website = "";
         const posts = [];
@@ -32,7 +33,7 @@ const Signup = () => {
 
                 console.log(creationTime)
 
-                const formData = { name, username, email, password, address, profilephotourl, phone, website, posts, creationTime }
+                const formData = { name, username, email, password, address, profilephotourl, coverphotourl, phone, website, posts, creationTime }
 
                 setUser(result.user)
 
