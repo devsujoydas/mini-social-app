@@ -38,7 +38,7 @@ const Signup = () => {
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signup`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
