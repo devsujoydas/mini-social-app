@@ -32,9 +32,7 @@ const PostDetailsUpdate = () => {
 
   }
 
-
   
-
   return (
     <div className="md:mt-10 mt-23 md:mx-10 mx-5 flex justify-center gap-5 md:flex-row flex-col">
 

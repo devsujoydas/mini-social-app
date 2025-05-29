@@ -23,7 +23,7 @@ const PostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
   const [likesCount, setlikesCount] = useState(0)
 
-  const { post, postAuthor } = useLoaderData()
+  const post = useLoaderData()
 
   const { userData, postsData, setPostsData } = useContext(AuthContext)
   const navigate = useNavigate()
@@ -99,11 +99,11 @@ const PostDetails = () => {
           <Link to={`/profile`}>
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer md:w-12 w-10 h-10 md:h-12 overflow-hidden rounded-full">
-                <img className=" rounded-full " src={postAuthor?.profilephotourl} alt="" />
+                <img className=" rounded-full " src={post?.authorPhoto} alt="" />
               </div>
 
               <div>
-                <h1 className="font-semibold active:underline transition-all md:text-md text-sm  cursor-pointer">{postAuthor?.name ? `${postAuthor?.name}` : "Your Name"}</h1>
+                <h1 className="font-semibold active:underline transition-all md:text-md text-sm  cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
                 <p className="text-zinc-500 md:text-sm text-xs">{new Date(post?.createdDate)?.toLocaleString()}</p>
               </div>
             </div>
@@ -143,7 +143,7 @@ const PostDetails = () => {
           <div className='rounded-lg md:w-full md:space-y-3 space-y-2 '>
             <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
             <div className="rounded-lg overflow-hidden">
-              <img className="hover:scale-105 w-full md:h-[600px]  h-[250px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post?.postImageUrl} alt="" />
+              <img className="hover:scale-105 w-full object-cover md:h-[600px]  h-[250px] active:scale-150 active:cursor-zoom-in duration-500 transition-all" src={post?.postImageUrl} alt="" />
             </div>
           </div>
 

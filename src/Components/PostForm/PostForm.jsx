@@ -52,7 +52,7 @@ const PostForm = () => {
         }
 
         form.reset()
-        setPostsData([...postsData, postData])
+        setPostsData([postData, ...postsData])
         // console.log("Post Upload Successfully")
       })
 

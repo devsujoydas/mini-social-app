@@ -11,7 +11,7 @@ const Profile = () => {
   const inactiveBtn = "border-b-2 border-transparent w-2/5 py-2 cursor-pointer transition-all"
 
   return (
-    <div className="relative flex md:flex-row flex-col-reverse  lg:mt-0 mt-12 bg-[#f1f5fa]">
+    <div className="relative flex md:flex-row flex-col-reverse  bg-[#f1f5fa] lg:mt-0 mt-12 lg:h-full">
 
       <div className="md:w-4/5 ">
         <div className="text-xl bg-white font-semibold flex justify-evenly items-center ">
