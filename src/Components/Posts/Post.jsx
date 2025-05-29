@@ -19,7 +19,9 @@ import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Post = ({ post }) => {
-  const { user,setUserPostsData, userData, postsData, setPostsData } = useContext(AuthContext)
+  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+
+
 
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
@@ -51,7 +53,7 @@ const Post = ({ post }) => {
       if (result.isConfirmed) {
 
 
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -66,7 +68,7 @@ const Post = ({ post }) => {
               });
               const remaining = postsData.filter(posts => posts._id != post._id)
               setPostsData(remaining)
-              
+
             }
 
           })
@@ -91,14 +93,14 @@ const Post = ({ post }) => {
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={`/profile`}>
+        <Link to={`/profile/${post.authorUsername}`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
-              <img className=" rounded-full " src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+              <img className=" rounded-full " src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
             </div>
 
             <div>
-              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
+              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
 
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>

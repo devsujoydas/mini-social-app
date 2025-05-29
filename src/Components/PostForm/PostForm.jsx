@@ -9,13 +9,17 @@ import { useNavigate } from "react-router-dom";
 const PostForm = () => {
 
   const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const handlePostSubmit = (e) => {
     e.preventDefault()
     const form = e.target;
 
-    const userEmail = user.email;
+    const authorEmail = userData.email;
+    const authorPhoto = userData.profilephotourl;
+    const authorName = userData.name;
+    const authorUsername = userData.username;
     const postContent = form.postContent.value;
     const postImageUrl = form.postImageUrl.value;
     const createdDate = new Date();
@@ -25,17 +29,18 @@ const PostForm = () => {
     const shares = []
 
 
-    const postData = { userEmail, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
-    // console.log("from form", postData)
+    const postData = { authorEmail, authorPhoto, authorName, authorUsername, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
 
-    fetch(`https://mini-social-app-backend.vercel.app/post`, {
+    // console.log(postData)
+
+    fetch(`http://localhost:3000/post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data.result.insertedId)
+        // console.log(data.result.insertedId)
 
         if (data.result.insertedId) {
           Swal.fire({
@@ -48,7 +53,7 @@ const PostForm = () => {
 
         form.reset()
         setPostsData([...postsData, postData])
-        console.log("Post Upload Successfully")
+        // console.log("Post Upload Successfully")
       })
 
   }

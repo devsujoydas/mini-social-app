@@ -24,8 +24,8 @@ const UpdateInfo = () => {
 
         console.log("formData", formData)
 
-        // fetch(`https://mini-social-app-backend.vercel.app/update`, {
-        fetch(`https://mini-social-app-backend.vercel.app/update`, {
+        // fetch(`http://localhost:3000/update`, {
+        fetch(`http://localhost:3000/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)

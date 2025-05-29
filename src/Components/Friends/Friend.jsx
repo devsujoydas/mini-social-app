@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const Friend = ({ friend }) => {
 
-    console.log(friend)
+    // console.log(friend)
     return (
         <div>
             <Link to={`/profiles/${friend?.username}`}>

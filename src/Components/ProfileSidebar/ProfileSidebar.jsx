@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 const ProfileSidebar = () => {
   const { user, signOutUser, userData, postsData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
 
-  console.log(userData)
+  // console.log(userData)
 
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
