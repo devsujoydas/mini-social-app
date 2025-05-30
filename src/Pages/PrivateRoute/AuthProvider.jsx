@@ -79,7 +79,7 @@ const AuthProvider = ({ children }) => {
                 fetch(`https://mini-social-app-backend.vercel.app/posts`)
                     .then(res => res.json())
                     .then(data => {
-                        const usersPost = data.filter(post => post.userEmail == currentUser.email)
+                        const usersPost = data.filter(post => post.authorEmail == currentUser.email)
                         setUsersPostsData(usersPost)
                     })
 

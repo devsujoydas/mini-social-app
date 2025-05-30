@@ -3,9 +3,16 @@ import PostForm from "../../Components/PostForm/PostForm"
 import Posts from "../../Components/Posts/Posts"
 import ProfileSidebar from "../../Components/ProfileSidebar/ProfileSidebar"
 import UsersPosts from "../../Components/UsersPosts/UsersPosts"
+import Loading from "../../Components/Loading/Loading"
 
 const Profile = () => {
   const [btnStyle, setbtnStyle] = useState(1)
+const [loading, setLoading] = useState(true)
+
+  setTimeout(() => {
+    setLoading(false)
+  }, 500);
+
 
   const activeBtn = "border-b-2 border-blue-600 w-2/5 py-2 cursor-pointer transition-all"
   const inactiveBtn = "border-b-2 border-transparent w-2/5 py-2 cursor-pointer transition-all"
@@ -22,7 +29,7 @@ const Profile = () => {
           <PostForm />
         </div>
         <div className="md:p-5 p-3 ">
-          <UsersPosts />
+          {loading ? <Loading /> : <  UsersPosts/>}
         </div>
       </div>
 
