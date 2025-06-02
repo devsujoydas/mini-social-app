@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { BiLike } from "react-icons/bi";
 import { VscSend } from "react-icons/vsc";
@@ -25,6 +25,9 @@ const FriendPost = ({ post, friend }) => {
     const [like, setlike] = useState(1)
     const [showEdit, setShowEdit] = useState(1)
     const { userData } = useContext(AuthContext)
+
+    console.log(post)
+    
     return (
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
 
@@ -33,13 +36,13 @@ const FriendPost = ({ post, friend }) => {
 
                 <div className="flex items-center gap-3">
                     <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
-                        <img className=" rounded-full " src={friend.imgURL} alt="" />
+                        <img className=" rounded-full " src={post.authorPhoto} alt="" />
                     </div>
 
                     <div>
-                        <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{friend?.name}</h1>
+                        <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName}</h1>
 
-                        <h1>@{friend?.username}</h1>
+                        <h1>@{post?.authorUsername}</h1>
                     </div>
                 </div>
 
@@ -76,10 +79,10 @@ const FriendPost = ({ post, friend }) => {
 
             {/* post content and image like comment share bookmark */}
             <div className="md:p-5 p-3 space-y-2">
-                <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.content}</h1>
 
+                <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
                 <div>
-                    <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.img}`} alt="" />
+                    <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
                 </div>
 
                 {/* like comment share container  */}
@@ -89,7 +92,7 @@ const FriendPost = ({ post, friend }) => {
 
                         <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
                             <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                            {like ? < BiLike/> : <  BiSolidLike/>}
+                                {like ? < BiLike /> : <  BiSolidLike />}
                             </div>
                             <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
                         </button>

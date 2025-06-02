@@ -14,7 +14,7 @@ const Posts = () => {
           <h1 className="text-zinc-400">No post found...</h1>
         </div>
         :
-        <div className="grid gap-5 ">
+        <div className="grid md:gap-5 gap-3 ">
           {postsData.map((post, idx) => <Post key={idx} post={post} />)}
         </div>
       }

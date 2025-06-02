@@ -15,14 +15,14 @@ const AllFriends = ({ friend }) => {
     return (
         <div className='border cursor-pointer border-zinc-300 rounded-md px-5 py-3 flex justify-center items-center  gap-3 hover:shadow-lg active:shadow-none duration-300 transition-all  '>
 
-            <Link to={`/profiles/${friend?.username}`} className='flex w-full justify- items-center gap-5'>
+            <Link to={`/friends/${friend?.username}`} className='flex w-full justify- items-center gap-5'>
                 <div className='w-18 h-18  rounded-full overflow-hidden'>
-                    <img className='w-full object-cover h-full scale-105 ' src={friend?.imgURL} alt="" />
+                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profilephotourl} alt="" />
                 </div>
 
                 <div className=''>
                     <h1 className='md:text-lg text-sm font-bold'>{friend?.name}</h1>
-                    <h1 className='text-sm'>{friend?.friends} Friends</h1>
+                    <h1 className='text-sm'>{friend?.username}</h1>
                 </div>
             </Link>
 
@@ -31,7 +31,7 @@ const AllFriends = ({ friend }) => {
                     <HiDotsHorizontal className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
                 </button>
                 <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-7 top-5 bg-white  w-36 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-                     <button className={likeCommentStyle}>
+                    <button className={likeCommentStyle}>
                         <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow</h1>
                     </button>
                     <hr />

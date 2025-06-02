@@ -5,7 +5,6 @@ import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
 import Loading from "../../Components/Loading/Loading"
 import { useContext, useState } from "react"
-import { AuthContext } from "../PrivateRoute/AuthProvider"
 
 const Home = () => {
 
@@ -15,7 +14,8 @@ const Home = () => {
 
   setTimeout(() => {
     setLoading(false)
-  }, 1000);
+  }, 50);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] relative  ">
 
@@ -23,11 +23,9 @@ const Home = () => {
         <div className="md:sticky top-0 z-10">
           <SearchBar />
         </div>
-        <div className="md:py-5 py-3 lg:px-5 px-3 space-y-5">
-
+        <div className="md:py-5 py-3 lg:px-5 px-3 md:space-y-5 space-y-3 ">
           {loading ? <Loading /> : <Storybox />}
           {loading ? <Loading /> : <Posts />}
-
         </div>
       </div>
 

@@ -11,7 +11,7 @@ const [loading, setLoading] = useState(true)
 
   setTimeout(() => {
     setLoading(false)
-  }, 500);
+  }, 100);
 
 
   const activeBtn = "border-b-2 border-blue-600 w-2/5 py-2 cursor-pointer transition-all"

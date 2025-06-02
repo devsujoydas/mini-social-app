@@ -53,7 +53,7 @@ const Post = ({ post }) => {
       if (result.isConfirmed) {
 
 
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -93,9 +93,9 @@ const Post = ({ post }) => {
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={`/profile/${post.authorUsername}`}>
+        <Link to={`/friends/${post.authorUsername}`}>
           <div className="flex items-center gap-3">
-            <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
+            <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
               <img className=" rounded-full " src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
             </div>
 
@@ -182,7 +182,7 @@ const Post = ({ post }) => {
       <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
         <div className="flex items-center gap-4 w-full ">
           <Link to={`/profile`}>
-            <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
+            <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
               <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
           </Link>

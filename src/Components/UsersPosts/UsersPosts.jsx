@@ -4,7 +4,7 @@ import Post from '../Posts/Post'
 
 const UsersPosts = () => {
   const { usersPostsData } = useContext(AuthContext)
-  console.log(usersPostsData)
+  // console.log(usersPostsData)
   
   return (
     <div className=' rounded-2xl  '>
@@ -14,7 +14,7 @@ const UsersPosts = () => {
           <h1 className="text-zinc-400">No post found...</h1>
         </div>
         :
-        <div className="grid gap-5">
+        <div className="grid md:gap-5 gap-3">
           {usersPostsData.map((post, idx) => <Post key={idx} post={post} />)}
         </div>
       }

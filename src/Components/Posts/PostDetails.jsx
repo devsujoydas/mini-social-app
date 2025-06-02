@@ -52,7 +52,7 @@ const PostDetails = () => {
       if (result.isConfirmed) {
 
 
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())

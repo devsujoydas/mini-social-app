@@ -36,7 +36,7 @@ const Storybox = () => {
           >
             {friendsData.map((friend, idx) => (
               <SwiperSlide key={idx}>
-                <Link to={`/profiles/${friend?.username}`}>
+                <Link to={`/friends/${friend?.username}`}>
                   <img className={storyimgstyle} src={friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"} alt="" />
                 </Link>
               </SwiperSlide>
