@@ -19,6 +19,7 @@ const Signup = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const address = "";
+        const bio = "";
         const profilephotourl = "";
         const coverphotourl = "";
         const phone = "";
@@ -33,12 +34,12 @@ const Signup = () => {
 
                 console.log(creationTime)
 
-                const formData = { name, username, email, password, address, profilephotourl, coverphotourl, phone, website, posts, creationTime }
+                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, creationTime }
 
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signup`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -51,8 +52,6 @@ const Signup = () => {
                             }
                         })
                 }
-
-
 
                 console.log("Signup Successfully: ", result.user);
             })

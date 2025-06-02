@@ -16,12 +16,12 @@ import Swal from "sweetalert2";
 const ProfileSidebar = () => {
   const { user, signOutUser, userData, postsData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
 
-  // console.log(userData)
-
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
 
+
+  console.log(userData)
   const accountDeleteHandle = () => {
     const swalWithTailwind = Swal.mixin({
       customClass: {
@@ -142,7 +142,7 @@ const ProfileSidebar = () => {
           <div className="">
             <div className="space-y-1">
               <h1 className="font-semibold text-xl ">About Me</h1>
-              <p className="text-zinc-500 ">Professional Web Developer || Software Engineers</p>
+              <p className="text-zinc-500 ">{userData?.bio}</p>
             </div>
           </div>
 

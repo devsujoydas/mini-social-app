@@ -14,7 +14,7 @@ const Home = () => {
 
   setTimeout(() => {
     setLoading(false)
-  }, 50);
+  }, 300);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-9 bg-[#f1f5fa] relative  ">
