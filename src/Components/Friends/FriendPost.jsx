@@ -80,7 +80,7 @@ const FriendPost = ({ post, friend }) => {
             {/* post content and image like comment share bookmark */}
             <div className="md:p-5 px-3 pt-2  md:space-y-2 space-y-1">
 
-                <h1 className="space-x-2 md:text-md text-xs flex flex-wrap">{post?.postContent}</h1>
+                <h1 className="space-x-2 md:text-sm font-semibold text-xs flex flex-wrap">{post?.postContent}</h1>
                 
                 <div>
                     <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />

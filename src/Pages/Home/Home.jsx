@@ -23,10 +23,13 @@ const Home = () => {
         <div className="md:sticky top-0 z-10">
           <SearchBar />
         </div>
-        <div className="md:py-5 py-3 lg:px-5 px-3 md:space-y-5 space-y-3 ">
-          {loading ? <Loading /> : <Storybox />}
-          {loading ? <Loading /> : <Posts />}
-        </div>
+
+        {loading ? <Loading /> :
+          <div className="md:py-5 py-3 lg:px-5 px-3 md:space-y-5 space-y-3 ">
+            <Storybox />
+            <Posts />
+          </div>
+        }
       </div>
 
       <div className="lg:col-span-3 bg-white border-l border-zinc-300 ">

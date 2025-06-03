@@ -21,7 +21,6 @@ const ProfileSidebar = () => {
   const navigate = useNavigate()
 
 
-  console.log(userData)
   const accountDeleteHandle = () => {
     const swalWithTailwind = Swal.mixin({
       customClass: {

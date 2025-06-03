@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { useContext, useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom";
 
 import { BiLike } from "react-icons/bi";
@@ -15,17 +14,16 @@ import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
-import { FaCirclePlus } from "react-icons/fa6";
-import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
-const Post = ({ post }) => {
+const UsersPost = ({ post }) => {
   const { user, userData, postsData, setPostsData } = useContext(AuthContext)
 
 
 
-  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1   md:py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
+  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 md:py-1.5 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
 
   const [like, setlike] = useState(1)
@@ -53,8 +51,6 @@ const Post = ({ post }) => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-
-
         fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
@@ -121,20 +117,20 @@ const Post = ({ post }) => {
 
           <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-4 md:right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
             <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
+              <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
             </button>
+            <Link to={`/post/update/${post?._id}`} className={`${likeCommentStyle} border border-zinc-200`}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+            </Link>
             <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
             </button>
             <hr className="" />
             <button className={likeCommentStyle}>
-              <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
+              <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+            </button>
+            <button onClick={() => { deletePost() }} className={`${likeCommentStyle} border border-zinc-200`}>
+              <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
             </button>
           </div>
         </div>
@@ -146,7 +142,7 @@ const Post = ({ post }) => {
       <div className="md:p-5 p-3 space-y-2">
         <h1 className="space-x-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
-        <Link to={`/post/${post._id}`}>
+        <Link to={`/profile/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
         </Link>
 
@@ -208,4 +204,4 @@ const Post = ({ post }) => {
   )
 }
 
-export default Post
+export default UsersPost

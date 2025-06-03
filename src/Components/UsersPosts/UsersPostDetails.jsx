@@ -14,16 +14,12 @@ import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6"; 
-
-import { FaCirclePlus } from "react-icons/fa6";
-import { FaCircleMinus } from "react-icons/fa6";
+import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
-
 import Swal from 'sweetalert2';
 
 
-const PostDetails = () => {
+const UsersPostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
   const [likesCount, setlikesCount] = useState(0)
 
@@ -119,22 +115,22 @@ const PostDetails = () => {
             </button>
 
             <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-9 bg-white w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-               <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
-            </button>
-            <hr className="" />
-            <button className={likeCommentStyle}>
-              <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
-            </button>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
+              </button>
+              <Link to={`/post/update/${post?._id}`} className={`${likeCommentStyle} border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+              </Link>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
+              </button>
+              <hr />
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+              </button>
+              <button onClick={() => { deletePost() }} className={`${likeCommentStyle} border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+              </button>
             </div>
           </div>
         </div>
@@ -221,4 +217,4 @@ const PostDetails = () => {
   )
 }
 
-export default PostDetails
+export default UsersPostDetails

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider'
 import Post from '../Posts/Post'
+import UsersPost from './UsersPost'
 
 const UsersPosts = () => {
   const { usersPostsData } = useContext(AuthContext)
@@ -15,7 +16,7 @@ const UsersPosts = () => {
         </div>
         :
         <div className="grid md:gap-5 gap-3">
-          {usersPostsData.map((post, idx) => <Post key={idx} post={post} />)}
+          {usersPostsData.map((post, idx) => <UsersPost key={idx} post={post} />)}
         </div>
       }
     </div>

@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     const [usersPostsData, setUsersPostsData] = useState([])
 
 
- 
+
 
 
     useEffect(() => {
@@ -26,14 +26,6 @@ const AuthProvider = ({ children }) => {
     }, [])
 
 
-    useEffect(() => {
-        fetch(`http://localhost:3000/friends`)
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data)
-                setFriendsData(data)
-            })
-    }, [])
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -88,26 +80,27 @@ const AuthProvider = ({ children }) => {
 
 
                 fetch(`http://localhost:3000/profile/${currentUser.email}`)
-                    .then(res => {
-                        if (!res.ok) {
-                            // Handle non-2xx responses
-                            console.error(`HTTP error! status: ${res.status}`);
-                            return Promise.reject(`HTTP error! status: ${res.status}`);
-                        }
-                        return res.json();
-                    })
+                    .then(res => res.json())
+                    .then(data => setUserData(data))
+
+
+                fetch(`http://localhost:3000/friends`)
+                    .then(res => res.json())
                     .then(data => {
-                        setUserData(data);
+                        const friends = data.filter(friend => friend.email != currentUser.email)
+                        setFriendsData(friends)
                     })
-                    .catch(error => {
-                        console.error("Error fetching user data:", error);
-                    });
+
+
             } else {
                 setUser(null);
                 setUserData(null);
                 setLoading(false);
             }
         });
+
+
+        
         return () => {
             unSubscribe();
         };

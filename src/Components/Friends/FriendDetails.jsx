@@ -23,7 +23,7 @@ const FriendDetails = () => {
 
 
     return (
-        <div>
+        <div className='md:pt-0 pt-3'>
 
             <div className='grid grid-cols-1 lg:grid-cols-9 '>
                 <div className='lg:col-span-6 p-3 md:p-5'>
@@ -34,24 +34,24 @@ const FriendDetails = () => {
                                 <div className='md:h-96 rounded-lg h-50 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center' style={{ backgroundImage: `url(${friend?.coverphotourl})` }}>
                                 </div>
                                 <div className='flex justify-center'>
-                                    <div className='w-50 h-50 border-4 border-white rounded-full -mt-23  bg-no-repeat bg-cover bg-center'
+                                    <div className='md:w-50 w-30 md:h-50 h-30 border-4 border-white rounded-full md:-mt-23 -mt-14  bg-no-repeat bg-cover bg-center'
                                         style={{ backgroundImage: `url(${friend?.profilephotourl})` }}></div>
                                 </div>
-                                <div className='text-center space-y-1 mt-3'>
+                                <div className='text-center md:space-y-1 md:mt-3'>
                                     <h1 className='text-2xl font-semibold'>{friend?.name}</h1>
-                                    <h1 className=''>@{friend?.username}</h1>
+                                    <h1 className='md:text-md text-sm'>@{friend?.username}</h1>
                                 </div>
-                                <div className=" flex justify-center items-center flex-col mt-5">
-                                    <div className=" flex justify-center items-center md:gap-10 gap-5 ">
-                                        <div className="text-center">
+                                <div className=" flex justify-center items-center flex-col md:mt-5 mt-3">
+                                    <div className=" flex justify-center items-center md:gap-10 gap-3 ">
+                                        <div className="text-center ">
                                             <h1 className="text-xl font-semibold">{friendPost?.length}</h1>
                                             <h1 className=" font-medium text-zinc-500">Post</h1>
                                         </div>
-                                        <div className="text-center border-zinc-300 border-r-2 border-l-2 md:px-8 px-3">
+                                        <div className="text-center  border-zinc-300 border-r-2 border-l-2 md:px-8 px-3">
                                             <h1 className="text-xl font-semibold">0</h1>
                                             <h1 className=" font-medium text-zinc-500">Followers</h1>
                                         </div>
-                                        <div className="text-center">
+                                        <div className="text-center ">
                                             <h1 className="text-xl font-semibold">0</h1>
                                             <h1 className=" font-medium text-zinc-500">Following</h1>
                                         </div>
