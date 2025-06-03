@@ -32,17 +32,17 @@ const FriendPost = ({ post, friend }) => {
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
 
             {/* post author details  */}
-            <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
+            <div className="md:px-5 md:py-3 px-2 py-2 flex justify-between items-center">
 
                 <div className="flex items-center gap-3">
-                    <div className="active:scale-95 transition-all cursor-pointer w-12 h-12 overflow-hidden rounded-full">
-                        <img className=" rounded-full " src={post.authorPhoto} alt="" />
+                    <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
+                        <img className="object-cover h-full rounded-full " src={post.authorPhoto} alt="" />
                     </div>
 
                     <div>
-                        <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName}</h1>
+                        <h1 className="font-semibold active:underline transition-all md:text-md text-sm cursor-pointer">{post?.authorName}</h1>
 
-                        <h1>@{post?.authorUsername}</h1>
+                        <h1 className="md:text-sm text-xs">@{post?.authorUsername}</h1>
                     </div>
                 </div>
 
@@ -78,20 +78,21 @@ const FriendPost = ({ post, friend }) => {
             <hr className="text-zinc-300" />
 
             {/* post content and image like comment share bookmark */}
-            <div className="md:p-5 p-3 space-y-2">
+            <div className="md:p-5 px-3 pt-2  md:space-y-2 space-y-1">
 
-                <h1 className="space-x-2 md:text-md text-sm flex flex-wrap">{post?.postContent}</h1>
+                <h1 className="space-x-2 md:text-md text-xs flex flex-wrap">{post?.postContent}</h1>
+                
                 <div>
                     <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
                 </div>
 
                 {/* like comment share container  */}
-                <div className="flex justify-between items-center mt-3 ">
+                <div className="flex justify-between items-center md:mt-3 ">
                     {/* buttons  */}
-                    <div className="flex items-center md:gap-6 gap-6">
+                    <div className="flex items-center md:gap-6 ">
 
                         <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
-                            <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+                            <div className="md:text-2xl text-xl  cursor-pointer active:scale-95 transition-all active:text-black">
                                 {like ? < BiLike /> : <  BiSolidLike />}
                             </div>
                             <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
@@ -99,7 +100,7 @@ const FriendPost = ({ post, friend }) => {
 
 
                         <button className={likeCommentStyle}>
-                            <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+                            <div className="md:text-2xl text-xl  cursor-pointer active:scale-95 transition-all active:text-black">
                                 <BiCommentDots />
                             </div>
                             <span className="flex items-center gap-2">0 <span className="hidden md:flex">Comments</span></span>
@@ -107,7 +108,7 @@ const FriendPost = ({ post, friend }) => {
 
 
                         <button className={likeCommentStyle}>
-                            <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+                            <div className="md:text-2xl text-xl  cursor-pointer active:scale-95 transition-all active:text-black">
                                 <PiShareFatBold />
                             </div>
                             <span className="flex items-center gap-2">0 <span className="hidden md:flex">Shares</span></span>
@@ -122,15 +123,15 @@ const FriendPost = ({ post, friend }) => {
             <hr className="text-zinc-300" />
 
             {/* comment container  */}
-            <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
+            <form action="" className="md:p-4 p-2 flex justify-between items-center gap-5 md:gap-20">
                 <div className="flex items-center gap-4 w-full ">
                     <Link to={`/profile`}>
-                        <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
-                            <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                        <div className="cursor-pointer md:w-12 w-9 md:h-12 h-9 overflow-hidden rounded-full">
+                            <img className="object-cover h-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                         </div>
                     </Link>
 
-                    <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
+                    <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full placeholder:text-xs " type="text" placeholder="Write your comment.." />
                 </div>
 
                 <div className="flex items-center gap-3 ">

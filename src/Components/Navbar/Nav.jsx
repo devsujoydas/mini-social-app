@@ -29,7 +29,7 @@ const Nav = () => {
             <NavLink to={`/profile`}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
-                    <img className="w-7 rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                    <img className="w-7 h-7 object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                     <span className="font-semibold ">Profile</span>
                 </div>
                 <div>

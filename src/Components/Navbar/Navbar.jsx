@@ -63,13 +63,13 @@ const Navbar = () => {
                     <FiAlertTriangle />
                   </div>
 
-                  <button onClick={()=>setGopro(0)}>
+                  <button onClick={() => setGopro(0)}>
                     <IoCloseSharp className="cursor-pointer active:scale-95 transition-all" />
                   </button>
                 </div>
                 <h1 className="text-sm">Enjoy unlimited access to our app with only a small price monthly.</h1>
                 <div className="font-semibold space-x-5">
-                  <button onClick={()=>setGopro(0)} className="cursor-pointer active:scale-95 transition-all">Dismiss</button>
+                  <button onClick={() => setGopro(0)} className="cursor-pointer active:scale-95 transition-all">Dismiss</button>
                   <button className="text-[#2b1fff] cursor-pointer active:scale-95 transition-all">Go Pro</button>
                 </div>
               </div>
@@ -80,7 +80,9 @@ const Navbar = () => {
             <div className=" flex justify-between items-center cursor-pointer">
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-14 rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                  <div className="w-14 h-14 overflow-hidden rounded-full">
+                    <img className=" h-full w-full object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                  </div>
                   <div className="">
                     <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
                     <p>Basic Member</p>
@@ -101,7 +103,7 @@ const Navbar = () => {
       {/* nav for sm device  */}
       <div className={humbarger ? 'bg-white lg:hidden fixed top-0 -left-121 w-full -z-50  opacity-0 duration-700 transition-all' : 'bg-white lg:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
 
-        <div className="px-5 pt-2 bg-white h-screen border border-red-500 flex flex-col justify-between">
+        <div className="px-5 pt-2 bg-white h-[100vh] border border-red-500 flex flex-col justify-between">
           <div className=" space-y-7 ">
             {/* nav logo  */}
             <div className=" flex justify-between items-center">
@@ -124,7 +126,9 @@ const Navbar = () => {
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
-                  <img className="w-12 rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                  <div className="w-10 h-10 overflow-hidden rounded-full">
+                    <img className=" h-full w-full object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                  </div>
                   <div className="">
                     <h1 className="font-semibold">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
                     <p className="text-sm">@{userData?.username ? `${userData?.username}` : "username"}</p>

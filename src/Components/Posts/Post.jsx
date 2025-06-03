@@ -53,7 +53,7 @@ const Post = ({ post }) => {
       if (result.isConfirmed) {
 
 
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -96,7 +96,7 @@ const Post = ({ post }) => {
         <Link to={`/friends/${post.authorUsername}`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-              <img className=" rounded-full " src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
+              <img className="h-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
             </div>
 
             <div>
@@ -183,7 +183,7 @@ const Post = ({ post }) => {
         <div className="flex items-center gap-4 w-full ">
           <Link to={`/profile`}>
             <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-              <img className="" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+              <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
           </Link>
           <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />

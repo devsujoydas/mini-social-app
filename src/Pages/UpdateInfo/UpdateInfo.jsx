@@ -21,11 +21,11 @@ const UpdateInfo = () => {
         const phone = e.target.phone.value;
         const website = e.target.website.value;
 
-        const formData = { name, username, email, address,bio, profilephotourl, coverphotourl, phone, website }
+        const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
         console.log("formData", formData)
- 
-        fetch(`https://mini-social-app-backend.vercel.app/update`, {
+
+        fetch(`http://localhost:3000/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
@@ -39,7 +39,7 @@ const UpdateInfo = () => {
             })
     }
     return (
-        <div className='pt-16 md:pt-0 md:p-10 '>
+        <div className='pt-16 md:pt-10 md:px-10 '>
 
 
             <form onSubmit={submitHandler} className='border border-zinc-300 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full' >
@@ -71,7 +71,7 @@ const UpdateInfo = () => {
 
                     <div className='md:col-span-2'>
                         <label className=" text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Bio</label>
-                        <input name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
+                        <input defaultValue={loaderUser.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
                     </div>
 
                     <div>
