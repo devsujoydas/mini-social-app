@@ -69,7 +69,7 @@ const FriendDetails = () => {
                 {/* All Friends  */}
                 <div className='lg:col-span-3 p-5'>
 
-                    <h1 className='text-lg mb-5 font-semibold'>All Friends</h1>
+                    <h1 className='text-lg mb-5 font-semibold'>All Friends Suggested</h1>
 
                     <div className='grid  gap-2 '>
                         {friendsData.map((friend, idx) => (

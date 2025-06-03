@@ -123,7 +123,7 @@ const ProfileSidebar = () => {
             </div>
             <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
               <Link to={'/friends'}>
-                <h1 className="md:text-xl font-semibold">{friendsData?.length}</h1>
+                <h1 className="md:text-xl font-semibold">0</h1>
                 <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Friends</h1>
               </Link>
             </div>

@@ -4,88 +4,109 @@ import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 const Login = () => {
-  const navigate = useNavigate()
-  const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
-  const [show, setShow] = useState(0)
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const formData = { email, password }
+    const navigate = useNavigate()
+    const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
+    const [show, setShow] = useState(0)
+
+    const [loadingSpiner, setLoadingSpiner] = useState(true)
 
 
-    logInUser(email, password)
-      .then((result) => {
-        console.log(result)
-        fetch(`http://localhost:3000/profile/${result.user.email}`)
-          .then(res => res.json())
-          .then(data => {
-            console.log(data)
-            setUserData(data)
-          })
-        setUser(result.user)
-        console.log("Log in successfully")
-        navigate(`/profile`)
-      })
-      .catch((error) => {
-        setLoading(false)
-        console.log(error.message);
-      });
-  }
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        setLoadingSpiner(false)
+        logInUser(email, password)
+            .then((result) => {
+                console.log(result)
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        setUserData(data)
+                    })
+                setUser(result.user)
+                navigate(`/profile`)
+            })
+            .catch((error) => {
+                setLoading(false)
+                console.log(error.message);
+            });
+    }
 
-  return (
-    <div className="w-full h-[90vh] md:p-0 p-5 flex md:flex-row flex-col items-center justify-center md:gap-0 gap-5">
+    return (
+        <div className="font-family-primary h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-      <div className="md:w-1/2 w-full h-full flex justify-center items-center">
-        <img className="h-full" src="/login.png" alt="" />
-      </div>
+            <div className="md:col-span-1 h-screen p-8   ">
+                <div className="">
+                    <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
+                </div>
 
-      <div className=" md:w-1/2 w-full h-full">
-        <div className="flex flex-col justify-center sm:h-screen md:p-4">
-          <div className="max-w-md w-full mx-auto border border-slate-300 rounded-2xl p-8">
-            <div className="text-center mb-8">
-              <h1 className="font-semibold text-4xl font-family-secondary text-blue-600">Log In</h1>
+                <div className="h-full  flex justify-center items-center">
+
+                    <div className="md:space-y-10 space-y-8 lg:w-2/4 w-full">
+                        <div className="">
+                            <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">Login Now</h1>
+                            <p className="text-sm">Please fill your details to access your account.</p>
+                        </div>
+                        <div className="flex  justify-center flex-col gap-5  items-center">
+                            <form onSubmit={submitHandler} className="w-full space-y-5">
+
+                                <div>
+                                    <label className="text-slate-800 text-sm font-medium mb-1 block">Email</label>
+                                    <input required name="email" type="text" className=" text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter email" />
+                                </div>
+
+                                <div className="relative">
+                                    <label className="text-slate-800 text-sm font-medium mb-1 block">Password</label>
+                                    <input required name="password" type={show ? "text" : "password"} className=" text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter password" />
+                                    <div onClick={() => setShow(!show)} className="text-xl absolute bottom-3 right-3 cursor-pointer active:scale-95 transition-all">
+                                        {show ? <FaRegEye /> : <FaRegEyeSlash />}
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-center">
+                                    <div className="flex items-center ">
+                                        <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
+                                        <label htmlFor="remember-me" className="text-black font-semibold ml-3 block text-sm cursor-pointer">Remember me
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <Link to={"/login"} className="text-violet-600 font-semibold text-sm hover:underline ml-1">Forgot Password?</Link>
+                                    </div>
+                                </div>
+
+                                <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
+                                    <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
+                                    <p className={`${loadingSpiner ? "block" : "hidden"}`}>Login</p>
+                                </button>
+
+                            </form>
+
+                            <div className="flex justify-center items-center">
+                                <p>---------------- Or ----------------</p>
+                            </div>
+
+                            <button className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                                <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
+                                <h1 className="text-black font-medium ">Sign in with Google</h1>
+                            </button>
+
+                            <p className="text-slate-800 text-sm text-center">Dont have any account?
+                                <Link to={"/signup"} className="text-violet-600 font-semibold hover:underline ml-1">Signup</Link>
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
-            <form onSubmit={submitHandler}>
-              <div className="space-y-3 md:space-y-5">
-                <div>
-                  <label className="text-slate-800 text-sm font-medium mb-2 block">Email</label>
-                  <input required name="email" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter email" />
-                </div>
-                <div className="relative">
-                  <label className="text-slate-800 text-sm font-medium mb-2 block">Password</label>
-                  <input required name="password" type={show ? "text" : "password"} className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter password" />
-                  <div onClick={() => setShow(!show)} className="text-xl absolute bottom-3 right-3 cursor-pointer active:scale-95 transition-all">
-                    {show ? <FaRegEye /> : <FaRegEyeSlash />}
-                  </div>
-                </div>
-                <div className="flex items-center ">
-                  <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
-                  <label htmlFor="remember-me" className="text-slate-800 ml-3 block text-sm cursor-pointer">
-                    I accept the <a href="/" className="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
-                  </label>
-                </div>
-              </div>
+            <div className="md:col-span-1 hidden h-screen md:flex justify-center items-center p-8">
+                <img className="" src="./login.png" alt="" />
+            </div>
 
-              <div className="mt-8">
-                <button type="submit" className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer active:scale-95 transition-all">
-                  Login
-                </button>
-              </div>
-              <p className="text-slate-800 text-sm mt-6 text-center">Dont have any account?
-                <Link to={"/signup"} className="text-blue-600 font-medium hover:underline ml-1">Signup</Link>
-              </p>
-
-            </form>
-          </div>
         </div>
-      </div>
-
-
-
-    </div >
-  )
+    )
 }
 
 export default Login

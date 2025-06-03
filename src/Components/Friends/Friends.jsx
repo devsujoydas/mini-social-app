@@ -7,7 +7,7 @@ const Friends = () => {
      
     return (
         <div className='md:p-10 p-3 md:mt-0 mt-20 space-y-10 '>
-            <h1 className="font-semibold text-4xl text-center font-family-secondary text-blue-600">All Friends</h1>
+            <h1 className="font-semibold text-4xl text-center font-family-secondary text-blue-600">All Friends Suggested</h1>
 
             {friendsData.length == 0
                 ?

@@ -32,7 +32,7 @@ const AllFriends = ({ friend }) => {
                 </button>
                 <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-7 top-5 bg-white  w-36 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
                     <button className={likeCommentStyle}>
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Unfollow</h1>
+                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserUnfollowFill />} Follow</h1>
                     </button>
                     <hr />
                     <button className={likeCommentStyle}>

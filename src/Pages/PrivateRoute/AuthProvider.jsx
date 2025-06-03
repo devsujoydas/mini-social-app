@@ -12,13 +12,13 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
-
+   
 
 
 
 
     useEffect(() => {
-        fetch(`http://localhost:3000/posts`)
+        fetch(`https://mini-social-app-backend.vercel.app/posts`)
             .then(res => res.json())
             .then(data => {
                 setPostsData(data)
@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
     const deleteAccount = () => {
         deleteUser(user)
             .then(() => {
-                fetch(`http://localhost:3000/profile/delete/${user.email}`, {
+                fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
                 setUser(currentUser);
                 setLoading(false);
 
-                fetch(`http://localhost:3000/posts`)
+                fetch(`https://mini-social-app-backend.vercel.app/posts`)
                     .then(res => res.json())
                     .then(data => {
                         const usersPost = data.filter(post => post.authorEmail == currentUser.email)
@@ -79,12 +79,12 @@ const AuthProvider = ({ children }) => {
                     })
 
 
-                fetch(`http://localhost:3000/profile/${currentUser.email}`)
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`)
                     .then(res => res.json())
                     .then(data => setUserData(data))
 
 
-                fetch(`http://localhost:3000/friends`)
+                fetch(`https://mini-social-app-backend.vercel.app/friends`)
                     .then(res => res.json())
                     .then(data => {
                         const friends = data.filter(friend => friend.email != currentUser.email)
@@ -100,7 +100,7 @@ const AuthProvider = ({ children }) => {
         });
 
 
-        
+
         return () => {
             unSubscribe();
         };

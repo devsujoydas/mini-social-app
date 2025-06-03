@@ -45,7 +45,7 @@ const UsersPost = ({ post }) => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/post/delete/${post._id}`, {
+        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
