@@ -84,8 +84,8 @@ const ProfileSidebar = () => {
             <div className=" h-full p-5">
 
               <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
-                <div className="border w-fit border-zinc-400 md:text-2xl text-xl md:mt-0 mt-3 md:p-3 p-2 rounded-full cursor-pointer  transition-all bg-zinc-200 ">
-                  <IoSettingsOutline className="active:scale-95 transition-all" />
+                <div className="border w-fit border-zinc-400 md:text-2xl text-xl md:mt-0 mt-3 md:p-3 p-2 rounded-full cursor-pointer  transition-all bg-zinc-200 hover:bg-zinc-400 ">
+                  <IoSettingsOutline className="active:scale-95 active:rotate-45 transition-all" />
                 </div>
 
                 <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-0 top-14 bg-white  md:w-44 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 font-semibold transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
@@ -124,12 +124,12 @@ const ProfileSidebar = () => {
             <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
               <Link to={'/friends'}>
                 <h1 className="md:text-xl font-semibold">{friendsData?.length}</h1>
-                <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Followers</h1>
+                <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Friends</h1>
               </Link>
             </div>
             <div className="text-center">
-              <h1 className="md:text-xl font-semibold">8</h1>
-              <h1 className="md:text-lg font-medium text-zinc-500">Following</h1>
+              <h1 className="md:text-xl font-semibold">0</h1>
+              <h1 className="md:text-lg font-medium text-zinc-500">Follo  wing</h1>
             </div>
           </div>
 

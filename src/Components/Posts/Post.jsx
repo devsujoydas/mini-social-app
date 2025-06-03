@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { BiLike } from "react-icons/bi";
-import { MdEdit } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
 import { FaBookmark } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
@@ -14,91 +13,29 @@ import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
-import Swal from "sweetalert2";
 
 const Post = ({ post }) => {
-  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
-
-
+  const { userData } = useContext(AuthContext)
 
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1   md:py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-  const navigate = useNavigate()
 
   const [like, setlike] = useState(1)
-  const [likesCount, setlikesCount] = useState(0)
   const [showEdit, setShowEdit] = useState(1)
 
 
-  const deletePost = () => {
-
-    const swalWithTailwind = Swal.mixin({
-      customClass: {
-        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-      },
-      buttonsStyling: false
-    });
-
-    swalWithTailwind.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-
-        fetch(`http://localhost:3000/post/delete/${post._id}`, {
-          method: 'DELETE',
-        })
-          .then(res => res.json())
-          .then(data => {
-
-            setShowEdit(!showEdit)
-            if (data.deletedCount > 0) {
-              swalWithTailwind.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
-              const remaining = postsData.filter(posts => posts._id != post._id)
-              setPostsData(remaining)
-
-            }
-
-          })
-
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithTailwind.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error"
-        });
-      }
-    });
-
-
-  }
-
-
-
   return (
-    <div className="shadow-xl w-fit md:w-full rounded-2xl md:rounded-3xl bg-white ">
+    <div className="shadow-xl md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={`/friends/${post.authorUsername}`}>
+        <Link to={userData.username == post.authorUsername ? "/profile" : `/friends/${post.authorUsername}`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-              <img className="h-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
+              <img className="h-full w-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
             </div>
 
             <div>
@@ -143,8 +80,8 @@ const Post = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:p-5 p-3 space-y-2">
-        <h1 className="space-x-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
+      <div className="md:px-5 p-3 space-y-2">
+        <h1 className="space-x-2 md:text-sm text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
@@ -154,11 +91,11 @@ const Post = ({ post }) => {
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-6 gap-6">
-            <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
+            <button onClick={() => { setlike(!like)}} className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {!like ? <BiSolidLike /> : < BiLike />}
               </div>
-              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
+              <span className="flex items-center gap-2">{like ? "0" : "1"}<span className="hidden md:flex">Likes</span></span>
             </button>
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">

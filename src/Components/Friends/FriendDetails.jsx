@@ -10,8 +10,7 @@ const FriendDetails = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const data = useLoaderData()
-    console.log(data)
+    const data = useLoaderData() 
 
     const {friend,friendPost} = data;
  

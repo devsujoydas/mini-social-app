@@ -25,9 +25,7 @@ const FriendPost = ({ post, friend }) => {
     const [like, setlike] = useState(1)
     const [showEdit, setShowEdit] = useState(1)
     const { userData } = useContext(AuthContext)
-
-    console.log(post)
-    
+  
     return (
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
 

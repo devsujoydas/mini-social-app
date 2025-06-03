@@ -103,7 +103,7 @@ const Navbar = () => {
       {/* nav for sm device  */}
       <div className={humbarger ? 'bg-white lg:hidden fixed top-0 -left-121 w-full -z-50  opacity-0 duration-700 transition-all' : 'bg-white lg:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
 
-        <div className="px-5 pt-2 bg-white h-[100vh] border border-red-500 flex flex-col justify-between">
+        <div className="px-5 pt-2 bg-white h-[100vh] flex flex-col justify-between">
           <div className=" space-y-7 ">
             {/* nav logo  */}
             <div className=" flex justify-between items-center">

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"; 
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { BiLike } from "react-icons/bi";
@@ -19,20 +19,15 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
 
 const UsersPost = ({ post }) => {
-  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
-
-
-
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 md:py-1.5 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-  const navigate = useNavigate()
+
+  const { userData, postsData, setPostsData } = useContext(AuthContext)
 
   const [like, setlike] = useState(1)
-  const [likesCount, setlikesCount] = useState(0)
   const [showEdit, setShowEdit] = useState(1)
-
+  const navigate = useNavigate()
 
   const deletePost = () => {
-
     const swalWithTailwind = Swal.mixin({
       customClass: {
         confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
@@ -40,7 +35,6 @@ const UsersPost = ({ post }) => {
       },
       buttonsStyling: false
     });
-
     swalWithTailwind.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -66,11 +60,9 @@ const UsersPost = ({ post }) => {
               });
               const remaining = postsData.filter(posts => posts._id != post._id)
               setPostsData(remaining)
-
+              navigate("/")
             }
-
           })
-
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithTailwind.fire({
           title: "Cancelled",
@@ -79,35 +71,29 @@ const UsersPost = ({ post }) => {
         });
       }
     });
-
-
   }
 
-
-
   return (
-    <div className="shadow-xl w-fit md:w-full rounded-2xl md:rounded-3xl bg-white ">
+    <div className="shadow-xl md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={`/friends/${post.authorUsername}`}>
-          <div className="flex items-center gap-3">
-            <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-              <img className="h-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
-            </div>
-
-            <div>
-              <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
-
-              <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
-                <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
-                <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
-              </div>
-
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
+            <img className="h-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
           </div>
-        </Link>
+
+          <div>
+            <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
+
+            <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
+              <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
+              <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
+            </div>
+
+          </div>
+        </div>
 
         <div className='relative'>
           <button onClick={() => { setShowEdit(!showEdit) }}>
@@ -139,7 +125,7 @@ const UsersPost = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:p-5 p-3 space-y-2">
+      <div className="md:px-5 p-3 space-y-2">
         <h1 className="space-x-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/profile/post/${post._id}`}>
@@ -150,11 +136,11 @@ const UsersPost = ({ post }) => {
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-6 gap-6">
-            <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
+            <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 {!like ? <BiSolidLike /> : < BiLike />}
               </div>
-              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
+              <span className="flex items-center gap-2">{like ? "0" : "1"}<span className="hidden md:flex">Likes</span></span>
             </button>
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">

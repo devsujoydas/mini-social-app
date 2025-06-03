@@ -29,9 +29,7 @@ const UsersPostDetails = () => {
   const navigate = useNavigate()
 
 
-
   const deletePost = () => {
-
     const swalWithTailwind = Swal.mixin({
       customClass: {
         confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
@@ -39,7 +37,6 @@ const UsersPostDetails = () => {
       },
       buttonsStyling: false
     });
-
     swalWithTailwind.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -50,14 +47,11 @@ const UsersPostDetails = () => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-
-
         fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
           .then(data => {
-
             setShowEdit(!showEdit)
             if (data.deletedCount > 0) {
               swalWithTailwind.fire({
@@ -65,13 +59,11 @@ const UsersPostDetails = () => {
                 text: "Your file has been deleted.",
                 icon: "success"
               });
-              navigate('/profile')
+              navigate('/')
               const remaining = postsData.filter(posts => posts._id != post._id)
               setPostsData(remaining)
             }
-
           })
-
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         swalWithTailwind.fire({
           title: "Cancelled",
@@ -80,8 +72,6 @@ const UsersPostDetails = () => {
         });
       }
     });
-
-
   } 
 
   const [like, setlike] = useState(0)
@@ -94,12 +84,12 @@ const UsersPostDetails = () => {
       <div className="md:w-full  shadow-xl border border-zinc-300 rounded-2xl md:rounded-3xl bg-white">
 
         {/* post author details  */}
-        <div className="md:px-5 md:py-3 p-2 flex justify-between items-center">
+        <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
           <Link to={`/profile`}>
             <div className="flex items-center gap-3">
               <div className="active:scale-95 transition-all cursor-pointer md:w-12 w-10 h-10 md:h-12 overflow-hidden rounded-full">
-                <img className="h-full object-cover rounded-full " src={post?.authorPhoto} alt="" />
+                <img className="h-full w-full object-cover rounded-full " src={post?.authorPhoto} alt="" />
               </div>
 
               <div>
@@ -185,11 +175,11 @@ const UsersPostDetails = () => {
         <hr className="text-zinc-300" />
 
         {/* comment container  */}
-        <form action="" className="md:p-4 p-2 flex justify-between items-center gap-5 md:gap-20">
+        <form action="" className="md:p-4 p-3 flex justify-between items-center gap-5 md:gap-20">
           <div className="flex items-center gap-4 w-full ">
             <Link to={`/profile`}>
-              <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
-                <img className="h-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+              <div className="cursor-pointer md:w-12 w-10 md:h-12 h-10 overflow-hidden rounded-full">
+                <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
               </div>
             </Link>
             <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />

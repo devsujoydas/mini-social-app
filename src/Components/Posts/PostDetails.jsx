@@ -1,9 +1,8 @@
 import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import { useContext, useState } from 'react'
 
 import { BiLike } from "react-icons/bi";
-import { MdEdit } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
 import { FaBookmark } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
@@ -14,82 +13,21 @@ import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6"; 
 
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 
-import Swal from 'sweetalert2';
-
 
 const PostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
-  const [likesCount, setlikesCount] = useState(0)
-
-  const post = useLoaderData()
-
+  
   const { userData, postsData, setPostsData } = useContext(AuthContext)
-  const navigate = useNavigate()
-
-
-
-  const deletePost = () => {
-
-    const swalWithTailwind = Swal.mixin({
-      customClass: {
-        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-      },
-      buttonsStyling: false
-    });
-
-    swalWithTailwind.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-
-
-        fetch(`http://localhost:3000/post/delete/${post._id}`, {
-          method: 'DELETE',
-        })
-          .then(res => res.json())
-          .then(data => {
-
-            setShowEdit(!showEdit)
-            if (data.deletedCount > 0) {
-              swalWithTailwind.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
-              navigate('/profile')
-              const remaining = postsData.filter(posts => posts._id != post._id)
-              setPostsData(remaining)
-            }
-
-          })
-
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithTailwind.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error"
-        });
-      }
-    });
-
-
-  } 
-
-  const [like, setlike] = useState(0)
+  const post = useLoaderData()
+  
   const [showEdit, setShowEdit] = useState(1)
+  const [like, setlike] = useState(0)
+  
 
   return (
     <div className='flex md:flex-row flex-col md:mt-5 mt-20 md:mx-0 mx-3 gap-5 md:ml-5 '>
@@ -98,7 +36,7 @@ const PostDetails = () => {
       <div className="md:w-full  shadow-xl border border-zinc-300 rounded-2xl md:rounded-3xl bg-white">
 
         {/* post author details  */}
-        <div className="md:px-5 md:py-3 p-2 flex justify-between items-center">
+        <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
           <Link to={`/profile`}>
             <div className="flex items-center gap-3">
@@ -156,13 +94,12 @@ const PostDetails = () => {
             {/* buttons  */}
             <div className="flex items-center md:gap-8 ">
 
-              <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
+              <button onClick={() => { setlike(!like)}} className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   {like ? <BiSolidLike /> : < BiLike />}
                 </div>
-                <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
+                <span className="flex items-center gap-2">{like ? "0" : "1"} <span className="hidden md:flex">Likes</span></span>
               </button>
-
 
               <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
@@ -171,15 +108,13 @@ const PostDetails = () => {
                 <span className="flex items-center gap-2">8 <span className="hidden md:flex">Comments</span></span>
               </button>
 
-
               <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   <PiShareFatBold />
                 </div>
                 <span className="flex items-center gap-2">5 <span className="hidden md:flex">Shares</span></span>
               </button>
-
-
+              
             </div>
 
             <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
@@ -189,10 +124,10 @@ const PostDetails = () => {
         <hr className="text-zinc-300" />
 
         {/* comment container  */}
-        <form action="" className="md:p-4 p-2 flex justify-between items-center gap-5 md:gap-20">
+        <form action="" className="md:p-4 p-3 flex justify-between items-center gap-5 md:gap-20">
           <div className="flex items-center gap-4 w-full ">
             <Link to={`/profile`}>
-              <div className="cursor-pointer md:w-12 w-8 md:h-12 h-8 overflow-hidden rounded-full">
+              <div className="cursor-pointer md:w-12 w-10 md:h-12 h-10 overflow-hidden rounded-full">
                 <img className="h-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
               </div>
             </Link>

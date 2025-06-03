@@ -12,7 +12,7 @@ const SearchBar = () => {
       </div>
 
       <button className="text-center md:w-fit w-2/3 flex justify-center items-center">
-        <Link to={`/profile`} className="lg:w-fit flex items-center md:gap-2 gap-1 bg-blue-700 hover:bg-blue-600 text-white md:text-md text-xs text-center md:px-6 px-4 py-2 md:py-3 rounded-full cursor-pointer active:scale-95 transition-all">Create Post <IoMdAdd className="md:text-2xl text-sm" /></Link>
+        <Link to={`/profile`} className="lg:w-fit flex items-center md:gap-2 gap-1 bg-blue-700 hover:bg-blue-600 text-white md:text-sm text-xs text-center md:px-6 px-4 py-2 md:py-3 rounded-full cursor-pointer active:scale-95 transition-all">Create Post <IoMdAdd className="md:text-2xl text-sm" /></Link>
       </button>
 
     </div>

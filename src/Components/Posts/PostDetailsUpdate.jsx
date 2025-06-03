@@ -16,9 +16,7 @@ const PostDetailsUpdate = () => {
     const lastUpdateDate = new Date();
 
     const postData = { postImageUrl, postContent, lastUpdateDate }
-    // console.log(postData)
 
-    // fetch(`http://localhost:3000/post/update/${post._id}`, {
     fetch(`http://localhost:3000/post/update/${post._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -27,7 +25,6 @@ const PostDetailsUpdate = () => {
       .then(res => res.json())
       .then(data => {
         navigate(-1)
-        console.log("Post Updated Successfully", data)
       })
 
   }
