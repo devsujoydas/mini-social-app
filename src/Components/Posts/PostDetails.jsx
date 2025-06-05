@@ -98,14 +98,14 @@ const PostDetails = () => {
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   {like ? <BiSolidLike /> : < BiLike />}
                 </div>
-                <span className="flex items-center gap-2">{like ? "0" : "1"} <span className="hidden md:flex">Likes</span></span>
+                <span className="flex items-center gap-2">{like ? "1" : "0"} <span className="hidden md:flex">Likes</span></span>
               </button>
 
               <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                   <BiCommentDots />
                 </div>
-                <span className="flex items-center gap-2">8 <span className="hidden md:flex">Comments</span></span>
+                <span className="flex items-center gap-2">0 <span className="hidden md:flex">Comments</span></span>
               </button>
 
               <button className={likeCommentStyle}>

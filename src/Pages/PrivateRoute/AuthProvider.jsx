@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
-   
+
 
 
 

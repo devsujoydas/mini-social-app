@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../PrivateRoute/AuthProvider'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 
@@ -7,10 +7,11 @@ const UpdateInfo = () => {
     const { user } = useContext(AuthContext)
     const loaderUser = useLoaderData()
     const navigate = useNavigate()
+    const [loadingSpiner, setLoadingSpiner] = useState(true)
 
     const submitHandler = async (e) => {
         e.preventDefault();
-
+        setLoadingSpiner(false)
         const name = e.target.name.value;
         const username = e.target.username.value;
         const email = user.email;
@@ -33,8 +34,11 @@ const UpdateInfo = () => {
             .then(res => res.json())
             .then(data => {
                 if (data) {
-                    console.log("Result from Backend: ", data)
-                    navigate(`/profile`)
+                    if (data.modifiedCount > 0) {
+
+                        console.log("Result from Backend: ", data)
+                        navigate(`/profile`)
+                    }
                 }
             })
     }
@@ -49,7 +53,7 @@ const UpdateInfo = () => {
 
                     <div className=''>
                         <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Username</label>
-                        <input disabled={true} defaultValue={loaderUser.username} required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 cursor-not-allowed" placeholder="Enter Username" />
+                        <input defaultValue={loaderUser.username} required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
                     </div>
 
                     <div className=''>
@@ -97,11 +101,10 @@ const UpdateInfo = () => {
                 </div>
 
 
-                <div className="mt-8">
-                    <button type="submit" className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer active:scale-95 transition-all">
-                        Update
-                    </button>
-                </div>
+                <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
+                    <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
+                    <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
+                </button>
 
             </form>
         </div>

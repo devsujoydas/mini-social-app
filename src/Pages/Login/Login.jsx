@@ -5,10 +5,60 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 const Login = () => {
     const navigate = useNavigate()
-    const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
+    const { signInWithGoogle, logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
     const [show, setShow] = useState(0)
-
     const [loadingSpiner, setLoadingSpiner] = useState(true)
+
+    const logInWithGoogle = () => {
+        signInWithGoogle()
+            .then((result) => {
+
+
+                console.log(result)
+                if (!result.user) return
+                setUser(result.user)
+
+                const name = result.user.displayName;
+                const username = "";
+                const email = result.user.email;
+                const password = "";
+                const address = "";
+                const bio = "";
+                const profilephotourl = "";
+                const coverphotourl = "";
+                const phone = "";
+                const website = "";
+                const posts = [];
+                const createdDate = new Date();
+
+                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+
+                if (result.user) {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+
+                            console.log(data)
+                            if (data.data = "This email is already taken") {
+                                console.log("Result from Backend: ", data)
+                                navigate("/profile")
+                            }
+                            if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                                navigate("/profile")
+                            }
+                        })
+                }
+
+            }).catch((err) => {
+                console.log(err)
+            });
+    }
+
 
 
     const submitHandler = async (e) => {
@@ -18,7 +68,6 @@ const Login = () => {
         setLoadingSpiner(false)
         logInUser(email, password)
             .then((result) => {
-                console.log(result)
                 fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
                     .then(res => res.json())
                     .then(data => {
@@ -66,7 +115,7 @@ const Login = () => {
 
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center ">
-                                        <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
+                                        <input required id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
                                         <label htmlFor="remember-me" className="text-black font-semibold ml-3 block text-sm cursor-pointer">Remember me
                                         </label>
                                     </div>
@@ -86,7 +135,7 @@ const Login = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
                                 <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
                                 <h1 className="text-black font-medium ">Sign in with Google</h1>
                             </button>
@@ -101,8 +150,9 @@ const Login = () => {
                 </div>
             </div>
 
-            <div className="md:col-span-1 hidden h-screen md:flex justify-center items-center p-8">
+            <div className="md:col-span-1 hidden h-screen md:flex justify-center items-center">
                 <img className="" src="./login.png" alt="" />
+                {/* <img className="rounded-2xl" src="https://demos.creative-tim.com/material-tailwind-dashboard-react/img/pattern.png" alt="" /> */}
             </div>
 
         </div>

@@ -25,6 +25,9 @@ const FriendPost = ({ post, friend }) => {
     const [like, setlike] = useState(1)
     const [showEdit, setShowEdit] = useState(1)
     const { userData } = useContext(AuthContext)
+
+
+    
   
     return (
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
@@ -34,7 +37,7 @@ const FriendPost = ({ post, friend }) => {
 
                 <div className="flex items-center gap-3">
                     <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-                        <img className="object-cover h-full rounded-full " src={post.authorPhoto} alt="" />
+                        <img className="object-cover w-full h-full rounded-full " src={post.authorPhoto} alt="" />
                     </div>
 
                     <div>

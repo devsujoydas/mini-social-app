@@ -39,8 +39,7 @@ const PostForm = () => {
       body: JSON.stringify(postData)
     })
       .then(res => res.json())
-      .then(data => {
-        // console.log(data.result.insertedId)
+      .then(data => { 
 
         if (data.result.insertedId) {
           Swal.fire({

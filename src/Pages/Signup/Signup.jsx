@@ -8,10 +8,61 @@ import { FaRegEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
     const navigate = useNavigate()
-    const { signUpUser, setUser } = useContext(AuthContext)
+    const { signInWithGoogle, signUpUser, setUser } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
 
+
+    const logInWithGoogle = () => {
+        signInWithGoogle()
+            .then((result) => {
+
+                if (!result.user) return
+                setUser(result.user)
+
+                const name = result.user.displayName;
+                const username = "";
+                const email = result.user.email;
+                const password = "";
+                const address = "";
+                const bio = "";
+                const profilephotourl = "";
+                const coverphotourl = "";
+                const phone = "";
+                const website = "";
+                const posts = [];
+                const createdDate = new Date();
+
+                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+
+                if (result.user) {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+
+                            console.log(data)
+                            if (data.data = "This email is already taken") {
+                                console.log("Result from Backend: ", data)
+                                navigate("/profile")
+                            }
+                            if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                                navigate("/profile")
+                            }
+                        })
+                }
+
+            }).catch((err) => {
+                console.log(err)
+            });
+
+
+
+    }
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -28,6 +79,7 @@ const Signup = () => {
         const website = "";
         const posts = [];
         const createdDate = new Date();
+
 
 
         signUpUser(email, password)
@@ -123,7 +175,7 @@ const Signup = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
                                 <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
                                 <h1 className="text-black font-medium ">Sign in with Google</h1>
                             </button>

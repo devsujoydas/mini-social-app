@@ -38,38 +38,80 @@ const ProfileSidebar = () => {
       confirmButtonText: "Yes, delete account!",
       cancelButtonText: "No, cancel!",
       reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
 
-        deleteAccount()
-        navigate("/login")
+          deleteAccount()
+          navigate("/login")
 
-        swalWithTailwind.fire({
-          title: "Account Deleted!",
-          text: "Your account has been deleted.",
-          icon: "success"
-        })
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithTailwind.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error"
-        });
-      }
-    });
+          swalWithTailwind.fire({
+            title: "Account Deleted!",
+            text: "Your account has been deleted.",
+            icon: "success"
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithTailwind.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+          });
+        }
+      });
 
 
   }
 
   const signOutHander = () => {
-    signOutUser()
-      .then(() => {
-        console.log("Sign Out Successfull");
-      })
-      .catch((error) => {
-        console.log(error.message);
+
+
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+    swalWithTailwind.fire({
+      title: "Logout! Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Logout!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          signOutUser()
+            .then(() => {
+              console.log("Sign Out Successfull");
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
+          navigate("/login")
+
+          swalWithTailwind.fire({
+            title: "Logout!",
+            text: "Logout Successfully.",
+            icon: "success"
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithTailwind.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+          });
+        }
       });
-    navigate("/login")
+
+
+
+
+
+
+
   }
 
   return (
@@ -80,7 +122,7 @@ const ProfileSidebar = () => {
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
 
 
-          <div style={{ backgroundImage: `url(${userData?.coverphotourl})` }} className=" h-45 w-full bg-center bg-cover absolute top-0">
+          <div style={{ backgroundImage: `url(${userData?.coverphotourl ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className=" h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
 
               <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
@@ -122,14 +164,14 @@ const ProfileSidebar = () => {
               <h1 className="md:text-lg font-medium text-zinc-500">Post</h1>
             </div>
             <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
-              <Link to={'/friends'}>
-                <h1 className="md:text-xl font-semibold">0</h1>
-                <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Friends</h1>
-              </Link>
+
+              <h1 className="md:text-xl font-semibold">0</h1>
+              <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Friends</h1>
+
             </div>
             <div className="text-center">
               <h1 className="md:text-xl font-semibold">0</h1>
-              <h1 className="md:text-lg font-medium text-zinc-500">Follo  wing</h1>
+              <h1 className="md:text-lg font-medium text-zinc-500">Following</h1>
             </div>
           </div>
 
