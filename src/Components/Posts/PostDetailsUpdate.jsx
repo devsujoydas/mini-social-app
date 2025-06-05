@@ -17,7 +17,7 @@ const PostDetailsUpdate = () => {
 
     const postData = { postImageUrl, postContent, lastUpdateDate }
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/update/${post._id}`, {
+    fetch(`http://localhost:3000/post/update/${post._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)

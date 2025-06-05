@@ -17,7 +17,7 @@ const Login = () => {
     logInUser(email, password)
       .then((result) => {
         console.log(result)
-        fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
+        fetch(`http://localhost:3000/profile/${result.user.email}`)
           .then(res => res.json())
           .then(data => {
             console.log(data)

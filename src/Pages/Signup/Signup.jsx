@@ -11,15 +11,14 @@ const Signup = () => {
     const { signInWithGoogle, signUpUser, setUser } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
-
+    const [userStatus, setUserStatus] = useState("")
 
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
-
                 if (!result.user) return
                 setUser(result.user)
-
+                navigate("/profile")
                 const name = result.user.displayName;
                 const username = "";
                 const email = result.user.email;
@@ -32,80 +31,74 @@ const Signup = () => {
                 const website = "";
                 const posts = [];
                 const createdDate = new Date();
-
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
                     })
                         .then(res => res.json())
                         .then(data => {
-
                             console.log(data)
-                            if (data.data = "This email is already taken") {
-                                console.log("Result from Backend: ", data)
-                                navigate("/profile")
-                            }
                             if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                            }
+                            if (data.data = "This email Existed") {
                                 console.log("Result from Backend: ", data)
                                 navigate("/profile")
                             }
                         })
                 }
-
             }).catch((err) => {
                 console.log(err)
             });
-
-
-
-    }
-
-    const submitHandler = async (e) => {
-        e.preventDefault();
-        setLoadingSpiner(false)
-        const name = e.target.name.value;
-        const username = e.target.username.value;
-        const email = e.target.email.value;
-        const password = e.target.password.value;
-        const address = "";
-        const bio = "";
+        }
+        
+        const submitHandler = async (e) => {
+            e.preventDefault();
+            setLoadingSpiner(false)
+            const name = e.target.name.value;
+            const username = e.target.username.value;
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+            const address = "";
+            const bio = "";
         const profilephotourl = "";
         const coverphotourl = "";
         const phone = "";
         const website = "";
         const posts = [];
         const createdDate = new Date();
-
-
-
+        
+        
+        
         signUpUser(email, password)
-            .then((result) => {
-
-                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
-                setUser(result.user)
-
-                if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.insertedId) {
-                                console.log("Result from Backend: ", data)
-                                navigate("/login")
-                            }
-                        })
-                }
-            })
-            .catch((error) => {
-                console.log(error.message);
+        .then((result) => {
+            
+            const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+            
+            setUser(result.user)
+            
+            if (result.user) {
+                fetch(`http://localhost:3000/signup`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        console.log("Result from Backend: ", data)
+                        navigate("/login")
+                    }
+                })
+            }
+        })
+        .catch((err) => {
+            console.log(err.message);
+            setUserStatus(err.message)
+              setLoadingSpiner(true)
             });
 
     };
@@ -162,6 +155,13 @@ const Signup = () => {
                                         <label htmlFor="remember-me" className="text-black font-semibold ml-3 block text-sm cursor-pointer">Remember me
                                         </label>
                                     </div>
+                                </div>
+
+                                <div>
+                                    {userStatus
+                                        &&
+                                        <h1 className="text-sm text-red-500 text-center font-semibold">{userStatus}</h1> 
+                                    }
                                 </div>
 
                                 <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>

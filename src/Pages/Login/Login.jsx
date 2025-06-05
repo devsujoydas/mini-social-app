@@ -8,58 +8,51 @@ const Login = () => {
     const { signInWithGoogle, logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
+    const [userStatus, setUserStatus] = useState("")
 
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
 
-
                 console.log(result)
                 if (!result.user) return
                 setUser(result.user)
-
                 const name = result.user.displayName;
                 const username = "";
                 const email = result.user.email;
                 const password = "";
                 const address = "";
                 const bio = "";
-                const profilephotourl = "";
+                const profilephotourl = result.user.photoURL;
                 const coverphotourl = "";
                 const phone = "";
                 const website = "";
                 const posts = [];
                 const createdDate = new Date();
-
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
+                navigate("/profile")
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
                     })
                         .then(res => res.json())
                         .then(data => {
-
                             console.log(data)
-                            if (data.data = "This email is already taken") {
-                                console.log("Result from Backend: ", data)
-                                navigate("/profile")
-                            }
                             if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                            }
+                            if (data.data = "This email Existed") {
                                 console.log("Result from Backend: ", data)
                                 navigate("/profile")
                             }
                         })
                 }
-
             }).catch((err) => {
                 console.log(err)
             });
     }
-
-
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -68,7 +61,7 @@ const Login = () => {
         setLoadingSpiner(false)
         logInUser(email, password)
             .then((result) => {
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
+                fetch(`http://localhost:3000/profile/${result.user.email}`)
                     .then(res => res.json())
                     .then(data => {
                         setUserData(data)
@@ -76,9 +69,12 @@ const Login = () => {
                 setUser(result.user)
                 navigate(`/profile`)
             })
-            .catch((error) => {
+            .catch((err) => {
+                console.log(err.message);
+                setUserStatus(err.message)
                 setLoading(false)
-                console.log(error.message);
+                setLoadingSpiner(true)
+
             });
     }
 
@@ -98,7 +94,7 @@ const Login = () => {
                             <p className="text-sm">Please fill your details to access your account.</p>
                         </div>
                         <div className="flex  justify-center flex-col gap-5  items-center">
-                            <form onSubmit={submitHandler} className="w-full space-y-5">
+                            <form onSubmit={submitHandler} className="w-full space-y-4">
 
                                 <div>
                                     <label className="text-slate-800 text-sm font-medium mb-1 block">Email</label>
@@ -124,7 +120,15 @@ const Login = () => {
                                     </div>
                                 </div>
 
-                                <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
+                                <div>
+                                    {userStatus
+                                        &&
+                                        <h1 className="text-sm text-red-500 text-center font-semibold">{userStatus}</h1>
+                                    }
+                                </div>
+
+                                <button type="submit"
+                                    className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
                                     <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
                                     <p className={`${loadingSpiner ? "block" : "hidden"}`}>Login</p>
                                 </button>
@@ -135,7 +139,8 @@ const Login = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                            <button
+                                onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
                                 <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
                                 <h1 className="text-black font-medium ">Sign in with Google</h1>
                             </button>
