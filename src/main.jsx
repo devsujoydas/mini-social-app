@@ -65,9 +65,9 @@ const router = createBrowserRouter([
         loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/friends/${params.id}`)
       },
       {
-        path: "/chat",
+        path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/friends/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/message/${params.id}`)
       },
     ]
   },

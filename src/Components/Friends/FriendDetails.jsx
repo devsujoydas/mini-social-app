@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useLoaderData, useParams } from 'react-router-dom'
+import { Link, useLoaderData, useParams } from 'react-router-dom'
 import FriendPost from './FriendPost';
 import AllFriends from './AllFriends';
 import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
@@ -7,7 +7,7 @@ import Loading from '../Loading/Loading';
 import { RiUserFollowFill } from "react-icons/ri";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import Swal from "sweetalert2";
-
+import { LuMessageCircleMore } from "react-icons/lu";
 
 const FriendDetails = () => {
     const { friendsData, postsData } = useContext(AuthContext)
@@ -78,19 +78,19 @@ const FriendDetails = () => {
                                 <div className='md:h-96 rounded-lg border border-zinc-300 h-50 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center' style={{ backgroundImage: `url(${friend?.coverphotourl ? friend?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png "})` }}>
                                 </div>
 
-                                <div className=' flex md:gap-5 gap-2 items-center'>
+                                <div className=' flex md:gap-5 items-center'>
 
-                                    <div className='md:ml-30 ml-2'>
+                                    <div className='md:ml-10 ml-2'>
                                         <div className='md:w-50 w-30 md:h-50 outline outline-zinc-300 bg-white h-30 border-4 border-white md:-mt-23 -mt-14  rounded-full  bg-no-repeat bg-cover bg-center'
                                             style={{ backgroundImage: `url(${friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"})` }}></div>
                                     </div>
                                     <div className='flex items-center flex-col md:flex-row md:gap-5'>
-                                        <div className='mt-3'>
-                                            <h1 className='md:text-2xl text-xl font-semibold'>{friend?.name}</h1>
+                                        <div className='md:mt-3 mt-1'>
+                                            <h1 className='md:text-2xl md:text-xl  font-semibold'>{friend?.name}</h1>
                                             <h1 className='md:text-md text-sm'>@{friend?.username}</h1>
                                         </div>
 
-                                        <div className='md:mt-4 mt-2'>
+                                        <div className='md:mt-4 mt-2 flex justify-center items-center gap-2'>
                                             <button>
                                                 {follow
                                                     ?
@@ -99,6 +99,7 @@ const FriendDetails = () => {
                                                     <p onClick={() => unFriend()} className='follow-btn'><RiUserUnfollowFill />Unfriend</p>
                                                 }
                                             </button>
+                                            <Link to={`/message/${friend?.username}`} className='follow-btn'><LuMessageCircleMore />Message</Link>
                                         </div>
                                     </div>
                                 </div>
