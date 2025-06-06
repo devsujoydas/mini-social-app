@@ -33,7 +33,7 @@ const Signup = () => {
                 const createdDate = new Date();
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
                 if (result.user) {
-                    fetch(`http://localhost:3000/signinwithgoogle`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -81,7 +81,7 @@ const Signup = () => {
             setUser(result.user)
             
             if (result.user) {
-                fetch(`http://localhost:3000/signup`, {
+                fetch(`https://mini-social-app-backend.vercel.app/signup`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
