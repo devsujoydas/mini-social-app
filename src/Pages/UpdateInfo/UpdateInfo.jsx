@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { AuthContext } from '../PrivateRoute/AuthProvider'
 import { useLoaderData, useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 const UpdateInfo = () => {
 
@@ -9,49 +8,6 @@ const UpdateInfo = () => {
     const loaderUser = useLoaderData()
     const navigate = useNavigate()
     const [loadingSpiner, setLoadingSpiner] = useState(true)
-
-    
-    const accountDeleteHandle = () => {
-        const swalWithTailwind = Swal.mixin({
-            customClass: {
-                confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-                cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-            },
-            buttonsStyling: false
-        });
-
-        swalWithTailwind.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete account!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: true
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-
-                    deleteAccount()
-                    navigate("/login")
-
-                    swalWithTailwind.fire({
-                        title: "Account Deleted!",
-                        text: "Your account has been deleted.",
-                        icon: "success"
-                    })
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithTailwind.fire({
-                        title: "Cancelled",
-                        text: "Your imaginary file is safe :)",
-                        icon: "error"
-                    });
-                }
-            });
-
-
-    }
-
 
     const submitHandler = async (e) => {
         e.preventDefault();

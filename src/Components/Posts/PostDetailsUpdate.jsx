@@ -3,6 +3,7 @@ import { VscSend } from "react-icons/vsc";
 import { FaRegSmile } from "react-icons/fa";
 import { IoMicOutline } from "react-icons/io5";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PostDetailsUpdate = () => {
   const post = useLoaderData()
@@ -17,19 +18,58 @@ const PostDetailsUpdate = () => {
 
     const postData = { postImageUrl, postContent, lastUpdateDate }
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/update/${post._id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(postData)
+
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+
+    swalWithTailwind.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Update!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
     })
-      .then(res => res.json())
-      .then(data => {
-        navigate(-1)
-      })
+      .then((result) => {
+        if (result.isConfirmed) {
+
+          fetch(`https://mini-social-app-backend.vercel.app/post/update/${post._id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postData)
+          })
+            .then(res => res.json())
+            .then(data => {
+              navigate(-1)
+            })
+
+          swalWithTailwind.fire({
+            title: "Post Updated!",
+            text: "Post Updated Successfully.",
+            icon: "success"
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithTailwind.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+          });
+        }
+      });
+
+
+
+
 
   }
 
-  
+
   return (
     <div className="md:mt-10 mt-23 md:mx-10 mx-5 flex justify-center gap-5 md:flex-row flex-col">
 
@@ -52,7 +92,7 @@ const PostDetailsUpdate = () => {
 
 
             <label className="w-full" htmlFor="">Content</label>
-            <textarea defaultValue={post?.postContent} required name="postContent" type="text" className="outline-none p-2 bg-white  border border-zinc-300 rounded-sm w-full  " placeholder="Whats on your mind right now?"></textarea>
+            <input defaultValue={post?.postContent} required name="postContent" type="text" className="outline-none p-2 bg-white  border border-zinc-300 rounded-sm w-full pb-4  " placeholder="Whats on your mind right now?"></input>
           </div>
 
           <div className="flex items-center justify-end gap-2 ">
