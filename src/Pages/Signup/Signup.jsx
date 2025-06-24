@@ -53,52 +53,52 @@ const Signup = () => {
             }).catch((err) => {
                 console.log(err)
             });
-        }
-        
-        const submitHandler = async (e) => {
-            e.preventDefault();
-            setLoadingSpiner(false)
-            const name = e.target.name.value;
-            const username = e.target.username.value;
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            const address = "";
-            const bio = "";
+    }
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        setLoadingSpiner(false)
+        const name = e.target.name.value;
+        const username = e.target.username.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const address = "";
+        const bio = "";
         const profilephotourl = "";
         const coverphotourl = "";
         const phone = "";
         const website = "";
         const posts = [];
         const createdDate = new Date();
-        
-        
-        
+
+
+
         signUpUser(email, password)
-        .then((result) => {
-            
-            const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-            
-            setUser(result.user)
-            
-            if (result.user) {
-                fetch(`https://mini-social-app-backend.vercel.app/signup`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.insertedId) {
-                        console.log("Result from Backend: ", data)
-                        navigate("/login")
-                    }
-                })
-            }
-        })
-        .catch((err) => {
-            console.log(err.message);
-            setUserStatus(err.message)
-              setLoadingSpiner(true)
+            .then((result) => {
+
+                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+
+                setUser(result.user)
+
+                if (result.user) {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.insertedId) {
+                                console.log("Result from Backend: ", data)
+                                navigate("/profile")
+                            }
+                        })
+                }
+            })
+            .catch((err) => {
+                console.log(err.message);
+                setUserStatus(err.message)
+                setLoadingSpiner(true)
             });
 
     };
@@ -160,7 +160,7 @@ const Signup = () => {
                                 <div>
                                     {userStatus
                                         &&
-                                        <h1 className="text-sm text-red-500 text-center font-semibold">{userStatus}</h1> 
+                                        <h1 className="text-sm text-red-500 text-center font-semibold">{userStatus}</h1>
                                     }
                                 </div>
 
