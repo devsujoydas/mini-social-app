@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
-
+import { MdEdit } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
@@ -12,6 +12,8 @@ import { FaUserEdit } from "react-icons/fa";
 import { FaUserSlash } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
+import { IoClose } from "react-icons/io5";
+
 
 const ProfileSidebar = () => {
   const { user, signOutUser, userData, postsData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
@@ -19,6 +21,11 @@ const ProfileSidebar = () => {
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
+
+  const [loadingSpiner, setLoadingSpiner] = useState(true)
+
+  const [messageStatus, setMessageStatus] = useState(false)
+  const [usernameMessage, setUsernameMessage] = useState("This username already existed")
 
 
   const accountDeleteHandle = () => {
@@ -105,24 +112,51 @@ const ProfileSidebar = () => {
           });
         }
       });
+  }
 
 
 
-
-
-
+  const updateUsernameHandler = () => {
 
   }
 
   return (
-    <div className="space-y-6 relative h-full ">
+    <div className=" space-y-6 relative h-full ">
+
+
+      <div className={messageStatus ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 flex justify-center items-center " : "hidden"}>
+
+        <div className="relative border max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
+          <button className="absolute top-3 right-3">
+            <IoClose onClick={() => setMessageStatus(!messageStatus)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
+          </button>
+
+          <form action="" className="">
+
+            <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
+            <div className='mb-2'>
+              <input defaultValue={userData.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
+              <p className={messageStatus ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
+            </div>
+
+            <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
+              <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
+              <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+
+
 
       <div className="sticky top-0 ">
         {/* profile section  */}
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
 
 
-          <div style={{ backgroundImage: `url(${userData?.coverphotourl ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className=" h-45 w-full bg-center bg-cover absolute top-0">
+          <div style={{ backgroundImage: `url(${userData?.coverphotourl ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
 
               <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
@@ -153,13 +187,21 @@ const ProfileSidebar = () => {
 
           <div className=" text-center md:-mt-5 space-y-1">
             <h1 className="font-semibold text-xl">{userData ? `${userData?.name}` : "Your Name"}</h1>
-            <h1 className="">@{userData ? `${userData?.username}` : "username"}</h1>
+            <div className="flex justify-between items-center gap-1 ">
+              <p className="w-full"></p>
+
+              <h1 className="w-full">@{userData ? `${userData?.username}` : "username"}</h1>
+
+              <div className="w-full">
+                <MdEdit onClick={() => setMessageStatus(!messageStatus)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
+              </div>
+
+            </div>
             <p className="text-zinc-500">{userData?.address == "" ? "Address" : userData?.address}</p>
           </div>
 
           <div className=" flex justify-center items-center gap-5">
             <div className="text-center">
-              {/* <h1 className="text-2xl font-semibold">{posts.length}</h1> */}
               <h1 className="md:text-xl font-semibold">{usersPostsData?.length}</h1>
               <h1 className="md:text-lg font-medium text-zinc-500">Post</h1>
             </div>

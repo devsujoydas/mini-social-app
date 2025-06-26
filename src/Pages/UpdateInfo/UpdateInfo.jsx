@@ -9,6 +9,10 @@ const UpdateInfo = () => {
     const navigate = useNavigate()
     const [loadingSpiner, setLoadingSpiner] = useState(true)
 
+    const [Message, setMessage] = useState()
+    const [usernameMessage, setUsernameMessage] = useState()
+
+
     const submitHandler = async (e) => {
         e.preventDefault();
         setLoadingSpiner(false)
@@ -26,16 +30,24 @@ const UpdateInfo = () => {
 
         console.log("formData", formData)
 
-        fetch(`https://mini-social-app-backend.vercel.app/update`, {
+        fetch(`http://localhost:3000/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         })
             .then(res => res.json())
             .then(data => {
+
+                console.log(data.message)
+                if (data.message == "This username already existed") {
+                    setMessage(true)
+                    setUsernameMessage(data.message)
+                    setLoadingSpiner(true)
+                    return
+                }
+
                 if (data) {
                     if (data.modifiedCount > 0) {
-
                         console.log("Result from Backend: ", data)
                         navigate(`/profile`)
                     }
@@ -53,17 +65,18 @@ const UpdateInfo = () => {
 
                     <div className=''>
                         <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Username</label>
-                        <input defaultValue={loaderUser.username} required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
+                        <input defaultValue={loaderUser.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
+                        <p className={Message ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
                     </div>
 
                     <div className=''>
                         <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Email</label>
-                        <input disabled={true} defaultValue={loaderUser.email} required type="email" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 cursor-not-allowed" placeholder="Enter email" />
+                        <input disabled={true} defaultValue={loaderUser.email} type="email" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 cursor-not-allowed" placeholder="Enter email" />
                     </div>
 
                     <div>
                         <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Name</label>
-                        <input defaultValue={loaderUser.name} required name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
+                        <input defaultValue={loaderUser.name} name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
                     </div>
 
                     <div>

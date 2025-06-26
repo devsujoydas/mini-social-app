@@ -32,7 +32,7 @@ const Login = () => {
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
                 navigate("/profile")
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -61,7 +61,7 @@ const Login = () => {
         setLoadingSpiner(false)
         logInUser(email, password)
             .then((result) => {
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
+                fetch(`http://localhost:3000/profile/${result.user.email}`)
                     .then(res => res.json())
                     .then(data => {
                         setUserData(data)
