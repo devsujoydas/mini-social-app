@@ -23,9 +23,9 @@ const ProfileSidebar = () => {
   const navigate = useNavigate()
 
   const [loadingSpiner, setLoadingSpiner] = useState(true)
-
-  const [messageStatus, setMessageStatus] = useState(false)
-  const [usernameMessage, setUsernameMessage] = useState("This username already existed")
+  const [showUsernameModal, setshowUsernameModal] = useState(false)
+  const [messageStatus, setMessageStatus] = useState(true)
+  const [usernameMessage, setUsernameMessage] = useState("")
 
 
   const accountDeleteHandle = () => {
@@ -116,7 +116,37 @@ const ProfileSidebar = () => {
 
 
 
-  const updateUsernameHandler = () => {
+  const updateUsernameHandler = (e) => {
+    e.preventDefault()
+    setLoadingSpiner(false)
+    const username = e.target.username.value
+    const formData = { username }
+
+    fetch(`http://localhost:3000/updateUsername`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+
+        if (data.message == "This username already existed") {
+          console.log(data.message)
+          setUsernameMessage(data.message)
+          setLoadingSpiner(true)
+          return
+        }
+        if (data) {
+          if (data.modifiedCount > 0) {
+            console.log("Result from Backend: ", data)
+            navigate(`/profile`)
+          }
+        }
+      })
+
+
+    console.log("uusernameMessage", usernameMessage)
 
   }
 
@@ -124,19 +154,20 @@ const ProfileSidebar = () => {
     <div className=" space-y-6 relative h-full ">
 
 
-      <div className={messageStatus ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 flex justify-center items-center " : "hidden"}>
+      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 flex justify-center items-center " : "hidden"}>
 
         <div className="relative border max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
           <button className="absolute top-3 right-3">
-            <IoClose onClick={() => setMessageStatus(!messageStatus)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
+            <IoClose onClick={() => setshowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
           </button>
 
-          <form action="" className="">
+          <form onSubmit={(e) => updateUsernameHandler(e)} className="">
 
             <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
             <div className='mb-2'>
               <input defaultValue={userData.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
-              <p className={messageStatus ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
+
+              <p className={usernameMessage ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
             </div>
 
             <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
@@ -193,7 +224,7 @@ const ProfileSidebar = () => {
               <h1 className="w-full">@{userData ? `${userData?.username}` : "username"}</h1>
 
               <div className="w-full">
-                <MdEdit onClick={() => setMessageStatus(!messageStatus)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
+                <MdEdit onClick={() => setshowUsernameModal(!showUsernameModal)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
               </div>
 
             </div>
