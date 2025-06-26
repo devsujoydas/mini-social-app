@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link, useLoaderData, useParams } from 'react-router-dom'
 import FriendPost from './FriendPost';
 import AllFriends from './AllFriends';
-import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import Loading from '../Loading/Loading';
 import { RiUserFollowFill } from "react-icons/ri";
 import { RiUserUnfollowFill } from "react-icons/ri";

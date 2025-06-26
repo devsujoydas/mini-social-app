@@ -6,7 +6,7 @@ import { IoMenu } from "react-icons/io5";
 import { useContext, useState } from "react";
 import Nav from "./Nav";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 
 const Navbar = () => {

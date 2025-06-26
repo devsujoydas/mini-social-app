@@ -2,7 +2,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu"
 import { LuBell } from "react-icons/lu";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext } from "react";
 
 const SideNavbar = () => {

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { Link } from "react-router-dom";
 
 import { BiLike } from "react-icons/bi";

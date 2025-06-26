@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import Friend from './Friend'
-import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider'
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
 
 const Friends = () => {
     const { friendsData } = useContext(AuthContext)

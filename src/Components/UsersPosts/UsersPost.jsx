@@ -16,7 +16,7 @@ import { IoSettings } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 const UsersPost = ({ post }) => {
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 md:py-1.5 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"

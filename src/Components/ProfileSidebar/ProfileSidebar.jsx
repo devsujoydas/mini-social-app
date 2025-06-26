@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { MdOutlineArrowOutward } from "react-icons/md";

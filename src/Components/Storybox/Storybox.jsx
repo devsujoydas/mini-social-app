@@ -4,7 +4,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import { FreeMode, Autoplay, Pagination } from 'swiper/modules'
-import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useContext } from 'react';
 
 const Storybox = () => {

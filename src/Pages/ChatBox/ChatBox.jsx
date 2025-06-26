@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { Link, useLoaderData } from "react-router-dom"
-import { AuthContext } from "../PrivateRoute/AuthProvider"
+import { AuthContext } from "../../AuthProvider/AuthProvider"
 import AllFriends from "./AllFriends"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";

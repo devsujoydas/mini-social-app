@@ -2,7 +2,7 @@ import { FaRegSmile } from "react-icons/fa"
 import { VscSend } from "react-icons/vsc"
 import { IoMicOutline } from "react-icons/io5";
 import { useContext } from "react";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 

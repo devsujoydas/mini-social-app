@@ -16,7 +16,7 @@ import { RiUserUnfollowFill } from "react-icons/ri";
 import { MdReport } from "react-icons/md";
 import { RiUserForbidFill } from "react-icons/ri";
 
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 
 const FriendPost = ({ post, friend }) => {

@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom"
-import { AuthContext } from "../PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -12,6 +12,8 @@ const Signup = () => {
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
     const [userStatus, setUserStatus] = useState("")
+    const [passStatus, setPassStatus] = useState(false)
+    const [passMessage, setPassMessage] = useState()
 
     const logInWithGoogle = () => {
         signInWithGoogle()
@@ -58,10 +60,11 @@ const Signup = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         setLoadingSpiner(false)
-        const name = e.target.name.value;
-        const username = e.target.username.value;
+        const name = "";
+        const username = "";
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const conPassword = e.target.conPassword.value;
         const address = "";
         const bio = "";
         const profilephotourl = "";
@@ -71,7 +74,12 @@ const Signup = () => {
         const posts = [];
         const createdDate = new Date();
 
-
+        if (password != conPassword) {
+            setLoadingSpiner(true)
+            setPassStatus(true)
+            setPassMessage("Password is not matched")
+            return
+        }
 
         signUpUser(email, password)
             .then((result) => {
@@ -107,8 +115,6 @@ const Signup = () => {
     return (
         <div className="font-family-primary min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
-
-
             <div className="md:col-span-1 h-screen p-8  ">
                 <div className="">
                     <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
@@ -125,21 +131,11 @@ const Signup = () => {
 
                         <div className="flex  justify-center flex-col gap-5  items-center">
                             <form onSubmit={submitHandler} className="w-full space-y-3 md:space-y-5">
-                                <div className="grid md:grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="text-slate-800 text-sm font-medium mb-2 block">Name</label>
-                                        <input required name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-800 text-sm font-medium mb-2 block">Username</label>
-                                        <input required name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Username" />
-                                    </div>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-3">
+                                <div className="grid gap-3">
                                     <div>
                                         <label className="text-slate-800 text-sm font-medium mb-2 block">Email</label>
                                         <input required name="email" type="email" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter email" />
+                                        <p className={`hidden mt-2 text-sm text-red-700 font-semibold`} >This email was already taken.</p>
                                     </div>
                                     <div className="relative">
                                         <label className="text-slate-800 text-sm font-medium mb-2 block">Password</label>
@@ -148,10 +144,18 @@ const Signup = () => {
                                             {show ? <FaRegEye /> : <FaRegEyeSlash />}
                                         </div>
                                     </div>
+                                    <div className="relative">
+                                        <label className="text-slate-800 text-sm font-medium mb-2 block">Confirm Password</label>
+                                        <input required name="conPassword" type={show ? "text" : "password"} className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Confirm password" />
+                                        <div onClick={() => setShow(!show)} className="text-xl absolute bottom-3 right-3 cursor-pointer active:scale-95 transition-all">
+                                            {show ? <FaRegEye /> : <FaRegEyeSlash />}
+                                        </div>
+                                    </div>
+                                    <p className={passStatus ? `-mt-2 text-sm text-red-700 font-semibold` : "hidden"} >{passMessage}</p>
                                 </div>
                                 <div className="flex justify-between items-center">
                                     <div className="flex items-center ">
-                                        <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
+                                        <input required id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" />
                                         <label htmlFor="remember-me" className="text-black font-semibold ml-3 block text-sm cursor-pointer">Remember me
                                         </label>
                                     </div>
@@ -175,7 +179,7 @@ const Signup = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                            <button disabled onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
                                 <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
                                 <h1 className="text-black font-medium ">Sign in with Google</h1>
                             </button>
@@ -187,15 +191,15 @@ const Signup = () => {
                         </div>
                     </div>
 
-                </div>
-            </div>
+                </div >
+            </div >
 
             <div className="md:col-span-1 md:flex justify-center items-center hidden  h-screen  p-8">
                 {/* <img className="h-full  " src="./Login Art.png" alt="" /> */}
                 <img className="h-4/4 w-4/4 object-cover " src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?t=st=1748958638~exp=1748962238~hmac=9aab7eaf214925c686d58b02948a12d86b2e30f4f85c836aa9cccfff16da7ae0&w=1380" alt="" />
             </div>
 
-        </div>
+        </div >
     )
 }
 

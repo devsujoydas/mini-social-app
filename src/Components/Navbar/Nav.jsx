@@ -6,7 +6,7 @@ import { IoHome } from "react-icons/io5";
 import { FaTicketAlt } from "react-icons/fa";
 
 import { NavLink } from "react-router-dom";
-import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider';
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import { useContext } from 'react';
 
 const Nav = () => {

@@ -1,7 +1,7 @@
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../Pages/PrivateRoute/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { useContext, useState } from "react";
 
 

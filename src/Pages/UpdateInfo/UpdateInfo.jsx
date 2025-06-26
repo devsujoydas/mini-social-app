@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { AuthContext } from '../PrivateRoute/AuthProvider'
+import { AuthContext } from '../../AuthProvider/AuthProvider'
 import { useLoaderData, useNavigate } from 'react-router-dom'
 
 const UpdateInfo = () => {

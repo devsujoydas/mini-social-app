@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AuthContext } from '../../Pages/PrivateRoute/AuthProvider'
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
 import Post from '../Posts/Post'
 import UsersPost from './UsersPost'
 
