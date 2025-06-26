@@ -17,6 +17,7 @@ import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
 import ChatBox from './Pages/ChatBox/ChatBox.jsx'
+import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
 
 
 
@@ -73,11 +74,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element:<AuthPrivateRoutes><Login /></AuthPrivateRoutes>,
   },
   {
     path: "/signup",
-    element: < Signup />
+    element: <AuthPrivateRoutes>< Signup /></AuthPrivateRoutes>
   },
 
 ])

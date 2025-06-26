@@ -83,7 +83,7 @@ const Signup = () => {
 
         signUpUser(email, password)
             .then((result) => {
-                
+
                 const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
 
                 setUser(result.user)
@@ -179,7 +179,7 @@ const Signup = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button disabled onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
+                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
                                 <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
                                 <h1 className="text-black font-medium ">Sign in with Google</h1>
                             </button>

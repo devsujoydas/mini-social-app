@@ -149,9 +149,10 @@ const PostDetails = () => {
 
       </div>
 
-      <div className='md:w-1/3 w-full   flex justify-center items-center border border-zinc-300 shadow-2xl rounded-md'>
+      <div className='md:w-1/3 w-full md:mr-5  flex justify-center items-center border border-zinc-300 shadow-2xl rounded-md'>
         <h1>Comment Loading</h1>
       </div>
+
     </div>
   )
 }

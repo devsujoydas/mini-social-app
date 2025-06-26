@@ -22,9 +22,10 @@ const ProfileSidebar = () => {
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
 
+
   const [loadingSpiner, setLoadingSpiner] = useState(true)
-  const [showUsernameModal, setshowUsernameModal] = useState(false)
-  const [messageStatus, setMessageStatus] = useState(true)
+  const [showUsernameModal, setShowUsernameModal] = useState(false)
+  const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false)
   const [usernameMessage, setUsernameMessage] = useState("")
 
 
@@ -70,8 +71,6 @@ const ProfileSidebar = () => {
   }
 
   const signOutHander = () => {
-
-
     const swalWithTailwind = Swal.mixin({
       customClass: {
         confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
@@ -92,10 +91,10 @@ const ProfileSidebar = () => {
         if (result.isConfirmed) {
           signOutUser()
             .then(() => {
-              console.log("Sign Out Successfull");
+              // console.log("Sign Out Successfull");
             })
             .catch((error) => {
-              console.log(error.message);
+              // console.log(error.message);
             });
           navigate("/login")
 
@@ -114,13 +113,12 @@ const ProfileSidebar = () => {
       });
   }
 
-
-
   const updateUsernameHandler = (e) => {
     e.preventDefault()
     setLoadingSpiner(false)
-    const username = e.target.username.value
-    const formData = { username }
+    const username = e.target.username.value;
+    const email = userData.email;
+    const formData = { email, username }
 
     fetch(`http://localhost:3000/updateUsername`, {
       method: 'PUT',
@@ -129,65 +127,162 @@ const ProfileSidebar = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
 
-        if (data.message == "This username already existed") {
-          console.log(data.message)
-          setUsernameMessage(data.message)
-          setLoadingSpiner(true)
-          return
-        }
+        setLoadingSpiner(true)
+
         if (data) {
+          // console.log(data)
           if (data.modifiedCount > 0) {
-            console.log("Result from Backend: ", data)
-            navigate(`/profile`)
+            Swal.fire({
+              title: "Username updated successfully!",
+              icon: "success",
+              draggable: true
+            });
+            setShowUsernameModal(false)
+          }
+          else {
+            Swal.fire({
+              title: `${data.message}`,
+              icon: "question",
+              draggable: true
+            });
+
           }
         }
       })
 
 
-    console.log("uusernameMessage", usernameMessage)
+    // console.log("UsernameMessage:", usernameMessage)
 
   }
 
+  const updateProfileHandler = async (e) => {
+    e.preventDefault();
+    setLoadingSpiner(false)
+    const name = e.target.name.value;
+    const email = userData.email;
+    const address = e.target.address.value;
+    const bio = e.target.bio.value;
+    const profilephotourl = e.target.profilephotourl.value;
+    const coverphotourl = e.target.coverphotourl.value;
+    const phone = e.target.phone.value;
+    const website = e.target.website.value;
+
+    const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
+ 
+    fetch(`http://localhost:3000/update`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        setLoadingSpiner(true)
+
+        if (data) { 
+          if (data.modifiedCount > 0) {
+            Swal.fire({
+              title: "Profile updated successfully!",
+              icon: "success",
+              draggable: true
+            });
+            setShowUpdateInfoModal(false)
+          }
+          else {
+            Swal.fire({
+              title: "You dont have changed anythings!",
+              icon: "question",
+              draggable: true
+            });
+
+          }
+        }
+      })
+  }
+
+
+  // console.log(userData?.profilephotourl)
   return (
     <div className=" space-y-6 relative h-full ">
 
 
-      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 flex justify-center items-center " : "hidden"}>
+      {/* UpdateProfile Modal */}
+      <div className={showUpdateInfoModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "hidden transition-all"}>
+        <form onSubmit={updateProfileHandler} className='  relative bg-white md:w-1/2 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full md:mx-0 mx-5' >
+          <button className="absolute md:top-3 top-1 md:right-3 right-1">
+            <IoClose onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
+          </button>
+          <h1 className="font-semibold text-3xl md:text-4xl text-center font-family-secondary text-blue-600">Complete Your Profile</h1>
+          <div className='grid md:gap-5 gap-2'>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Name</label>
+              <input defaultValue={userData?.name} name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
+            </div>
+            <div className=''>
+              <label className=" text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Bio</label>
+              <input defaultValue={userData.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
+            </div>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Website</label>
+              <input defaultValue={userData.website} name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
+            </div>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Phone</label>
+              <input defaultValue={userData.phone} name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
+            </div>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Address</label>
+              <input defaultValue={userData.address} name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
+            </div>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Profile Photo URL</label>
+              <input defaultValue={userData.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+            </div>
+            <div>
+              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Cover Photo URL</label>
+              <input defaultValue={userData.coverphotourl} name="coverphotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+            </div>
+          </div>
+          <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
+            <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
+            <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
+          </button>
+        </form>
+      </div>
 
-        <div className="relative border max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
+
+      {/* Username Update Modal */}
+      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "hidden transition-all"}>
+        <div className="relative max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
+
           <button className="absolute top-3 right-3">
-            <IoClose onClick={() => setshowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
+            <IoClose onClick={() => setShowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
           </button>
 
           <form onSubmit={(e) => updateUsernameHandler(e)} className="">
-
             <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
             <div className='mb-2'>
               <input defaultValue={userData.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
-
               <p className={usernameMessage ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
             </div>
-
             <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
               <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
               <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
             </button>
-
           </form>
+
         </div>
       </div>
 
 
 
 
+      {/* profile section  */}
       <div className="sticky top-0 ">
-        {/* profile section  */}
+
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
-
-
-          <div style={{ backgroundImage: `url(${userData?.coverphotourl ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
+          <div style={{ backgroundImage: `url(${userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
 
               <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
@@ -196,9 +291,11 @@ const ProfileSidebar = () => {
                 </div>
 
                 <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-0 top-14 bg-white  md:w-44 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 font-semibold transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-                  <Link to={`/updateInfo/${user?.email}`} className={likeCommentStyle}>
-                    <h1 className='flex justify-center items-center gap-2  text-sm text-emerald-700  '> {<FaUserEdit />} Edit Profile</h1>
-                  </Link>
+                  <button onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className={likeCommentStyle}>
+                    <p className='flex justify-center items-center gap-2  text-sm text-emerald-700' >
+                      <FaUserEdit /> Edit Profile
+                    </p>
+                  </button>
                   <button onClick={() => signOutHander()} className={likeCommentStyle}>
                     <h1 className='flex justify-center items-center gap-2 text-sm '> {<FiLogOut />} LogOut</h1>
                   </button>
@@ -212,22 +309,20 @@ const ProfileSidebar = () => {
           </div>
 
           <div className="w-36 h-36 mt-22 overflow-hidden relative ">
-            <img className="rounded-full w-36 h-36 border-4 border-white object-cover " src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+            <img className="rounded-full w-36 h-36 border-4 border-white object-cover " src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
             <h1 className="absolute right-3 bottom-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></h1>
           </div>
 
           <div className=" text-center md:-mt-5 space-y-1">
-            <h1 className="font-semibold text-xl">{userData ? `${userData?.name}` : "Your Name"}</h1>
+            <h1 className="font-semibold text-xl">{userData.name ? `${userData?.name}` : "Your Name"}</h1>
             <div className="flex justify-between items-center gap-1 ">
               <p className="w-full"></p>
-
-              <h1 className="w-full">@{userData ? `${userData?.username}` : "username"}</h1>
-
+              <h1 className="w-full">@{userData.username ? `${userData?.username}` : "username"}</h1>
               <div className="w-full">
-                <MdEdit onClick={() => setshowUsernameModal(!showUsernameModal)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
+                <MdEdit onClick={() => setShowUsernameModal(!showUsernameModal)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
               </div>
-
             </div>
+
             <p className="text-zinc-500">{userData?.address == "" ? "Address" : userData?.address}</p>
           </div>
 
