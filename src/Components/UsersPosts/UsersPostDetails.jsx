@@ -59,7 +59,7 @@ const UsersPostDetails = () => {
                 text: "Your file has been deleted.",
                 icon: "success"
               });
-              navigate('/')
+              navigate(-1)
               const remaining = postsData.filter(posts => posts._id != post._id)
               setPostsData(remaining)
             }
@@ -110,7 +110,7 @@ const UsersPostDetails = () => {
       .catch(err => console.error(err));
   };
 
-  
+
   return (
     <div className='flex md:flex-row flex-col md:mt-5 mt-20 md:mx-0 mx-3 gap-5 md:ml-5 '>
 

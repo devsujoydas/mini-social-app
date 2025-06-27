@@ -19,24 +19,33 @@ import { FaArchive } from "react-icons/fa";
 import { useEffect } from "react";
 
 const Post = ({ post }) => {
-  const { userData } = useContext(AuthContext)
+  const { userData, friendsData } = useContext(AuthContext)
 
-  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1   md:py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
+  const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
   const [showEdit, setShowEdit] = useState(1)
 
-  const [like, setlike] = useState(true)
+
+  const [like, setlike] = useState(false)
+  const [reactorsName, setReactorsName] = useState([])
   const [likesCount, setLikesCount] = useState(post.likes.length)
 
   useEffect(() => {
-    if (post.likes && userData?._id) {
-      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
-      setlike(!!likedUser);
+    if (post?.likes.length > 0 && userData?._id) {
+      setReactorsName(post.likes)
+      const likedUser = post?.likes.find(likedUserId => likedUserId.userId == userData?._id);
+      if (!likedUser) return
+      setlike(true)
     }
   }, [post.likes, userData]);
 
+
+
   const likeHandler = () => {
     const userId = userData?._id;
-    const fromData = { userId };
+    const username = userData?.username;
+    const name = userData?.name;
+    const fromData = { name, username, userId };
 
     fetch(`http://localhost:3000/post/like/${post._id}`, {
       method: "PUT",
@@ -45,8 +54,8 @@ const Post = ({ post }) => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
 
+        console.log(data)
         if (data.message === "Liked") {
           setlike(true);
           setLikesCount(prev => prev + 1);
@@ -59,6 +68,8 @@ const Post = ({ post }) => {
       })
       .catch(err => console.error(err));
   };
+
+
 
 
   return (
@@ -115,40 +126,89 @@ const Post = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:px-5 p-3 space-y-2">
-        <h1 className="space-x-2 md:text-sm text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
+      <div className="md:px-5 space-y-2">
+        <h1 className="space-x-2 px-2 cursor-pointer pt-2  text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
         </Link>
 
-        {/* like comment share container  */}
-        <div className="flex justify-between items-center mt-3 ">
-          {/* buttons  */}
-          <div className="flex items-center md:gap-6 gap-2">
+        {/* display likes */}
+        <div className="flex justify-between items-center gap-3 mt-2 text-sm px-2">
 
+          <div className="flex items-center gap-1 ">
+            <img className="md:w-5 w-4 md:h-5 h-4 rounded-full overflow-hidden" src="/like.png" alt="" />
+
+            <div className="flex items-center gap-2 ">
+              {reactorsName.length > 0 &&
+                <div className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+                  <p className="text-sm text-zinc-600">
+                    {(() => {
+                      const names = reactorsName.map(user => user.name);
+                      const displayNames = names.slice(0, 2).join(", ");
+                      const othersCount = names.length - 2;
+                      return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
+                    })()}
+                  </p>
+                </div>}
+
+              {reactorsName.length > 0 &&
+                <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+                  <p className=" text-zinc-600">
+                    {(() => {
+                      const names = reactorsName.map(user => user.name);
+                      const displayNames = names.slice(0, 1).join(", ");
+                      const othersCount = names.length - 1;
+                      return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
+                    })()}
+                  </p>
+                </div>}
+            </div>
+
+          </div>
+
+          <div className="flex items-center gap-3 text-sm ">
+            <div>
+              <h1 className="flex items-center gap-1">0 <span className="md:block hidden">Comments</span> <span className="block md:hidden"><BiCommentDots /></span></h1>
+            </div>
+            <div>
+              <h1 className="flex items-center gap-1">0 <span className="md:block hidden">Share</span>  <span className="block md:hidden"><PiShareFatBold /></span> </h1>
+            </div>
+          </div>
+        </div>
+
+        <hr className="text-zinc-300" />
+
+        {/* like comment share container  */}
+        <div className="flex justify-between items-center my-1 ">
+          {/* buttons  */}
+          <div className="flex items-center md:gap-2">
             <button onClick={likeHandler} className={likeCommentStyle}>
-              <div className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black">
+              <div className={`text-xl cursor-pointer active:scale-95 transition-all active:text-black ${!like ? "text-black" : "text-blue-500"}`}>
                 {like ? <BiSolidLike className="text-blue-500" /> : <BiLike />}
               </div>
-              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
+              <span className={`flex items-center gap-1 ${like ? "text-blue-500" :"text-black"}`}>{likesCount}<span className="hidden md:flex">Like</span></span>
             </button>
 
             <button className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+              <div className="text-xl  cursor-pointer active:scale-95 transition-all  ">
                 <BiCommentDots />
               </div>
-              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Comments</span></span>
+              <span className="flex items-center gap-1"><span className="hidden md:flex">Comments</span></span>
             </button>
+
             <button className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+              <div className="text-xl  cursor-pointer active:scale-95 transition-all ">
                 <PiShareFatBold />
               </div>
-              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Shares</span></span>
+              <span className="flex items-center gap-1"><span className="hidden md:flex">Shares</span></span>
             </button>
           </div>
 
-          <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+          <div>
+
+            <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+          </div>
         </div>
       </div>
 
