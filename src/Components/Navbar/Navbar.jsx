@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import Nav from "./Nav";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import Swal from "sweetalert2";
 
 
 const Navbar = () => {
@@ -16,50 +17,47 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   const signOutHander = () => {
- 
- 
-     const swalWithTailwind = Swal.mixin({
-       customClass: {
-         confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-         cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-       },
-       buttonsStyling: false
-     });
-     swalWithTailwind.fire({
-       title: "Logout! Are you sure?",
-       text: "You won't be able to revert this!",
-       icon: "warning",
-       showCancelButton: true,
-       confirmButtonText: "Yes, Logout!",
-       cancelButtonText: "No, cancel!",
-       reverseButtons: true
-     })
-       .then((result) => {
-         if (result.isConfirmed) {
-           signOutUser()
-             .then(() => {
-               console.log("Sign Out Successfull");
-             })
-             .catch((error) => {
-               console.log(error.message);
-             });
-           navigate("/login")
- 
-           swalWithTailwind.fire({
-             title: "Logout!",
-             text: "Logout Successfully.",
-             icon: "success"
-           })
-         } else if (result.dismiss === Swal.DismissReason.cancel) {
-           swalWithTailwind.fire({
-             title: "Cancelled",
-             text: "Your imaginary file is safe :)",
-             icon: "error"
-           });
-         }
-       })
- 
-   }
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+    swalWithTailwind.fire({
+      title: "Logout! Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Logout!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          signOutUser()
+            .then(() => {
+              // console.log("Sign Out Successfull");
+            })
+            .catch((error) => {
+              // console.log(error.message);
+            });
+          navigate("/login")
+
+          swalWithTailwind.fire({
+            title: "Logout!",
+            text: "Logout Successfully.",
+            icon: "success"
+          })
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithTailwind.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+          });
+        }
+      });
+  }
 
   return (
     <div className="md:sticky left-0 top-0 ">

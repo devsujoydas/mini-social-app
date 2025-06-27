@@ -1,6 +1,6 @@
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import { Link, useLoaderData, useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { BiLike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
@@ -21,11 +21,11 @@ import Swal from 'sweetalert2';
 
 const UsersPostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
-  const [likesCount, setlikesCount] = useState(0)
+  const { userData, postsData, setPostsData } = useContext(AuthContext)
+  const [showEdit, setShowEdit] = useState(1)
 
   const post = useLoaderData()
-
-  const { userData, postsData, setPostsData } = useContext(AuthContext)
+  console.log(post.likes)
   const navigate = useNavigate()
 
 
@@ -72,11 +72,45 @@ const UsersPostDetails = () => {
         });
       }
     });
-  } 
+  }
 
-  const [like, setlike] = useState(0)
-  const [showEdit, setShowEdit] = useState(1)
+  const [like, setlike] = useState(true)
+  const [likesCount, setLikesCount] = useState(post.likes.length)
 
+  useEffect(() => {
+    if (post.likes && userData?._id) {
+      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
+      setlike(!!likedUser);
+    }
+  }, [post.likes, userData]);
+
+  const likeHandler = () => {
+    const userId = userData?._id;
+    const fromData = { userId };
+
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fromData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+
+        if (data.message === "Liked") {
+          setlike(true);
+          setLikesCount(prev => prev + 1);
+        }
+
+        if (data.message === "Disliked") {
+          setlike(false);
+          setLikesCount(prev => prev - 1);
+        }
+      })
+      .catch(err => console.error(err));
+  };
+
+  
   return (
     <div className='flex md:flex-row flex-col md:mt-5 mt-20 md:mx-0 mx-3 gap-5 md:ml-5 '>
 
@@ -142,13 +176,12 @@ const UsersPostDetails = () => {
             {/* buttons  */}
             <div className="flex items-center md:gap-8 ">
 
-              <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
+              <button onClick={() => { likeHandler() }} className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                  {like ? <BiSolidLike /> : < BiLike />}
+                  {like ? <BiSolidLike className="text-blue-500" /> : < BiLike />}
                 </div>
-                <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
+                <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
               </button>
-
 
               <button className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">

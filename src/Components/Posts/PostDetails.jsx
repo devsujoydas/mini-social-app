@@ -1,6 +1,6 @@
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import { Link, useLoaderData } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { BiLike } from "react-icons/bi";
 import { VscSend } from "react-icons/vsc";
@@ -21,13 +21,48 @@ import { FaArchive } from "react-icons/fa";
 
 const PostDetails = () => {
   const likeCommentStyle = "md:text-xl w-full active:scale-95 transition-all px-4 py-2 rounded-md  hover:bg-zinc-300 active:bg-zinc-300 cursor-pointer flex items-center gap-2"
-  
+
   const { userData, postsData, setPostsData } = useContext(AuthContext)
   const post = useLoaderData()
-  
   const [showEdit, setShowEdit] = useState(1)
-  const [like, setlike] = useState(0)
-  
+
+
+ const [like, setlike] = useState(true)
+  const [likesCount, setLikesCount] = useState(post.likes.length)
+
+  useEffect(() => {
+    if (post.likes && userData?._id) {
+      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
+      setlike(!!likedUser);
+    }
+  }, [post.likes, userData]);
+
+  const likeHandler = () => {
+    const userId = userData?._id;
+    const fromData = { userId };
+
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fromData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+
+        if (data.message === "Liked") {
+          setlike(true);
+          setLikesCount(prev => prev + 1);
+        }
+
+        if (data.message === "Disliked") {
+          setlike(false);
+          setLikesCount(prev => prev - 1);
+        }
+      })
+      .catch(err => console.error(err));
+  };
+
 
   return (
     <div className='flex md:flex-row flex-col md:mt-5 mt-20 md:mx-0 mx-3 gap-5 md:ml-5 '>
@@ -57,22 +92,22 @@ const PostDetails = () => {
             </button>
 
             <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-9 bg-white w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-               <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
-            </button>
-            <hr className="" />
-            <button className={likeCommentStyle}>
-              <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
-            </button>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
+              </button>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
+              </button>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
+              </button>
+              <button className={likeCommentStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
+              </button>
+              <hr className="" />
+              <button className={likeCommentStyle}>
+                <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
+              </button>
             </div>
           </div>
         </div>
@@ -94,11 +129,11 @@ const PostDetails = () => {
             {/* buttons  */}
             <div className="flex items-center md:gap-8 ">
 
-              <button onClick={() => { setlike(!like)}} className={likeCommentStyle}>
+              <button onClick={() => { likeHandler() }} className={likeCommentStyle}>
                 <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                  {like ? <BiSolidLike /> : < BiLike />}
+                  {like ? <BiSolidLike className="text-blue-500" /> : < BiLike />}
                 </div>
-                <span className="flex items-center gap-2">{like ? "1" : "0"} <span className="hidden md:flex">Likes</span></span>
+                <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
               </button>
 
               <button className={likeCommentStyle}>
@@ -114,7 +149,7 @@ const PostDetails = () => {
                 </div>
                 <span className="flex items-center gap-2">5 <span className="hidden md:flex">Shares</span></span>
               </button>
-              
+
             </div>
 
             <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />

@@ -17,15 +17,52 @@ import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { useEffect } from "react";
 
 const UsersPost = ({ post }) => {
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 md:py-1.5 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-
   const { userData, postsData, setPostsData } = useContext(AuthContext)
-
-  const [like, setlike] = useState(1)
   const [showEdit, setShowEdit] = useState(1)
   const navigate = useNavigate()
+
+  const [like, setlike] = useState(true)
+  const [likesCount, setLikesCount] = useState(post.likes.length)
+
+  useEffect(() => {
+    if (post.likes.length > 0) {
+      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
+      if (likedUser) {
+        setlike(false)
+      }
+    }
+  }, [])
+
+  const likeHandler = () => {
+    setlike(!like)
+    const userId = userData?._id
+    const fromData = { userId }
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fromData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        
+        console.log(data)
+        if (data.message == "Liked") {
+          setlike(!like)
+          setLikesCount(likesCount + 1)
+        }
+        if (data.message == "Disliked") {
+          setlike(!like)
+          setLikesCount(likesCount - 1)
+
+        }
+      })
+  }
+
+
 
   const deletePost = () => {
     const swalWithTailwind = Swal.mixin({
@@ -73,6 +110,7 @@ const UsersPost = ({ post }) => {
     });
   }
 
+
   return (
     <div className="shadow-xl md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
@@ -81,7 +119,7 @@ const UsersPost = ({ post }) => {
 
         <div className="flex items-center gap-3">
           <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-            <img className="h-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
+            <img className="h-full w-full rounded-full object-cover" src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
           </div>
 
           <div>
@@ -136,23 +174,27 @@ const UsersPost = ({ post }) => {
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
           <div className="flex items-center md:gap-6 gap-6">
-            <button onClick={() => { setlike(!like) }} className={likeCommentStyle}>
+
+
+            <button onClick={() => { likeHandler() }} className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                {!like ? <BiSolidLike /> : < BiLike />}
+                {!like ? <BiSolidLike className="text-blue-500" /> : < BiLike />}
               </div>
-              <span className="flex items-center gap-2">{like ? "0" : "1"}<span className="hidden md:flex">Likes</span></span>
+              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
             </button>
+
+
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />
               </div>
-              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Comments</span></span>
+              <span className="flex items-center gap-2">{post?.comments.length}<span className="hidden md:flex">Comments</span></span>
             </button>
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <PiShareFatBold />
               </div>
-              <span className="flex items-center gap-2">0 <span className="hidden md:flex">Shares</span></span>
+              <span className="flex items-center gap-2">{post?.shares.length}<span className="hidden md:flex">Shares</span></span>
             </button>
           </div>
 

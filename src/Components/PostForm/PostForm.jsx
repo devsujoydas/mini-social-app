@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const PostForm = () => {
 
-  const { user, userData, postsData, setPostsData } = useContext(AuthContext)
+  const { user, userData, postsData, setPostsData, setUsersPostsData, usersPostsData } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -39,7 +39,7 @@ const PostForm = () => {
       body: JSON.stringify(postData)
     })
       .then(res => res.json())
-      .then(data => { 
+      .then(data => {
 
         if (data.result.insertedId) {
           Swal.fire({
@@ -47,11 +47,12 @@ const PostForm = () => {
             icon: "success",
             draggable: true
           });
-          navigate('/')
-        }
 
+        }
+        const postFormData = { _id: data.result.insertedId, authorEmail, authorPhoto, authorName, authorUsername, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
         form.reset()
-        setPostsData([postData, ...postsData])
+        setPostsData([postFormData, ...postsData])
+        setUsersPostsData([postFormData, ...usersPostsData])
         // console.log("Post Upload Successfully")
       })
 

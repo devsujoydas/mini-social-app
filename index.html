@@ -1,17 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/src/index.css" rel="stylesheet">
-    <title>Xenon Media</title>
-    <style>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/src/index.css" rel="stylesheet">
+  <title>Xenon Media</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    body {
+      height: 100vh;
+      cursor: none;
+      background-color: #212428;
+    }
+
+    .cursor-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #155DFC;
+    }
+
+    .cursor-outline {
+      width: 40px;
+      height: 40px;
+      /* border: 3px solid #155DFC; */
+    }
+
+    .cursor-dot,
+    .cursor-outline {
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 100;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <div class="cursor-dot hidden md:block" data-cursor-dot></div>
+  <div class="cursor-outline hidden md:block border-y-2 border-x-[#155DFC] border-x-2 border-y-[#9b9b9b] " data-cursor-outline></div>
+
+  <script>
+    const cursorDot = document.querySelector('[data-cursor-dot]')
+    const cursorOutline = document.querySelector('[data-cursor-outline]')
+
+    window.addEventListener('mousemove', function (e) {
+      const posX = e.clientX
+      const posY = e.clientY
+
+      cursorDot.style.left = `${posX}px`
+      cursorDot.style.top = `${posY}px`
+
+      cursorOutline.animate(
+        {
+          left: `${posX}px`,
+          top: `${posY}px`
+        },
+        {
+          duration: 500,
+          fill: 'forwards'
+        }
+      )
+    })
+  </script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

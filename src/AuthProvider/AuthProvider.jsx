@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom'
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-
-    // const navigate = useNavigate()
+ 
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])

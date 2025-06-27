@@ -16,14 +16,49 @@ import { IoSettings } from "react-icons/io5";
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
+import { useEffect } from "react";
 
 const Post = ({ post }) => {
   const { userData } = useContext(AuthContext)
 
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1   md:py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-
-  const [like, setlike] = useState(1)
   const [showEdit, setShowEdit] = useState(1)
+
+  const [like, setlike] = useState(true)
+  const [likesCount, setLikesCount] = useState(post.likes.length)
+
+  useEffect(() => {
+    if (post.likes && userData?._id) {
+      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
+      setlike(!!likedUser);
+    }
+  }, [post.likes, userData]);
+
+  const likeHandler = () => {
+    const userId = userData?._id;
+    const fromData = { userId };
+
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fromData)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+
+        if (data.message === "Liked") {
+          setlike(true);
+          setLikesCount(prev => prev + 1);
+        }
+
+        if (data.message === "Disliked") {
+          setlike(false);
+          setLikesCount(prev => prev - 1);
+        }
+      })
+      .catch(err => console.error(err));
+  };
 
 
   return (
@@ -32,7 +67,7 @@ const Post = ({ post }) => {
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
 
-        <Link to={userData.username == post.authorUsername ? "/profile" : `/friends/${post.authorUsername}`}>
+        <Link to={post?.authorUsername === userData?.username ? "/profile" : `/friends/${post?.authorUsername}`}>
           <div className="flex items-center gap-3">
             <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
               <img className="h-full w-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
@@ -90,13 +125,15 @@ const Post = ({ post }) => {
         {/* like comment share container  */}
         <div className="flex justify-between items-center mt-3 ">
           {/* buttons  */}
-          <div className="flex items-center md:gap-6 gap-6">
-            <button onClick={() => { setlike(!like)}} className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                {!like ? <BiSolidLike /> : < BiLike />}
+          <div className="flex items-center md:gap-6 gap-2">
+
+            <button onClick={likeHandler} className={likeCommentStyle}>
+              <div className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black">
+                {like ? <BiSolidLike className="text-blue-500" /> : <BiLike />}
               </div>
-              <span className="flex items-center gap-2">{like ? "0" : "1"}<span className="hidden md:flex">Likes</span></span>
+              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
             </button>
+
             <button className={likeCommentStyle}>
               <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
                 <BiCommentDots />

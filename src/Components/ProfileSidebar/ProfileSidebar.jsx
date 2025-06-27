@@ -117,7 +117,7 @@ const ProfileSidebar = () => {
     e.preventDefault()
     setLoadingSpiner(false)
     const username = e.target.username.value;
-    const email = userData.email;
+    const email = userData?.email;
     const formData = { email, username }
 
     fetch(`http://localhost:3000/updateUsername`, {
@@ -127,7 +127,6 @@ const ProfileSidebar = () => {
     })
       .then(res => res.json())
       .then(data => {
-        // console.log(data)
 
         setLoadingSpiner(true)
 
@@ -161,7 +160,7 @@ const ProfileSidebar = () => {
     e.preventDefault();
     setLoadingSpiner(false)
     const name = e.target.name.value;
-    const email = userData.email;
+    const email = userData?.email;
     const address = e.target.address.value;
     const bio = e.target.bio.value;
     const profilephotourl = e.target.profilephotourl.value;
@@ -170,7 +169,8 @@ const ProfileSidebar = () => {
     const website = e.target.website.value;
 
     const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
- 
+
+
     fetch(`http://localhost:3000/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -178,12 +178,13 @@ const ProfileSidebar = () => {
     })
       .then(res => res.json())
       .then(data => {
+
         setLoadingSpiner(true)
 
-        if (data) { 
+        if (data) {
           if (data.modifiedCount > 0) {
             Swal.fire({
-              title: "Profile updated successfully!",
+              title: "Profile info updated successfully!",
               icon: "success",
               draggable: true
             });
@@ -202,17 +203,18 @@ const ProfileSidebar = () => {
   }
 
 
-  // console.log(userData?.profilephotourl)
   return (
     <div className=" space-y-6 relative h-full ">
 
 
       {/* UpdateProfile Modal */}
-      <div className={showUpdateInfoModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "hidden transition-all"}>
-        <form onSubmit={updateProfileHandler} className='  relative bg-white md:w-1/2 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full md:mx-0 mx-5' >
+      <div className={showUpdateInfoModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "fixed top-0 left-0 w-full h-screen backdrop-blur-sm -z-40 bg-[#00000079] flex justify-center items-center transition-all"}>
+        <form onSubmit={(e) => updateProfileHandler(e)} className='  relative bg-white md:w-1/2 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full md:mx-0 mx-5' >
+
           <button className="absolute md:top-3 top-1 md:right-3 right-1">
             <IoClose onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
           </button>
+
           <h1 className="font-semibold text-3xl md:text-4xl text-center font-family-secondary text-blue-600">Complete Your Profile</h1>
           <div className='grid md:gap-5 gap-2'>
             <div>
@@ -221,27 +223,27 @@ const ProfileSidebar = () => {
             </div>
             <div className=''>
               <label className=" text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Bio</label>
-              <input defaultValue={userData.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
+              <input defaultValue={userData?.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
             </div>
             <div>
               <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Website</label>
-              <input defaultValue={userData.website} name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
+              <input defaultValue={userData?.website} name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
             </div>
             <div>
               <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Phone</label>
-              <input defaultValue={userData.phone} name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
+              <input defaultValue={userData?.phone} name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
             </div>
             <div>
               <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Address</label>
-              <input defaultValue={userData.address} name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
+              <input defaultValue={userData?.address} name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
             </div>
             <div>
               <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Profile Photo URL</label>
-              <input defaultValue={userData.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+              <input defaultValue={userData?.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
             </div>
             <div>
               <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Cover Photo URL</label>
-              <input defaultValue={userData.coverphotourl} name="coverphotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
+              <input defaultValue={userData?.coverphotourl} name="coverphotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
             </div>
           </div>
           <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
@@ -253,7 +255,7 @@ const ProfileSidebar = () => {
 
 
       {/* Username Update Modal */}
-      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "hidden transition-all"}>
+      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "fixed top-0 left-0 w-full h-screen backdrop-blur-sm -z-40 bg-[#00000079] flex justify-center items-center transition-all"}>
         <div className="relative max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
 
           <button className="absolute top-3 right-3">
@@ -263,7 +265,7 @@ const ProfileSidebar = () => {
           <form onSubmit={(e) => updateUsernameHandler(e)} className="">
             <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
             <div className='mb-2'>
-              <input defaultValue={userData.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
+              <input defaultValue={userData?.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
               <p className={usernameMessage ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
             </div>
             <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
@@ -314,10 +316,10 @@ const ProfileSidebar = () => {
           </div>
 
           <div className=" text-center md:-mt-5 space-y-1">
-            <h1 className="font-semibold text-xl">{userData.name ? `${userData?.name}` : "Your Name"}</h1>
+            <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
             <div className="flex justify-between items-center gap-1 ">
               <p className="w-full"></p>
-              <h1 className="w-full">@{userData.username ? `${userData?.username}` : "username"}</h1>
+              <h1 className="w-full">@{userData?.username ? `${userData?.username}` : "username"}</h1>
               <div className="w-full">
                 <MdEdit onClick={() => setShowUsernameModal(!showUsernameModal)} className=" border border-transparent hover:border-zinc-300 rounded-full p-1 text-2xl hover:bg-zinc-300  cursor-pointer transition-all" />
               </div>

@@ -15,25 +15,31 @@ const Signup = () => {
     const [passStatus, setPassStatus] = useState(false)
     const [passMessage, setPassMessage] = useState()
 
-    const logInWithGoogle = () => {
+   const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
+                // console.log(result)
+
                 if (!result.user) return
+
                 setUser(result.user)
-                navigate("/profile")
                 const name = result.user.displayName;
                 const username = "";
                 const email = result.user.email;
                 const password = "";
                 const address = "";
                 const bio = "";
-                const profilephotourl = "";
+                const profilephotourl = result.user.photoURL;
                 const coverphotourl = "";
                 const phone = "";
                 const website = "";
                 const posts = [];
                 const createdDate = new Date();
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+
+
+                // navigate("/profile")
+
                 if (result.user) {
                     fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
@@ -42,11 +48,11 @@ const Signup = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log(data)
                             if (data.insertedId) {
-                                console.log("Result from Backend: ", data)
+                                setUserData(data)
                             }
                             if (data.data = "This email Existed") {
+                                setUserData(data)
                                 console.log("Result from Backend: ", data)
                                 navigate("/profile")
                             }
@@ -113,7 +119,7 @@ const Signup = () => {
 
 
     return (
-        <div className="font-family-primary min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
+        <div className="font-family-primary bg-white min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
             <div className="md:col-span-1 h-screen p-8  ">
                 <div className="">

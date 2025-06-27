@@ -10,7 +10,7 @@ import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaWindowClose } from "react-icons/fa";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import { MdReport } from "react-icons/md";
@@ -21,14 +21,47 @@ import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 const FriendPost = ({ post, friend }) => {
     const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-    const [likesCount, setlikesCount] = useState(0)
-    const [like, setlike] = useState(1)
+
     const [showEdit, setShowEdit] = useState(1)
     const { userData } = useContext(AuthContext)
 
+    const [like, setlike] = useState(true)
+    const [likesCount, setLikesCount] = useState(post.likes.length)
 
-    
-  
+    useEffect(() => {
+        if (post.likes && userData?._id) {
+            const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
+            setlike(!!likedUser);
+        }
+    }, [post.likes, userData]);
+
+    const likeHandler = () => {
+        const userId = userData?._id;
+        const fromData = { userId };
+
+        fetch(`http://localhost:3000/post/like/${post._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(fromData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+
+                if (data.message === "Liked") {
+                    setlike(true);
+                    setLikesCount(prev => prev + 1);
+                }
+
+                if (data.message === "Disliked") {
+                    setlike(false);
+                    setLikesCount(prev => prev - 1);
+                }
+            })
+            .catch(err => console.error(err));
+    };
+
+
     return (
         <div className="shadow-xl border border-zinc-200 rounded-2xl md:rounded-3xl bg-white">
 
@@ -82,7 +115,7 @@ const FriendPost = ({ post, friend }) => {
             <div className="md:p-5 px-3 pt-2  md:space-y-2 space-y-1">
 
                 <h1 className="space-x-2 md:text-sm font-semibold text-xs flex flex-wrap">{post?.postContent}</h1>
-                
+
                 <div>
                     <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
                 </div>
@@ -91,12 +124,11 @@ const FriendPost = ({ post, friend }) => {
                 <div className="flex justify-between items-center md:mt-3 ">
                     {/* buttons  */}
                     <div className="flex items-center md:gap-6 ">
-
-                        <button onClick={() => { setlike(!like), setlikesCount(likesCount + 1) }} className={likeCommentStyle}>
-                            <div className="md:text-2xl text-xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                                {like ? < BiLike /> : <  BiSolidLike />}
+                        <button onClick={() => { likeHandler() }} className={likeCommentStyle}>
+                            <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+                                {like ? <BiSolidLike className="text-blue-500" /> : < BiLike />}
                             </div>
-                            <span className="flex items-center gap-2">{likesCount} <span className="hidden md:flex">Likes</span></span>
+                            <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
                         </button>
 
 

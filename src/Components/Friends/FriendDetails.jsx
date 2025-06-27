@@ -86,7 +86,7 @@ const FriendDetails = () => {
                                     </div>
                                     <div className='flex items-center flex-col md:flex-row md:gap-5'>
                                         <div className='md:mt-3 mt-1'>
-                                            <h1 className='md:text-2xl md:text-xl  font-semibold'>{friend?.name}</h1>
+                                            <h1 className='md:text-2xl text-xl  font-semibold'>{friend?.name}</h1>
                                             <h1 className='md:text-md text-sm'>@{friend?.username}</h1>
                                         </div>
 
@@ -94,9 +94,9 @@ const FriendDetails = () => {
                                             <button>
                                                 {follow
                                                     ?
-                                                    <p onClick={() => addFriend()} className='follow-btn'><RiUserFollowFill />Add Friend</p>
+                                                    <p onClick={() => addFriend()} className='follow-btn'><RiUserFollowFill />Follow</p>
                                                     :
-                                                    <p onClick={() => unFriend()} className='follow-btn'><RiUserUnfollowFill />Unfriend</p>
+                                                    <p onClick={() => unFriend()} className='follow-btn'><RiUserUnfollowFill />Unfollow</p>
                                                 }
                                             </button>
                                             <Link to={`/message/${friend?.username}`} className='follow-btn'><LuMessageCircleMore />Message</Link>

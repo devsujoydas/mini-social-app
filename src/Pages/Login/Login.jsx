@@ -13,9 +13,10 @@ const Login = () => {
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
+                // console.log(result)
 
-                console.log(result)
                 if (!result.user) return
+
                 setUser(result.user)
                 const name = result.user.displayName;
                 const username = "";
@@ -30,7 +31,10 @@ const Login = () => {
                 const posts = [];
                 const createdDate = new Date();
                 const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-                navigate("/profile")
+
+
+                // navigate("/profile")
+
                 if (result.user) {
                     fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
@@ -39,11 +43,11 @@ const Login = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
-                            console.log(data)
                             if (data.insertedId) {
-                                console.log("Result from Backend: ", data)
+                                setUserData(data)
                             }
                             if (data.data = "This email Existed") {
+                                setUserData(data)
                                 console.log("Result from Backend: ", data)
                                 navigate("/profile")
                             }
@@ -79,7 +83,7 @@ const Login = () => {
     }
 
     return (
-        <div className="font-family-primary h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
+        <div className="font-family-primary bg-white h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
 
             <div className="md:col-span-1 h-screen p-8   ">
                 <div className="">
