@@ -17,29 +17,33 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 import { useEffect } from "react";
+import { MdEdit } from "react-icons/md";
+import { FaTrashCan } from "react-icons/fa6";
+
 
 const Post = ({ post }) => {
   const { userData, friendsData } = useContext(AuthContext)
 
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
 
+  const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
   const [showEdit, setShowEdit] = useState(1)
 
 
+  const [showUsers, setShowUsers] = useState(false)
   const [like, setlike] = useState(false)
-  const [reactorsName, setReactorsName] = useState([])
+  const [reactorsUsers, setReactorsUsers] = useState([])
   const [likesCount, setLikesCount] = useState(post.likes.length)
 
   useEffect(() => {
     if (post?.likes.length > 0 && userData?._id) {
-      setReactorsName(post.likes)
+      setReactorsUsers(post.likes)
       const likedUser = post?.likes.find(likedUserId => likedUserId.userId == userData?._id);
       if (!likedUser) return
       setlike(true)
     }
   }, [post.likes, userData]);
-
-
 
   const likeHandler = () => {
     const userId = userData?._id;
@@ -70,10 +74,8 @@ const Post = ({ post }) => {
   };
 
 
-
-
   return (
-    <div className="shadow-xl md:w-full rounded-2xl md:rounded-3xl bg-white ">
+    <div className="shadow-xl border-t border-t-zinc-400 md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -101,25 +103,44 @@ const Post = ({ post }) => {
             <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
           </button>
 
-
-          <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-4 md:right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
-            </button>
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
-            </button>
-            <hr className="" />
-            <button className={likeCommentStyle}>
-              <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
-            </button>
-          </div>
+          {post?.authorUsername == userData.username ?
+            <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+              <button className={`${editTrashBtnStyle}`}>
+                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaBookmark />} Save post</h1>
+              </button>
+              <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+              </Link>
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
+              </button>
+              <hr className="" />
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+              </button>
+              <button onClick={() => { deletePost() }} className={`${editTrashBtnStyle} border bg-zinc-100 border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+              </button>
+            </div>
+            :
+            <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
+              </button>
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
+              </button>
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
+              </button>
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
+              </button>
+              <hr className="" />
+              <button className={editTrashBtnStyle}>
+                <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
+              </button>
+            </div>}
         </div>
       </div>
 
@@ -139,12 +160,19 @@ const Post = ({ post }) => {
           <div className="flex items-center gap-1 ">
             <img className="md:w-5 w-4 md:h-5 h-4 rounded-full overflow-hidden" src="/like.png" alt="" />
 
-            <div className="flex items-center gap-2 ">
-              {reactorsName.length > 0 &&
-                <div className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+            <div className="flex items-center gap-2 relative">
+              {reactorsUsers.length > 0 &&
+                <div onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+
+                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#ffffff80] p-3 space-y-1 rounded-lg flex flex-col text-black font-semibold`}>
+                    {reactorsUsers.map((user, idx) => (
+                      <Link to={`/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                    ))}
+                  </div>
+
                   <p className="text-sm text-zinc-600">
                     {(() => {
-                      const names = reactorsName.map(user => user.name);
+                      const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 2).join(", ");
                       const othersCount = names.length - 2;
                       return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
@@ -152,11 +180,11 @@ const Post = ({ post }) => {
                   </p>
                 </div>}
 
-              {reactorsName.length > 0 &&
+              {reactorsUsers.length > 0 &&
                 <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
                   <p className=" text-zinc-600">
                     {(() => {
-                      const names = reactorsName.map(user => user.name);
+                      const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 1).join(", ");
                       const othersCount = names.length - 1;
                       return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
@@ -187,7 +215,7 @@ const Post = ({ post }) => {
               <div className={`text-xl cursor-pointer active:scale-95 transition-all active:text-black ${!like ? "text-black" : "text-blue-500"}`}>
                 {like ? <BiSolidLike className="text-blue-500" /> : <BiLike />}
               </div>
-              <span className={`flex items-center gap-1 ${like ? "text-blue-500" :"text-black"}`}>{likesCount}<span className="hidden md:flex">Like</span></span>
+              <span className={`flex items-center gap-1 ${like ? "text-blue-500" : "text-black"}`}>{likesCount}<span className="hidden md:flex">Like</span></span>
             </button>
 
             <button className={likeCommentStyle}>

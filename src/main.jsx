@@ -6,8 +6,7 @@ import Root from './Pages/Root/Root.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Signup from './Pages/Signup/Signup.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
-import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx'
-import AuthProvider from '../src/AuthProvider/AuthProvider.jsx'
+import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx' 
 import Home from './Pages/Home/Home.jsx'
 import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
 import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
@@ -18,6 +17,9 @@ import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
 import ChatBox from './Pages/ChatBox/ChatBox.jsx'
 import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
+ 
+import AuthProvider from './AuthProvider/AuthProvider.jsx'
+import Login1 from './Pages/Login/Login1.jsx'
 
 
 

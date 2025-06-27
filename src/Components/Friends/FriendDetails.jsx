@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom'
-import FriendPost from './FriendPost';
+import { Link, useLoaderData, useParams } from 'react-router-dom' 
 import AllFriends from './AllFriends';
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import Loading from '../Loading/Loading';
@@ -8,6 +7,7 @@ import { RiUserFollowFill } from "react-icons/ri";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { LuMessageCircleMore } from "react-icons/lu";
+import Post from '../Posts/Post.jsx';
 
 const FriendDetails = () => {
     const { friendsData, postsData } = useContext(AuthContext)
@@ -131,7 +131,7 @@ const FriendDetails = () => {
                                 </div>
                                 :
                                 <div className="grid gap-5">
-                                    {friendPost.map((post) => <FriendPost key={post._id} post={post} friend={friend} />)}
+                                    {friendPost.map((post) => <Post key={post._id} post={post} friend={friend} />)}
                                 </div>
                             }
                         </div>

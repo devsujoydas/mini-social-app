@@ -20,49 +20,13 @@ import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { useEffect } from "react";
 
 const UsersPost = ({ post }) => {
-  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-1 md:py-1.5 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
+  const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
+  const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
   const { userData, postsData, setPostsData } = useContext(AuthContext)
   const [showEdit, setShowEdit] = useState(1)
   const navigate = useNavigate()
-
-  const [like, setlike] = useState(true)
-  const [likesCount, setLikesCount] = useState(post.likes.length)
-
-  useEffect(() => {
-    if (post.likes.length > 0) {
-      const likedUser = post.likes.find(likedUserId => likedUserId == userData._id);
-      if (likedUser) {
-        setlike(false)
-      }
-    }
-  }, [])
-
-  const likeHandler = () => {
-    setlike(!like)
-    const userId = userData?._id
-    const fromData = { userId }
-    fetch(`http://localhost:3000/post/like/${post._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(fromData)
-    })
-      .then(res => res.json())
-      .then(data => {
-        
-        console.log(data)
-        if (data.message == "Liked") {
-          setlike(!like)
-          setLikesCount(likesCount + 1)
-        }
-        if (data.message == "Disliked") {
-          setlike(!like)
-          setLikesCount(likesCount - 1)
-
-        }
-      })
-  }
-
-
 
   const deletePost = () => {
     const swalWithTailwind = Swal.mixin({
@@ -111,8 +75,54 @@ const UsersPost = ({ post }) => {
   }
 
 
+  const [showUsers, setShowUsers] = useState(false)
+  const [like, setlike] = useState(false)
+  const [reactorsUsers, setReactorsUsers] = useState([])
+  const [likesCount, setLikesCount] = useState(post.likes.length)
+
+  useEffect(() => {
+    if (post?.likes.length > 0 && userData?._id) {
+      setReactorsUsers(post.likes)
+      const likedUser = post?.likes.find(likedUserId => likedUserId.userId == userData?._id);
+      if (!likedUser) return
+      setlike(true)
+    }
+  }, [post.likes, userData]);
+
+  const likeHandler = () => {
+    const userId = userData?._id;
+    const username = userData?.username;
+    const name = userData?.name;
+    const fromData = { name, username, userId };
+
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(fromData)
+    })
+      .then(res => res.json())
+      .then(data => {
+
+        console.log(data)
+        if (data.message === "Liked") {
+          setlike(true);
+          setLikesCount(prev => prev + 1);
+        }
+
+        if (data.message === "Disliked") {
+          setlike(false);
+          setLikesCount(prev => prev - 1);
+        }
+      })
+      .catch(err => console.error(err));
+  };
+
+
+
+
+
   return (
-    <div className="shadow-xl md:w-full rounded-2xl md:rounded-3xl bg-white ">
+    <div className="shadow-xl border-t border-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -139,21 +149,21 @@ const UsersPost = ({ post }) => {
           </button>
 
 
-          <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-4 md:right-9 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-            <button className={likeCommentStyle}>
-              <h1 className='flex justify-center items-center gap-2  text-sm '> {<FaBookmark />} Save post</h1>
+          <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+            <button className={`${editTrashBtnStyle}`}>
+              <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaBookmark />} Save post</h1>
             </button>
-            <Link to={`/post/update/${post?._id}`} className={`${likeCommentStyle} border border-zinc-200`}>
+            <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
             </Link>
-            <button className={likeCommentStyle}>
+            <button className={editTrashBtnStyle}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
             </button>
             <hr className="" />
-            <button className={likeCommentStyle}>
+            <button className={editTrashBtnStyle}>
               <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
             </button>
-            <button onClick={() => { deletePost() }} className={`${likeCommentStyle} border border-zinc-200`}>
+            <button onClick={() => { deletePost() }} className={`${editTrashBtnStyle} border bg-zinc-100 border-zinc-200`}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
             </button>
           </div>
@@ -163,43 +173,97 @@ const UsersPost = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:px-5 p-3 space-y-2">
+      <div className="md:px-5 pt-2 pb-1 space-y-2">
         <h1 className="space-x-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/profile/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
         </Link>
 
+        {/* display likes */}
+        <div className="flex justify-between items-center gap-3 mt-2 text-sm px-2">
+
+          <div className="flex items-center gap-1 ">
+            <img className="md:w-5 w-4 md:h-5 h-4 rounded-full overflow-hidden" src="/like.png" alt="" />
+
+            <div className="flex items-center gap-2 relative">
+              {reactorsUsers.length > 0 &&
+                <div onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+
+                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#ffffff80] p-3 space-y-1 rounded-lg flex flex-col text-black font-semibold`}>
+                    {reactorsUsers.map((user, idx) => (
+                      <Link to={`/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                    ))}
+                  </div>
+
+                  <p className="text-sm text-zinc-600">
+                    {(() => {
+                      const names = reactorsUsers.map(user => user.name);
+                      const displayNames = names.slice(0, 2).join(", ");
+                      const othersCount = names.length - 2;
+                      return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
+                    })()}
+                  </p>
+                </div>}
+
+              {reactorsUsers.length > 0 &&
+                <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+                  <p className=" text-zinc-600">
+                    {(() => {
+                      const names = reactorsUsers.map(user => user.name);
+                      const displayNames = names.slice(0, 1).join(", ");
+                      const othersCount = names.length - 1;
+                      return othersCount > 0 ? `${displayNames} and ${othersCount} others` : displayNames;
+                    })()}
+                  </p>
+                </div>}
+            </div>
+
+          </div>
+
+          <div className="flex items-center gap-3 text-sm ">
+            <div>
+              <h1 className="flex items-center gap-1">0 <span className="md:block hidden">Comments</span> <span className="block md:hidden"><BiCommentDots /></span></h1>
+            </div>
+            <div>
+              <h1 className="flex items-center gap-1">0 <span className="md:block hidden">Share</span>  <span className="block md:hidden"><PiShareFatBold /></span> </h1>
+            </div>
+          </div>
+        </div>
+
+        <hr className="text-zinc-300" />
+
         {/* like comment share container  */}
-        <div className="flex justify-between items-center mt-3 ">
+        <div className="flex justify-between items-center ">
           {/* buttons  */}
-          <div className="flex items-center md:gap-6 gap-6">
-
-
-            <button onClick={() => { likeHandler() }} className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
-                {!like ? <BiSolidLike className="text-blue-500" /> : < BiLike />}
+          <div className="flex items-center md:gap-2">
+            <button onClick={likeHandler} className={likeCommentStyle}>
+              <div className={`text-xl cursor-pointer active:scale-95 transition-all active:text-black ${!like ? "text-black" : "text-blue-500"}`}>
+                {like ? <BiSolidLike className="text-blue-500" /> : <BiLike />}
               </div>
-              <span className="flex items-center gap-2">{likesCount}<span className="hidden md:flex">Likes</span></span>
+              <span className={`flex items-center gap-1 ${like ? "text-blue-500" : "text-black"}`}>{likesCount}<span className="hidden md:flex">Like</span></span>
             </button>
 
-
             <button className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+              <div className="text-xl  cursor-pointer active:scale-95 transition-all  ">
                 <BiCommentDots />
               </div>
-              <span className="flex items-center gap-2">{post?.comments.length}<span className="hidden md:flex">Comments</span></span>
+              <span className="flex items-center gap-1"><span className="hidden md:flex">Comments</span></span>
             </button>
+
             <button className={likeCommentStyle}>
-              <div className="text-2xl  cursor-pointer active:scale-95 transition-all active:text-black">
+              <div className="text-xl  cursor-pointer active:scale-95 transition-all ">
                 <PiShareFatBold />
               </div>
-              <span className="flex items-center gap-2">{post?.shares.length}<span className="hidden md:flex">Shares</span></span>
+              <span className="flex items-center gap-1"><span className="hidden md:flex">Shares</span></span>
             </button>
           </div>
 
-          <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+          <div>
+            <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+          </div>
         </div>
+
       </div>
 
       <hr className="text-zinc-300" />

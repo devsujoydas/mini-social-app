@@ -1,9 +1,9 @@
-import { Link, useNavigate } from "react-router-dom"
-import { AuthContext } from "../PrivateRoute/AuthProvider";
+import { Link, useNavigate } from "react-router-dom" 
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
-const Login = () => {
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+const Login1 = () => {
   const navigate = useNavigate()
   const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
   const [show, setShow] = useState(0)
@@ -34,7 +34,7 @@ const Login = () => {
   }
 
   return (
-    <div className="w-full h-[90vh] md:p-0 p-5 flex md:flex-row flex-col items-center justify-center md:gap-0 gap-5">
+    <div className="w-full bg-white  md:p-0 p-5 flex md:flex-row flex-col items-center justify-center md:gap-0 gap-5">
 
       <div className="md:w-1/2 w-full h-full flex justify-center items-center">
         <img className="h-full" src="/login.png" alt="" />
@@ -88,4 +88,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login1
