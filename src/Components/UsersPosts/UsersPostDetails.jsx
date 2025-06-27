@@ -26,7 +26,7 @@ const UsersPostDetails = () => {
   const [showEdit, setShowEdit] = useState(1)
 
   const post = useLoaderData()
-  console.log(post.likes)
+  
   const navigate = useNavigate()
 
 

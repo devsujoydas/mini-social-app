@@ -75,7 +75,7 @@ const Post = ({ post }) => {
 
 
   return (
-    <div className="shadow-xl border-t border-t-zinc-400 md:w-full rounded-2xl md:rounded-3xl bg-white ">
+    <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -125,20 +125,20 @@ const Post = ({ post }) => {
             :
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCirclePlus />}</span> Interested</h1>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCirclePlus />}</span> Interested</h1>
               </button>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaCircleMinus />}</span> Not Interested</h1>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCircleMinus />}</span> Not Interested</h1>
               </button>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="text-xl">{<FaBookmark />}</span> Save post</h1>
+                <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="">{<FaBookmark />}</span> Save post</h1>
               </button>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="text-xl">{<IoSettings />}</span> Hide Post</h1>
+                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<IoSettings />}</span> Hide Post</h1>
               </button>
               <hr className="" />
               <button className={editTrashBtnStyle}>
-                <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="text-xl">{<FaArchive />}</span> Report Post</h1>
+                <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="">{<FaArchive />}</span> Report Post</h1>
               </button>
             </div>}
         </div>
@@ -164,9 +164,9 @@ const Post = ({ post }) => {
               {reactorsUsers.length > 0 &&
                 <div onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
 
-                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#ffffff80] p-3 space-y-1 rounded-lg flex flex-col text-black font-semibold`}>
+                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
-                      <Link to={`/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                      <Link to={user?.username == userData?.username ? "/profile": `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                     ))}
                   </div>
 

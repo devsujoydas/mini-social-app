@@ -1,49 +1,38 @@
 import { useState } from "react"
 import { Link } from 'react-router-dom'
-import { HiDotsHorizontal } from "react-icons/hi";
-import { RiUserFollowFill } from "react-icons/ri";
-import { RiUserUnfollowFill } from "react-icons/ri";
-import { MdReport } from "react-icons/md";
-import { RiUserForbidFill } from "react-icons/ri";
 
 
 const AllFriends = ({ friend }) => {
-    const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-4 py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
-    const [showEdit, setShowEdit] = useState(1)
+
+    const { profilephotourl, name, username } = friend;
+    const [addStatus, setAddStatus] = useState(true)
+    const btnStyle = "block  py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
 
     return (
-        <div className='border cursor-pointer border-zinc-300 rounded-md px-5 py-3 flex justify-center items-center  gap-3 hover:shadow-lg active:shadow-none duration-300 transition-all  '>
-
-            <Link to={`/friends/${friend?.username}`} className='flex w-full justify- items-center gap-5'>
-                <div className='w-18 h-18  rounded-full overflow-hidden'>
-                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profilephotourl?friend?.profilephotourl:"/default.jpg"} alt="" />
-                </div>
-
+        <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
+            <div className=' p-2 '>
+                <Link to={`/friends/${friend.username}`}>
+                    <img className=' w-20 h-20 object-cover rounded-full' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                </Link>
+            </div>
+            <div className=' p-2  w-3/4'>
                 <div className=''>
-                    <h1 className='md:text-lg text-sm font-bold'>{friend?.name}</h1>
-                    <h1 className='text-sm'>{friend?.username}</h1>
+                    <Link to={`/friends/${friend.username}`} className='space-y-1 mb-2'>
+                        <div className='flex flex-col gap-2'>
+                            <h1 className='text-[16px]  text-wrap font-semibold'>{name}</h1>
+                            <h1 className='md:text-sm text-xs -mt-2 mb-2'>@ {username}</h1>
+                        </div>
+                    </Link>
+                    <div className='flex   gap-2'>
+                        {addStatus ?
+                            <button onClick={() => setAddStatus(false)} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Add friend</button>
+                            :
+                            <button onClick={() => setAddStatus(true)} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Sent Request</button>
+                        }
+                        <button className={`${btnStyle} bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300`} >Delete</button>
+                    </div>
                 </div>
-            </Link>
-
-            <div className='relative'>
-                <button onClick={() => { setShowEdit(!showEdit) }}>
-                    <HiDotsHorizontal className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
-                </button>
-                <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-7 top-5 bg-white  w-40 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-                    <button className={likeCommentStyle}>
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserFollowFill />} Add Friend</h1>
-                    </button>
-                    <hr />
-                    <button className={likeCommentStyle}>
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdReport />} Report</h1>
-                    </button>
-                    <button className={likeCommentStyle}>
-                        <h1 className='flex justify-center items-center gap-2 text-sm '> {<RiUserForbidFill />} Block </h1>
-                    </button>
-                </div>
-
-
             </div>
         </div>
     )

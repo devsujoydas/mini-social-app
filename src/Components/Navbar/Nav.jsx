@@ -51,7 +51,7 @@ const Nav = () => {
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaUserFriends className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Friend Suggested</span>
+                    <span className="font-semibold ">Friends</span>
                 </div>
                 <div>
                     <p className='px-2 py-1 bg-zinc-300 rounded-full'>{friendsData.length}</p>
@@ -59,15 +59,15 @@ const Nav = () => {
             </NavLink>
 
 
-            <NavLink to={"/"}
+            <NavLink to={"/savedposts"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <MdWebStories className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Stories</span>
+                    <span className="font-semibold ">Saved Posts</span>
                 </div>
             </NavLink>
 
-            <NavLink to={"/"}
+            <NavLink to={"/eventsPage"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaTicketAlt className="text-zinc-500 text-2xl" />
@@ -75,7 +75,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <NavLink to={"/"}
+            <NavLink to={"/memories"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
                     <FaLightbulb className="text-zinc-500 text-2xl" />

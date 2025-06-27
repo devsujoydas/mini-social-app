@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom' 
+import { Link, useLoaderData, useParams } from 'react-router-dom'
 import AllFriends from './AllFriends';
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import Loading from '../Loading/Loading';
@@ -7,12 +7,20 @@ import { RiUserFollowFill } from "react-icons/ri";
 import { RiUserUnfollowFill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import { LuMessageCircleMore } from "react-icons/lu";
+import { BsPersonFillAdd } from "react-icons/bs";
+import { IoIosPersonAdd } from "react-icons/io";
+import { FaUserPlus } from "react-icons/fa6";
+import { RiUserSharedFill } from "react-icons/ri";
+
 import Post from '../Posts/Post.jsx';
 
 const FriendDetails = () => {
+
+    const btnStyle = "block px-6 py-2   text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
+
     const { friendsData, postsData } = useContext(AuthContext)
     const [loading, setLoading] = useState(true)
-    const [follow, setFollow] = useState(true)
+    const [addFriendStatus, setAddFriendStatus] = useState(true)
     const data = useLoaderData()
     const { friend, friendPost } = data;
     setTimeout(() => {
@@ -21,7 +29,7 @@ const FriendDetails = () => {
 
 
     const addFriend = () => {
-        setFollow(false)
+        setAddFriendStatus(false)
     }
 
     const unFriend = () => {
@@ -39,16 +47,16 @@ const FriendDetails = () => {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonText: "Yes, Unfollow!",
+            confirmButtonText: "Yes, Unfriend!",
             cancelButtonText: "No, cancel!",
             reverseButtons: true
         })
             .then((result) => {
                 if (result.isConfirmed) {
-                    setFollow(true)
+                    setAddFriendStatus(true)
                     swalWithTailwind.fire({
-                        title: "Unfollow!",
-                        text: "Unfollow Successfully.",
+                        title: "Unfriend!",
+                        text: "Unfriend Successfully.",
                         icon: "success"
                     })
 
@@ -92,11 +100,11 @@ const FriendDetails = () => {
 
                                         <div className='md:mt-4 mt-2 flex justify-center items-center gap-2'>
                                             <button>
-                                                {follow
+                                                {addFriendStatus
                                                     ?
-                                                    <p onClick={() => addFriend()} className='follow-btn'><RiUserFollowFill />Follow</p>
+                                                    <button onClick={() => addFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center gap-2`}  ><FaUserPlus className='text-lg'/> Add friend</button>
                                                     :
-                                                    <p onClick={() => unFriend()} className='follow-btn'><RiUserUnfollowFill />Unfollow</p>
+                                                    <p onClick={() => unFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center gap-2`}><RiUserSharedFill  className='text-lg' />Sent Request</p>
                                                 }
                                             </button>
                                             <Link to={`/message/${friend?.username}`} className='follow-btn'><LuMessageCircleMore />Message</Link>
@@ -141,8 +149,8 @@ const FriendDetails = () => {
 
                 {/* All Friends  */}
                 <div className='lg:col-span-3 p-5'>
-                    <h1 className='text-lg mb-5 font-semibold'>All Friends Suggested</h1>
-                    <div className='grid  gap-2 '>
+                    <h1 className='text-lg mb-5 font-semibold'>People you may know</h1>
+                    <div className='grid grid-cols-1 gap-2 '>
                         {friendsData.map((friend, idx) => (
                             <AllFriends key={idx} friend={friend} />
                         ))}

@@ -5,7 +5,7 @@ const ErrorPage = () => {
     const navigate = useNavigate()
 
     return (
-        <section className=" ">
+        <section className="bg-white ">
             <div className="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
                 <div className="wf-ull lg:w-1/2">
                     <p className="text-5xl font-medium text-blue-500 dark:text-blue-400">404 error</p>
@@ -17,7 +17,6 @@ const ErrorPage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:rotate-180">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                             </svg>
-
 
                             <span>Go back</span>
                         </button>

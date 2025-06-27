@@ -20,6 +20,9 @@ import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
  
 import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import Login1 from './Pages/Login/Login1.jsx'
+import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
+import EventsPage from './Pages/EventsPage/EventsPage.jsx'
+import Memories from './Pages/Memories/Memories.jsx'
 
 
 
@@ -71,6 +74,18 @@ const router = createBrowserRouter([
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
         loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`)
+      },
+      {
+        path: "/savedposts",
+        element: <PrivateRoute> <SavedPosts /></PrivateRoute> 
+      },
+      {
+        path: "/eventsPage",
+        element: <PrivateRoute> <EventsPage /></PrivateRoute> 
+      },
+      {
+        path: "/memories",
+        element: <PrivateRoute> <Memories /></PrivateRoute> 
       },
     ]
   },
