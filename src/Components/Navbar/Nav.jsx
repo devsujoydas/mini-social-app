@@ -1,3 +1,7 @@
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
+import { NavLink } from "react-router-dom";
+import { useContext } from 'react';
+
 import { FaUserFriends } from 'react-icons/fa';
 import { BiSolidMessageRounded } from "react-icons/bi";
 import { FaLightbulb } from "react-icons/fa";
@@ -5,9 +9,6 @@ import { MdWebStories } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaTicketAlt } from "react-icons/fa";
 
-import { NavLink } from "react-router-dom";
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
-import { useContext } from 'react';
 
 const Nav = () => {
     const { userData, postsData, usersPostsData, friendsData } = useContext(AuthContext)

@@ -120,7 +120,7 @@ const ProfileSidebar = () => {
     const email = userData?.email;
     const formData = { email, username }
 
-    fetch(`http://localhost:3000/updateUsername`, {
+    fetch(`https://mini-social-app-backend.vercel.app/updateUsername`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -171,7 +171,7 @@ const ProfileSidebar = () => {
     const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
 
-    fetch(`http://localhost:3000/update`, {
+    fetch(`https://mini-social-app-backend.vercel.app/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

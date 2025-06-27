@@ -1,13 +1,11 @@
 import { useState } from "react"
 import { Link } from 'react-router-dom'
 
-
 const AllFriends = ({ friend }) => {
 
     const { profilephotourl, name, username } = friend;
     const [addStatus, setAddStatus] = useState(true)
     const btnStyle = "block  py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
-
 
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>

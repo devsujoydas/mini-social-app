@@ -1,19 +1,20 @@
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import Nav from "./Nav";
+import Swal from "sweetalert2";
+
 import { IoSearch } from "react-icons/io5";
 import { FiAlertTriangle } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
-import { useContext, useState } from "react";
-import Nav from "./Nav";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
-import Swal from "sweetalert2";
 
 
 const Navbar = () => {
+  const { user, userData, signOutUser } = useContext(AuthContext)
   const [gopro, setGopro] = useState(1)
   const [humbarger, setHumbarger] = useState(1)
-  const { user, userData, signOutUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const signOutHander = () => {
@@ -40,7 +41,7 @@ const Navbar = () => {
               // console.log("Sign Out Successfull");
             })
             .catch((error) => {
-              // console.log(error.message);
+              console.log(error.message);
             });
           navigate("/login")
 
@@ -68,8 +69,6 @@ const Navbar = () => {
         </div>
       </div>
 
-
-
       {/* nav for lg device  */}
       <div className=" ">
         <div className=" px-5 py-5 hidden lg:flex flex-col justify-between h-[100vh] border-r border-zinc-300">
@@ -95,7 +94,6 @@ const Navbar = () => {
                   <div className="font-semibold bg-[#d7dfeb]  rounded-full p-4">
                     <FiAlertTriangle />
                   </div>
-
                   <button onClick={() => setGopro(0)}>
                     <IoCloseSharp className="cursor-pointer active:scale-95 transition-all" />
                   </button>
@@ -131,8 +129,6 @@ const Navbar = () => {
         </div>
       </div>
 
-
-
       {/* nav for sm device  */}
       <div className={humbarger ? 'bg-white lg:hidden fixed top-0 -left-121 w-full -z-50  opacity-0 duration-700 transition-all' : 'bg-white lg:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
 
@@ -153,7 +149,6 @@ const Navbar = () => {
               <Nav />
             </div>
           </div>
-
           <div className=" space-y-4 pb-5">
             <hr className="text-zinc-300" />
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
@@ -174,11 +169,7 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-
       </div>
-
-
-
     </div>
   )
 }

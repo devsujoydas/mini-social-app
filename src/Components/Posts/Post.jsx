@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { Link } from "react-router-dom";
@@ -12,25 +13,19 @@ import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
-import { FaCirclePlus } from "react-icons/fa6";
 import { FaCircleMinus } from "react-icons/fa6";
-import { FaArchive } from "react-icons/fa";
-import { useEffect } from "react";
-import { MdEdit } from "react-icons/md";
+import { FaCirclePlus } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
+import { IoSettings } from "react-icons/io5";
+import { FaArchive } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
 
 
 const Post = ({ post }) => {
   const { userData, friendsData } = useContext(AuthContext)
-
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
-
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
-
   const [showEdit, setShowEdit] = useState(1)
-
-
   const [showUsers, setShowUsers] = useState(false)
   const [like, setlike] = useState(false)
   const [reactorsUsers, setReactorsUsers] = useState([])
@@ -51,7 +46,7 @@ const Post = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`http://localhost:3000/post/like/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)
@@ -88,12 +83,10 @@ const Post = ({ post }) => {
 
             <div>
               <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
-
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
                 <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
               </div>
-
             </div>
           </div>
         </Link>

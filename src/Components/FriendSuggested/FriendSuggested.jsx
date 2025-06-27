@@ -17,17 +17,12 @@ const FriendSuggested = () => {
   return (
 
     <div>
-
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-semibold">Friends Suggested</h1>
         <Link to="/friends" className="flex items-center text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="text-2xl" /></Link>
       </div>
 
-
-
-
-      {
-        friendsData == ""
+      {friendsData == ""
           ?
           <div className="min-h-56 flex justify-center items-center">
             <div className="w-10 h-10 border-t-2 border-b-2 rounded-full animate-spin transition-all"></div>

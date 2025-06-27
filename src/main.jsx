@@ -1,4 +1,3 @@
- 
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -17,9 +16,7 @@ import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
 import ChatBox from './Pages/ChatBox/ChatBox.jsx'
 import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
- 
-import AuthProvider from './AuthProvider/AuthProvider.jsx'
-import Login1 from './Pages/Login/Login1.jsx'
+import AuthProvider from './AuthProvider/AuthProvider.jsx' 
 import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
@@ -44,22 +41,22 @@ const router = createBrowserRouter([
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
         element: <PrivateRoute> <PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/${params.id}`)
       },
       {
         path: "profile/post/:id",
         element: <PrivateRoute> <UsersPostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profile/post/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profile/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/update/${params.id}`)
       },
       {
         path: "/friends",
@@ -68,12 +65,12 @@ const router = createBrowserRouter([
       {
         path: "/friends/:id",
         element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/friends/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/friends/${params.id}`)
       },
       {
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`)
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/message/${params.id}`)
       },
       {
         path: "/savedposts",
