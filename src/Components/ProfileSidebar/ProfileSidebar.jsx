@@ -120,7 +120,7 @@ const ProfileSidebar = () => {
     const email = userData?.email;
     const formData = { email, username }
 
-    fetch(`http://localhost:3000/updateUsername`, {
+    fetch(`https://mini-social-app-backend.vercel.app/updateUsername`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -171,7 +171,7 @@ const ProfileSidebar = () => {
     const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
 
-    fetch(`http://localhost:3000/update`, {
+    fetch(`https://mini-social-app-backend.vercel.app/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -256,9 +256,9 @@ const ProfileSidebar = () => {
 
       {/* Username Update Modal */}
       <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "fixed top-0 left-0 w-full h-screen backdrop-blur-sm -z-40 bg-[#00000079] flex justify-center items-center transition-all"}>
-        <div className="relative max-w-96 w-full md:p-10 p-5 rounded-md bg-white">
 
-          <button className="absolute top-3 right-3">
+        <div className="relative max-w-96 w-full md:p-10 p-5 md:m-0 m-5 rounded-md bg-white">
+          <button className="absolute md:top-3 top-1 md:right-3 right-1">
             <IoClose onClick={() => setShowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
           </button>
 
@@ -292,17 +292,20 @@ const ProfileSidebar = () => {
                   <IoSettingsOutline className="active:scale-95 active:rotate-45 transition-all" />
                 </div>
 
-                <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-0 top-14 bg-white  md:w-44 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-1 font-semibold transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-                  <button onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className={likeCommentStyle}>
+                <div onClick={() => { setShowEdit(!showEdit) }} className={`absolute right-0 top-14 bg-white  md:w-44 border border-zinc-300 shadow-2xl p-3  rounded-md  font-semibold transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
+
+                  <button onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className={`md:text-xl active:scale-95 w-full transition-all p-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2`}>
                     <p className='flex justify-center items-center gap-2  text-sm text-emerald-700' >
                       <FaUserEdit /> Edit Profile
                     </p>
                   </button>
-                  <button onClick={() => signOutHander()} className={likeCommentStyle}>
+
+                  <button onClick={() => signOutHander()} className={`md:text-xl active:scale-95 w-full transition-all p-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2`}>
                     <h1 className='flex justify-center items-center gap-2 text-sm '> {<FiLogOut />} LogOut</h1>
                   </button>
-                  <button onClick={() => accountDeleteHandle()} className={likeCommentStyle}>
-                    <h1 className='flex text-red-500 justify-center items-center gap-2 text-sm '> {<FaUserSlash />} Delete Account</h1>
+
+                  <button onClick={() => accountDeleteHandle()} className={`md:text-xl active:scale-95 w-full transition-all p-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2`}>
+                    <h1 className='flex text-red-500 justify-center items-center gap-1 text-sm '> {<FaUserSlash />} Delete Account</h1>
                   </button>
                 </div>
               </div>

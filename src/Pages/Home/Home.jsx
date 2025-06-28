@@ -4,11 +4,9 @@ import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
 import Loading from "../../Components/Loading/Loading"
-import { useContext, useState } from "react"
+import { useState } from "react"
 
 const Home = () => {
-
-
 
   const [loading, setLoading] = useState(true)
 

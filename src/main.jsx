@@ -20,6 +20,9 @@ import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx'
+
+
 
 
 const router = createBrowserRouter([
@@ -39,46 +42,22 @@ const router = createBrowserRouter([
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
-        element: <PrivateRoute><PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        element: <PrivateRoute> <PostDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/${params.id}`)
       },
       {
         path: "profile/post/:id",
         element: <PrivateRoute> <UsersPostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profile/post/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/profile/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/post/update/${params.id}`)
       },
       {
         path: "/friends",
@@ -87,24 +66,12 @@ const router = createBrowserRouter([
       {
         path: "/friends/:id",
         element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/friends/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/friends/${params.id}`)
       },
       {
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
+        loader: ({ params }) => fetch(`https://mini-social-app-backend.vercel.app/message/${params.id}`)
       },
       {
         path: "/savedposts",
@@ -123,6 +90,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes>,
+  },
+  {
+    path: "/forgotPass",
+    element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>,
   },
   {
     path: "/signup",

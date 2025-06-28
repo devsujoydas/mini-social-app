@@ -50,7 +50,7 @@ const UsersPost = ({ post }) => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/post/delete/${post._id}`, {
+        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -93,7 +93,7 @@ const UsersPost = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`http://localhost:3000/post/like/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)
@@ -200,18 +200,17 @@ const UsersPost = ({ post }) => {
 
           <div className="flex items-center gap-1 ">
             <img className="md:w-5 w-4 md:h-5 h-4 rounded-full overflow-hidden" src="/like.png" alt="" />
-
             <div className="flex items-center gap-2 relative">
               {reactorsUsers.length > 0 &&
-                <div onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+                <div onClick={() => setShowUsers(!showUsers)} onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm flex gap-1 cursor-pointer hover:underline active:underline transition-all items-center " >
 
-                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
+                  <div className={`absolute bottom-8 -left-7 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all   shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
                       <Link to={user?.username == userData?.username ? "/profile" : `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                     ))}
                   </div>
 
-                  <p className="text-sm text-zinc-600">
+                  <p className="text-sm text-zinc-600 md:block hidden">
                     {(() => {
                       const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 2).join(", ");
@@ -223,7 +222,7 @@ const UsersPost = ({ post }) => {
 
               {reactorsUsers.length > 0 &&
                 <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
-                  <p className=" text-zinc-600">
+                  <p onClick={() => setShowUsers(!showUsers)} className=" -ml-2 text-zinc-600 ">
                     {(() => {
                       const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 1).join(", ");

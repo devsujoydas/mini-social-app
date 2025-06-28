@@ -33,37 +33,30 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, provider)
     }
 
-    const signOutUser = () => {
+    const signOutUser = async () => {
         setLoading(true)
 
-        fetch(`http://localhost:3000/logout`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify()
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
+        try {
+            await signOut(auth);
+
+            await fetch("https://mini-social-app-backend.vercel.app/logout", {
+                method: "POST",
+                credentials: "include"
+            });
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
 
 
-        return signOut(auth)
+
     }
 
-    const deleteAccount = () => {
+    const deleteAccount = async () => {
         deleteUser(user)
             .then(() => {
-                fetch(`http://localhost:3000/logout`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify()
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                    })
-                    
-                fetch(`http://localhost:3000/profile/delete/${user.email}`, {
+
+                fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -75,6 +68,17 @@ const AuthProvider = ({ children }) => {
             }).catch((error) => {
                 console.log(error)
             });
+        try {
+            await signOut(auth);
+
+            await fetch("https://mini-social-app-backend.vercel.app/logout", {
+                method: "POST",
+                credentials: "include"
+            });
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout error:", error);
+        }
     }
 
     useEffect(() => {
@@ -85,10 +89,10 @@ const AuthProvider = ({ children }) => {
 
                 if (!currentUser?.email) return;
 
-                fetch('http://localhost:3000/posts', {
+                fetch('https://mini-social-app-backend.vercel.app/posts', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include'
+                    // credentials: 'include'
                 })
                     .then(res => res.json())
                     .then(data => {
@@ -100,10 +104,10 @@ const AuthProvider = ({ children }) => {
 
 
 
-                fetch(`http://localhost:3000/posts`, {
+                fetch(`https://mini-social-app-backend.vercel.app/posts`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', },
-                    credentials: 'include'
+                    // credentials: 'include'
                 })
                     .then(res => res.json())
                     .then(data => {
@@ -115,9 +119,8 @@ const AuthProvider = ({ children }) => {
                     .catch(err => console.error("Post fetch error:", err));
 
 
-                fetch(`http://localhost:3000/profile/${currentUser.email}`, {
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`, {
                     method: 'GET',
-                    credentials: 'include',
                     headers: { 'Content-Type': 'application/json' }
                 })
                     .then(res => res.json())
@@ -126,10 +129,10 @@ const AuthProvider = ({ children }) => {
 
 
 
-                fetch(`http://localhost:3000/friends`, {
+                fetch(`https://mini-social-app-backend.vercel.app/friends`, {
                     method: 'GET',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    // credentials: 'include'
                 })
                     .then(res => res.json())
                     .then(data => {

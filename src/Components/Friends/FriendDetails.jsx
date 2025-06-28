@@ -47,11 +47,14 @@ const FriendDetails = () => {
                             <div className='mb-5 '>
                                 <div className='md:h-96 rounded-lg border border-zinc-300 h-50 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center' style={{ backgroundImage: `url(${friend?.coverphotourl ? friend?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png "})` }}>
                                 </div>
+                                
                                 <div className=' flex md:gap-5 items-center'>
                                     <div className='md:ml-10 ml-2'>
                                         <div className='md:w-50 w-26 md:h-50 outline outline-zinc-300 bg-white h-26 border-4 border-white md:-mt-23 -mt-14  rounded-full  bg-no-repeat bg-cover bg-center'
                                             style={{ backgroundImage: `url(${friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"})` }}></div>
                                     </div>
+
+
                                     <div className='flex items-center flex-col md:flex-row md:gap-5'>
                                         <div className='md:mt-3 md:ml-0 ml-2'>
                                             <h1 className='md:text-2xl text-xl  font-semibold'>{friend?.name}</h1>
@@ -61,7 +64,7 @@ const FriendDetails = () => {
                                             <button>
                                                 {addStatus
                                                     ?
-                                                    <button onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}  ><FaUserPlus className='md:text-lg text-sm' /> Add friend</button>
+                                                    <p onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}  ><FaUserPlus className='md:text-lg text-sm' /> Add friend</p>
                                                     :
                                                     <p onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}><RiUserSharedFill className='md:text-lg text-sm' />Cencel</p>
                                                 }

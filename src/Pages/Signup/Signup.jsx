@@ -18,7 +18,6 @@ const Signup = () => {
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
-                // console.log(result)
 
                 if (!result.user) return
 
@@ -26,7 +25,6 @@ const Signup = () => {
                 const name = result.user.displayName;
                 const username = "";
                 const email = result.user.email;
-                const password = "";
                 const address = "";
                 const bio = "";
                 const profilephotourl = result.user.photoURL;
@@ -35,13 +33,10 @@ const Signup = () => {
                 const website = "";
                 const posts = [];
                 const createdDate = new Date();
-                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
-
-                // navigate("/profile")
+                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signinwithgoogle`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -49,10 +44,8 @@ const Signup = () => {
                         .then(res => res.json())
                         .then(data => {
 
-
                             const user = { email }
-
-                            fetch(`http://localhost:3000/jwt`, {
+                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(user)
@@ -104,12 +97,12 @@ const Signup = () => {
         signUpUser(email, password)
             .then((result) => {
 
-                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
 
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signup`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -117,21 +110,24 @@ const Signup = () => {
                         .then(res => res.json())
                         .then(data => {
 
-
-
                             const user = { email }
-
-                            fetch(`http://localhost:3000/jwt`, {
+                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(user)
+                                body: JSON.stringify(user),
+                                credentials: 'include'
                             })
                                 .then(res => res.json())
                                 .then(data => {
-                                    console.log(data)
+                                    if (data.success) {
+                                        navigate(location?.state ? location.state : "/")
+                                    }
                                 })
+                                .catch(error => {
+                                    console.error("JWT fetch error:", error);
+                                });
 
-                                
+
 
                             if (data.insertedId) {
                                 console.log("Result from Backend: ", data)

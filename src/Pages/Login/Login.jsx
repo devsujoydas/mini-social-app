@@ -37,13 +37,13 @@ const Login = () => {
                 const website = "";
                 const posts = [];
                 const createdDate = new Date();
-                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
 
 
                 // navigate("/profile")
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signinwithgoogle`, {
+                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -52,8 +52,7 @@ const Login = () => {
                         .then(data => {
 
                             const user = { email }
-
-                            fetch(`http://localhost:3000/jwt`, {
+                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(user),
@@ -68,6 +67,7 @@ const Login = () => {
                                 .catch(error => {
                                     console.error("JWT fetch error:", error);
                                 });
+
 
                             if (data.insertedId) {
                                 setUserData(data)
@@ -97,16 +97,14 @@ const Login = () => {
 
                 const loggedInUser = result.user;
 
-                fetch(`http://localhost:3000/profile/${loggedInUser.email}`)
+                fetch(`https://mini-social-app-backend.vercel.app/profile/${loggedInUser.email}`)
                     .then(res => res.json())
                     .then(data => { setUserData(data) }
                     )
 
-                // user login kora done hole token create korte hobe
                 const user = { email }
 
-
-                fetch(`http://localhost:3000/jwt`, {
+                fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(user),
@@ -121,12 +119,6 @@ const Login = () => {
                     .catch(error => {
                         console.error("JWT fetch error:", error);
                     });
-
-
-
-
-
-
             })
             .catch((err) => {
                 console.log(err.message);
@@ -175,7 +167,7 @@ const Login = () => {
                                         </label>
                                     </div>
                                     <div>
-                                        <Link to={"/login"} className="text-violet-600 font-semibold text-sm hover:underline ml-1">Forgot Password?</Link>
+                                        <Link to={"/forgotPass"} className="text-violet-600 font-semibold text-sm hover:underline ml-1">Forgot Password?</Link>
                                     </div>
                                 </div>
 

@@ -61,7 +61,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className="md:sticky left-0 top-0 ">
+    <div className="lg:sticky left-0 top-0 ">
       <div className="fixed z-40 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-2">
         <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">

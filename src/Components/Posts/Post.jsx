@@ -16,7 +16,7 @@ import { BiSolidLike } from "react-icons/bi";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { ImAttachment } from "react-icons/im";
-import { BiCommentDots } from "react-icons/bi"; 
+import { BiCommentDots } from "react-icons/bi";
 import { FaCircleMinus } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -48,7 +48,7 @@ const Post = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`http://localhost:3000/post/like/${post._id}`, {
+    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)
@@ -177,15 +177,15 @@ const Post = ({ post }) => {
 
             <div className="flex items-center gap-2 relative">
               {reactorsUsers.length > 0 &&
-                <div onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm md:flex hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
+                <div onClick={() => setShowUsers(!showUsers)} onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)}  className="text-xs md:text-sm flex gap-1 cursor-pointer hover:underline active:underline transition-all items-center " >
 
-                  <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
+                  <div className={`absolute bottom-8 -left-7 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all   shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
                       <Link to={user?.username == userData?.username ? "/profile" : `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                     ))}
                   </div>
 
-                  <p className="text-sm text-zinc-600">
+                  <p className="text-sm text-zinc-600 md:block hidden">
                     {(() => {
                       const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 2).join(", ");
@@ -197,7 +197,7 @@ const Post = ({ post }) => {
 
               {reactorsUsers.length > 0 &&
                 <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
-                  <p className=" text-zinc-600">
+                  <p  onClick={() => setShowUsers(!showUsers)}  className=" -ml-2 text-zinc-600 ">
                     {(() => {
                       const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 1).join(", ");
