@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast';
 
 const AllFriends = ({ friend }) => {
 
@@ -7,8 +8,19 @@ const AllFriends = ({ friend }) => {
     const [addStatus, setAddStatus] = useState(true)
     const btnStyle = "block  py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
+    const addFriendHandler = () => {
+        toast.success('Request Send!')
+        setAddStatus(false)
+    }
+    const cencelBtnHandler = () => {
+        toast.success('Cencel!')
+        setAddStatus(true)
+    }
+
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
+            <Toaster position="bottom-center" reverseOrder={true} />
+
             <div className=' p-2 '>
                 <Link to={`/friends/${friend.username}`}>
                     <img className=' w-20 h-20 object-cover rounded-full' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
@@ -24,9 +36,9 @@ const AllFriends = ({ friend }) => {
                     </Link>
                     <div className='flex   gap-2'>
                         {addStatus ?
-                            <button onClick={() => setAddStatus(false)} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Add friend</button>
+                            <button onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Add friend</button>
                             :
-                            <button onClick={() => setAddStatus(true)} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Sent Request</button>
+                            <button onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Sent Request</button>
                         }
                         <button className={`${btnStyle} bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300`} >Delete</button>
                     </div>

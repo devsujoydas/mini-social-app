@@ -1,12 +1,11 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
-import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
- 
+
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
@@ -15,18 +14,6 @@ const AuthProvider = ({ children }) => {
     const [usersPostsData, setUsersPostsData] = useState([])
 
 
- 
-
-
-
-
-    useEffect(() => {
-        fetch(`http://localhost:3000/posts`)
-            .then(res => res.json())
-            .then(data => {
-                setPostsData(data)
-            })
-    }, [])
 
 
 
@@ -48,12 +35,34 @@ const AuthProvider = ({ children }) => {
 
     const signOutUser = () => {
         setLoading(true)
+
+        fetch(`http://localhost:3000/logout`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify()
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+            })
+
+
         return signOut(auth)
     }
 
     const deleteAccount = () => {
         deleteUser(user)
             .then(() => {
+                fetch(`http://localhost:3000/logout`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify()
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                    })
+                    
                 fetch(`http://localhost:3000/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
@@ -74,26 +83,63 @@ const AuthProvider = ({ children }) => {
                 setUser(currentUser);
                 setLoading(false);
 
-                fetch(`http://localhost:3000/posts`)
+                if (!currentUser?.email) return;
+
+                fetch('http://localhost:3000/posts', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include'
+                })
                     .then(res => res.json())
                     .then(data => {
-                        const usersPost = data.filter(post => post.authorEmail == currentUser.email)
-                        setUsersPostsData(usersPost)
+                        if (!data.message) {
+                            setPostsData(data)
+                        }
                     })
+                    .catch(err => console.error("Fetch posts error:", err));
 
 
-                fetch(`http://localhost:3000/profile/${currentUser.email}`)
+
+                fetch(`http://localhost:3000/posts`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json', },
+                    credentials: 'include'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.message) {
+                            const usersPost = data.filter(post => post.authorEmail === currentUser.email);
+                            setUsersPostsData(usersPost);
+                        }
+                    })
+                    .catch(err => console.error("Post fetch error:", err));
+
+
+                fetch(`http://localhost:3000/profile/${currentUser.email}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                })
                     .then(res => res.json())
                     .then(data => setUserData(data))
+                    .catch(err => console.error(err))
 
 
-                fetch(`http://localhost:3000/friends`)
+
+                fetch(`http://localhost:3000/friends`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                })
                     .then(res => res.json())
                     .then(data => {
-                        const friends = data.filter(friend => friend.email != currentUser.email)
-                        setFriendsData(friends)
-                    })
 
+                        if (!data.message) {
+                            const friends = data.filter(friend => friend.email !== currentUser.email);
+                            setFriendsData(friends);
+                        }
+                    })
+                    .catch(err => console.error(err));
 
             } else {
                 setUser(null);

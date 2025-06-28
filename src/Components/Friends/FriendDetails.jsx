@@ -1,8 +1,8 @@
 import { Link, useLoaderData, useParams } from 'react-router-dom'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
+import toast, { Toaster } from 'react-hot-toast';
 
-import Swal from "sweetalert2";
 import AllFriends from './AllFriends';
 import Loading from '../Loading/Loading';
 import Post from '../Posts/Post.jsx';
@@ -13,8 +13,8 @@ import { RiUserSharedFill } from "react-icons/ri";
 
 const FriendDetails = () => {
     const btnStyle = "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
-    const { friendsData, postsData } = useContext(AuthContext)
-    const [addFriendStatus, setAddFriendStatus] = useState(true)
+    const { friendsData } = useContext(AuthContext)
+
     const [loading, setLoading] = useState(true)
     const data = useLoaderData()
     const { friend, friendPost } = data;
@@ -22,48 +22,23 @@ const FriendDetails = () => {
         setLoading(false)
     }, 500);
 
-    const addFriend = () => {
-        setAddFriendStatus(false)
-    }
+    const [addStatus, setAddStatus] = useState(true)
 
-    const unFriend = () => {
-        const swalWithTailwind = Swal.mixin({
-            customClass: {
-                confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-                cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-            },
-            buttonsStyling: false
-        });
-        swalWithTailwind.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, Unfriend!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: true
-        })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    setAddFriendStatus(true)
-                    swalWithTailwind.fire({
-                        title: "Unfriend!",
-                        text: "Unfriend Successfully.",
-                        icon: "success"
-                    })
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithTailwind.fire({
-                        title: "Cancelled",
-                        text: "Your imaginary file is safe :)",
-                        icon: "error"
-                    });
-                }
-            });
+    const addFriendHandler = () => {
+        toast.success('Request Send!')
+        setAddStatus(false)
+    }
+    const cencelBtnHandler = () => {
+        toast.success('Cencel!')
+        setAddStatus(true)
     }
 
 
     return (
         <div className='md:pt-0 pt-3'>
+
+            <Toaster position="bottom-center" reverseOrder={true} />
+
             <div className='grid grid-cols-1 lg:grid-cols-9 '>
                 <div className='lg:col-span-6 p-3 md:p-5'>
                     {loading ? <Loading /> :
@@ -84,11 +59,11 @@ const FriendDetails = () => {
                                         </div>
                                         <div className='md:mt-4 mt-2 flex justify-center items-center gap-2'>
                                             <button>
-                                                {addFriendStatus
+                                                {addStatus
                                                     ?
-                                                    <button onClick={() => addFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}  ><FaUserPlus className='md:text-lg text-sm' /> Add friend</button>
+                                                    <button onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}  ><FaUserPlus className='md:text-lg text-sm' /> Add friend</button>
                                                     :
-                                                    <p onClick={() => unFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}><RiUserSharedFill className='md:text-lg text-sm' />Sent Request</p>
+                                                    <p onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}><RiUserSharedFill className='md:text-lg text-sm' />Cencel</p>
                                                 }
                                             </button>
                                             <Link to={`/message/${friend?.username}`} className='follow-btn'><LuMessageCircleMore />Message</Link>

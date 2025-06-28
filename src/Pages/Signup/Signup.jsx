@@ -15,7 +15,7 @@ const Signup = () => {
     const [passStatus, setPassStatus] = useState(false)
     const [passMessage, setPassMessage] = useState()
 
-   const logInWithGoogle = () => {
+    const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
                 // console.log(result)
@@ -48,6 +48,20 @@ const Signup = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
+
+
+                            const user = { email }
+
+                            fetch(`http://localhost:3000/jwt`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(user)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data)
+                                })
+
                             if (data.insertedId) {
                                 setUserData(data)
                             }
@@ -102,6 +116,23 @@ const Signup = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
+
+
+
+                            const user = { email }
+
+                            fetch(`http://localhost:3000/jwt`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(user)
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    console.log(data)
+                                })
+
+                                
+
                             if (data.insertedId) {
                                 console.log("Result from Backend: ", data)
                                 navigate("/profile")

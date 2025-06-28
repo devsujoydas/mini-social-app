@@ -5,7 +5,7 @@ import Root from './Pages/Root/Root.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Signup from './Pages/Signup/Signup.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
-import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx' 
+import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx'
 import Home from './Pages/Home/Home.jsx'
 import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
 import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
@@ -16,19 +16,17 @@ import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
 import ChatBox from './Pages/ChatBox/ChatBox.jsx'
 import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
-import AuthProvider from './AuthProvider/AuthProvider.jsx' 
+import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
-
-
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <PrivateRoute><Root /></PrivateRoute>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -41,22 +39,46 @@ const router = createBrowserRouter([
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "/post/:id",
-        element: <PrivateRoute> <PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+        element: <PrivateRoute><PostDetails /></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "profile/post/:id",
         element: <PrivateRoute> <UsersPostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profile/post/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/profile/post/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "/friends",
@@ -65,30 +87,42 @@ const router = createBrowserRouter([
       {
         path: "/friends/:id",
         element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/friends/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/friends/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
       },
       {
         path: "/savedposts",
-        element: <PrivateRoute> <SavedPosts /></PrivateRoute> 
+        element: <PrivateRoute> <SavedPosts /></PrivateRoute>
       },
       {
         path: "/eventsPage",
-        element: <PrivateRoute> <EventsPage /></PrivateRoute> 
+        element: <PrivateRoute> <EventsPage /></PrivateRoute>
       },
       {
         path: "/memories",
-        element: <PrivateRoute> <Memories /></PrivateRoute> 
+        element: <PrivateRoute> <Memories /></PrivateRoute>
       },
     ]
   },
   {
     path: "/login",
-    element:<AuthPrivateRoutes><Login /></AuthPrivateRoutes>,
+    element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes>,
   },
   {
     path: "/signup",

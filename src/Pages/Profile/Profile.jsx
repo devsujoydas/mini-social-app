@@ -7,7 +7,7 @@ import Loading from "../../Components/Loading/Loading"
 import { AuthContext } from "../../AuthProvider/AuthProvider"
 
 const Profile = () => {
-  const { userData, } = useContext(AuthContext)
+  const {user, userData, } = useContext(AuthContext)
   const [btnStyle, setbtnStyle] = useState(1)
   const [loadingState, setLoadingState] = useState(true)
 
@@ -22,7 +22,7 @@ const Profile = () => {
 
   return (
     <div>
-      {!userData?.username?
+      {!user?.email?
         <div className="h-screen flex justify-center items-center">
           <Loading />
         </div>

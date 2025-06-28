@@ -1,12 +1,13 @@
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
-import { Link, useLoaderData } from 'react-router-dom'
+import { useLoaderData } from 'react-router-dom'
 import Post from './Post.jsx';
+
 
 const PostDetails = () => {
   const post = useLoaderData()
 
   return (
     <div className='flex h-screen bg-white md:flex-row  flex-col md:p-0 p-3 gap-5 md:ml-5 '>
+      
       {/* post container */}
       <div className="md:w-full md:mt-5 mt-16 ">
         <Post post={post} />
@@ -17,7 +18,6 @@ const PostDetails = () => {
           <h1>Comment Loading. . .</h1>
         </div>
       </div>
-
     </div>
   )
 }

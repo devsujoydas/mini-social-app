@@ -3,29 +3,33 @@ import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import toast, { Toaster } from 'react-hot-toast';
 
 import { BiLike } from "react-icons/bi";
+import { FaCopy } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { VscSend } from "react-icons/vsc";
-import { FaBookmark } from "react-icons/fa";
+import { FaArchive } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
 import { FaRegSmile } from "react-icons/fa";
+import { FaTrashCan } from "react-icons/fa6";
+import { IoSettings } from "react-icons/io5";
 import { BiSolidLike } from "react-icons/bi";
 import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
-import { FaArchive } from "react-icons/fa";
 
 const UsersPost = ({ post }) => {
+  const { userData, postsData, setPostsData } = useContext(AuthContext)
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
-
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
 
-  const { userData, postsData, setPostsData } = useContext(AuthContext)
   const [showEdit, setShowEdit] = useState(1)
+  const [showUsers, setShowUsers] = useState(false)
+  const [like, setlike] = useState(false)
+  const [reactorsUsers, setReactorsUsers] = useState([])
+  const [likesCount, setLikesCount] = useState(post.likes.length)
   const navigate = useNavigate()
 
   const deletePost = () => {
@@ -74,12 +78,6 @@ const UsersPost = ({ post }) => {
     });
   }
 
-
-  const [showUsers, setShowUsers] = useState(false)
-  const [like, setlike] = useState(false)
-  const [reactorsUsers, setReactorsUsers] = useState([])
-  const [likesCount, setLikesCount] = useState(post.likes.length)
-
   useEffect(() => {
     if (post?.likes.length > 0 && userData?._id) {
       setReactorsUsers(post.likes)
@@ -107,21 +105,39 @@ const UsersPost = ({ post }) => {
         if (data.message === "Liked") {
           setlike(true);
           setLikesCount(prev => prev + 1);
+          toast.success('Liked!')
         }
 
         if (data.message === "Disliked") {
           setlike(false);
           setLikesCount(prev => prev - 1);
+          toast.success('Disliked!')
         }
       })
       .catch(err => console.error(err));
   };
 
+  const url = `https://xenonmedia.netlify.app/post/${post._id}`
 
+  const sharePostHandler = () => {
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        // alert("URL copied to clipboard!");
+        toast.success('Post Url Copied Successfully!')
+      })
+      .catch((err) => {
+        console.error("Copy failed: ", err);
+      });
+  }
 
 
   return (
     <div className="shadow-xl border-t border-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
+      <Toaster
+        position="bottom-center"
+        reverseOrder={true}
+      />
+
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -149,8 +165,8 @@ const UsersPost = ({ post }) => {
 
 
           <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-            <button className={`${editTrashBtnStyle}`}>
-              <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaBookmark />} Save post</h1>
+            <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+              <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
             </button>
             <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
               <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
@@ -250,7 +266,7 @@ const UsersPost = ({ post }) => {
               <span className="flex items-center gap-1"><span className="hidden md:flex">Comments</span></span>
             </button>
 
-            <button className={likeCommentStyle}>
+            <button onClick={() => sharePostHandler()} className={likeCommentStyle}>
               <div className="text-xl  cursor-pointer active:scale-95 transition-all ">
                 <PiShareFatBold />
               </div>

@@ -3,12 +3,17 @@ import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
 import FriendsRequestCard from './FriendsRequestCard.jsx'
 import PeopleYouMayKnow from './PeopleYouMayKnow.jsx'
 
+
+
 const Friends = () => {
     const { friendsData } = useContext(AuthContext)
     const [friendStatus, setFriendStatus] = useState(true)
 
+
+
     return (
         <div className='md:p-8 min-h-screen p-3 lg:pt-8 md:pt-20 pt-20'>
+            
 
             <div className=' '>
                 <h1 className='mb-3 text-xl font-bold'>Friend Requests</h1>

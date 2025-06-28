@@ -2,33 +2,31 @@ import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 import { BiLike } from "react-icons/bi";
+import { MdEdit } from "react-icons/md";
+import { FaCopy } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
+import { FaArchive } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
 import { FaRegSmile } from "react-icons/fa";
 import { BiSolidLike } from "react-icons/bi";
-import { ImAttachment } from "react-icons/im";
-import { BiCommentDots } from "react-icons/bi";
-import { PiShareFatBold } from "react-icons/pi";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaCircleMinus } from "react-icons/fa6";
-import { FaCirclePlus } from "react-icons/fa6";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
-import { FaArchive } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import Swal from "sweetalert2";
-import toast, { Toaster } from 'react-hot-toast';
+import { ImAttachment } from "react-icons/im";
+import { BiCommentDots } from "react-icons/bi"; 
+import { FaCircleMinus } from "react-icons/fa6";
+import { PiShareFatBold } from "react-icons/pi";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 
 const Post = ({ post }) => {
-
-
   const { userData, friendsData } = useContext(AuthContext)
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
   const [showEdit, setShowEdit] = useState(1)
   const [showUsers, setShowUsers] = useState(false)
   const [like, setlike] = useState(false)
@@ -64,7 +62,7 @@ const Post = ({ post }) => {
           setLikesCount(prev => prev + 1);
           toast.success('Liked!')
         }
-        
+
         if (data.message === "Disliked") {
           setlike(false);
           setLikesCount(prev => prev - 1);
@@ -74,19 +72,17 @@ const Post = ({ post }) => {
       .catch(err => console.error(err));
   };
 
-
-  const url = `https://xenonmedia.netlify.app/post/${post._id}`
+  const url = `http://localhost:5173/post/${post._id}`
 
   const sharePostHandler = () => {
     navigator.clipboard.writeText(url)
       .then(() => {
         // alert("URL copied to clipboard!");
-        toast.success('Post Link Copied Successfully!')
+        toast.success('Post Url Copied Successfully!')
       })
       .catch((err) => {
         console.error("Copy failed: ", err);
       });
-
   }
 
   return (
@@ -95,7 +91,6 @@ const Post = ({ post }) => {
         position="bottom-center"
         reverseOrder={true}
       />
-
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -110,7 +105,9 @@ const Post = ({ post }) => {
               <h1 className="font-semibold active:underline transition-all text-md cursor-pointer">{post?.authorName ? `${post?.authorName}` : "Your Name"}</h1>
               <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
                 <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
-                <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
+                {post?.authorUsername === userData?.username &&
+                  <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
+                }
               </div>
             </div>
           </div>
@@ -123,8 +120,8 @@ const Post = ({ post }) => {
 
           {post?.authorUsername == userData?.username ?
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-              <button className={`${editTrashBtnStyle}`}>
-                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaBookmark />} Save post</h1>
+              <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
               </button>
               <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
                 <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
@@ -142,8 +139,8 @@ const Post = ({ post }) => {
             </div>
             :
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
-              <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCirclePlus />}</span> Interested</h1>
+              <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
               </button>
               <button className={editTrashBtnStyle}>
                 <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCircleMinus />}</span> Not Interested</h1>

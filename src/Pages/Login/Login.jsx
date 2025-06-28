@@ -3,11 +3,14 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+
+import axios from 'axios';
+
+
 const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
-    
-    console.log(location)
+
 
     const { signInWithGoogle, logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
     const [show, setShow] = useState(0)
@@ -18,7 +21,6 @@ const Login = () => {
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
-                // console.log(result)
 
                 if (!result.user) return
 
@@ -48,6 +50,25 @@ const Login = () => {
                     })
                         .then(res => res.json())
                         .then(data => {
+
+                            const user = { email }
+
+                            fetch(`http://localhost:3000/jwt`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(user),
+                                credentials: 'include'
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        navigate(location?.state ? location.state : "/")
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error("JWT fetch error:", error);
+                                });
+
                             if (data.insertedId) {
                                 setUserData(data)
                             }
@@ -65,18 +86,47 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        setLoadingSpiner(false)
         const email = e.target.email.value;
         const password = e.target.password.value;
-        setLoadingSpiner(false)
+
         logInUser(email, password)
             .then((result) => {
-                fetch(`http://localhost:3000/profile/${result.user.email}`)
+                setUser(result.user)
+
+
+                const loggedInUser = result.user;
+
+                fetch(`http://localhost:3000/profile/${loggedInUser.email}`)
+                    .then(res => res.json())
+                    .then(data => { setUserData(data) }
+                    )
+
+                // user login kora done hole token create korte hobe
+                const user = { email }
+
+
+                fetch(`http://localhost:3000/jwt`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user),
+                    credentials: 'include'
+                })
                     .then(res => res.json())
                     .then(data => {
-                        setUserData(data)
+                        if (data.success) {
+                            navigate(location?.state ? location.state : "/")
+                        }
                     })
-                setUser(result.user)
-                navigate(location?.state ? location.state : "/")
+                    .catch(error => {
+                        console.error("JWT fetch error:", error);
+                    });
+
+
+
+
+
+
             })
             .catch((err) => {
                 console.log(err.message);
