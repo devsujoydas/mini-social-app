@@ -15,11 +15,13 @@ const AuthProvider = ({ children }) => {
     const [usersPostsData, setUsersPostsData] = useState([])
 
 
+ 
+
 
 
 
     useEffect(() => {
-        fetch(`https://mini-social-app-backend.vercel.app/posts`)
+        fetch(`http://localhost:3000/posts`)
             .then(res => res.json())
             .then(data => {
                 setPostsData(data)
@@ -52,7 +54,7 @@ const AuthProvider = ({ children }) => {
     const deleteAccount = () => {
         deleteUser(user)
             .then(() => {
-                fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
+                fetch(`http://localhost:3000/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -72,7 +74,7 @@ const AuthProvider = ({ children }) => {
                 setUser(currentUser);
                 setLoading(false);
 
-                fetch(`https://mini-social-app-backend.vercel.app/posts`)
+                fetch(`http://localhost:3000/posts`)
                     .then(res => res.json())
                     .then(data => {
                         const usersPost = data.filter(post => post.authorEmail == currentUser.email)
@@ -80,12 +82,12 @@ const AuthProvider = ({ children }) => {
                     })
 
 
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`)
+                fetch(`http://localhost:3000/profile/${currentUser.email}`)
                     .then(res => res.json())
                     .then(data => setUserData(data))
 
 
-                fetch(`https://mini-social-app-backend.vercel.app/friends`)
+                fetch(`http://localhost:3000/friends`)
                     .then(res => res.json())
                     .then(data => {
                         const friends = data.filter(friend => friend.email != currentUser.email)

@@ -39,7 +39,7 @@ const PostDetailsUpdate = () => {
       .then((result) => {
         if (result.isConfirmed) {
 
-          fetch(`https://mini-social-app-backend.vercel.app/post/update/${post._id}`, {
+          fetch(`http://localhost:3000/post/update/${post._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)
@@ -62,18 +62,13 @@ const PostDetailsUpdate = () => {
           });
         }
       });
-
-
-
-
-
   }
 
 
   return (
-    <div className="md:mt-10 mt-23 md:mx-10 mx-5 flex justify-center gap-5 md:flex-row flex-col">
+    <div className="md:mt-10 min-h-[90vh] mt-23 md:mx-10 mx-5 flex justify-center gap-5 md:flex-row flex-col">
 
-      <div className="w-full space-y-5">
+      <div className="w-full  space-y-5">
         <div className="rounded-md overflow-hidden">
           <img className="hover:scale-105 active:scale-150 cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
         </div>

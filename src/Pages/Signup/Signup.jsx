@@ -41,7 +41,7 @@ const Signup = () => {
                 // navigate("/profile")
 
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -95,7 +95,7 @@ const Signup = () => {
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                    fetch(`http://localhost:3000/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)

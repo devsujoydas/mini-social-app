@@ -19,9 +19,13 @@ import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { FaArchive } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Post = ({ post }) => {
+
+
   const { userData, friendsData } = useContext(AuthContext)
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
@@ -46,7 +50,7 @@ const Post = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)
@@ -58,19 +62,40 @@ const Post = ({ post }) => {
         if (data.message === "Liked") {
           setlike(true);
           setLikesCount(prev => prev + 1);
+          toast.success('Liked!')
         }
-
+        
         if (data.message === "Disliked") {
           setlike(false);
           setLikesCount(prev => prev - 1);
+          toast.success('Disliked!')
         }
       })
       .catch(err => console.error(err));
   };
 
 
+  const url = `https://xenonmedia.netlify.app/post/${post._id}`
+
+  const sharePostHandler = () => {
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        // alert("URL copied to clipboard!");
+        toast.success('Post Link Copied Successfully!')
+      })
+      .catch((err) => {
+        console.error("Copy failed: ", err);
+      });
+
+  }
+
   return (
     <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
+      <Toaster
+        position="bottom-center"
+        reverseOrder={true}
+      />
+
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -96,7 +121,7 @@ const Post = ({ post }) => {
             <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
           </button>
 
-          {post?.authorUsername == userData.username ?
+          {post?.authorUsername == userData?.username ?
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
               <button className={`${editTrashBtnStyle}`}>
                 <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaBookmark />} Save post</h1>
@@ -159,7 +184,7 @@ const Post = ({ post }) => {
 
                   <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
-                      <Link to={user?.username == userData?.username ? "/profile": `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                      <Link to={user?.username == userData?.username ? "/profile" : `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                     ))}
                   </div>
 
@@ -198,6 +223,8 @@ const Post = ({ post }) => {
           </div>
         </div>
 
+
+
         <hr className="text-zinc-300" />
 
         {/* like comment share container  */}
@@ -218,7 +245,7 @@ const Post = ({ post }) => {
               <span className="flex items-center gap-1"><span className="hidden md:flex">Comments</span></span>
             </button>
 
-            <button className={likeCommentStyle}>
+            <button onClick={() => sharePostHandler()} className={likeCommentStyle}>
               <div className="text-xl  cursor-pointer active:scale-95 transition-all ">
                 <PiShareFatBold />
               </div>

@@ -120,7 +120,7 @@ const ProfileSidebar = () => {
     const email = userData?.email;
     const formData = { email, username }
 
-    fetch(`https://mini-social-app-backend.vercel.app/updateUsername`, {
+    fetch(`http://localhost:3000/updateUsername`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -171,7 +171,7 @@ const ProfileSidebar = () => {
     const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
 
-    fetch(`https://mini-social-app-backend.vercel.app/update`, {
+    fetch(`http://localhost:3000/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -352,15 +352,15 @@ const ProfileSidebar = () => {
           {/* about me */}
           <div className="">
             <div className="space-y-1">
-              <h1 className="font-semibold text-xl ">About Me</h1>
-              <p className="text-zinc-500 ">{userData?.bio}</p>
+              <h1 className="font-semibold md:text-xl text-lg ">About Me</h1>
+              <p className="text-zinc-500 md:text-lg text-sm">{userData?.bio}</p>
             </div>
           </div>
 
           {/* contact  */}
           <div>
             <div className="flex justify-between items-center pt-2">
-              <h1 className="text-xl font-semibold">Contact Infomation</h1>
+              <h1 className="md:text-xl text-lg  font-semibold">Contact Infomation</h1>
               <BsThreeDotsVertical className="cursor-pointer active:scale-95 text-xl text-zinc-500 hover:text-black" />
             </div>
 
@@ -369,7 +369,7 @@ const ProfileSidebar = () => {
             <a target="_blank" href={`tel:${userData?.phone}`}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                  <div className="text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
                     <IoCallOutline />
                   </div>
                   <div>
@@ -377,7 +377,7 @@ const ProfileSidebar = () => {
                     <p className="text-zinc-500 text-sm">+{userData?.phone}</p>
                   </div>
                 </div>
-                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+                <MdOutlineArrowOutward className="md:text-3xl text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </div>
             </a>
 
@@ -386,7 +386,7 @@ const ProfileSidebar = () => {
             <a target="_blank" href={`mailto:${userData?.email}`} >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                  <div className="text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
                     <MdOutlineEmail />
                   </div>
                   <div>
@@ -394,7 +394,7 @@ const ProfileSidebar = () => {
                     <p className="text-zinc-500 text-sm">{userData?.email}</p>
                   </div>
                 </div>
-                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+                <MdOutlineArrowOutward className="md:text-3xl text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </div>
             </a>
 
@@ -403,7 +403,7 @@ const ProfileSidebar = () => {
             <a target="_blank" href={userData?.website}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl p-3 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
+                  <div className="text-2xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all bg-[#dde3fd] text-[#2600ff]">
                     <TbWorldWww />
                   </div>
                   <div>
@@ -411,7 +411,7 @@ const ProfileSidebar = () => {
                     <p className="text-zinc-500 text-sm">{userData?.website}</p>
                   </div>
                 </div>
-                <MdOutlineArrowOutward className="text-3xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
+                <MdOutlineArrowOutward className="md:text-3xl text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </div>
             </a>
 

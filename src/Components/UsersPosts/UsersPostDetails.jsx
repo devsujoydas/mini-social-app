@@ -48,7 +48,7 @@ const UsersPostDetails = () => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -95,7 +95,7 @@ const UsersPostDetails = () => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)

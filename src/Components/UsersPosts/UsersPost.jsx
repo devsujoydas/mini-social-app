@@ -1,5 +1,8 @@
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 import { BiLike } from "react-icons/bi";
 import { MdEdit } from "react-icons/md";
@@ -15,9 +18,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSettings } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
-import Swal from "sweetalert2";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
-import { useEffect } from "react";
 
 const UsersPost = ({ post }) => {
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
@@ -46,7 +46,7 @@ const UsersPost = ({ post }) => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://mini-social-app-backend.vercel.app/post/delete/${post._id}`, {
+        fetch(`http://localhost:3000/post/delete/${post._id}`, {
           method: 'DELETE',
         })
           .then(res => res.json())
@@ -95,7 +95,7 @@ const UsersPost = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)
@@ -116,7 +116,6 @@ const UsersPost = ({ post }) => {
       })
       .catch(err => console.error(err));
   };
-
 
 
 
@@ -173,8 +172,8 @@ const UsersPost = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* post content and image like comment share bookmark */}
-      <div className="md:px-5 pt-2 pb-1 space-y-2">
-        <h1 className="space-x-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
+      <div className="md:px-5  pt-2 pb-1 space-y-2">
+        <h1 className="space-x-2 pl-2 md:text-md text-sm flex text-wrap font-semibold flex-wrap">{post?.postContent}</h1>
 
         <Link to={`/profile/post/${post._id}`}>
           <img className="w-full object-cover rounded-lg md:h-[550px] h-56" src={`${post?.postImageUrl}`} alt="" />
@@ -192,7 +191,7 @@ const UsersPost = ({ post }) => {
 
                   <div className={`absolute bottom-8 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all  -left-7 shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
-                      <Link to={user?.username == userData?.username ? "/profile": `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                      <Link to={user?.username == userData?.username ? "/profile" : `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                     ))}
                   </div>
 

@@ -12,7 +12,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import { RiUserSharedFill } from "react-icons/ri";
 
 const FriendDetails = () => {
-    const btnStyle = "block px-6 py-2   text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
+    const btnStyle = "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const { friendsData, postsData } = useContext(AuthContext)
     const [addFriendStatus, setAddFriendStatus] = useState(true)
     const [loading, setLoading] = useState(true)
@@ -51,7 +51,6 @@ const FriendDetails = () => {
                         text: "Unfriend Successfully.",
                         icon: "success"
                     })
-
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithTailwind.fire({
                         title: "Cancelled",
@@ -70,16 +69,16 @@ const FriendDetails = () => {
                     {loading ? <Loading /> :
                         <div>
                             {/* Friends Details  */}
-                            <div className=' mb-5 '>
+                            <div className='mb-5 '>
                                 <div className='md:h-96 rounded-lg border border-zinc-300 h-50 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center' style={{ backgroundImage: `url(${friend?.coverphotourl ? friend?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png "})` }}>
                                 </div>
                                 <div className=' flex md:gap-5 items-center'>
                                     <div className='md:ml-10 ml-2'>
-                                        <div className='md:w-50 w-30 md:h-50 outline outline-zinc-300 bg-white h-30 border-4 border-white md:-mt-23 -mt-14  rounded-full  bg-no-repeat bg-cover bg-center'
+                                        <div className='md:w-50 w-26 md:h-50 outline outline-zinc-300 bg-white h-26 border-4 border-white md:-mt-23 -mt-14  rounded-full  bg-no-repeat bg-cover bg-center'
                                             style={{ backgroundImage: `url(${friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"})` }}></div>
                                     </div>
                                     <div className='flex items-center flex-col md:flex-row md:gap-5'>
-                                        <div className='md:mt-3 mt-1'>
+                                        <div className='md:mt-3 md:ml-0 ml-2'>
                                             <h1 className='md:text-2xl text-xl  font-semibold'>{friend?.name}</h1>
                                             <h1 className='md:text-md text-sm'>@{friend?.username}</h1>
                                         </div>
@@ -87,9 +86,9 @@ const FriendDetails = () => {
                                             <button>
                                                 {addFriendStatus
                                                     ?
-                                                    <button onClick={() => addFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center gap-2`}  ><FaUserPlus className='text-lg'/> Add friend</button>
+                                                    <button onClick={() => addFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}  ><FaUserPlus className='md:text-lg text-sm' /> Add friend</button>
                                                     :
-                                                    <p onClick={() => unFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center gap-2`}><RiUserSharedFill  className='text-lg' />Sent Request</p>
+                                                    <p onClick={() => unFriend()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold flex items-center md:gap-2 gap-1`}><RiUserSharedFill className='md:text-lg text-sm' />Sent Request</p>
                                                 }
                                             </button>
                                             <Link to={`/message/${friend?.username}`} className='follow-btn'><LuMessageCircleMore />Message</Link>
@@ -131,7 +130,7 @@ const FriendDetails = () => {
                 </div>
 
                 {/* All Friends  */}
-                <div className='lg:col-span-3 p-5'>
+                <div className='lg:col-span-3 md:p-5 p-3'>
                     <h1 className='text-lg mb-5 font-semibold'>People you may know</h1>
                     <div className='grid grid-cols-1 gap-2 '>
                         {friendsData.map((friend, idx) => (

@@ -62,7 +62,7 @@ const Navbar = () => {
 
   return (
     <div className="md:sticky left-0 top-0 ">
-      <div className="fixed z-50 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-2">
+      <div className="fixed z-40 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-2">
         <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="text-5xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
@@ -70,7 +70,7 @@ const Navbar = () => {
       </div>
 
       {/* nav for lg device  */}
-      <div className=" ">
+      <div className="">
         <div className=" px-5 py-5 hidden lg:flex flex-col justify-between h-[100vh] border-r border-zinc-300">
 
           <div className=" space-y-6 ">
@@ -132,10 +132,11 @@ const Navbar = () => {
       {/* nav for sm device  */}
       <div className={humbarger ? 'bg-white lg:hidden fixed top-0 -left-121 w-full -z-50  opacity-0 duration-700 transition-all' : 'bg-white lg:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
 
-        <div className="px-5 pt-2 bg-white h-[100vh] flex flex-col justify-between">
-          <div className=" space-y-7 ">
+        <div className="px-3 py-3 bg-white h-[100vh] overflow-hidden flex flex-col justify-between">
+
+          <div className="space-y-7 ">
             {/* nav logo  */}
-            <div className=" flex justify-between items-center">
+            <div className=" flex justify-between px-2 items-center">
               <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
               <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="text-5xl" />
             </div>
@@ -149,27 +150,31 @@ const Navbar = () => {
               <Nav />
             </div>
           </div>
-          <div className=" space-y-4 pb-5">
-            <hr className="text-zinc-300" />
+
+          <div className=" ">
+            <hr className="text-zinc-300 pb-3" />
             <div onClick={() => setHumbarger(!humbarger)} className=" flex justify-between items-center cursor-pointer">
               <Link to={`/profile`}>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 overflow-hidden rounded-full">
+                <div className="flex items-center gap-2">
+                  <div className="w-12 h-12 overflow-hidden rounded-full">
                     <img className=" h-full w-full object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
                   </div>
                   <div className="">
                     <h1 className="font-semibold">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
-                    <p className="text-sm">@{userData?.username ? `${userData?.username}` : "username"}</p>
+                    <p className=" text-sm">@{userData?.username ? `${userData?.username}` : "username"}</p>
                   </div>
                 </div>
               </Link>
               <button onClick={() => signOutHander()}>
-                <RxExit className="text-3xl cursor-pointer m-3" />
+                <RxExit className="text-2xl cursor-pointer m-3" />
               </button>
             </div>
+
           </div>
+
         </div>
       </div>
+
     </div>
   )
 }

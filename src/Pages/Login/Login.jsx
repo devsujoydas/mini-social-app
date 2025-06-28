@@ -1,14 +1,19 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 const Login = () => {
     const navigate = useNavigate()
+    const location = useLocation()
+    
+    console.log(location)
+
     const { signInWithGoogle, logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
     const [userStatus, setUserStatus] = useState("")
+
 
     const logInWithGoogle = () => {
         signInWithGoogle()
@@ -36,7 +41,7 @@ const Login = () => {
                 // navigate("/profile")
 
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -65,13 +70,13 @@ const Login = () => {
         setLoadingSpiner(false)
         logInUser(email, password)
             .then((result) => {
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${result.user.email}`)
+                fetch(`http://localhost:3000/profile/${result.user.email}`)
                     .then(res => res.json())
                     .then(data => {
                         setUserData(data)
                     })
                 setUser(result.user)
-                navigate(`/profile`)
+                navigate(location?.state ? location.state : "/")
             })
             .catch((err) => {
                 console.log(err.message);
