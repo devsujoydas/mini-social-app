@@ -4,86 +4,36 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 
 
 const Signup = () => {
     const navigate = useNavigate()
-    const { signInWithGoogle, signUpUser, setUser } = useContext(AuthContext)
+    const { signUpUser, setUser, setUserData } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
     const [userStatus, setUserStatus] = useState("")
     const [passStatus, setPassStatus] = useState(false)
     const [passMessage, setPassMessage] = useState()
 
-    const logInWithGoogle = () => {
-        signInWithGoogle()
-            .then((result) => {
-                console.log(result);
-                if (!result.user.email) return
-                setUser(result.user)
-                const name = result.user.displayName;
-                const username = "";
-                const email = result.user.email;
-                const address = "";
-                const bio = "";
-                const profilephotourl = result.user.photoURL;
-                const coverphotourl = "";
-                const phone = "";
-                const website = "";
-                const posts = [];
-                const createdDate = new Date();
-                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-                if (result.user) {
-                    fetch(`http://localhost:3000/signinwithgoogle`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-
-                            const user = { email }
-                            fetch(`http://localhost:3000/jwt`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(user)
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    console.log(data)
-                                })
-
-                            if (data.insertedId) {
-                                setUserData(data)
-                            }
-                            if (data.data = "This email Existed") {
-                                setUserData(data)
-                                console.log("Result from Backend: ", data)
-                                navigate("/profile")
-                            }
-                        })
-                }
-            }).catch((err) => {
-                console.log(err)
-            });
-    }
 
     const submitHandler = async (e) => {
         e.preventDefault();
         setLoadingSpiner(false)
-        const name = "";
-        const username = "";
+
         const email = e.target.email.value;
+        const username = email.split('@')[0];
+        const nameRaw = username.replace(/[0-9]/g, '');
+        const name = nameRaw.charAt(0).toUpperCase() + nameRaw.slice(1);
         const password = e.target.password.value;
         const conPassword = e.target.conPassword.value;
-        const address = "";
-        const bio = "";
-        const profilephotourl = "";
-        const coverphotourl = "";
-        const phone = "";
-        const website = "";
-        const posts = [];
+        const address = ""; const bio = "";
+        const profilephotourl = ""; const coverphotourl = "";
+        const phone = ""; const website = ""; const posts = [];
         const createdDate = new Date();
+
+        const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
 
         if (password != conPassword) {
             setLoadingSpiner(true)
@@ -95,42 +45,19 @@ const Signup = () => {
         signUpUser(email, password)
             .then((result) => {
 
-                const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
                 setUser(result.user)
+                console.log(result);
+
 
                 if (result.user) {
-                    fetch(`http://localhost:3000/signup`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
 
-                            const user = { email }
-                            fetch(`http://localhost:3000/jwt`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(user),
-                                credentials: 'include'
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        navigate(location?.state ? location.state : "/")
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error("JWT fetch error:", error);
-                                });
+                    axios.post(`http://localhost:3000/signup`, formData)
+                        .then(res => {
+                            console.log("Result from signup page: ", res.data)
 
+                            setUserData(res.data)
+                            navigate("/profile")
 
-
-                            if (data.insertedId) {
-                                console.log("Result from Backend: ", data)
-                                navigate("/profile")
-                            }
                         })
                 }
             })
@@ -141,6 +68,8 @@ const Signup = () => {
             });
 
     };
+
+
 
 
     return (
@@ -210,10 +139,7 @@ const Signup = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
-                                <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
-                                <h1 className="text-black font-medium ">Sign in with Google</h1>
-                            </button>
+                            <SignInWithGoogle />
 
                             <p className="text-slate-800 text-sm text-center">Already have an account?
                                 <Link to={"/login"} className="text-violet-600 font-semibold hover:underline ml-1">Login</Link>

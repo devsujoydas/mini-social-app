@@ -21,6 +21,7 @@ import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx'
+import UserName from './Pages/UserName/UserName.jsx'
 
 
 
@@ -89,15 +90,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes>,
+    element: <Login />,
+  },
+  {
+    path: "/setusername",
+    element: <UserName />
   },
   {
     path: "/forgotPass",
-    element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>,
+    element: <ForgotPassword />,
   },
   {
     path: "/signup",
-    element: <AuthPrivateRoutes>< Signup /></AuthPrivateRoutes>
+    element: < Signup />
   },
 
 ])

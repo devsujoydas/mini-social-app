@@ -3,82 +3,18 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 
 
 const Login = () => {
     const navigate = useNavigate()
-    const location = useLocation()
 
-
-    const { signInWithGoogle, logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
+    const { logInUser, setUser, setUserData, setLoading } = useContext(AuthContext)
     const [show, setShow] = useState(0)
     const [loadingSpiner, setLoadingSpiner] = useState(true)
     const [userStatus, setUserStatus] = useState("")
 
-
-    const logInWithGoogle = () => {
-        signInWithGoogle()
-            .then((result) => {
-                if (!result.user.email) return
-                setUser(result.user)
-                const name = result.user.displayName;
-                const username = "";
-                const email = result.user.email;
-                const password = "";
-                const address = "";
-                const bio = "";
-                const profilephotourl = result.user.photoURL;
-                const coverphotourl = "";
-                const phone = "";
-                const website = "";
-                const posts = [];
-                const createdDate = new Date();
-                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
-
-                // navigate("/profile")
-
-                if (result.user) {
-                    fetch(`http://localhost:3000/signinwithgoogle`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-
-                            const user = { email }
-                            fetch(`http://localhost:3000/jwt`, {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(user),
-                                credentials: 'include'
-                            })
-                                .then(res => res.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        navigate(location?.state ? location.state : "/")
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error("JWT fetch error:", error);
-                                });
-
-
-                            if (data.insertedId) {
-                                setUserData(data)
-                            }
-                            if (data.data = "This email Existed") {
-                                setUserData(data)
-                                console.log("Result from Backend: ", data)
-                                navigate("/profile")
-                            }
-                        })
-                }
-            }).catch((err) => {
-                console.log(err)
-            });
-    }
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -88,32 +24,13 @@ const Login = () => {
 
         logInUser(email, password)
             .then((result) => {
+                if (result.user.email) {
+                    navigate("/profile")
+                }
+
                 setUser(result.user)
+                setUserData(result.user)
 
-                const loggedInUser = result.user;
-                
-                fetch(`http://localhost:3000/profile/${loggedInUser.email}`)
-                    .then(res => res.json())
-                    .then(data => { setUserData(data) }
-                    )
-
-                const user = { email }
-
-                fetch(`http://localhost:3000/jwt`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(user),
-                    credentials: 'include'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            navigate(location?.state ? location.state : "/")
-                        }
-                    })
-                    .catch(error => {
-                        console.error("JWT fetch error:", error);
-                    });
             })
             .catch((err) => {
                 console.log(err.message);
@@ -123,6 +40,8 @@ const Login = () => {
 
             });
     }
+
+
 
     return (
         <div className="font-family-primary bg-white h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
@@ -185,11 +104,7 @@ const Login = () => {
                                 <p>---------------- Or ----------------</p>
                             </div>
 
-                            <button
-                                onClick={logInWithGoogle} className="flex justify-center items-center gap-1 border border-zinc-300 w-full py-1 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all">
-                                <img className="w-10 h-10 rounded-full" src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="" />
-                                <h1 className="text-black font-medium ">Sign in with Google</h1>
-                            </button>
+                            <SignInWithGoogle />
 
                             <p className="text-slate-800 text-sm text-center">Dont have any account?
                                 <Link to={"/signup"} className="text-violet-600 font-semibold hover:underline ml-1">Signup</Link>
@@ -211,3 +126,41 @@ const Login = () => {
 }
 
 export default Login
+
+
+
+
+// fetch(`http://localhost:3000/jwt`, {
+//                                 method: 'POST',
+//                                 headers: { 'Content-Type': 'application/json' },
+//                                 body: JSON.stringify(user),
+//                                 credentials: 'include'
+//                             })
+//                                 .then(res => res.json())
+//                                 .then(data => {
+//                                     if (data.success) {
+//                                         navigate(location?.state ? location.state : "/")
+//                                     }
+//                                 })
+//                                 .catch(error => {
+//                                     console.error("JWT fetch error:", error);
+//                                 });
+
+
+
+
+// fetch(`http://localhost:3000/jwt`, {
+//                     method: 'POST',
+//                     headers: { 'Content-Type': 'application/json' },
+//                     body: JSON.stringify(user),
+//                     credentials: 'include'
+//                 })
+//                     .then(res => res.json())
+//                     .then(data => {
+//                         if (data.success) {
+//                             navigate(location?.state ? location.state : "/")
+//                         }
+//                     })
+//                     .catch(error => {
+//                         console.error("JWT fetch error:", error);
+//                     });

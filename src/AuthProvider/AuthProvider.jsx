@@ -1,12 +1,15 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
+    // const navigate = useNavigate()
 
+    const [storedEmail, setStoredEmail] = useState("") 
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
@@ -14,6 +17,39 @@ const AuthProvider = ({ children }) => {
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
 
+    
+    useEffect(() => {
+
+        if (userData.email) {
+            setUserName(userData.username)
+        }
+
+        axios.get(`http://localhost:3000/posts`)
+            .then(res => setPostsData(res.data))
+            .catch(err => console.error("Fetch posts error:", err));
+
+
+
+        axios.get(`http://localhost:3000/posts`)
+            .then(res => {
+                const usersPost = res.data.filter(post => post.authorEmail === localStorage.getItem("email"));
+                setUsersPostsData(usersPost);
+            })
+            .catch(err => console.error(err))
+
+
+        axios.get(`http://localhost:3000/friends`)
+            .then(res => {
+                // console.log(res.data);
+                const friends = res.data.filter(friend => friend.email !== localStorage.getItem("email"));
+                setFriendsData(friends);
+
+            })
+            .catch(err => console.error(err))
+
+    }, [])
+
+    // console.log(friendsData);
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -36,6 +72,7 @@ const AuthProvider = ({ children }) => {
 
         try {
             await signOut(auth);
+            localStorage.removeItem("email")
 
             await fetch("http://localhost:3000/logout", {
                 method: "POST",
@@ -60,6 +97,7 @@ const AuthProvider = ({ children }) => {
                     .then(res => res.json())
                     .then(data => {
 
+                        localStorage.removeItem("email")
                         navigate("/login")
                         console.log("Account Deleted Successfully", data)
                     })
@@ -87,60 +125,31 @@ const AuthProvider = ({ children }) => {
 
                 if (!currentUser?.email) return;
 
-                fetch('http://localhost:3000/posts', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    // credentials: 'include'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data.message) {
-                            setPostsData(data)
-                        }
-                    })
-                    .catch(err => console.error("Fetch posts error:", err));
+                localStorage.setItem("email", currentUser.email)
+                setStoredEmail(localStorage.getItem("email"))
 
 
 
-                fetch(`http://localhost:3000/posts`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json', },
-                    // credentials: 'include'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!data.message) {
-                            const usersPost = data.filter(post => post.authorEmail === currentUser.email);
-                            setUsersPostsData(usersPost);
-                        }
-                    })
-                    .catch(err => console.error("Post fetch error:", err));
-
-
-                fetch(`http://localhost:3000/profile/${currentUser.email}`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                })
-                    .then(res => res.json())
-                    .then(data => setUserData(data))
+                axios.get(`http://localhost:3000/profile/${currentUser.email}`)
+                    .then(res => setUserData(res.data))
                     .catch(err => console.error(err))
 
 
 
-                fetch(`http://localhost:3000/friends`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    // credentials: 'include'
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                // axios.get(`http://localhost:3000/posts`)
+                //     .then(res => {
+                //         const usersPost = res.data.filter(post => post.authorEmail === currentUser.email);
+                //         setUsersPostsData(usersPost);
+                //     })
+                //     .catch(err => console.error(err))
 
-                        if (!data.message) {
-                            const friends = data.filter(friend => friend.email !== currentUser.email);
-                            setFriendsData(friends);
-                        }
-                    })
-                    .catch(err => console.error(err));
+                // axios.get(`http://localhost:3000/friends`)
+                //     .then(res => {
+                //         const friends = res.data.filter(friend => friend.email !== currentUser.email);
+                //         setFriendsData(friends);
+                //     })
+                //     .catch(err => console.error(err))
+
 
             } else {
                 setUser(null);
@@ -169,6 +178,7 @@ const AuthProvider = ({ children }) => {
         signOutUser,
         signInWithGoogle,
         deleteAccount,
+        storedEmail, 
     }
 
     return (
