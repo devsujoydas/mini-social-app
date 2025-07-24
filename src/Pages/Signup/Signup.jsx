@@ -30,10 +30,13 @@ const Signup = () => {
         const conPassword = e.target.conPassword.value;
         const address = ""; const bio = "";
         const profilephotourl = ""; const coverphotourl = "";
-        const phone = ""; const website = ""; const posts = [];
+        const phone = ""; const website = "";
         const createdDate = new Date();
+        const posts = [];
+        const friendRequests = [];
+        const myFriends = []
 
-        const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+        const formData = { name, username, email, password, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate, myFriends, friendRequests }
 
         if (password != conPassword) {
             setLoadingSpiner(true)

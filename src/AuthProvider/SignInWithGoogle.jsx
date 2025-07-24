@@ -22,8 +22,10 @@ const SignInWithGoogle = () => {
                 const address = ""; const bio = "";
                 const coverphotourl = ""; const phone = ""; const website = "";
                 const posts = []; const createdDate = new Date();
+                const friendRequests = [];
+                const myFriends = []
 
-                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
+                const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate, myFriends, friendRequests }
 
                 axios.post(`http://localhost:3000/signinwithgoogle`, formData)
                     .then(res => {

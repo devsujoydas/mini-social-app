@@ -2,14 +2,12 @@ import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    // const navigate = useNavigate()
 
-    const [storedEmail, setStoredEmail] = useState("") 
+    const [storedEmail, setStoredEmail] = useState("")
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
@@ -17,11 +15,13 @@ const AuthProvider = ({ children }) => {
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
 
-    
+
     useEffect(() => {
 
         if (userData.email) {
             setUserName(userData.username)
+
+
         }
 
         axios.get(`http://localhost:3000/posts`)
@@ -40,16 +40,33 @@ const AuthProvider = ({ children }) => {
 
         axios.get(`http://localhost:3000/friends`)
             .then(res => {
-                // console.log(res.data);
-                const friends = res.data.filter(friend => friend.email !== localStorage.getItem("email"));
+                const friends = res.data.filter(friend => friend.email != localStorage.getItem("email"));
                 setFriendsData(friends);
-
             })
             .catch(err => console.error(err))
 
+
     }, [])
 
-    // console.log(friendsData);
+
+    // OnlineStatus
+    useEffect(() => {
+        const email = localStorage.getItem("email");
+        const onlineStatus = true;
+        const statusData = { email, onlineStatus }
+        const ping = () => {
+            axios.post("http://localhost:3000/activeStatus", statusData)
+                .then(res => {
+                    // console.log(res?.data);
+                })
+        };
+        const interval = setInterval(ping, 5000);
+        ping();
+        return () => clearInterval(interval);
+    }, []);
+
+    // console.log(userData);
+
 
     const signUpUser = (email, password) => {
         setLoading(true)
@@ -128,28 +145,9 @@ const AuthProvider = ({ children }) => {
                 localStorage.setItem("email", currentUser.email)
                 setStoredEmail(localStorage.getItem("email"))
 
-
-
                 axios.get(`http://localhost:3000/profile/${currentUser.email}`)
                     .then(res => setUserData(res.data))
                     .catch(err => console.error(err))
-
-
-
-                // axios.get(`http://localhost:3000/posts`)
-                //     .then(res => {
-                //         const usersPost = res.data.filter(post => post.authorEmail === currentUser.email);
-                //         setUsersPostsData(usersPost);
-                //     })
-                //     .catch(err => console.error(err))
-
-                // axios.get(`http://localhost:3000/friends`)
-                //     .then(res => {
-                //         const friends = res.data.filter(friend => friend.email !== currentUser.email);
-                //         setFriendsData(friends);
-                //     })
-                //     .catch(err => console.error(err))
-
 
             } else {
                 setUser(null);
@@ -178,7 +176,7 @@ const AuthProvider = ({ children }) => {
         signOutUser,
         signInWithGoogle,
         deleteAccount,
-        storedEmail, 
+        storedEmail,
     }
 
     return (

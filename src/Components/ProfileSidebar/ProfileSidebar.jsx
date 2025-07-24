@@ -16,7 +16,7 @@ import { IoClose } from "react-icons/io5";
 
 
 const ProfileSidebar = () => {
-  const { user, signOutUser, userData, postsData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
+  const { user, signOutUser, userData, setUserData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
 
   const [showEdit, setShowEdit] = useState(1)
   const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
@@ -284,6 +284,7 @@ const ProfileSidebar = () => {
       <div className="sticky top-0 ">
 
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
+          
           <div style={{ backgroundImage: `url(${userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
 
@@ -313,8 +314,11 @@ const ProfileSidebar = () => {
             </div>
           </div>
 
-          <div className="w-36 h-36 mt-22 overflow-hidden relative ">
-            <img className="rounded-full w-36 h-36 border-4 border-white object-cover " src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
+          <div className="w-36 h-36 mt-22 overflow-hidden relative  ">
+            <div className="bg-zinc-200 rounded-full overflow-hidden">
+              <img className="rounded-full w-36 h-36 border-4 border-white object-cover " src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
+
+            </div>
             <h1 className="absolute right-3 bottom-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></h1>
           </div>
 

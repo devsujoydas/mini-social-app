@@ -4,12 +4,14 @@ import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import toast, { Toaster } from 'react-hot-toast';
 
 import AllFriends from './AllFriends';
-import Loading from '../Loading/Loading';
-import Post from '../Posts/Post.jsx';
+
+
 
 import { LuMessageCircleMore } from "react-icons/lu";
 import { FaUserPlus } from "react-icons/fa6";
 import { RiUserSharedFill } from "react-icons/ri";
+import Loading from '../../Components/Loading/Loading.jsx';
+import Post from '../../Components/Posts/Post.jsx';
 
 const FriendDetails = () => {
     const btnStyle = "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "

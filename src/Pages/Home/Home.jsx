@@ -3,8 +3,9 @@ import SearchBar from "../../Components/SearchBar/SearchBar"
 import Sidebar from "../../Components/Sidebar/Sidebar"
 import Storybox from "../../Components/Storybox/Storybox"
 import SideNavbar from "../../Components/SideNavbar/SideNavbar"
-import Loading from "../../Components/Loading/Loading"
+
 import { useState } from "react"
+import Loading from "../../Components/Loading/Loading"
 
 const Home = () => {
 

@@ -9,19 +9,17 @@ import PrivateRoute from './Pages/PrivateRoute/PrivateRoute.jsx'
 import Home from './Pages/Home/Home.jsx'
 import UpdateInfo from './Pages/UpdateInfo/UpdateInfo.jsx'
 import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
-import Friends from './Components/Friends/Friends.jsx'
-import FriendDetails from './Components/Friends/FriendDetails.jsx'
 import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
-import ChatBox from './Pages/ChatBox/ChatBox.jsx'
-import AuthPrivateRoutes from './Pages/PrivateRoute/AuthPrivateRoutes.jsx'
+import ChatBox from './Pages/ChatBox/ChatBox.jsx' 
 import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
-import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx'
-import UserName from './Pages/UserName/UserName.jsx'
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx' 
+import Friends from './Pages/Friends/Friends.jsx'
+import FriendDetails from './Pages/Friends/FriendDetails.jsx'
 
 
 
@@ -92,10 +90,7 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  {
-    path: "/setusername",
-    element: <UserName />
-  },
+
   {
     path: "/forgotPass",
     element: <ForgotPassword />,

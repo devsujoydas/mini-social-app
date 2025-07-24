@@ -10,8 +10,8 @@ import { IoCameraOutline } from "react-icons/io5";
 import { MdAddReaction } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
-import Loading from "../../Components/Loading/Loading";
 import moment from 'moment'
+import Loading from "../../Components/Loading/Loading";
 
 
 const ChatBox = () => {
@@ -54,7 +54,7 @@ const ChatBox = () => {
               </div>
 
               <div className="space-y-3 mt-2 text-sm md:text-lg">
-                <div className=" rounded-md md:min-h-[740px] min-h-[450px] md:p-5 p-2 flex flex-col justify-end gap-2">
+                <div className=" rounded-md md:min-h-[640px] min-h-[450px] md:p-5 p-2 flex flex-col justify-end gap-2">
                   <p className="text-center text-xs ">{moment().subtract(1, 'days').calendar()}</p>
                   <div className=" flex justify-start w-full gap-2">
                     <Link to={`/friends/${friend.username}`}><img className="md:w-9 w-7 md:h-9 h-7 object-cover border border-zinc-300 rounded-full" src={friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"} alt="" /></Link>

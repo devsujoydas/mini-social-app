@@ -3,8 +3,9 @@ import PostForm from "../../Components/PostForm/PostForm"
 import Posts from "../../Components/Posts/Posts"
 import ProfileSidebar from "../../Components/ProfileSidebar/ProfileSidebar"
 import UsersPosts from "../../Components/UsersPosts/UsersPosts"
-import Loading from "../../Components/Loading/Loading"
+
 import { AuthContext } from "../../AuthProvider/AuthProvider"
+import Loading from "../../Components/Loading/Loading"
 
 const Profile = () => {
   const {user, userData, } = useContext(AuthContext)

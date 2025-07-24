@@ -25,16 +25,21 @@ const FriendsCard = ({ friend }) => {
 
             <div className='md:p-0 p-2 '>
                 <Link to={`/friends/${friend.username}`}>
-                    <img className='md:w-full w-22 md:h-66 h-22 object-cover md:rounded-none rounded-full' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                    <img className='md:w-full w-22 md:h-52 h-22 object-cover md:rounded-none rounded-full' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
                 </Link>
             </div>
-            <div className='md:p-3 p-2 md:w-full w-3/4'>
+            <div className='md:p-3 p-2 md:w-full w-3/4 relative'>
+                {
+                    friend?.onlineStatus &&
+                    <h1 className='text-emerald-600 font-bold text-xs absolute right-2 top-1'> Online</h1>
+                }
                 <div className='space-y-2   '>
                     <div className='flex flex-col gap-2'>
                         <Link to={`/friends/${friend.username}`}>
                             <h1 className='text-[16px]   text-wrap font-semibold'>{name}</h1>
                         </Link>
                         <h1 className='md:text-sm text-xs -mt-2'>@ {username}</h1>
+
                     </div>
                     <div className='flex md:flex-col  gap-2'>
                         {addStatus ?
