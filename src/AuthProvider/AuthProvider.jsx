@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
+import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
@@ -12,9 +13,6 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
-
-
-
 
 
     const signUpUser = (email, password) => {
@@ -39,7 +37,7 @@ const AuthProvider = ({ children }) => {
         try {
             await signOut(auth);
 
-            await fetch("https://mini-social-app-backend.vercel.app/logout", {
+            await fetch("http://localhost:3000/logout", {
                 method: "POST",
                 credentials: "include"
             });
@@ -56,7 +54,7 @@ const AuthProvider = ({ children }) => {
         deleteUser(user)
             .then(() => {
 
-                fetch(`https://mini-social-app-backend.vercel.app/profile/delete/${user.email}`, {
+                fetch(`http://localhost:3000/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -71,7 +69,7 @@ const AuthProvider = ({ children }) => {
         try {
             await signOut(auth);
 
-            await fetch("https://mini-social-app-backend.vercel.app/logout", {
+            await fetch("http://localhost:3000/logout", {
                 method: "POST",
                 credentials: "include"
             });
@@ -89,7 +87,7 @@ const AuthProvider = ({ children }) => {
 
                 if (!currentUser?.email) return;
 
-                fetch('https://mini-social-app-backend.vercel.app/posts', {
+                fetch('http://localhost:3000/posts', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     // credentials: 'include'
@@ -104,7 +102,7 @@ const AuthProvider = ({ children }) => {
 
 
 
-                fetch(`https://mini-social-app-backend.vercel.app/posts`, {
+                fetch(`http://localhost:3000/posts`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json', },
                     // credentials: 'include'
@@ -119,7 +117,7 @@ const AuthProvider = ({ children }) => {
                     .catch(err => console.error("Post fetch error:", err));
 
 
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${currentUser.email}`, {
+                fetch(`http://localhost:3000/profile/${currentUser.email}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
                 })
@@ -129,7 +127,7 @@ const AuthProvider = ({ children }) => {
 
 
 
-                fetch(`https://mini-social-app-backend.vercel.app/friends`, {
+                fetch(`http://localhost:3000/friends`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     // credentials: 'include'

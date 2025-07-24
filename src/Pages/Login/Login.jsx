@@ -4,8 +4,6 @@ import { useContext, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
-import axios from 'axios';
-
 
 const Login = () => {
     const navigate = useNavigate()
@@ -21,9 +19,7 @@ const Login = () => {
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
-
-                if (!result.user) return
-
+                if (!result.user.email) return
                 setUser(result.user)
                 const name = result.user.displayName;
                 const username = "";
@@ -43,7 +39,7 @@ const Login = () => {
                 // navigate("/profile")
 
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -52,7 +48,7 @@ const Login = () => {
                         .then(data => {
 
                             const user = { email }
-                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
+                            fetch(`http://localhost:3000/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(user),
@@ -94,17 +90,16 @@ const Login = () => {
             .then((result) => {
                 setUser(result.user)
 
-
                 const loggedInUser = result.user;
-
-                fetch(`https://mini-social-app-backend.vercel.app/profile/${loggedInUser.email}`)
+                
+                fetch(`http://localhost:3000/profile/${loggedInUser.email}`)
                     .then(res => res.json())
                     .then(data => { setUserData(data) }
                     )
 
                 const user = { email }
 
-                fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
+                fetch(`http://localhost:3000/jwt`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(user),

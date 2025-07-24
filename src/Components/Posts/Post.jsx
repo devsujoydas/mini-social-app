@@ -48,7 +48,7 @@ const Post = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`https://mini-social-app-backend.vercel.app/post/like/${post._id}`, {
+    fetch(`http://localhost:3000/post/like/${post._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(fromData)

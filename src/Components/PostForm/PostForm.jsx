@@ -26,7 +26,7 @@ const PostForm = () => {
     const comments = [];
     const shares = []
     const postData = { authorEmail, authorPhoto, authorName, authorUsername, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
-    fetch(`https://mini-social-app-backend.vercel.app/post`, {
+    fetch(`http://localhost:3000/post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(postData)

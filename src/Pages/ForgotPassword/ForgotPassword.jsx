@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     const email = e.target.email.value;
 
     const formData = { email }
-    fetch(`https://mini-social-app-backend.vercel.app/forgotPass`, {
+    fetch(`http://localhost:3000/forgotPass`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

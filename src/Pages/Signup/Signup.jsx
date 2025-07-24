@@ -18,9 +18,8 @@ const Signup = () => {
     const logInWithGoogle = () => {
         signInWithGoogle()
             .then((result) => {
-
-                if (!result.user) return
-
+                console.log(result);
+                if (!result.user.email) return
                 setUser(result.user)
                 const name = result.user.displayName;
                 const username = "";
@@ -34,9 +33,8 @@ const Signup = () => {
                 const posts = [];
                 const createdDate = new Date();
                 const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate }
-
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signinwithgoogle`, {
+                    fetch(`http://localhost:3000/signinwithgoogle`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -45,7 +43,7 @@ const Signup = () => {
                         .then(data => {
 
                             const user = { email }
-                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
+                            fetch(`http://localhost:3000/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(user)
@@ -102,7 +100,7 @@ const Signup = () => {
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`https://mini-social-app-backend.vercel.app/signup`, {
+                    fetch(`http://localhost:3000/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
@@ -111,7 +109,7 @@ const Signup = () => {
                         .then(data => {
 
                             const user = { email }
-                            fetch(`https://mini-social-app-backend.vercel.app/jwt`, {
+                            fetch(`http://localhost:3000/jwt`, {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify(user),
