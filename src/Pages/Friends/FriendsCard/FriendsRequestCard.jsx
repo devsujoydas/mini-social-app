@@ -15,7 +15,7 @@ const FriendsCard = ({ friend }) => {
 
 
     const confirmBtnHandler = () => {
-        confrimFriendBtnHanlder(email)
+        confrimFriendBtnHanlder(friend)
         toast.success('Confirmed!')
         setAddStatus(false)
     }

@@ -13,8 +13,8 @@ const AllFriends = ({ friend }) => {
 
 
     const addFriendHandler = () => {
-        toast.success('Request Send!')
-        addFriendBtnHanlder(friend.email)
+        
+        addFriendBtnHanlder(friend)
         setAddStatus(false)
     }
     const cencelBtnHandler = () => {

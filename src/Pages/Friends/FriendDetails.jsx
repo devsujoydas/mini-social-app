@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useParams } from 'react-router-dom'
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -14,7 +14,7 @@ import Loading from '../../Components/Loading/Loading.jsx';
 import Post from '../../Components/Posts/Post.jsx';
 
 const FriendDetails = () => {
-    const { youMayKnowFriends, addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
+    const { youMayKnowFriends, addFriendBtnHanlder, myFriends, userData } = useContext(AuthContext)
 
     const btnStyle = "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const [loading, setLoading] = useState(true)
@@ -27,14 +27,15 @@ const FriendDetails = () => {
     const [addStatus, setAddStatus] = useState(true)
 
     const addFriendHandler = () => {
-        addFriendBtnHanlder(friend.email)
-        toast.success('Request Send!')
+        addFriendBtnHanlder(friend)
+        
         setAddStatus(false)
     }
     const cencelBtnHandler = () => {
         toast.success('Cencel!')
         setAddStatus(true)
     }
+
 
 
     return (
@@ -114,7 +115,7 @@ const FriendDetails = () => {
                 <div className='lg:col-span-3 md:p-5 p-3'>
                     <h1 className='text-lg mb-5 font-semibold'>People you may know</h1>
                     <div className='grid grid-cols-1 gap-2 '>
-                        {youMayKnowFriends.map((friend, idx) => (
+                        {youMayKnowFriends?.map((friend, idx) => (
                             <AllFriends key={idx} friend={friend} />
                         ))}
                     </div>

@@ -10,7 +10,7 @@ const FriendsPage = () => {
 
 
 
-    const [displayFriendBlock, setDisplayFriendBlock] = useState("friend")
+    const [displayFriendBlock, setDisplayFriendBlock] = useState("youmayknow")
 
 
     const btnStyle = "border border-zinc-200 py-1 px-4 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300 font-family-secondary"

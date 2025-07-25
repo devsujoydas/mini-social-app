@@ -12,8 +12,8 @@ const PeopleYouMayKnow = ({ friend }) => {
 
 
     const addFriendHandler = () => {
-        addFriendBtnHanlder(friend.email)
-        toast.success('Request Send!')
+        addFriendBtnHanlder(friend)
+        
         setAddStatus(false)
     }
     const cencelBtnHandler = () => {

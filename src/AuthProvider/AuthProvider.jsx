@@ -2,10 +2,13 @@ import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
 import axios from 'axios'
-
+import toast, { Toaster } from 'react-hot-toast';
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
+
+    const currentUserFromLs = JSON.parse(localStorage.getItem("currentUser"))
+    const emailFromLS = localStorage.getItem("email");
 
     const [storedEmail, setStoredEmail] = useState("")
     const [user, setUser] = useState({})
@@ -15,49 +18,65 @@ const AuthProvider = ({ children }) => {
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
 
-    const emailFromLS = localStorage.getItem("email");
-
     const [myFriends, setMyFriends] = useState([])
     const [requestFriends, setRequestFriends] = useState([])
     const [youMayKnowFriends, setYouMayKnowFriends] = useState([])
 
 
 
-
-
-
-
-
-
-
-
-    const addFriendBtnHanlder = (friendEmail) => {
-        const data = { friendEmail, userData }
-        axios.put(`http://localhost:3000/addFriend`, data)
+    const addFriendBtnHanlder = (friend) => {
+        const data = { userId: userData._id, friendId: friend._id }
+        axios.put(`http://localhost:3000/addfriend`, data)
             .then(res => {
-                console.log(res.data);
+                toast.success('Request Send!')
+                console.log(res.data)
             })
+            .catch(err => console.error("Add friend failed:", err));
     }
 
-    const confrimFriendBtnHanlder = (friendEmail) => {
-        const data = { friendEmail, userEmail: localStorage.getItem("email") }
+
+
+
+    const unFriendBtnHanlder = (friend) => {
+        const data = { userId: userData._id, friendId: friend._id }
+        axios.put(`http://localhost:3000/unfriend`, data)
+            .then(res => console.log(res.data))
+            .catch(err => console.error("Unfriend failed:", err));
+    }
+
+
+
+    const confrimFriendBtnHanlder = (friend) => {
+        const data = { userId: userData._id, friendId: friend._id }
         axios.put(`http://localhost:3000/confirmFriend`, data)
-            .then(res => {
-                console.log(res.data);
-            })
+            .then(res => console.log(res.data))
+            .catch(err => console.error("Friend confirm failed:", err));
+
     }
 
-    const unFriendBtnHanlder = (friendEmail) => {
-        const data = { friendEmail, email: localStorage.getItem("email") }
-        console.log(data);
-    }
+
+
+
+
 
 
     useEffect(() => {
 
+
+
+
+        axios.get(`http://localhost:3000/myfriends?email=${localStorage.getItem("email")}`)
+            .then(res => console.log("myfriends", res.data))
+            .catch(err => console.error(err));
+
+
+
+
         axios.get(`http://localhost:3000/posts`)
             .then(res => setPostsData(res.data))
             .catch(err => console.error("Fetch posts error:", err));
+
+
 
         axios.get(`http://localhost:3000/posts`)
             .then(res => {
@@ -66,21 +85,29 @@ const AuthProvider = ({ children }) => {
             })
             .catch(err => console.error(err))
 
-        axios.get(`http://localhost:3000/friends`)
+
+
+
+        axios.get(`http://localhost:3000/allUsers`)
             .then(res => {
 
                 if (emailFromLS) {
-                    const friends = res.data.filter(friend => friend.email != localStorage.getItem("email"));
+                    const friends = res.data.filter(friend => friend.email != currentUserFromLs.email);
+                    // console.log(friends);
                     setFriendsData(friends);
 
                     setRequestFriends(JSON.parse(localStorage.getItem("currentUser"))?.friendRequests)
+
                     setMyFriends(JSON.parse(localStorage.getItem("currentUser"))?.myFriends)
-                    setYouMayKnowFriends(JSON.parse(localStorage.getItem("filteredFriend")))
 
                     const filteredFriend = friends.filter(friend =>
-                        !JSON.parse(localStorage.getItem("currentUser"))?.myFriends.some(my => my?.email === friend?.email)
+                        !currentUserFromLs?.myFriends.some(my => my?.email == friend?.email)
                     );
                     localStorage.setItem("filteredFriend", JSON.stringify(filteredFriend))
+
+
+                    setYouMayKnowFriends(JSON.parse(localStorage.getItem("filteredFriend")))
+
                 }
 
             })
@@ -182,18 +209,17 @@ const AuthProvider = ({ children }) => {
                 setLoading(false);
 
                 if (!currentUser?.email) return;
-
-                localStorage.setItem("email", currentUser.email)
+                const email = currentUser.email
+                // console.log(email);
+                localStorage.setItem("email", email)
                 setStoredEmail(localStorage.getItem("email"))
 
-                axios.get(`http://localhost:3000/profile/${currentUser.email}`)
+                axios.get(`http://localhost:3000/profile/${email}`)
                     .then(res => {
                         setUserData(res.data)
                         localStorage.setItem("currentUser", JSON.stringify(res.data))
                     })
                     .catch(err => console.error(err))
-
-
 
 
             } else { setUser(null); setUserData(null); setLoading(false); }
