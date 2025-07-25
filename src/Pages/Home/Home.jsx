@@ -24,7 +24,7 @@ const Home = () => {
         </div>
 
         {loading ? <Loading /> :
-          <div className="md:py-5 py-3 lg:px-5 px-3 md:space-y-5 space-y-3 ">
+          <div className="md:py-5 py-3 lg:px-5 px-3 md:space-y-5 space-y-2 ">
             <Storybox />
             <Posts />
           </div>

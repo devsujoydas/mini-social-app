@@ -20,3 +20,12 @@
 .message-btn{
     @apply p-2 hover:bg-zinc-200 cursor-pointer transition-all active:scale-95 rounded-full
 }
+
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}

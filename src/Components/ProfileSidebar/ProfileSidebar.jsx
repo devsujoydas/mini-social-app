@@ -284,7 +284,7 @@ const ProfileSidebar = () => {
       <div className="sticky top-0 ">
 
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
-          
+
           <div style={{ backgroundImage: `url(${userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
 
@@ -340,12 +340,12 @@ const ProfileSidebar = () => {
               <h1 className="md:text-xl font-semibold">{usersPostsData?.length}</h1>
               <h1 className="md:text-lg font-medium text-zinc-500">Post</h1>
             </div>
-            <div className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
 
-              <h1 className="md:text-xl font-semibold">0</h1>
+            <Link to={"/friends"} className="text-center border-zinc-300 border-r-2 border-l-2 px-4">
+              <h1 className="md:text-xl font-semibold">{userData?.myFriends?.length}</h1>
               <h1 className="md:text-lg hover:text-black transition-all font-medium text-zinc-500">Friends</h1>
+            </Link>
 
-            </div>
             <div className="text-center">
               <h1 className="md:text-xl font-semibold">0</h1>
               <h1 className="md:text-lg font-medium text-zinc-500">Following</h1>

@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
 const PeopleYouMayKnow = ({ friend }) => {
+    const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
     const btnStyle = "block md:py-2 py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const { profilephotourl, name, username } = friend;
     const [addStatus, setAddStatus] = useState(true)
 
+
     const addFriendHandler = () => {
+        addFriendBtnHanlder(friend.email)
         toast.success('Request Send!')
         setAddStatus(false)
     }

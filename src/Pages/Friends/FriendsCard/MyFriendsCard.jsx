@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../../AuthProvider/AuthProvider'
 
 const MyFriendsCard = ({ friend }) => {
+    const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
     const btnStyle = "block  py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const navigate = useNavigate()
-
     const [addStatus, setAddStatus] = useState(true)
 
-    const unFriendHandler = () => {
-        toast.success('Unfriend Successfully!')
-        setAddStatus(false)
-    }
     const addFriendHandler = () => {
         toast.success('Request Send!')
+        addFriendBtnHanlder(friend.email)
         setAddStatus(true)
+    }
+    const unFriendHandler = () => {
+        toast.success('Unfriend Successfully!')
+        // unFriendBtnHanlder(friend.email)
+        setAddStatus(false)
     }
 
     return (

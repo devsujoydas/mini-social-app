@@ -18,7 +18,7 @@ import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx' 
-import Friends from './Pages/Friends/Friends.jsx'
+import FriendsPage from './Pages/Friends/FriendsPage.jsx'
 import FriendDetails from './Pages/Friends/FriendDetails.jsx'
 
 
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/friends",
-        element: <PrivateRoute> <Friends /></PrivateRoute>,
+        element: <PrivateRoute> <FriendsPage /></PrivateRoute>,
       },
       {
         path: "/friends/:id",

@@ -1,15 +1,21 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
 const FriendsCard = ({ friend }) => {
-    const { profilephotourl, name, username } = friend;
+    const { confrimFriendBtnHanlder } = useContext(AuthContext)
+
+
+
+    const { profilephotourl, name, username, email } = friend;
     const [addStatus, setAddStatus] = useState(true)
     const btnStyle = "block md:py-2 py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
 
     const confirmBtnHandler = () => {
+        confrimFriendBtnHanlder(email)
         toast.success('Confirmed!')
         setAddStatus(false)
     }

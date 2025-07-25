@@ -23,7 +23,7 @@ const Nav = () => {
                     <span className="font-semibold ">Home </span>
                 </div>
                 <div>
-                    <p className='px-2 py-1 bg-zinc-300 rounded-full'>{postsData.length}</p>
+                    <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{postsData.length}</p>
                 </div>
             </NavLink>
 
@@ -34,7 +34,7 @@ const Nav = () => {
                     <span className="font-semibold ">Profile</span>
                 </div>
                 <div>
-                    <p className='px-2 py-1 bg-zinc-300 rounded-full'>{usersPostsData.length}</p>
+                    <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{usersPostsData.length}</p>
                 </div>
             </NavLink>
 
@@ -55,7 +55,7 @@ const Nav = () => {
                     <span className="font-semibold ">Friends</span>
                 </div>
                 <div>
-                    <p className='px-2 py-1 bg-zinc-300 rounded-full'>{friendsData.length}</p>
+                    <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{userData?.myFriends?.length}</p>
                 </div>
             </NavLink>
 
