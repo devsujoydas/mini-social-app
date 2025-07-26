@@ -130,7 +130,7 @@ export default Login
 
 
 
-// fetch(`http://localhost:3000/jwt`, {
+// fetch(`${import.meta.env.VITE_BACKEND_URL}/jwt`, {
 //                                 method: 'POST',
 //                                 headers: { 'Content-Type': 'application/json' },
 //                                 body: JSON.stringify(user),
@@ -149,7 +149,7 @@ export default Login
 
 
 
-// fetch(`http://localhost:3000/jwt`, {
+// fetch(`${import.meta.env.VITE_BACKEND_URL}/jwt`, {
 //                     method: 'POST',
 //                     headers: { 'Content-Type': 'application/json' },
 //                     body: JSON.stringify(user),

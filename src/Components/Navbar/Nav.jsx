@@ -38,15 +38,14 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-            <div className='bg-zinc-200 h-1.5'></div>
 
             {/* <NavLink to={"/message/ironman"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                 <div className="flex items-center gap-2 md:text-xl ">
-                    <BiSolidMessageRounded className="text-zinc-500 text-2xl" />
-                    <span className="font-semibold ">Message</span>
+                <BiSolidMessageRounded className="text-zinc-500 text-2xl" />
+                <span className="font-semibold ">Message</span>
                 </div>
-            </NavLink> */}
+                </NavLink> */}
 
             <NavLink to={"/friends"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
@@ -59,6 +58,7 @@ const Nav = () => {
                 </div>
             </NavLink>
 
+            <div className='bg-zinc-200 h-1.5'></div>
 
             <NavLink to={"/savedposts"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">

@@ -17,7 +17,7 @@ const Login1 = () => {
     logInUser(email, password)
       .then((result) => {
         console.log(result)
-        fetch(`http://localhost:3000/profile/${result.user.email}`)
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${result.user.email}`)
           .then(res => res.json())
           .then(data => {
             console.log(data)

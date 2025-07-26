@@ -3,34 +3,40 @@ import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
 import MyFriendsCard from './FriendsCard/MyFriendsCard.jsx'
 import FriendsRequestCard from './FriendsCard/FriendsRequestCard.jsx'
 import PeopleYouMayKnow from './FriendsCard/PeopleYouMayKnow.jsx'
+import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 
 
 const FriendsPage = () => {
-    const { youMayKnowFriends, requestFriends, myFriends, } = useContext(AuthContext)
+    const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useContext(AuthContext)
 
 
 
     const [displayFriendBlock, setDisplayFriendBlock] = useState("youmayknow")
 
 
-    const btnStyle = "border border-zinc-200 py-1 px-4 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300 font-family-secondary"
+    const btnStyle = "border border-zinc-200 md:text-[16px] text-xs py-1 md:px-4 px-2 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300 font-family-secondary"
 
     return (
         <div className='md:p-7 min-h-screen p-3 lg:pt-7 md:pt-20 pt-20 relative'>
 
-            <div className='sticky top-0 backdrop-blur-2xl flex gap-5 items-center mb-5 border border-zinc-200 rounded-2xl p-5 bg-white'>
+            <div className='sticky flex-wrap top-0 backdrop-blur-2xl flex md:gap-5 gap-2 items-center mb-5 border border-zinc-200 rounded-2xl p-3 md:p-5 bg-white'>
                 <button onClick={() => setDisplayFriendBlock("friend")} className={`${btnStyle} relative`}>
                     Friends
-                    <span className={`${myFriends.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{myFriends.length}</span>
+                    <span className={`${myFriends?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{myFriends?.length}</span>
                 </button>
-                <button onClick={() => setDisplayFriendBlock("request")} className={`${btnStyle} relative`}>
-                    Request
-                    <span className={`${requestFriends.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{requestFriends.length}</span>
+                <button onClick={() => setDisplayFriendBlock("friendrequest")} className={`${btnStyle} relative`}>
+                    Friend Requests
+                    <span className={`${friendsRequest?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{friendsRequest?.length}</span>
+                </button>
+                <button onClick={() => setDisplayFriendBlock("sentrequest")} className={`${btnStyle} relative`}>
+                    Sent Requests
+                    <span className={`${sentRequests?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{sentRequests?.length}</span>
                 </button>
                 <button onClick={() => setDisplayFriendBlock("youmayknow")} className={btnStyle}>You May Know</button>
             </div>
+
             <div>
-                {displayFriendBlock == "friend" &&
+                {displayFriendBlock == "friend" && (
                     <div className=''>
                         <h1 className='mb-3 text-xl font-bold'>All Friends</h1>
                         {myFriends.length > 0 ?
@@ -43,28 +49,43 @@ const FriendsPage = () => {
                             </div>
                         }
                     </div>
-                }
+                )}
 
-
-                {displayFriendBlock === "request" && (
+                {displayFriendBlock === "friendrequest" && (
                     <div>
                         <h1 className='mb-3 text-xl font-bold'>Friend Requests</h1>
-                        {requestFriends?.length >= 1 ? (
+                        {friendsRequest?.length >= 1 ? (
                             <div className='grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 md:gap-3 gap-2'>
-                                {requestFriends.map((friend, idx) => (
+                                {friendsRequest.map((friend, idx) => (
                                     <FriendsRequestCard friend={friend} key={idx} />
                                 ))}
                             </div>
                         ) : (
                             <div className='flex justify-center items-center min-h-[70vh]'>
-                                <h1 className='text-zinc-800'>no friend request found!</h1>
+                                <h1 className='text-zinc-800'>No friend request found!</h1>
+                            </div>
+                        )}
+                    </div>
+                )}
+                {/* No Sent request found */}
+                {displayFriendBlock === "sentrequest" && (
+                    <div>
+                        <h1 className='mb-3 text-xl font-bold'>Sent Requests</h1>
+                        {sentRequests?.length >= 1 ? (
+                            <div className='grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-6 md:gap-3 gap-2'>
+                                {sentRequests.map((friend, idx) => (
+                                    <SentRequestCard friend={friend} key={idx} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className='flex justify-center items-center min-h-[70vh]'>
+                                <h1 className='text-zinc-800'>You don't sent any requests!</h1>
                             </div>
                         )}
                     </div>
                 )}
 
-
-                {displayFriendBlock == "youmayknow" &&
+                {displayFriendBlock == "youmayknow" && (
                     < div className=''>
                         <h1 className='mb-3 text-xl font-bold'>People you may know</h1>
                         {youMayKnowFriends ?
@@ -77,7 +98,7 @@ const FriendsPage = () => {
                             </div>
                         }
                     </div>
-                }
+                )}
             </div >
         </div>
     )

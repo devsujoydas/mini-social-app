@@ -6,23 +6,21 @@ import { useContext, useState } from "react";
 
 
 const FriendSuggested = () => {
-  const { friendsData } = useContext(AuthContext)
+  const { youMayKnowFriends } = useContext(AuthContext)
 
-  const friend1 = friendsData[0]
-  const friend2 = friendsData[1]
-  const friend3 = friendsData[2]
-
-  const [loadingSpiner, setLoadingSpiner] = useState(true)
+  const friend1 = youMayKnowFriends[0]
+  const friend2 = youMayKnowFriends[1]
+  const friend3 = youMayKnowFriends[2]
 
   return (
 
     <div>
       <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Friends Suggested</h1>
-        <Link to="/friends" className="flex items-center text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="text-2xl" /></Link>
+        <h1 className="md:text-xl font-semibold">Friends Suggested</h1>
+        <Link to="/friends" className="flex items-center text-sm md:text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="md:text-2xl" /></Link>
       </div>
 
-      {friendsData == ""
+      {youMayKnowFriends == ""
           ?
           <div className="min-h-56 flex justify-center items-center">
             <div className="w-10 h-10 border-t-2 border-b-2 rounded-full animate-spin transition-all"></div>
@@ -30,7 +28,7 @@ const FriendSuggested = () => {
           :
           <div>
             <div>
-              <hr className="text-zinc-300 my-5" />
+              <hr className="text-zinc-300 my-3 md:my-5" />
               <Link to={`/friends/${friend1?.username}`} className="flex w-full justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="active:scale-95 transition-all cursor-pointer">
@@ -43,7 +41,7 @@ const FriendSuggested = () => {
                 </div>
                 <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </Link>
-              <hr className="text-zinc-300 my-5" />
+              <hr className="text-zinc-300 my-3 md:my-5" />
             </div>
 
             <div>
@@ -59,7 +57,7 @@ const FriendSuggested = () => {
                 </div>
                 <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </Link>
-              <hr className="text-zinc-300 my-5" />
+              <hr className="text-zinc-300 my-3 md:my-5" />
             </div>
 
             <div>
@@ -75,7 +73,7 @@ const FriendSuggested = () => {
                 </div>
                 <IoMdAdd className="text-2xl text-zinc-400 active:scale-95 transition-all cursor-pointer hover:text-zinc-700" />
               </Link>
-              <hr className="text-zinc-300 my-5" />
+              <hr className="text-zinc-300 my-3 md:my-5" />
             </div>
           </div>
       }

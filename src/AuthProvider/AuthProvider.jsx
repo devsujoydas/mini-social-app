@@ -19,116 +19,73 @@ const AuthProvider = ({ children }) => {
     const [usersPostsData, setUsersPostsData] = useState([])
 
     const [myFriends, setMyFriends] = useState([])
-    const [requestFriends, setRequestFriends] = useState([])
+    const [friendsRequest, setFriendRequests] = useState([])
+    const [sentRequests, setSentRequests] = useState([])
     const [youMayKnowFriends, setYouMayKnowFriends] = useState([])
 
 
 
     const addFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`http://localhost:3000/addfriend`, data)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/addfriend`, data)
             .then(res => {
-                toast.success('Request Send!')
-                console.log(res.data)
+                toast.success(res.data.message)
             })
             .catch(err => console.error("Add friend failed:", err));
     }
-
-
-
-
     const unFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`http://localhost:3000/unfriend`, data)
-            .then(res => console.log(res.data))
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/unfriend`, data)
+            .then(res => {
+                toast.success(res.data.message)
+            })
             .catch(err => console.error("Unfriend failed:", err));
     }
-
-
-
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`http://localhost:3000/confirmFriend`, data)
-            .then(res => console.log(res.data))
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
+            .then(res => {
+                toast.success(res.data.message)
+            })
             .catch(err => console.error("Friend confirm failed:", err));
 
     }
 
-
-
-
-
-
-
     useEffect(() => {
 
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/allfriends?email=${localStorage.getItem("email")}`).then(res => {
+            setFriendsData(res.data);
+        });
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/myfriends?email=${localStorage.getItem("email")}`).then(res => {
+            setMyFriends(res.data);
+        });
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/sentrequest?email=${localStorage.getItem("email")}`).then(res => {
+            setSentRequests(res.data);
+        });
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/requests?email=${localStorage.getItem("email")}`).then(res => {
+            setFriendRequests(res.data);
+        });
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/youMayKnow?email=${localStorage.getItem("email")}`).then(res => {
+            setYouMayKnowFriends(res.data);
+        });
 
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`).then(res => {
+            setPostsData(res.data)
+            const usersPost = res.data.filter(post => post.authorEmail === localStorage.getItem("email"));
+            setUsersPostsData(usersPost);
+        });
 
+        if (!localStorage.getItem("email")) return;
+        const ping = () => {
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/activeStatus?email=${localStorage.getItem("email")}`)
+                .then(res => { }).catch(err => console.error("Ping Error:", err));
+        };
+        const interval = setInterval(ping, 2000);
+        ping();
+        return () => clearInterval(interval);
 
-        axios.get(`http://localhost:3000/myfriends?email=${localStorage.getItem("email")}`)
-            .then(res => console.log("myfriends", res.data))
-            .catch(err => console.error(err));
-
-
-
-
-        axios.get(`http://localhost:3000/posts`)
-            .then(res => setPostsData(res.data))
-            .catch(err => console.error("Fetch posts error:", err));
-
-
-
-        axios.get(`http://localhost:3000/posts`)
-            .then(res => {
-                const usersPost = res.data.filter(post => post.authorEmail === localStorage.getItem("email"));
-                setUsersPostsData(usersPost);
-            })
-            .catch(err => console.error(err))
-
-
-
-
-        axios.get(`http://localhost:3000/allUsers`)
-            .then(res => {
-
-                if (emailFromLS) {
-                    const friends = res.data.filter(friend => friend.email != currentUserFromLs.email);
-                    // console.log(friends);
-                    setFriendsData(friends);
-
-                    setRequestFriends(JSON.parse(localStorage.getItem("currentUser"))?.friendRequests)
-
-                    setMyFriends(JSON.parse(localStorage.getItem("currentUser"))?.myFriends)
-
-                    const filteredFriend = friends.filter(friend =>
-                        !currentUserFromLs?.myFriends.some(my => my?.email == friend?.email)
-                    );
-                    localStorage.setItem("filteredFriend", JSON.stringify(filteredFriend))
-
-
-                    setYouMayKnowFriends(JSON.parse(localStorage.getItem("filteredFriend")))
-
-                }
-
-            })
-            .catch(err => console.error(err))
     }, [])
 
-    // OnlineStatus
-    useEffect(() => {
-        if (!emailFromLS) return;
-
-        const ping = () => {
-            axios.post("http://localhost:3000/activeStatus", { emailFromLS })
-                .then(res => { })
-                .catch(err => console.error("Ping Error:", err));
-        };
-
-        const interval = setInterval(ping, 2000); // Every 2 seconds
-        ping(); // Initial ping
-
-        return () => clearInterval(interval); // Cleanup
-    }, [emailFromLS]);
 
 
 
@@ -157,7 +114,7 @@ const AuthProvider = ({ children }) => {
             localStorage.removeItem("currentUser")
             localStorage.removeItem("filteredFriend")
 
-            await fetch("http://localhost:3000/logout", {
+            await fetch("${import.meta.env.VITE_BACKEND_URL}/logout", {
                 method: "POST",
                 credentials: "include"
             });
@@ -174,7 +131,7 @@ const AuthProvider = ({ children }) => {
         deleteUser(user)
             .then(() => {
 
-                fetch(`http://localhost:3000/profile/delete/${user.email}`, {
+                fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())
@@ -192,7 +149,7 @@ const AuthProvider = ({ children }) => {
         try {
             await signOut(auth);
 
-            await fetch("http://localhost:3000/logout", {
+            await fetch("${import.meta.env.VITE_BACKEND_URL}/logout", {
                 method: "POST",
                 credentials: "include"
             });
@@ -214,7 +171,7 @@ const AuthProvider = ({ children }) => {
                 localStorage.setItem("email", email)
                 setStoredEmail(localStorage.getItem("email"))
 
-                axios.get(`http://localhost:3000/profile/${email}`)
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/${email}`)
                     .then(res => {
                         setUserData(res.data)
                         localStorage.setItem("currentUser", JSON.stringify(res.data))
@@ -238,7 +195,8 @@ const AuthProvider = ({ children }) => {
         addFriendBtnHanlder, unFriendBtnHanlder, confrimFriendBtnHanlder,
         postsData, setPostsData, friendsData, setFriendsData,
         myFriends, setMyFriends,
-        requestFriends, setRequestFriends,
+        friendsRequest, setFriendRequests,
+        sentRequests, setSentRequests,
         youMayKnowFriends, setYouMayKnowFriends,
     }
 

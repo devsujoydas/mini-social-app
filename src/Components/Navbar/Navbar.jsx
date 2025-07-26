@@ -63,7 +63,7 @@ const Navbar = () => {
   return (
     <div className="lg:sticky left-0 top-0 ">
       <div className="fixed z-20 w-full bg-white left-0 top-0 border-b border-zinc-400 lg:hidden flex justify-between items-center px-5 py-3">
-        <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
+        <Link to={"/"} className="text-2xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
         <div onClick={() => setHumbarger(!humbarger)} className="md:text-5xl text-4xl cursor-pointer active:scale-95 transition-all">
           <IoMenu />
         </div>
@@ -76,7 +76,7 @@ const Navbar = () => {
           <div className=" space-y-6 ">
             {/* nav logo  */}
             <div className="">
-              <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
+              <Link to={"/"} className="text-2xl md:text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
             </div>
             {/* search box  */}
             <div className="flex items-center gap-2 relative">
@@ -131,19 +131,20 @@ const Navbar = () => {
 
       {/* nav for sm device  */}
       <div className={humbarger ? 'bg-white lg:hidden fixed top-0 -left-121 w-full -z-50  opacity-0 duration-700 transition-all' : 'lg:hidden opacity-100 fixed z-50 top-0 left-0 w-full   duration-700 transition-all'} >
-        <div className="flex h-[100vh]  w-full ">
-          <div className="px-3 py-3 w-2/3 bg-white overflow-hidden flex flex-col justify-between">
+        <div className="flex h-screen  w-full "
+        >
+          <div className="px-3 py-3 md:w-140 w-2/3 bg-white overflow-hidden flex flex-col justify-between">
 
             <div className="space-y-7 ">
               {/* nav logo  */}
               <div className=" flex justify-between px-2 items-center cursor-pointer">
-                <Link to={"/"} className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
-                <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="md:text-5xl text-4xl " />
+                <Link to={"/"} className="text-2xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
+                <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="md:text-4xl text-3xl " />
               </div>
               {/* search box  */}
               <div className="flex items-center gap-2 relative">
-                <input className=" text-xl border border-zinc-300 md:py-2  py-2 pl-10 w-full rounded-full outline-zinc-300" type="text" placeholder="Search..." />
-                <IoSearch className="absolute left-3 text-2xl cursor-pointer text-zinc-600" />
+                <input className="text-sm md:text-xl border border-zinc-300 md:py-2  py-1 pl-10 w-full rounded-full outline-zinc-300" type="text" placeholder="Search..." />
+                <IoSearch className="absolute left-3 text-lg md:text-2xl cursor-pointer text-zinc-600" />
               </div>
               {/* nav btn container  */}
               <div onClick={() => setHumbarger(!humbarger)} >
@@ -174,7 +175,7 @@ const Navbar = () => {
 
           </div>
 
-          <div onClick={() => setHumbarger(!humbarger)} className={`${humbarger ? "bg-[#00000000] opacity-0 transition-all duration-500" : "bg-[#000000a2] opacity-100 transition-all duration-500"}  w-1/3 cursor-cell`}>
+          <div onClick={() => setHumbarger(!humbarger)} className={`${humbarger ? "bg-[#00000000] opacity-0 transition-all duration-500" : "bg-[#000000a2] opacity-100 transition-all duration-500"} md:w-full w-1/3  cursor-cell`}>
 
           </div>
         </div>

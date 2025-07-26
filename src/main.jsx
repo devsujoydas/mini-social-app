@@ -41,22 +41,22 @@ const router = createBrowserRouter([
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/updateInfo/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
         element: <PrivateRoute> <PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/${params.id}`)
       },
       {
         path: "profile/post/:id",
         element: <PrivateRoute> <UsersPostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/profile/post/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/post/update/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`)
       },
       {
         path: "/friends",
@@ -65,12 +65,12 @@ const router = createBrowserRouter([
       {
         path: "/friends/:id",
         element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/friends/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`)
       },
       {
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:3000/message/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/message/${params.id}`)
       },
       {
         path: "/savedposts",

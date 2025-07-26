@@ -10,13 +10,12 @@ const MyFriendsCard = ({ friend }) => {
     const [addStatus, setAddStatus] = useState(true)
 
     const addFriendHandler = () => {
-        
+
         addFriendBtnHanlder(friend)
         setAddStatus(true)
     }
     const unFriendHandler = () => {
-        toast.success('Unfriend Successfully!')
-        // unFriendBtnHanlder(friend.email)
+        unFriendBtnHanlder(friend)
         setAddStatus(false)
     }
 

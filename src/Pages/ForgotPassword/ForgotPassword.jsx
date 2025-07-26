@@ -18,7 +18,7 @@ const ForgotPassword = () => {
     const email = e.target.email.value;
 
     const formData = { email }
-    fetch(`http://localhost:3000/forgotPass`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/forgotPass`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
