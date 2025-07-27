@@ -1,7 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Root from './Pages/Root/Root.jsx'
 import Login from './Pages/Login/Login.jsx'
 import Signup from './Pages/Signup/Signup.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
@@ -12,22 +11,23 @@ import PostDetailsUpdate from './Components/Posts/PostDetailsUpdate.jsx'
 import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 import PostDetails from './Components/Posts/PostDetails.jsx'
 import UsersPostDetails from './Components/UsersPosts/UsersPostDetails.jsx'
-import ChatBox from './Pages/ChatBox/ChatBox.jsx' 
+import ChatBox from './Pages/ChatBox/ChatBox.jsx'
 import AuthProvider from './AuthProvider/AuthProvider.jsx'
 import SavedPosts from './Pages/SavedPosts/SavedPosts.jsx'
 import EventsPage from './Pages/EventsPage/EventsPage.jsx'
 import Memories from './Pages/Memories/Memories.jsx'
-import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx' 
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword.jsx'
 import FriendsPage from './Pages/Friends/FriendsPage.jsx'
 import FriendDetails from './Pages/Friends/FriendDetails.jsx'
+import Layout from './Layout/Layout.jsx'
 
-
+const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivateRoute><Root /></PrivateRoute>,
+    element: <PrivateRoute><Layout /></PrivateRoute>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
@@ -41,22 +41,22 @@ const router = createBrowserRouter([
       {
         path: "/updateInfo/:id",
         element: <PrivateRoute> <UpdateInfo /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/updateInfo/${params.id}`)
+        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/updateInfo/${params.id}`)
       },
       {
         path: "/post/:id",
         element: <PrivateRoute> <PostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/${params.id}`)
+        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/post/${params.id}`)
       },
       {
         path: "profile/post/:id",
         element: <PrivateRoute> <UsersPostDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/post/${params.id}`)
+        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/profile/post/${params.id}`)
       },
       {
         path: "/post/update/:id",
         element: <PrivateRoute> <PostDetailsUpdate /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`)
+        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/post/update/${params.id}`)
       },
       {
         path: "/friends",
@@ -65,12 +65,12 @@ const router = createBrowserRouter([
       {
         path: "/friends/:id",
         element: <PrivateRoute> <FriendDetails /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`)
+        loader: async ({ params }) => await fetch(`${BASE_BACKEND_URL}/friends/${params.id}`)
       },
       {
         path: "/message/:id",
         element: <PrivateRoute> <ChatBox /></PrivateRoute>,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/message/${params.id}`)
+        loader: async ({ params }) => await fetch(`${BASE_BACKEND_URL}/message/${params.id}`)
       },
       {
         path: "/savedposts",

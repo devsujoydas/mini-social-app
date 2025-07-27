@@ -20,6 +20,7 @@ import { BiCommentDots } from "react-icons/bi";
 import { FaCircleMinus } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import axios from "axios";
 
 
 const Post = ({ post }) => {
@@ -48,28 +49,21 @@ const Post = ({ post }) => {
     const name = userData?.name;
     const fromData = { name, username, userId };
 
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(fromData)
-    })
-      .then(res => res.json())
-      .then(data => {
 
-        console.log(data)
-        if (data.message === "Liked") {
+    axios.put(`${BASE_BACKEND_URL}/post/like/${post._id}`, fromData)
+      .then(res => {
+        if (res.data.message === "Liked") {
           setlike(true);
           setLikesCount(prev => prev + 1);
           toast.success('Liked!')
         }
-
-        if (data.message === "Disliked") {
+        if (res.data.message === "Disliked") {
           setlike(false);
           setLikesCount(prev => prev - 1);
           toast.success('Disliked!')
         }
-      })
-      .catch(err => console.error(err));
+      }).catch(err => console.error(err));
+
   };
 
   const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`
@@ -77,7 +71,6 @@ const Post = ({ post }) => {
   const sharePostHandler = () => {
     navigator.clipboard.writeText(url)
       .then(() => {
-        // alert("URL copied to clipboard!");
         toast.success('Post Url Copied Successfully!')
       })
       .catch((err) => {
@@ -177,7 +170,7 @@ const Post = ({ post }) => {
 
             <div className="flex items-center gap-2 relative">
               {reactorsUsers.length > 0 &&
-                <div onClick={() => setShowUsers(!showUsers)} onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)}  className="text-xs md:text-sm flex gap-1 cursor-pointer hover:underline active:underline transition-all items-center " >
+                <div onClick={() => setShowUsers(!showUsers)} onMouseEnter={() => setShowUsers(true)} onMouseLeave={() => setShowUsers(false)} className="text-xs md:text-sm flex gap-1 cursor-pointer hover:underline active:underline transition-all items-center " >
 
                   <div className={`absolute bottom-8 -left-7 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all   shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                     {reactorsUsers.map((user, idx) => (
@@ -197,7 +190,7 @@ const Post = ({ post }) => {
 
               {reactorsUsers.length > 0 &&
                 <div className="text-xs md:text-sm flex md:hidden gap-1 cursor-pointer hover:underline transition-all items-center " >
-                  <p  onClick={() => setShowUsers(!showUsers)}  className=" -ml-2 text-zinc-600 ">
+                  <p onClick={() => setShowUsers(!showUsers)} className=" -ml-2 text-zinc-600 ">
                     {(() => {
                       const names = reactorsUsers.map(user => user.name);
                       const displayNames = names.slice(0, 1).join(", ");

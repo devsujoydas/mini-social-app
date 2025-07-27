@@ -35,7 +35,7 @@ const UpdateInfo = () => {
 
         console.log("formData", formData)
 
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/update`, {
+        fetch(`${BASE_BACKEND_URL}/update`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)

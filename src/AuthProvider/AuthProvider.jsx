@@ -6,15 +6,14 @@ import toast, { Toaster } from 'react-hot-toast';
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
+    const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-    const currentUserFromLs = JSON.parse(localStorage.getItem("currentUser"))
-    const emailFromLS = localStorage.getItem("email");
+    const [loading, setLoading] = useState(true)
 
     const [storedEmail, setStoredEmail] = useState("")
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
-    const [loading, setLoading] = useState(true)
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
 
@@ -27,7 +26,7 @@ const AuthProvider = ({ children }) => {
 
     const addFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/addfriend`, data)
+        axios.put(`${BASE_BACKEND_URL}/addfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -35,7 +34,7 @@ const AuthProvider = ({ children }) => {
     }
     const unFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/unfriend`, data)
+        axios.put(`${BASE_BACKEND_URL}/unfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -43,7 +42,7 @@ const AuthProvider = ({ children }) => {
     }
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
+        axios.put(`${BASE_BACKEND_URL}/confirmFriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -53,23 +52,23 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
 
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/allfriends?email=${localStorage.getItem("email")}`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/allfriends?email=${localStorage.getItem("email")}`).then(res => {
             setFriendsData(res.data);
         });
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/myfriends?email=${localStorage.getItem("email")}`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/myfriends?email=${localStorage.getItem("email")}`).then(res => {
             setMyFriends(res.data);
         });
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/sentrequest?email=${localStorage.getItem("email")}`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/sentrequest?email=${localStorage.getItem("email")}`).then(res => {
             setSentRequests(res.data);
         });
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/requests?email=${localStorage.getItem("email")}`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/requests?email=${localStorage.getItem("email")}`).then(res => {
             setFriendRequests(res.data);
         });
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/youMayKnow?email=${localStorage.getItem("email")}`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/youMayKnow?email=${localStorage.getItem("email")}`).then(res => {
             setYouMayKnowFriends(res.data);
         });
 
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`).then(res => {
+        axios.get(`${BASE_BACKEND_URL}/posts`).then(res => {
             setPostsData(res.data)
             const usersPost = res.data.filter(post => post.authorEmail === localStorage.getItem("email"));
             setUsersPostsData(usersPost);
@@ -77,7 +76,7 @@ const AuthProvider = ({ children }) => {
 
         if (!localStorage.getItem("email")) return;
         const ping = () => {
-            axios.post(`${import.meta.env.VITE_BACKEND_URL}/activeStatus?email=${localStorage.getItem("email")}`)
+            axios.post(`${BASE_BACKEND_URL}/activeStatus?email=${localStorage.getItem("email")}`)
                 .then(res => { }).catch(err => console.error("Ping Error:", err));
         };
         const interval = setInterval(ping, 2000);
@@ -93,69 +92,47 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
-
     const logInUser = (email, password) => {
         setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
-
     const provider = new GoogleAuthProvider();
     const signInWithGoogle = () => {
         setLoading(true)
         return signInWithPopup(auth, provider)
     }
-
     const signOutUser = async () => {
         setLoading(true)
-
         try {
             await signOut(auth);
+            axios.post(`${BASE_BACKEND_URL}/logout`)
             localStorage.removeItem("email")
             localStorage.removeItem("currentUser")
-            localStorage.removeItem("filteredFriend")
-
-            await fetch("${import.meta.env.VITE_BACKEND_URL}/logout", {
-                method: "POST",
-                credentials: "include"
-            });
             navigate("/login");
         } catch (error) {
             console.error("Logout error:", error);
         }
-
-
-
     }
-
     const deleteAccount = async () => {
-        deleteUser(user)
+        deleteUser(user) //Firebase e delete holei db theke delete hobe 
             .then(() => {
-
-                fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`, {
-                    method: 'DELETE',
-                })
-                    .then(res => res.json())
-                    .then(data => {
+                axios.delete(`${BASE_BACKEND_URL}/profile/delete/${user.email}`)
+                    .then(res => {
                         localStorage.removeItem("email")
                         localStorage.removeItem("currentUser")
                         localStorage.removeItem("filteredFriend")
-
                         navigate("/login")
-                        console.log("Account Deleted Successfully", data)
+                        console.log("Account Deleted Successfully", res.data)
                     })
             }).catch((error) => {
                 console.log(error)
             });
         try {
             await signOut(auth);
-
-            await fetch("${import.meta.env.VITE_BACKEND_URL}/logout", {
-                method: "POST",
-                credentials: "include"
-            });
+            axios.post(`${BASE_BACKEND_URL}/logout`)
             navigate("/login");
-        } catch (error) {
-            console.error("Logout error:", error);
+        } catch (err) {
+            console("Logout error:", err);
         }
     }
 
@@ -171,7 +148,7 @@ const AuthProvider = ({ children }) => {
                 localStorage.setItem("email", email)
                 setStoredEmail(localStorage.getItem("email"))
 
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/${email}`)
+                axios.get(`${BASE_BACKEND_URL}/profile/${email}`)
                     .then(res => {
                         setUserData(res.data)
                         localStorage.setItem("currentUser", JSON.stringify(res.data))

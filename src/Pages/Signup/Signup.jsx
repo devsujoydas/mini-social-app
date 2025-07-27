@@ -54,7 +54,7 @@ const Signup = () => {
 
                 if (result.user) {
 
-                    axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, formData)
+                    axios.post(`${BASE_BACKEND_URL}/signup`, formData)
                         .then(res => {
                             console.log("Result from signup page: ", res.data)
 

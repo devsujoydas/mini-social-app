@@ -39,7 +39,7 @@ const PostDetailsUpdate = () => {
       .then((result) => {
         if (result.isConfirmed) {
 
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${post._id}`, {
+          fetch(`${BASE_BACKEND_URL}/post/update/${post._id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(postData)

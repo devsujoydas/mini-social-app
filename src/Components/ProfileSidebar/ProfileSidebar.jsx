@@ -120,7 +120,7 @@ const ProfileSidebar = () => {
     const email = userData?.email;
     const formData = { email, username }
 
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/updateUsername`, {
+    fetch(`${BASE_BACKEND_URL}/updateUsername`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -171,7 +171,7 @@ const ProfileSidebar = () => {
     const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
 
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/update`, {
+    fetch(`${BASE_BACKEND_URL}/update`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

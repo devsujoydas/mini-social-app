@@ -39,7 +39,7 @@ const Signup = () => {
                 setUser(result.user)
 
                 if (result.user) {
-                    fetch(`${import.meta.env.VITE_BACKEND_URL}/signup`, {
+                    fetch(`${BASE_BACKEND_URL}/signup`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(formData)
