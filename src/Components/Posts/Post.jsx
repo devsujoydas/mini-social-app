@@ -72,7 +72,7 @@ const Post = ({ post }) => {
       .catch(err => console.error(err));
   };
 
-  const url = `http://localhost:5173/post/${post._id}`
+  const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`
 
   const sharePostHandler = () => {
     navigator.clipboard.writeText(url)

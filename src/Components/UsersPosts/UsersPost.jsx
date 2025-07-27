@@ -117,7 +117,7 @@ const UsersPost = ({ post }) => {
       .catch(err => console.error(err));
   };
 
-  const url = `https://xenonmedia.netlify.app/post/${post._id}`
+  const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`
 
   const sharePostHandler = () => {
     navigator.clipboard.writeText(url)

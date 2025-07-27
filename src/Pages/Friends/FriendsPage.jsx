@@ -8,13 +8,9 @@ import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 
 const FriendsPage = () => {
     const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useContext(AuthContext)
-
-
-
-    const [displayFriendBlock, setDisplayFriendBlock] = useState("youmayknow")
-
-
     const btnStyle = "border border-zinc-200 md:text-[16px] text-xs py-1 md:px-4 px-2 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300 font-family-secondary"
+    
+    const [displayFriendBlock, setDisplayFriendBlock] = useState("friend")
 
     return (
         <div className='md:p-7 min-h-screen p-3 lg:pt-7 md:pt-20 pt-20 relative'>

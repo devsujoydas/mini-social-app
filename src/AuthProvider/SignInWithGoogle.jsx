@@ -16,8 +16,8 @@ const SignInWithGoogle = () => {
 
                 setUserData(result.user)
                 const email = result.user.email;
-                const username = email.split('@')[0];
                 const name = result.user.displayName;
+                const username = name.replace(/[^a-zA-Z]/g, "").toLowerCase();
                 const profilephotourl = result.user.photoURL;
                 const address = ""; const bio = "";
                 const coverphotourl = ""; const phone = ""; const website = "";
