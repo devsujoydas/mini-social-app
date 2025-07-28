@@ -13,13 +13,14 @@ import { FaUserSlash } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
+import UpdateUsernameModal from "./UpdateUsernameModal.jsx";
+import UpdateProfileModal from "./UpdateProfileModal.jsx";
 
 
 const ProfileSidebar = () => {
   const { user, signOutUser, userData, setUserData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
 
   const [showEdit, setShowEdit] = useState(1)
-  const likeCommentStyle = "md:text-xl active:scale-95 w-full transition-all px-2 py-1 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-2"
   const navigate = useNavigate()
 
 
@@ -208,74 +209,11 @@ const ProfileSidebar = () => {
 
 
       {/* UpdateProfile Modal */}
-      <div className={showUpdateInfoModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "fixed top-0 left-0 w-full h-screen backdrop-blur-sm -z-40 bg-[#00000079] flex justify-center items-center transition-all"}>
-        <form onSubmit={(e) => updateProfileHandler(e)} className='  relative bg-white md:w-1/2 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full md:mx-0 mx-5' >
-
-          <button className="absolute md:top-3 top-1 md:right-3 right-1">
-            <IoClose onClick={() => setShowUpdateInfoModal(!showUpdateInfoModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
-          </button>
-
-          <h1 className="font-semibold text-3xl md:text-4xl text-center font-family-secondary text-blue-600">Complete Your Profile</h1>
-          <div className='grid md:gap-5 gap-2'>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Name</label>
-              <input defaultValue={userData?.name} name="name" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Name" />
-            </div>
-            <div className=''>
-              <label className=" text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Bio</label>
-              <input defaultValue={userData?.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
-            </div>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Website</label>
-              <input defaultValue={userData?.website} name="website" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter website url" />
-            </div>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Phone</label>
-              <input defaultValue={userData?.phone} name="phone" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter phone number" />
-            </div>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Address</label>
-              <input defaultValue={userData?.address} name="address" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter address" />
-            </div>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Profile Photo URL</label>
-              <input defaultValue={userData?.profilephotourl} name="profilephotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
-            </div>
-            <div>
-              <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Cover Photo URL</label>
-              <input defaultValue={userData?.coverphotourl} name="coverphotourl" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter Photo Url" />
-            </div>
-          </div>
-          <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
-            <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
-            <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
-          </button>
-        </form>
-      </div>
+      <UpdateProfileModal showUpdateInfoModal={showUpdateInfoModal} setShowUpdateInfoModal={setShowUpdateInfoModal} />
 
 
       {/* Username Update Modal */}
-      <div className={showUsernameModal ? "fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-40 bg-[#00000079] flex justify-center items-center transition-all" : "fixed top-0 left-0 w-full h-screen backdrop-blur-sm -z-40 bg-[#00000079] flex justify-center items-center transition-all"}>
-
-        <div className="relative max-w-96 w-full md:p-10 p-5 md:m-0 m-5 rounded-md bg-white">
-          <button className="absolute md:top-3 top-1 md:right-3 right-1">
-            <IoClose onClick={() => setShowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
-          </button>
-
-          <form onSubmit={(e) => updateUsernameHandler(e)} className="">
-            <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
-            <div className='mb-2'>
-              <input defaultValue={userData?.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
-              <p className={usernameMessage ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
-            </div>
-            <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
-              <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
-              <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
-            </button>
-          </form>
-
-        </div>
-      </div>
+      <UpdateUsernameModal showUsernameModal={showUsernameModal} setShowUsernameModal={setShowUsernameModal} />
 
 
 

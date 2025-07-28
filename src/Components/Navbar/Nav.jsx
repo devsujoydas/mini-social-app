@@ -11,7 +11,7 @@ import { FaTicketAlt } from "react-icons/fa";
 
 
 const Nav = () => {
-    const { userData, postsData, usersPostsData, friendsData } = useContext(AuthContext)
+    const { userData, postsData, usersPostsData, myFriends } = useContext(AuthContext)
 
     return (
         <div className="md:space-y-7 space-y-4 md:px-5 px-3">
@@ -54,7 +54,7 @@ const Nav = () => {
                     <span className="font-semibold ">Friends</span>
                 </div>
                 <div>
-                    <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{userData?.myFriends?.length}</p>
+                    <p className='px-2 py-1 md:text-[16px] text-xs bg-zinc-300 rounded-full'>{myFriends?.length}</p>
                 </div>
             </NavLink>
 

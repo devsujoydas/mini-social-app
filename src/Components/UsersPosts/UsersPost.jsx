@@ -290,7 +290,7 @@ const UsersPost = ({ post }) => {
               <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
           </Link>
-          <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
+          <input className="w-full border border-zinc-400 outline-none md:text-[14px] text-xs py-2 md:py-3 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
         </div>
 
         <div className="flex items-center gap-3 ">

@@ -7,7 +7,6 @@ import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
 import { FiArrowUpRight } from "react-icons/fi";
-import { LuArrowDownLeft } from "react-icons/lu";
 
 const FriendsPage = () => {
     const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useContext(AuthContext)

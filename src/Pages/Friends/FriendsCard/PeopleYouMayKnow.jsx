@@ -7,7 +7,6 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 const PeopleYouMayKnow = ({ friend }) => {
     const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
     const btnStyle = "block py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
-    const { profilephotourl, name, username } = friend;
     const [addStatus, setAddStatus] = useState(true)
 
 
@@ -39,7 +38,7 @@ const PeopleYouMayKnow = ({ friend }) => {
                                     <p className='bg-green-400 h-3.5 w-3.5 rounded-full  border border-white'></p>
                                 )}
                             </h1>
-                            <h1 className='md:text-sm text-xs mb-1 -mt-2'>@ {username}</h1>
+                            <h1 className='md:text-sm text-xs mb-1 -mt-2'>@ {friend.username}</h1>
                         </div>
                     </Link>
                     <div className='flex md:flex-col md:mt-2 gap-2'>

@@ -5,7 +5,7 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
 const FriendsCard = ({ friend }) => {
-    const { confrimFriendBtnHanlder, addFriendBtnHanlder } = useContext(AuthContext)
+    const { confrimFriendBtnHanlder, cancelReceivedRequestBtnHandler } = useContext(AuthContext)
 
     const btnStyle = "block py-2  text-xs md:text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
@@ -16,7 +16,7 @@ const FriendsCard = ({ friend }) => {
         setAddStatus(false)
     }
     const cencelBtnHandler = () => {
-        addFriendBtnHanlder(friend)
+        cancelReceivedRequestBtnHandler(friend)
         setAddStatus(true)
     }
 

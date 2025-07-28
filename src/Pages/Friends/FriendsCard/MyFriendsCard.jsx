@@ -1,19 +1,14 @@
-import React, { useContext, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { useContext, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../AuthProvider/AuthProvider'
 
 const MyFriendsCard = ({ friend }) => {
-    const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
+    const { unFriendBtnHanlder, } = useContext(AuthContext)
     const btnStyle = "block py-2 text-xs md:text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const navigate = useNavigate()
     const [addStatus, setAddStatus] = useState(true)
 
-    const addFriendHandler = () => {
-
-        addFriendBtnHanlder(friend)
-        setAddStatus(true)
-    }
     const unFriendHandler = () => {
         unFriendBtnHanlder(friend)
         setAddStatus(false)
@@ -47,7 +42,7 @@ const MyFriendsCard = ({ friend }) => {
                         {addStatus ?
                             <button onClick={() => unFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Unfriend</button>
                             :
-                            <button onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Add friend</button>
+                            <button className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Unfriended</button>
                         }
                     </div>
                 </div>

@@ -14,7 +14,7 @@ const Storybox = () => {
       <div className='w-full  overflow-hidden ' >
         {myFriends == "" ?
           <div>
-            <h1 className='text-center text-zinc-300'>You have no friend here. Add them first</h1>
+            <h1 className='text-center md:text-[16px] text-xs py-3 text-zinc-300'>You have no friend here. Add them first</h1>
           </div>
           :
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-2 py-2">

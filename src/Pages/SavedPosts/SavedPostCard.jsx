@@ -251,29 +251,29 @@ const SavedPostCard = ({ post }) => {
 
             <hr className="text-zinc-300" />
 
-            {/* comment container  */ }
-    <form action="" className="md:p-4 p-3 flex justify-between items-center gap-5 md:gap-20">
-        <div className="flex items-center gap-4 w-full ">
-            <Link to={`/profile`}>
-                <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
-                    <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+            {/* comment container  */}
+            <form action="" className="md:p-4 p-3 flex justify-between items-center gap-5 md:gap-20">
+                <div className="flex items-center gap-4 w-full ">
+                    <Link to={`/profile`}>
+                        <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
+                            <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                        </div>
+                    </Link>
+                    <input className="w-full border border-zinc-400 outline-none md:text-[14px] text-xs py-2 md:py-3 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
                 </div>
-            </Link>
-            <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
-        </div>
 
-        <div className="flex items-center gap-3 ">
-            <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
-                <ImAttachment />
-            </div>
-            <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
-                <FaRegSmile />
-            </div>
-            <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
-                <VscSend />
-            </div>
-        </div>
-    </form>
+                <div className="flex items-center gap-3 ">
+                    <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+                        <ImAttachment />
+                    </div>
+                    <div className="border border-zinc-400 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+                        <FaRegSmile />
+                    </div>
+                    <div className="border border-blue-700 text-blue-700 hover:text-zinc-200 md:text-xl md:p-3 p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-blue-600">
+                        <VscSend />
+                    </div>
+                </div>
+            </form>
 
         </div >
     )

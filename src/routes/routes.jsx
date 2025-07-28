@@ -83,14 +83,14 @@ export const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes> 
-  },
-  {
-    path: '/forgotPass',
-    element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>  
+    element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes>
   },
   {
     path: '/signup',
-    element: <AuthPrivateRoutes><Signup /></AuthPrivateRoutes>  
+    element: <AuthPrivateRoutes><Signup /></AuthPrivateRoutes>
+  },
+  {
+    path: '/forgotPass',
+    element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>
   },
 ]);

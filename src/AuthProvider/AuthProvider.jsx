@@ -28,6 +28,20 @@ const AuthProvider = ({ children }) => {
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/addfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
+                console.log(res.data.message)
+
+                if (res.data.message === "Request sent") {
+                    const remaining = youMayKnowFriends.filter(fr => fr._id !== friend._id)
+                    setYouMayKnowFriends(remaining);
+                    setSentRequests([...sentRequests, friend])
+                }
+                else {
+                    const remainingSentRequests = sentRequests.filter(fr => fr._id !== friend._id)
+                    setSentRequests(remainingSentRequests);
+                    const remainingFriendsRequests = friendsRequest.filter(fr => fr._id !== friend._id)
+                    setFriendRequests(remainingFriendsRequests);;
+                    setYouMayKnowFriends([...youMayKnowFriends, friend])
+                }
             })
             .catch(err => console.error("Add friend failed:", err));
     }
@@ -36,18 +50,49 @@ const AuthProvider = ({ children }) => {
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/unfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
+                if (res.data.message === "Unfriend successful") {
+                    const remainingMyFriend = myFriends.filter(fr => fr._id !== friend._id)
+                    setMyFriends(remainingMyFriend)
+                    setYouMayKnowFriends([...youMayKnowFriends, friend])
+                }
             })
             .catch(err => console.error("Unfriend failed:", err));
     }
-
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
             .then(res => {
                 toast.success(res.data.message)
+                if (res.data.message == "Request accepted") {
+                    const remainingFriendsRequests = friendsRequest.filter(fr => fr._id !== friend._id)
+                    setFriendRequests(remainingFriendsRequests)
+                    setMyFriends([...myFriends, friend])
+                }
             })
             .catch(err => console.error("Friend confirm failed:", err));
 
+    }
+    const cancelReceivedRequestBtnHandler = (friend) => {
+        const data = { userId: userData._id, friendId: friend._id };
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/cancelreceivedrequest`, data)
+            .then(res => {
+                toast.success(res.data.message);
+                const remaining = friendsRequest.filter(fr => fr._id !== friend._id);
+                setFriendRequests(remaining);
+                setYouMayKnowFriends([...youMayKnowFriends, friend]);
+            })
+            .catch(err => console.error("Cancel received request failed:", err));
+    }
+    const cancelSentRequestBtnHandler = (friend) => {
+        const data = { userId: userData._id, friendId: friend._id };
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/cancelsentrequest`, data)
+            .then(res => {
+                toast.success(res.data.message);
+                const remaining = sentRequests.filter(fr => fr._id !== friend._id);
+                setSentRequests(remaining);
+                setYouMayKnowFriends([...youMayKnowFriends, friend]);
+            })
+            .catch(err => console.error("Cancel sent request failed:", err));
     }
 
 
@@ -178,7 +223,7 @@ const AuthProvider = ({ children }) => {
                 };
                 const interval = setInterval(ping, 2000); ping();
                 return () => clearInterval(interval);
-                
+
             } else { setUser(null); setUserData(null); setLoading(false); }
         });
 
@@ -195,7 +240,7 @@ const AuthProvider = ({ children }) => {
         myFriends, setMyFriends,
         friendsRequest, setFriendRequests,
         sentRequests, setSentRequests,
-        youMayKnowFriends, setYouMayKnowFriends,
+        youMayKnowFriends, setYouMayKnowFriends, cancelSentRequestBtnHandler, cancelSentRequestBtnHandler, cancelReceivedRequestBtnHandler,
         savedPosts, setSavedPosts, savePostHandler, removeSavedPostHandler
     }
 

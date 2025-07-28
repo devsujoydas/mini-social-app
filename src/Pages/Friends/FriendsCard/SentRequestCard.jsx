@@ -1,17 +1,17 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 
 const SentRequestCard = ({ friend }) => {
-    const { addFriendBtnHanlder } = useContext(AuthContext)
+    const { cancelSentRequestBtnHandler } = useContext(AuthContext)
     const [addStatus, setAddStatus] = useState(true)
 
     const btnStyle = "block py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
     const cencelBtnHandler = () => {
-        addFriendBtnHanlder(friend)
+        cancelSentRequestBtnHandler(friend)
         setAddStatus(false)
     }
 
