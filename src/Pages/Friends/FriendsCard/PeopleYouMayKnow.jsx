@@ -6,18 +6,16 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const PeopleYouMayKnow = ({ friend }) => {
     const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
-    const btnStyle = "block md:py-2 py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
+    const btnStyle = "block py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const { profilephotourl, name, username } = friend;
     const [addStatus, setAddStatus] = useState(true)
 
 
     const addFriendHandler = () => {
         addFriendBtnHanlder(friend)
-        
         setAddStatus(false)
     }
     const cencelBtnHandler = () => {
-        toast.success('Cencel!')
         setAddStatus(true)
     }
 
@@ -33,20 +31,23 @@ const PeopleYouMayKnow = ({ friend }) => {
                 </Link>
             </div>
             <div className='md:p-3 p-2 md:w-full w-3/4'>
-                <div className=''>
-                    <Link to={`/friends/${friend.username}`} className='space-y-1 mb-2'>
+                <div className='flex flex-col justify-between h-full '>
+                    <Link to={`/friends/${friend.username}`} className='space-y-1 '>
                         <div className='flex flex-col gap-2'>
-                            <h1 className='text-[16px]   text-wrap font-semibold'>{name}</h1>
+                            <h1 className='text-[16px] flex items-center gap-2 text-wrap font-semibold'>{friend?.name}
+                                {friend?.onlineStatus && (
+                                    <p className='bg-green-400 h-3.5 w-3.5 rounded-full  border border-white'></p>
+                                )}
+                            </h1>
                             <h1 className='md:text-sm text-xs mb-1 -mt-2'>@ {username}</h1>
                         </div>
                     </Link>
-                    <div className='flex md:flex-col  gap-2'>
+                    <div className='flex md:flex-col md:mt-2 gap-2'>
                         {addStatus ?
                             <button onClick={() => addFriendHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Add friend</button>
                             :
                             <button onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-blue-200 hover:bg-blue-100 active:bg-blue-100 text-blue-800 font-semibold`}  >Sent Request</button>
                         }
-                        <button className={`${btnStyle} bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300`} >Remove</button>
                     </div>
                 </div>
             </div>

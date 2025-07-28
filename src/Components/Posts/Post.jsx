@@ -108,7 +108,7 @@ const Post = ({ post }) => {
           </div>
         </Link>
 
-        <div className='relative'>
+        <div className='relative md:text-sm text-xs'>
           <button onClick={() => { setShowEdit(!showEdit) }}>
             <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
           </button>
@@ -116,39 +116,39 @@ const Post = ({ post }) => {
           {post?.authorUsername == userData?.username ?
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
               <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
+                <h1 className='flex justify-center items-center gap-2   '> {<FaCopy />} Copy Url</h1>
               </button>
               <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+                <h1 className='flex justify-center items-center gap-2 '> {<MdEdit />} Edit Post</h1>
               </Link>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
+                <h1 className='flex justify-center items-center gap-2 '> {<IoSettings />} Edit audience</h1>
               </button>
               <hr className="" />
               <button className={editTrashBtnStyle}>
-                <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+                <h1 className='flex  justify-center items-center gap-2 '> {<FaArchive />} Move to archive</h1>
               </button>
               <button onClick={() => { deletePost() }} className={`${editTrashBtnStyle} border bg-zinc-100 border-zinc-200`}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+                <h1 className='flex justify-center items-center gap-2 '> {<FaTrashCan />} Move to trash</h1>
               </button>
             </div>
             :
             <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
               <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-                <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
+                <h1 className='flex justify-center items-center gap-2   '> {<FaCopy />} Copy Url</h1>
               </button>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCircleMinus />}</span> Not Interested</h1>
+                <h1 className='flex justify-center items-center gap-2 '> <span className="">{<FaCircleMinus />}</span> Not Interested</h1>
               </button>
-              <button onClick={() => savePostHandler(post)} className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="">{<FaBookmark />}</span> Save post</h1>
+              <button onClick={() => savePostHandler(post)} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2  '> <span className="">{<FaBookmark />}</span> Save post</h1>
               </button>
               <button className={editTrashBtnStyle}>
-                <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<IoSettings />}</span> Hide Post</h1>
+                <h1 className='flex justify-center items-center gap-2 '> <span className="">{<IoSettings />}</span> Hide Post</h1>
               </button>
               <hr className="" />
               <button className={editTrashBtnStyle}>
-                <h1 className='flex  justify-center items-center gap-2 text-sm '> <span className="">{<FaArchive />}</span> Report Post</h1>
+                <h1 className='flex  justify-center items-center gap-2 '> <span className="">{<FaArchive />}</span> Report Post</h1>
               </button>
             </div>}
         </div>
@@ -247,7 +247,7 @@ const Post = ({ post }) => {
 
           <div>
 
-            <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+            <CiBookmark onClick={() => savePostHandler(post)} className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
           </div>
         </div>
       </div>
@@ -255,14 +255,14 @@ const Post = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* comment container  */}
-      <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
-        <div className="flex items-center gap-4 w-full ">
+      <form action="" className="p-3 md:p-4 flex justify-between items-center gap-2 md:gap-20">
+        <div className="flex items-center gap-2 md:gap-4 w-full ">
           <Link to={`/profile`}>
             <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
               <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
             </div>
           </Link>
-          <input className="w-full border border-zinc-400 outline-none md:text-lg text-sm py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
+          <input className="w-full border border-zinc-400 outline-none md:text-lg text-xs py-2 md:px-4 px-2 rounded-full " type="text" placeholder="Write your comment.." />
         </div>
 
         <div className="flex items-center gap-3 ">

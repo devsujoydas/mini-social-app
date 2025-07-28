@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import toast, { Toaster } from 'react-hot-toast';
-
+import { FaBookmark } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
 import { FaCopy } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
@@ -14,14 +14,14 @@ import { CiBookmark } from "react-icons/ci";
 import { FaRegSmile } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
-import { BiSolidLike } from "react-icons/bi";
+import { BiSolidLike } from "react-icons/bi"; 
 import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const UsersPost = ({ post }) => {
-  const { userData, postsData, setPostsData } = useContext(AuthContext)
+  const { userData, postsData, setPostsData, savePostHandler } = useContext(AuthContext)
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
 
@@ -158,7 +158,7 @@ const UsersPost = ({ post }) => {
           </div>
         </div>
 
-        <div className='relative'>
+        <div className='relative md:text-sm text-xs'>
           <button onClick={() => { setShowEdit(!showEdit) }}>
             <BsThreeDotsVertical className="cursor-pointer active:scale-95 hover:bg-zinc-300 active:bg-zinc-300 text-4xl text-zinc-500 hover:text-black  rounded-full transition-all p-2" />
           </button>
@@ -166,20 +166,20 @@ const UsersPost = ({ post }) => {
 
           <div onMouseLeave={() => { setShowEdit(!showEdit) }} onClick={() => { setShowEdit(!showEdit) }} className={`absolute top-8 right-4 md:right-6 bg-white  w-50 border border-zinc-300 shadow-2xl p-3  rounded-md space-y-2 transition-all duration-500 ${showEdit ? '-z-10 opacity-0' : ' opacity-100 z-10'}`} >
             <button onClick={() => sharePostHandler()} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-              <h1 className='flex justify-center items-center gap-2   text-sm '> {<FaCopy />} Copy Url</h1>
+              <h1 className='flex justify-center items-center gap-2 '> {<FaCopy />} Copy Url</h1>
             </button>
             <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> {<MdEdit />} Edit Post</h1>
+              <h1 className='flex justify-center items-center gap-2 '> {<MdEdit />} Edit Post</h1>
             </Link>
-            <button className={editTrashBtnStyle}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> {<IoSettings />} Edit audience</h1>
-            </button>
+           <button onClick={() => savePostHandler(post)} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+                <h1 className='flex justify-center items-center gap-2  '> <span className="">{<FaBookmark />}</span> Save post</h1>
+              </button>
             <hr className="" />
             <button className={editTrashBtnStyle}>
-              <h1 className='flex  justify-center items-center gap-2 text-sm '> {<FaArchive />} Move to archive</h1>
+              <h1 className='flex  justify-center items-center gap-2 '> {<FaArchive />} Move to archive</h1>
             </button>
             <button onClick={() => { deletePost() }} className={`${editTrashBtnStyle} border bg-zinc-100 border-zinc-200`}>
-              <h1 className='flex justify-center items-center gap-2 text-sm '> {<FaTrashCan />} Move to trash</h1>
+              <h1 className='flex justify-center items-center gap-2 '> {<FaTrashCan />} Move to trash</h1>
             </button>
           </div>
         </div>
@@ -274,7 +274,7 @@ const UsersPost = ({ post }) => {
           </div>
 
           <div>
-            <CiBookmark className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
+            <CiBookmark onClick={() => savePostHandler(post)} className="text-2xl cursor-pointer active:scale-95 transition-all active:text-black" />
           </div>
         </div>
 
@@ -283,7 +283,7 @@ const UsersPost = ({ post }) => {
       <hr className="text-zinc-300" />
 
       {/* comment container  */}
-      <form action="" className="p-4 flex justify-between items-center gap-5 md:gap-20">
+      <form action="" className="p-3 md:p-4 flex justify-between items-center gap-5 md:gap-20">
         <div className="flex items-center gap-4 w-full ">
           <Link to={`/profile`}>
             <div className="cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">

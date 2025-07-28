@@ -6,41 +6,46 @@ import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const SentRequestCard = ({ friend }) => {
     const { addFriendBtnHanlder } = useContext(AuthContext)
-
-    const { profilephotourl, name, username, email } = friend;
     const [addStatus, setAddStatus] = useState(true)
-    const btnStyle = "block md:py-2 py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
+
+    const btnStyle = "block py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
     const cencelBtnHandler = () => {
-        addFriendBtnHanlder(friend) 
-        setAddStatus(true)
+        addFriendBtnHanlder(friend)
+        setAddStatus(false)
     }
 
     return (
-        <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex flex-col '>
+        <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex w-full '>
 
             <Toaster position="bottom-center" reverseOrder={true} />
 
             <div className='md:p-0 p-2 '>
                 <Link to={`/friends/${friend.username}`}>
-                    <img className='w-full md:h-52 h-30 object-cover' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />
+                    <img className='w-32  md:w-full md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profilephotourl ? `/default.jpg` : `${friend?.profilephotourl}`} alt="" />
                 </Link>
             </div>
+
             <div className='md:p-3 p-2 w-full relative'>
-                {
-                    friend?.onlineStatus &&
-                    <h1 className='text-emerald-600 font-bold text-xs absolute right-2 top-1'> Online</h1>
-                }
-                <div className='space-y-2   '>
+                <div className='flex flex-col justify-between h-full   '>
                     <div className='flex flex-col gap-2'>
                         <Link to={`/friends/${friend.username}`}>
-                            <h1 className='md:text-[16px] text-sm  text-wrap font-semibold'>{name}</h1>
+                            <h1 className='text-[16px] flex items-center gap-2 text-wrap font-semibold'>{friend?.name}
+                                {friend?.onlineStatus && (
+                                    <p className='bg-green-400 h-3.5 w-3.5 rounded-full  border border-white'></p>
+                                )}
+                            </h1>
                         </Link>
-                        <h1 className='md:text-sm text-xs -mt-2'>@ {username}</h1>
-
+                        <h1 className='md:text-sm text-xs -mt-2'>@ {friend.username}</h1>
                     </div>
-                    <div className='flex md:flex-col  gap-2'>
-                        <button onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-blue-600 hover:bg-blue-500 active:bg-blue-500 text-white md:text-[16px] text-xs`}  >Cencel</button>
+                    <div className='flex md:flex-col md:mt-2 gap-2'>
+                        {
+                            addStatus ?
+                                <button onClick={() => cencelBtnHandler()} className={`${btnStyle} bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300`}  >Cencel</button>
+                                :
+                                <button className={`${btnStyle} bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-300`}  >Cenceled</button>
+
+                        }
                     </div>
                 </div>
             </div>

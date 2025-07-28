@@ -39,6 +39,7 @@ const AuthProvider = ({ children }) => {
             })
             .catch(err => console.error("Unfriend failed:", err));
     }
+
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
@@ -48,6 +49,8 @@ const AuthProvider = ({ children }) => {
             .catch(err => console.error("Friend confirm failed:", err));
 
     }
+
+
     const savePostHandler = (post) => {
         const data = { userId: userData._id, postId: post._id }
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/savePost`, data)
@@ -57,6 +60,16 @@ const AuthProvider = ({ children }) => {
             .catch(err => console.error("Friend confirm failed:", err));
 
     }
+    const removeSavedPostHandler = (post) => {
+        const data = { userId: userData._id, postId: post._id }
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/removeSavedPost`, data)
+            .then(res => {
+                toast.success(res.data.message)
+            })
+            .catch(err => console.error("Friend confirm failed:", err));
+
+    }
+
 
 
 
@@ -165,6 +178,7 @@ const AuthProvider = ({ children }) => {
                 };
                 const interval = setInterval(ping, 2000); ping();
                 return () => clearInterval(interval);
+                
             } else { setUser(null); setUserData(null); setLoading(false); }
         });
 
@@ -172,7 +186,6 @@ const AuthProvider = ({ children }) => {
             unSubscribe();
         };
     }, []);
-
 
     const dataList = {
         user, setUser, userData, setUserData, usersPostsData, setUsersPostsData,
@@ -183,7 +196,7 @@ const AuthProvider = ({ children }) => {
         friendsRequest, setFriendRequests,
         sentRequests, setSentRequests,
         youMayKnowFriends, setYouMayKnowFriends,
-        savedPosts, setSavedPosts, savePostHandler
+        savedPosts, setSavedPosts, savePostHandler, removeSavedPostHandler
     }
 
     return (
