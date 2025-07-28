@@ -6,7 +6,11 @@ import './index.css'
 import Lenis from 'lenis'
 
 
-
+function raf(time) {
+  lenisRef.current.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 createRoot(document.getElementById('root')).render(
   <AuthProvider>

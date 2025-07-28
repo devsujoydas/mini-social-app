@@ -240,7 +240,7 @@ const AuthProvider = ({ children }) => {
         myFriends, setMyFriends,
         friendsRequest, setFriendRequests,
         sentRequests, setSentRequests,
-        youMayKnowFriends, setYouMayKnowFriends, cancelSentRequestBtnHandler, cancelSentRequestBtnHandler, cancelReceivedRequestBtnHandler,
+        youMayKnowFriends, setYouMayKnowFriends, cancelSentRequestBtnHandler, cancelReceivedRequestBtnHandler,
         savedPosts, setSavedPosts, savePostHandler, removeSavedPostHandler
     }
 

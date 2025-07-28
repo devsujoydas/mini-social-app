@@ -4,6 +4,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom'
 import ProfileSidebar from '../../Components/ProfileSidebar/ProfileSidebar'
 import { IoClose } from "react-icons/io5";
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 
 const UpdateInfo = () => {
@@ -35,39 +36,31 @@ const UpdateInfo = () => {
 
         console.log("formData", formData)
 
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/update`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/update`, formData)
+            .then(res => {
                 setLoadingSpiner(true)
 
-                if (data) {
-                    console.log(data)
-                    if (data.modifiedCount > 0) {
+                if (res.data) {
+                    console.log(res.data)
+                    if (res.data.modifiedCount > 0) {
                         Swal.fire({
                             title: "Profile updated successfully!",
-                            icon: "success",
-                            draggable: true
+                            icon: "success", draggable: true
                         });
                         setShowUpdateInfoModal(false)
                     }
                     else {
                         Swal.fire({
                             title: "You dont have changed anythings!",
-                            icon: "question",
-                            draggable: true
+                            icon: "question", draggable: true
                         });
-
                     }
                 }
             })
     }
 
 
-    
+
     return (
         <div className='flex md:flex-row flex-col-reverse'>
 

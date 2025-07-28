@@ -152,7 +152,7 @@ const UsersPost = ({ post }) => {
 
             <div className="flex justify-center items-center gap-2 text-zinc-500 text-sm ">
               <p className="">{new Date(post?.createdDate)?.toLocaleString()}</p>
-              <span className="text-emerald-700 font-semibold">{!post?.lastUpdateDate == "" && "Updated"}</span>
+              <span className="text-emerald-700 font-semibold md:text-sm text-xs">{!post?.lastUpdateDate == "" && "Updated"}</span>
             </div>
 
           </div>

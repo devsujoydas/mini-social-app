@@ -7,14 +7,14 @@ import SavePostSideBar from './SavePostSideBar';
 import SavedPostCard from './SavedPostCard';
 const SavedPosts = () => {
     const navigate = useNavigate()
-    const { savedPosts, setSavedPosts, postsData } = useContext(AuthContext)
+    const { savedPosts } = useContext(AuthContext)
 
     // console.log(savedPosts);
 
     return (
         <div className=' md:pt-5 pt-18 px-5'>
             <h1 className='md:text-2xl text-xl font-semibold  text-blue-600'>Saved Posts</h1>
-           
+
             <div className='grid grid-cols-1 lg:grid-cols-9 gap-5'>
                 <div className='mt-4 lg:col-span-6'>
                     <div className=' rounded-2xl '>

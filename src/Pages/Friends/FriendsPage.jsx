@@ -7,6 +7,8 @@ import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
 import { FiArrowUpRight } from "react-icons/fi";
+import { RiUserSharedFill } from "react-icons/ri";
+
 
 const FriendsPage = () => {
     const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useContext(AuthContext)
@@ -19,15 +21,15 @@ const FriendsPage = () => {
 
             <div className='sticky flex-wrap top-0 backdrop-blur-2xl flex md:gap-5 gap-2 items-center mb-5 border border-zinc-200 rounded-2xl p-3 md:p-5 bg-white'>
                 <button onClick={() => setDisplayFriendBlock("friend")} className={`${btnStyle} relative flex items-center gap-2`}>
-                    <span className='md:block hidden'>Friends</span> <HiUsers className='text-xl font-bold'/>
+                    <span className='md:block hidden'>Friends</span> <HiUsers className='text-xl font-bold' />
                     <span className={`${myFriends?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{myFriends?.length}</span>
                 </button>
                 <button onClick={() => setDisplayFriendBlock("friendrequest")} className={`${btnStyle} relative flex items-center gap-2`}>
-                    <span className='md:block hidden'>Friend Requests</span> <RiUserReceived2Fill className='text-xl font-bold'/>
+                    <span className='md:block hidden'>Friend Requests</span> <RiUserReceived2Fill className='text-xl font-bold' />
                     <span className={`${friendsRequest?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{friendsRequest?.length}</span>
                 </button>
                 <button onClick={() => setDisplayFriendBlock("sentrequest")} className={`${btnStyle} relative flex items-center gap-2`}>
-                    <span className='md:block hidden'>Sent Requests</span> < FiArrowUpRight className='text-xl font-bold'/>
+                    <span className='md:block hidden'>Sent Requests</span> < RiUserSharedFill className='text-xl font-bold' />
                     <span className={`${sentRequests?.length == 0 ? "hidden" : "absolute"} -top-2 -right-1.5 border px-1 bg-emerald-500 text-xs rounded-full text-white`}>{sentRequests?.length}</span>
                 </button>
                 <button onClick={() => setDisplayFriendBlock("youmayknow")} className={btnStyle}>You May Know</button>

@@ -39,3 +39,13 @@
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-in forwards;
 }
+
+/* Hide scrollbar globally for all scrollable elements */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

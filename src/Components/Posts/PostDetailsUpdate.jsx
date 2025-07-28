@@ -4,6 +4,7 @@ import { FaRegSmile } from "react-icons/fa";
 import { IoMicOutline } from "react-icons/io5";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const PostDetailsUpdate = () => {
   const post = useLoaderData()
@@ -17,7 +18,6 @@ const PostDetailsUpdate = () => {
     const lastUpdateDate = new Date();
 
     const postData = { postImageUrl, postContent, lastUpdateDate }
-
 
     const swalWithTailwind = Swal.mixin({
       customClass: {
@@ -38,17 +38,10 @@ const PostDetailsUpdate = () => {
     })
       .then((result) => {
         if (result.isConfirmed) {
-
-          fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${post._id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData)
-          })
-            .then(res => res.json())
-            .then(data => {
+          axios.put(`${import.meta.env.VITE_BACKEND_URL}/post/update/${post._id}`, postData)
+            .then(res => {
               navigate(-1)
             })
-
           swalWithTailwind.fire({
             title: "Post Updated!",
             text: "Post Updated Successfully.",

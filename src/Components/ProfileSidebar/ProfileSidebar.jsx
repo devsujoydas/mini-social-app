@@ -18,17 +18,13 @@ import UpdateProfileModal from "./UpdateProfileModal.jsx";
 
 
 const ProfileSidebar = () => {
-  const { user, signOutUser, userData, setUserData, usersPostsData, friendsData, deleteAccount } = useContext(AuthContext)
+  const { signOutUser, userData, usersPostsData, deleteAccount } = useContext(AuthContext)
 
   const [showEdit, setShowEdit] = useState(1)
   const navigate = useNavigate()
 
-
-  const [loadingSpiner, setLoadingSpiner] = useState(true)
   const [showUsernameModal, setShowUsernameModal] = useState(false)
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false)
-  const [usernameMessage, setUsernameMessage] = useState("")
-
 
   const accountDeleteHandle = () => {
     const swalWithTailwind = Swal.mixin({
@@ -113,96 +109,6 @@ const ProfileSidebar = () => {
         }
       });
   }
-
-  const updateUsernameHandler = (e) => {
-    e.preventDefault()
-    setLoadingSpiner(false)
-    const username = e.target.username.value;
-    const email = userData?.email;
-    const formData = { email, username }
-
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/updateUsername`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    })
-      .then(res => res.json())
-      .then(data => {
-
-        setLoadingSpiner(true)
-
-        if (data) {
-          // console.log(data)
-          if (data.modifiedCount > 0) {
-            Swal.fire({
-              title: "Username updated successfully!",
-              icon: "success",
-              draggable: true
-            });
-            setShowUsernameModal(false)
-          }
-          else {
-            Swal.fire({
-              title: `${data.message}`,
-              icon: "question",
-              draggable: true
-            });
-
-          }
-        }
-      })
-
-
-    // console.log("UsernameMessage:", usernameMessage)
-
-  }
-
-  const updateProfileHandler = async (e) => {
-    e.preventDefault();
-    setLoadingSpiner(false)
-    const name = e.target.name.value;
-    const email = userData?.email;
-    const address = e.target.address.value;
-    const bio = e.target.bio.value;
-    const profilephotourl = e.target.profilephotourl.value;
-    const coverphotourl = e.target.coverphotourl.value;
-    const phone = e.target.phone.value;
-    const website = e.target.website.value;
-
-    const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
-
-
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/update`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    })
-      .then(res => res.json())
-      .then(data => {
-
-        setLoadingSpiner(true)
-
-        if (data) {
-          if (data.modifiedCount > 0) {
-            Swal.fire({
-              title: "Profile info updated successfully!",
-              icon: "success",
-              draggable: true
-            });
-            setShowUpdateInfoModal(false)
-          }
-          else {
-            Swal.fire({
-              title: "You dont have changed anythings!",
-              icon: "question",
-              draggable: true
-            });
-
-          }
-        }
-      })
-  }
-
 
   return (
     <div className=" space-y-6 relative h-full ">
