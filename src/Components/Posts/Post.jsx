@@ -24,9 +24,11 @@ import axios from "axios";
 
 
 const Post = ({ post }) => {
-  const { userData, friendsData } = useContext(AuthContext)
+  const { userData, savePostHandler } = useContext(AuthContext)
   const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
   const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+
+
 
   const [showEdit, setShowEdit] = useState(1)
   const [showUsers, setShowUsers] = useState(false)
@@ -50,7 +52,7 @@ const Post = ({ post }) => {
     const fromData = { name, username, userId };
 
 
-    axios.put(`${BASE_BACKEND_URL}/post/like/${post._id}`, fromData)
+    axios.put(`${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`, fromData)
       .then(res => {
         if (res.data.message === "Liked") {
           setlike(true);
@@ -138,7 +140,7 @@ const Post = ({ post }) => {
               <button className={editTrashBtnStyle}>
                 <h1 className='flex justify-center items-center gap-2 text-sm '> <span className="">{<FaCircleMinus />}</span> Not Interested</h1>
               </button>
-              <button className={editTrashBtnStyle}>
+              <button onClick={() => savePostHandler(post)} className={editTrashBtnStyle}>
                 <h1 className='flex justify-center items-center gap-2  text-sm '> <span className="">{<FaBookmark />}</span> Save post</h1>
               </button>
               <button className={editTrashBtnStyle}>

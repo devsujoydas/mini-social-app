@@ -6,11 +6,9 @@ import toast, { Toaster } from 'react-hot-toast';
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
-    const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
     const [loading, setLoading] = useState(true)
 
-    const [storedEmail, setStoredEmail] = useState("")
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
     const [friendsData, setFriendsData] = useState([])
@@ -22,11 +20,12 @@ const AuthProvider = ({ children }) => {
     const [sentRequests, setSentRequests] = useState([])
     const [youMayKnowFriends, setYouMayKnowFriends] = useState([])
 
+    const [savedPosts, setSavedPosts] = useState([])
 
 
     const addFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${BASE_BACKEND_URL}/addfriend`, data)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/addfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -34,7 +33,7 @@ const AuthProvider = ({ children }) => {
     }
     const unFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${BASE_BACKEND_URL}/unfriend`, data)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/unfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -42,49 +41,22 @@ const AuthProvider = ({ children }) => {
     }
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${BASE_BACKEND_URL}/confirmFriend`, data)
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
             .catch(err => console.error("Friend confirm failed:", err));
 
     }
+    const savePostHandler = (post) => {
+        const data = { userId: userData._id, postId: post._id }
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/savePost`, data)
+            .then(res => {
+                toast.success(res.data.message)
+            })
+            .catch(err => console.error("Friend confirm failed:", err));
 
-    useEffect(() => {
-
-        axios.get(`${BASE_BACKEND_URL}/allfriends?email=${localStorage.getItem("email")}`).then(res => {
-            setFriendsData(res.data);
-        });
-        axios.get(`${BASE_BACKEND_URL}/myfriends?email=${localStorage.getItem("email")}`).then(res => {
-            setMyFriends(res.data);
-        });
-        axios.get(`${BASE_BACKEND_URL}/sentrequest?email=${localStorage.getItem("email")}`).then(res => {
-            setSentRequests(res.data);
-        });
-        axios.get(`${BASE_BACKEND_URL}/requests?email=${localStorage.getItem("email")}`).then(res => {
-            setFriendRequests(res.data);
-        });
-        axios.get(`${BASE_BACKEND_URL}/youMayKnow?email=${localStorage.getItem("email")}`).then(res => {
-            setYouMayKnowFriends(res.data);
-        });
-
-        axios.get(`${BASE_BACKEND_URL}/posts`).then(res => {
-            setPostsData(res.data)
-            const usersPost = res.data.filter(post => post.authorEmail === localStorage.getItem("email"));
-            setUsersPostsData(usersPost);
-        });
-
-      
-        if (!localStorage.getItem("email")) return;
-        const ping = () => {
-            axios.post(`${BASE_BACKEND_URL}/activeStatus?email=${localStorage.getItem("email")}`)
-                .then(res => { }).catch(err => console.error("Ping Error:", err));
-        };
-        const interval = setInterval(ping, 2000);
-        ping();
-        return () => clearInterval(interval);
-
-    }, [])
+    }
 
 
 
@@ -105,7 +77,7 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         try {
             await signOut(auth);
-            axios.post(`${BASE_BACKEND_URL}/logout`)
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`)
             localStorage.removeItem("email")
             localStorage.removeItem("currentUser")
             navigate("/login");
@@ -116,7 +88,7 @@ const AuthProvider = ({ children }) => {
     const deleteAccount = async () => {
         deleteUser(user) //Firebase e delete holei db theke delete hobe 
             .then(() => {
-                axios.delete(`${BASE_BACKEND_URL}/profile/delete/${user.email}`)
+                axios.delete(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`)
                     .then(res => {
                         localStorage.removeItem("email")
                         localStorage.removeItem("currentUser")
@@ -129,7 +101,7 @@ const AuthProvider = ({ children }) => {
             });
         try {
             await signOut(auth);
-            axios.post(`${BASE_BACKEND_URL}/logout`)
+            axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`)
             navigate("/login");
         } catch (err) {
             console("Logout error:", err);
@@ -143,12 +115,12 @@ const AuthProvider = ({ children }) => {
                 setLoading(false);
 
                 if (!currentUser?.email) return;
-                const email = currentUser.email
-                // console.log(email);
-                localStorage.setItem("email", email)
-                setStoredEmail(localStorage.getItem("email"))
 
-                axios.get(`${BASE_BACKEND_URL}/profile/${email}`)
+                const email = currentUser.email
+                localStorage.setItem("email", email)
+
+
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/${email}`)
                     .then(res => {
                         setUserData(res.data)
                         localStorage.setItem("currentUser", JSON.stringify(res.data))
@@ -156,6 +128,43 @@ const AuthProvider = ({ children }) => {
                     .catch(err => console.error(err))
 
 
+                // friends related
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/allfriends?email=${email}`).then(res => {
+                    setFriendsData(res.data);
+                });
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/myfriends?email=${email}`).then(res => {
+                    setMyFriends(res.data);
+                });
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/sentrequest?email=${email}`).then(res => {
+                    setSentRequests(res.data);
+                });
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/requests?email=${email}`).then(res => {
+                    setFriendRequests(res.data);
+                });
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/youMayKnow?email=${email}`).then(res => {
+                    setYouMayKnowFriends(res.data);
+                });
+
+
+                // Post related get
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`).then(res => {
+                    setPostsData(res.data)
+                    const usersPost = res.data.filter(post => post.authorEmail === email);
+                    setUsersPostsData(usersPost);
+                });
+
+                axios.get(`${import.meta.env.VITE_BACKEND_URL}/savedPosts?email=${email}`).then(res => {
+                    setSavedPosts(res.data);
+                });
+
+
+                const ping = () => {
+                    axios.post(`${import.meta.env.VITE_BACKEND_URL}/activeStatus?email=${email}`)
+                        .then(res => { })
+                        .catch(err => console.error("Ping Error:", err));
+                };
+                const interval = setInterval(ping, 2000); ping();
+                return () => clearInterval(interval);
             } else { setUser(null); setUserData(null); setLoading(false); }
         });
 
@@ -167,14 +176,14 @@ const AuthProvider = ({ children }) => {
 
     const dataList = {
         user, setUser, userData, setUserData, usersPostsData, setUsersPostsData,
-        loading, setLoading, storedEmail,
-        signUpUser, logInUser, signOutUser, signInWithGoogle, deleteAccount,
+        loading, setLoading, signUpUser, logInUser, signOutUser, signInWithGoogle, deleteAccount,
         addFriendBtnHanlder, unFriendBtnHanlder, confrimFriendBtnHanlder,
         postsData, setPostsData, friendsData, setFriendsData,
         myFriends, setMyFriends,
         friendsRequest, setFriendRequests,
         sentRequests, setSentRequests,
         youMayKnowFriends, setYouMayKnowFriends,
+        savedPosts, setSavedPosts, savePostHandler
     }
 
     return (

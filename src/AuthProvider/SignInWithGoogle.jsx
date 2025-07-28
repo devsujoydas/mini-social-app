@@ -27,7 +27,7 @@ const SignInWithGoogle = () => {
 
                 const formData = { name, username, email, address, bio, profilephotourl, coverphotourl, phone, website, posts, createdDate, myFriends, friendRequests }
 
-                axios.post(`${BASE_BACKEND_URL}/signinwithgoogle`, formData)
+                axios.post(`${import.meta.env.VITE_BACKEND_URL}/signinwithgoogle`, formData)
                     .then(res => {
                         localStorage.setItem("email", res.data.email)
                         setUserData(res.data)

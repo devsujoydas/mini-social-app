@@ -1,17 +1,37 @@
- 
+
 import { useNavigate } from 'react-router-dom'
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import Post from '../../Components/Posts/Post';
+import SavePostSideBar from './SavePostSideBar';
 const SavedPosts = () => {
     const navigate = useNavigate()
+    const { savedPosts, setSavedPosts, postsData } = useContext(AuthContext)
+
+    // console.log(savedPosts);
 
     return (
-        <div className='h-[100vh] overflow-hidden  md:pt-5 pt-18 px-5'>
+        <div className=' md:pt-5 pt-18 px-5'>
             <h1 className='md:text-2xl text-xl font-semibold  text-blue-600'>Saved Posts</h1>
-            <div className='flex justify-center items-center h-full flex-col gap-2'>
-                <h1 className=' md:text-4xl text-3xl font-semibold font-family-secondary text-blue-600'>Comming Soon . . . </h1>
-                <h1 className='text-sm font-semibold'>Still Work On it</h1>
-
-                <button onClick={() => navigate(-1)} className='mt-2 cursor-pointer shadow-md active:shadow-none   border border-blue-300 hover:border-zinc-200 p-3 text-3xl rounded-full bg-zinc-100 hover:bg-zinc-200 text-blue-600 font-bold transition-all'><IoMdArrowRoundBack /></button>
+            <div className='grid grid-cols-1 lg:grid-cols-9 gap-5'>
+                <div className='border border-zinc-200 lg:col-span-6'>
+                    <div className=' rounded-2xl '>
+                        {!savedPosts
+                            ?
+                            <div className="flex justify-center items-center">
+                                <h1 className="text-zinc-400">No post found...</h1>
+                            </div>
+                            :
+                            <div className="grid md:gap-5 gap-3 ">
+                                {savedPosts.map((post, idx) => <Post key={idx} post={post} />)}
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div className='border border-zinc-200 lg:col-span-3'>
+                    <SavePostSideBar />
+                </div>
             </div>
         </div>
     )

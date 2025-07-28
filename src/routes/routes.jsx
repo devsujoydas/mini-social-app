@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Login from '../Pages/Login/Login.jsx'
-import Signup from '../Pages/Signup/Signup.jsx'
-import PrivateRoutes from '../Pages/PrivateRoutes/PrivateRoutes.jsx';
+import Login from '../Pages/Login/Login.jsx';
+import Signup from '../Pages/Signup/Signup.jsx';
 import Layout from '../Layout/Layout.jsx';
 import Home from '../Pages/Home/Home.jsx';
 import Profile from '../Pages/Profile/Profile.jsx';
@@ -17,84 +16,81 @@ import EventsPage from '../Pages/EventsPage/EventsPage.jsx';
 import Memories from '../Pages/Memories/Memories.jsx';
 import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword.jsx';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage.jsx';
-
-
-const BASE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import PrivateRoutes from './PrivateRoutes.jsx';
+import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <PrivateRoutes><Layout /></PrivateRoutes>,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
-        element: <PrivateRoutes> <Home /></PrivateRoutes>,
+        path: '/',
+        element: <Home />,
       },
       {
-        path: "/profile",
-        element: <PrivateRoutes> <Profile /></PrivateRoutes>,
+        path: '/profile',
+        element: <Profile />,
       },
       {
-        path: "/updateInfo/:id",
-        element: <PrivateRoutes> <UpdateInfo /></PrivateRoutes>,
-        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/updateInfo/${params.id}`)
+        path: '/updateInfo/:id',
+        element: <UpdateInfo />,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/updateInfo/${params.id}`),
       },
       {
-        path: "/post/:id",
-        element: <PrivateRoutes> <PostDetails /></PrivateRoutes>,
-        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/post/${params.id}`)
+        path: '/post/:id',
+        element: <PostDetails />,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/${params.id}`),
       },
       {
-        path: "profile/post/:id",
-        element: <PrivateRoutes> <UsersPostDetails /></PrivateRoutes>,
-        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/profile/post/${params.id}`)
+        path: 'profile/post/:id',
+        element: <UsersPostDetails />,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/post/${params.id}`),
       },
       {
-        path: "/post/update/:id",
-        element: <PrivateRoutes> <PostDetailsUpdate /></PrivateRoutes>,
-        loader: ({ params }) => fetch(`${BASE_BACKEND_URL}/post/update/${params.id}`)
+        path: '/post/update/:id',
+        element: <PostDetailsUpdate />,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
       },
       {
-        path: "/friends",
-        element: <PrivateRoutes> <FriendsPage /></PrivateRoutes>,
+        path: '/friends',
+        element: <FriendsPage />,
       },
       {
-        path: "/friends/:id",
-        element: <PrivateRoutes> <FriendDetails /></PrivateRoutes>,
-        loader: async ({ params }) => await fetch(`${BASE_BACKEND_URL}/friends/${params.id}`)
+        path: '/friends/:id',
+        element: <FriendDetails />,
+        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`),
       },
       {
-        path: "/message/:id",
-        element: <PrivateRoutes> <ChatBox /></PrivateRoutes>,
-        loader: async ({ params }) => await fetch(`${BASE_BACKEND_URL}/message/${params.id}`)
+        path: '/message/:id',
+        element: <ChatBox />,
+        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/message/${params.id}`),
       },
       {
-        path: "/savedposts",
-        element: <PrivateRoutes> <SavedPosts /></PrivateRoutes>
+        path: '/savedposts',
+        element: <SavedPosts />,
       },
       {
-        path: "/eventsPage",
-        element: <PrivateRoutes> <EventsPage /></PrivateRoutes>
+        path: '/eventsPage',
+        element: <EventsPage />,
       },
       {
-        path: "/memories",
-        element: <PrivateRoutes> <Memories /></PrivateRoutes>
+        path: '/memories',
+        element: <Memories />,
       },
-    ]
+    ],
   },
   {
-    path: "/login",
-    element: <Login />,
-  },
-
-  {
-    path: "/forgotPass",
-    element: <ForgotPassword />,
+    path: '/login',
+    element: <AuthPrivateRoutes><Login /></AuthPrivateRoutes> 
   },
   {
-    path: "/signup",
-    element: < Signup />
+    path: '/forgotPass',
+    element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>  
   },
-
-])
+  {
+    path: '/signup',
+    element: <AuthPrivateRoutes><Signup /></AuthPrivateRoutes>  
+  },
+]);
