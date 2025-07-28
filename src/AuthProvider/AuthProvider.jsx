@@ -74,6 +74,7 @@ const AuthProvider = ({ children }) => {
             setUsersPostsData(usersPost);
         });
 
+      
         if (!localStorage.getItem("email")) return;
         const ping = () => {
             axios.post(`${BASE_BACKEND_URL}/activeStatus?email=${localStorage.getItem("email")}`)
@@ -84,7 +85,6 @@ const AuthProvider = ({ children }) => {
         return () => clearInterval(interval);
 
     }, [])
-
 
 
 
