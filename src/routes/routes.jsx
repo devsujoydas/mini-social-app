@@ -18,6 +18,8 @@ import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword.jsx';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage.jsx';
 import PrivateRoutes from './PrivateRoutes.jsx';
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
+import SearchPage from '../Components/SearchBar/SearchPage.jsx';
+import ProfileImageUpload from '../Pages/ProfileImageUpload/ProfileImageUpload.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -92,5 +94,9 @@ export const router = createBrowserRouter([
   {
     path: '/forgotPass',
     element: <AuthPrivateRoutes><ForgotPassword /></AuthPrivateRoutes>
+  },
+  {
+    path: '/ppupload',
+    element: <ProfileImageUpload />
   },
 ]);
