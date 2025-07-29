@@ -9,6 +9,7 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
+import NavSearch from "./NavSearch.jsx";
 
 
 const Navbar = () => {
@@ -78,12 +79,8 @@ const Navbar = () => {
             <div className="">
               <Link to={"/"} className="text-2xl md:text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
             </div>
-            {/* search box  */}
-            <div className="flex items-center gap-2 relative">
-              <input className=" text-xl border border-zinc-300 py-2 pl-10 w-full rounded-full outline-zinc-300" type="text" placeholder="Search..." />
-              <IoSearch className="absolute left-3 text-2xl cursor-pointer text-zinc-600" />
-            </div>
-            {/* nav btn container  */}
+
+            <NavSearch />
             <Nav />
           </div>
 
@@ -141,12 +138,7 @@ const Navbar = () => {
                 <Link to={"/"} className="text-2xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
                 <IoCloseSharp onClick={() => setHumbarger(!humbarger)} className="md:text-4xl text-3xl " />
               </div>
-              {/* search box  */}
-              <div className="flex items-center gap-2 relative">
-                <input className="text-sm md:text-xl border border-zinc-300 md:py-2  py-1 pl-10 w-full rounded-full outline-zinc-300" type="text" placeholder="Search..." />
-                <IoSearch className="absolute left-3 text-lg md:text-2xl cursor-pointer text-zinc-600" />
-              </div>
-              {/* nav btn container  */}
+              <NavSearch />
               <div onClick={() => setHumbarger(!humbarger)} >
                 <Nav />
               </div>

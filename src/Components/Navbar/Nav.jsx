@@ -8,7 +8,7 @@ import { FaLightbulb } from "react-icons/fa";
 import { MdWebStories } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaTicketAlt } from "react-icons/fa";
-
+import { MdDashboard } from "react-icons/md";
 
 const Nav = () => {
     const { userData, postsData, usersPostsData, myFriends } = useContext(AuthContext)
@@ -38,14 +38,16 @@ const Nav = () => {
                 </div>
             </NavLink>
 
-
-            {/* <NavLink to={"/message/ironman"}
-                className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                <div className="flex items-center gap-2 md:text-xl ">
-                <BiSolidMessageRounded className="text-zinc-500 text-2xl" />
-                <span className="font-semibold ">Message</span>
-                </div>
-                </NavLink> */}
+            {
+                userData.role == "admin" &&
+                <NavLink to={"/admin/dashboard"}
+                    className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
+                    <div className="flex items-center gap-2 md:text-xl ">
+                        <MdDashboard className="text-zinc-500 text-2xl" />
+                        <span className="font-semibold ">Admin Panel</span>
+                    </div>
+                </NavLink>
+            }
 
             <NavLink to={"/friends"}
                 className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">

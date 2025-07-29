@@ -144,27 +144,32 @@ const AuthProvider = ({ children }) => {
         }
     }
     const deleteAccount = async () => {
-        deleteUser(user) //Firebase e delete holei db theke delete hobe 
-            .then(() => {
-                axios.delete(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`)
-                    .then(res => {
-                        localStorage.removeItem("email")
-                        localStorage.removeItem("currentUser")
-                        localStorage.removeItem("filteredFriend")
-                        navigate("/login")
-                        console.log("Account Deleted Successfully", res.data)
-                    })
-            }).catch((error) => {
-                console.log(error)
-            });
         try {
+            // Step 1: Delete Firebase Auth user
+            await deleteUser(user);
+
+            // Step 2: Call backend to delete all related data
+            const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`);
+            console.log("✅ Account & all data deleted:", res.data);
+
+            // Step 3: Clear localStorage
+            localStorage.removeItem("email");
+            localStorage.removeItem("currentUser");
+            localStorage.removeItem("filteredFriend");
+
+            // Step 4: Logout from Firebase and backend
             await signOut(auth);
-            axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`)
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`);
+
+            // Step 5: Redirect to login page
             navigate("/login");
-        } catch (err) {
-            console("Logout error:", err);
+
+        } catch (error) {
+            console.error("❌ Error deleting account:", error);
         }
-    }
+    };
+
+
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {

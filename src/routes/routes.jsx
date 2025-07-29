@@ -18,8 +18,12 @@ import ForgotPassword from '../Pages/ForgotPassword/ForgotPassword.jsx';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage.jsx';
 import PrivateRoutes from './PrivateRoutes.jsx';
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
-import SearchPage from '../Components/SearchBar/SearchPage.jsx';
 import ProfileImageUpload from '../Pages/ProfileImageUpload/ProfileImageUpload.jsx';
+import AdminDashboard from '../Pages/Admin/AdminDashboard.jsx';
+import Settings from '../Pages/Admin/Settings.jsx'; 
+import AdminLayout from '../Pages/Admin/AdminLayout.jsx';
+import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
+import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +86,28 @@ export const router = createBrowserRouter([
         element: <Memories />,
       },
     ],
+  },
+  {
+    path: '/admin',
+    element: <PrivateRoutes requiredRole="admin"><AdminLayout /></PrivateRoutes>,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <AdminDashboard />
+      },
+      {
+        path: "/admin/settings",
+        element: <Settings />
+      },
+      {
+        path: "/admin/posts",
+        element: <ManagePosts />
+      },
+      {
+        path: "/admin/users",
+        element: <ManageUsers />
+      },
+    ]
   },
   {
     path: '/login',

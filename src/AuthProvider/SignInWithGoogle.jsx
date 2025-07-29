@@ -54,25 +54,26 @@ const SignInWithGoogle = () => {
                 }
                 setUserData(result.user)
 
-                const email = result.user.email;
-                const name = result.user.displayName;
-                const username = name.replace(/[^a-zA-Z]/g, "").toLowerCase();
-                
-                const address = "";
-                const bio = "";
-                const profilephotourl = result.user.photoURL;
-                const coverphotourl = "";
-                const phone = "";
-                const website = "";
-                const onlineStatus = false;
-                const createdDate = new Date();
-                const posts = [];
-                const savePosts = []
-                const myFriends = []
-                const friendRequests = [];
-                const sentRequests = []
 
-                const formData = { email, name, username, address, bio, profilephotourl, coverphotourl, phone, website, onlineStatus, createdDate, posts, savePosts, myFriends, friendRequests, sentRequests }
+                const formData = {
+                    email: result.user.email,
+                    name: result.user.displayName,
+                    username: result.user.displayName.replace(/[^a-zA-Z]/g, "").toLowerCase(),
+                    address: "",
+                    bio: "",
+                    profilephotourl: result.user.photoURL,
+                    coverphotourl: "",
+                    phone: "",
+                    website: "",
+                    role: "user",
+                    onlineStatus: false,
+                    createdDate: new Date(),
+                    posts: [],
+                    savePosts: [],
+                    myFriends: [],
+                    friendRequests: [],
+                    sentRequests: [],
+                };
 
                 axios.post(`${import.meta.env.VITE_BACKEND_URL}/signinwithgoogle`, formData)
                     .then(res => {
