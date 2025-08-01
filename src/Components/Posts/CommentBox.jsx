@@ -201,7 +201,6 @@ const CommentBox = ({ post }) => {
                     </div>
                 </div>
 
-
                 {/* Comment card */}
                 <div className="relative ">
                     {comment ? (

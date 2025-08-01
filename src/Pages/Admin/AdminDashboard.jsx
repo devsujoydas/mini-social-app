@@ -59,11 +59,11 @@ const AdminDashboard = () => {
 
       <section className="grid  grid-cols-3 gap-3 md:gap-6 mb-3 md:mb-10">
         {[
-          { title: "Total Users", value: totalUsers },
-          { title: "Total Posts", value: totalPosts },
-          { title: "Total Friends", value: totalFriends },
+          { title: "Total Users", value: totalUsers, bgColor: "#1F6EFF" },
+          { title: "Total Posts", value: totalPosts, bgColor: "#00AB72" },
+          { title: "Total Friends", value: totalFriends, bgColor: "#8740FF" },
         ].map((card) => (
-          <div key={card.title} className="bg-white p-3 md:p-6 rounded-lg shadow">
+          <div key={card.title} className={`bg-white p-3 md:p-6 rounded-lg shadow`}>
             <p className="md:text-sm text-xs  text-gray-500">{card.title}</p>
             <p className="md:text-3xl text-2xl font-bold text-blue-600">{card.value}</p>
           </div>

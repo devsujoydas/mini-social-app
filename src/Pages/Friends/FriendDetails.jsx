@@ -1,11 +1,10 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import AllFriends from './AllFriends';
 import { LuMessageCircleMore } from "react-icons/lu";
-import { FaUserPlus } from "react-icons/fa6";
-import { RiUserSharedFill } from "react-icons/ri";
+import { FaUserPlus } from "react-icons/fa6"; 
 import Loading from '../../Components/Loading/Loading.jsx';
 import Post from '../../Components/Posts/Post.jsx';
 import { FaUserAltSlash } from "react-icons/fa";

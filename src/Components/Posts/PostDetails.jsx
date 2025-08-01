@@ -4,18 +4,7 @@ import CommentBox from './CommentBox.jsx';
 
 const PostDetails = () => {
   const post = useLoaderData()
-
-
-  const a = {
-    commentContent: "",
-    author: "",
-    authorImg: "",
-    authorName: "",
-    authorUsername: "",
-    date: "",
-    likes: []
-  }
-
+  console.log(post);
   return (
     <div className='grid grid-cols-1 lg:grid-cols-9 gap-5 md:h-screen bg-white md:p-0 p-3 md:ml-5 md:mt-0 mt-10'>
       {/* post container */}
