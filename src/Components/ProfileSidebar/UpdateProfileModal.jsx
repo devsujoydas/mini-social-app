@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
 
 const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => {
@@ -25,19 +26,13 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
 
         const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
-
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/update`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
+        axios.put(`${import.meta.env.VITE_BACKEND_URL}/update`, formData)
+            .then(res => {
 
                 setLoadingSpiner(true)
 
-                if (data) {
-                    if (data.modifiedCount > 0) {
+                if (res.data) {
+                    if (res.data.modifiedCount > 0) {
                         Swal.fire({
                             title: "Profile info updated successfully!",
                             icon: "success",

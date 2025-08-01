@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { FaRegSmile } from "react-icons/fa"
 import { VscSend } from "react-icons/vsc"
 import { IoMicOutline } from "react-icons/io5";
+import axios from "axios";
 
 const PostForm = () => {
   const { user, userData, postsData, setPostsData, setUsersPostsData, usersPostsData } = useContext(AuthContext)
@@ -26,14 +27,10 @@ const PostForm = () => {
     const comments = [];
     const shares = []
     const postData = { authorEmail, authorPhoto, authorName, authorUsername, postImageUrl, postContent, createdDate, lastUpdateDate, likes, comments, shares }
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/post`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(postData)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.result.insertedId) {
+
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/post`, postData)
+      .then(res => {
+        if (res.data.result.insertedId) {
           Swal.fire({
             title: "Post Successfully",
             icon: "success",

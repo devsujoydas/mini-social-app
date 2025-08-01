@@ -14,11 +14,12 @@ import { CiBookmark } from "react-icons/ci";
 import { FaRegSmile } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
-import { BiSolidLike } from "react-icons/bi"; 
+import { BiSolidLike } from "react-icons/bi";
 import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import axios from "axios";
 
 const UsersPost = ({ post }) => {
   const { userData, postsData, setPostsData, savePostHandler } = useContext(AuthContext)
@@ -50,14 +51,11 @@ const UsersPost = ({ post }) => {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/post/delete/${post._id}`, {
-          method: 'DELETE',
-        })
-          .then(res => res.json())
-          .then(data => {
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/post/delete/${post._id}`,)
+          .then(res => {
 
             setShowEdit(!showEdit)
-            if (data.deletedCount > 0) {
+            if (res.data.deletedCount > 0) {
               swalWithTailwind.fire({
                 title: "Deleted!",
                 text: "Your file has been deleted.",
@@ -92,23 +90,15 @@ const UsersPost = ({ post }) => {
     const username = userData?.username;
     const name = userData?.name;
     const fromData = { name, username, userId };
-
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(fromData)
-    })
-      .then(res => res.json())
-      .then(data => {
-
-        console.log(data)
-        if (data.message === "Liked") {
+    axios.put(`${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`, FormData)
+      .then(res => {
+        console.log(res.data)
+        if (res.data.message === "Liked") {
           setlike(true);
           setLikesCount(prev => prev + 1);
           toast.success('Liked!')
         }
-
-        if (data.message === "Disliked") {
+        if (res.data.message === "Disliked") {
           setlike(false);
           setLikesCount(prev => prev - 1);
           toast.success('Disliked!')
@@ -171,9 +161,9 @@ const UsersPost = ({ post }) => {
             <Link to={`/post/update/${post?._id}`} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
               <h1 className='flex justify-center items-center gap-2 '> {<MdEdit />} Edit Post</h1>
             </Link>
-           <button onClick={() => savePostHandler(post)} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
-                <h1 className='flex justify-center items-center gap-2  '> <span className="">{<FaBookmark />}</span> Save post</h1>
-              </button>
+            <button onClick={() => savePostHandler(post)} className={`${editTrashBtnStyle} bg-zinc-100 border border-zinc-200`}>
+              <h1 className='flex justify-center items-center gap-2  '> <span className="">{<FaBookmark />}</span> Save post</h1>
+            </button>
             <hr className="" />
             <button className={editTrashBtnStyle}>
               <h1 className='flex  justify-center items-center gap-2 '> {<FaArchive />} Move to archive</h1>

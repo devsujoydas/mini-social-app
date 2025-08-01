@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
-import ActiveUsersDailyWeeklyChart from "./Carts/ActiveUsersDailyWeeklyChart";
+import { AuthContext } from "../../AuthProvider/AuthProvider"; 
 import NewUsersPerMonthChart from "./Carts/NewUsersPerMonthChart";
 import PostsCreatedPerDayChart from "./Carts/PostsCreatedPerDayChart";
 import TopActiveUsersChart from "./Carts/TopActiveUsersChart";
@@ -70,10 +69,7 @@ const AdminDashboard = () => {
         ))}
       </section>
 
-      {/* Chart Container with grid layout */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {/* <ActiveUsers  DailyWeeklyChart /> */}
-        {/* <UsersByRolePieChart adminCount={1} userCount={150} /> */}
         <NewUsersPerMonthChart />
         <TotalUsersGrowthChart />
         <PostsCreatedPerDayChart />
