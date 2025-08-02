@@ -1,11 +1,12 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
 import UserTableCard from "../ManageUsers/UserTableCard";
 import PostTableCard from "./PostTableCard";
+import Swal from "sweetalert2";
 
 
 const ManagePosts = () => {
@@ -20,7 +21,6 @@ const ManagePosts = () => {
   const [showResults, setShowResults] = useState(false);
   const [error, setError] = useState(null);
 
-  // সার্চ API কল - debounce সহ
   useEffect(() => {
     if (!query.trim()) {
       setResults({ posts: [] });
@@ -33,8 +33,6 @@ const ManagePosts = () => {
 
     return () => clearTimeout(handler);
   }, [query]);
-
-  // API কল ফাংশন
   const fetchSearchResults = async (searchText) => {
     setLoading(true);
     setError(null);
@@ -52,9 +50,6 @@ const ManagePosts = () => {
       setLoading(false);
     }
   };
-
-
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
@@ -66,6 +61,45 @@ const ManagePosts = () => {
   }, []);
 
 
+  const deletePost = (postId) => {
+    const swalWithTailwind = Swal.mixin({
+      customClass: {
+        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
+      },
+      buttonsStyling: false
+    });
+    swalWithTailwind.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/post/delete/${postId}`,)
+          .then(res => {
+            if (res.data.deletedCount > 0) {
+              swalWithTailwind.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+              const remaining = postsData.filter(posts => posts._id != postId)
+              setDisplayPosts(remaining)
+            }
+          })
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithTailwind.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+      }
+    });
+  }
 
 
   return (
@@ -142,7 +176,7 @@ const ManagePosts = () => {
               </thead>
               <tbody className="">
                 {displayPosts.map(post => (
-                  <PostTableCard key={post.postImageUrl} post={post} />
+                  <PostTableCard key={post.postImageUrl} post={post} deletePost={deletePost} />
                 ))}
               </tbody>
             </table>

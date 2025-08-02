@@ -125,7 +125,7 @@ const CommentBox = ({ post }) => {
 
 
                 {/* display likes */}
-                <div className="flex justify-between items-center gap-3  text-sm px-3 py-1 mt-5 ">
+                <div className="flex justify-between items-center gap-3  text-sm px-3 py-1 md:mt-5 ">
 
                     <div className="flex items-center gap-1 ">
                         <img className="md:w-5 w-4 md:h-5 h-4 rounded-full overflow-hidden" src="/like.png" alt="" />

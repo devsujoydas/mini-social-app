@@ -94,8 +94,6 @@ const AuthProvider = ({ children }) => {
             })
             .catch(err => console.error("Cancel sent request failed:", err));
     }
-
-
     const savePostHandler = (post) => {
         const data = { userId: userData._id, postId: post._id }
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/savePost`, data)
@@ -114,6 +112,11 @@ const AuthProvider = ({ children }) => {
             .catch(err => console.error("Friend confirm failed:", err));
 
     }
+
+
+
+
+
 
 
 
