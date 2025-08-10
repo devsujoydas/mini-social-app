@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { MdEdit } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs"
+import { BsCamera, BsThreeDotsVertical } from "react-icons/bs"
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { IoCallOutline } from "react-icons/io5";
 import { MdOutlineEmail } from "react-icons/md";
@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
 import UpdateUsernameModal from "./UpdateUsernameModal.jsx";
 import UpdateProfileModal from "./UpdateProfileModal.jsx";
+import { Camera } from "lucide-react";
 
 
 const ProfileSidebar = () => {
@@ -163,7 +164,9 @@ const ProfileSidebar = () => {
               <img className="rounded-full w-36 h-36 border-4 border-white object-cover " src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
 
             </div>
-            <h1 className="absolute right-3 bottom-1 w-6 h-6 bg-green-400 border-2 border-white rounded-full"></h1>
+            <div className="absolute right-3 bottom-1 bg-[#D6D9DD] p-1 rounded-full ">
+              <Camera />
+            </div>
           </div>
 
           <div className=" text-center md:-mt-5 space-y-1">

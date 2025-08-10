@@ -40,13 +40,22 @@ const Nav = () => {
 
             {
                 userData.role == "admin" &&
-                <NavLink to={"/admin/dashboard"}
+                <>
+                    <NavLink to={"/profile-page"}
+                        className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
+                        <div className="flex items-center gap-2 md:text-xl ">
+                            <MdDashboard className="text-zinc-500 text-2xl" />
+                            <span className="font-semibold ">Profile Page</span>
+                        </div>
+                    </NavLink>
+                     <NavLink to={"/admin/dashboard"}
                     className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                     <div className="flex items-center gap-2 md:text-xl ">
                         <MdDashboard className="text-zinc-500 text-2xl" />
                         <span className="font-semibold ">Admin Panel</span>
                     </div>
                 </NavLink>
+                </>
             }
 
             <NavLink to={"/friends"}

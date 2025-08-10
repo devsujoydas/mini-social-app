@@ -20,10 +20,12 @@ import PrivateRoutes from './PrivateRoutes.jsx';
 import AuthPrivateRoutes from './AuthPrivateRoutes.jsx';
 import ProfileImageUpload from '../Pages/ProfileImageUpload/ProfileImageUpload.jsx';
 import AdminDashboard from '../Pages/Admin/AdminDashboard.jsx';
-import Settings from '../Pages/Admin/Settings.jsx'; 
+import Settings from '../Pages/Admin/Settings.jsx';
 import AdminLayout from '../Pages/Admin/AdminLayout.jsx';
 import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
 import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
+import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
+import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ export const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/profile-page',
+        element: <ProiflePage />,
+      },
+      {
+        path: '/imgupload',
+        element: <ImageUploader />,
       },
       {
         path: '/updateInfo/:id',
