@@ -1,6 +1,8 @@
 import ProfileTopSection from "./ProfileTopSection";
 import ProfileIntroSection from "./ProfileIntroSection";
 import ProfilePostSection from "./ProfilePostSection";
+import PhotoSection from "./PhotoSection";
+import ProfileFriendSection from "./ProfileFriendSection";
 
 
 
@@ -12,10 +14,15 @@ const ProiflePage = () => {
 
             {/* Post info */}
             <div className='md:mt-5 mt-2 lg:mx-20 md:mx-10 flex lg:flex-row flex-col gap-5'>
-                <div  className="">
+                <div className="lg:w-2/5 grid gap-5">
                     <ProfileIntroSection />
+                    <PhotoSection />
+                    <ProfileFriendSection />
                 </div>
-                <ProfilePostSection />
+
+                <div className="lg:w-3/5 space-y-5">
+                    <ProfilePostSection />
+                </div>
             </div>
         </div>
     )

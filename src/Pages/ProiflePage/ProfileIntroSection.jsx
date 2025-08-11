@@ -13,7 +13,7 @@ import { FaLocationDot } from "react-icons/fa6";
 
 const ProfileIntroSection = () => {
     return (
-        <div className='text-xs md:text-[14px] text-zinc-600 bg-white lg:w-2/5 border p-4 border-zinc-300 rounded-lg'>
+        <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg'>
 
             <h1 className='font-semibold text-lg'>Intro</h1>
             <div className=' text-center space-y-1 my-3'>
@@ -37,23 +37,23 @@ const ProfileIntroSection = () => {
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaFacebook className='text-lg' />
-                    <Link to={""} className='text-blue-500 font-medium'>https://www.facebook.com/devsujoydas</Link>
+                    <Link to={""} className='text-blue-500 '>https://www.facebook.com/devsujoydas</Link>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaLinkedin className='text-lg' />
-                    <Link to={""} className='text-blue-500 font-medium'>https://www.linkdin.com/devsujoydas</Link>
+                    <Link to={""} className='text-blue-500 '>https://www.linkdin.com/devsujoydas</Link>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaGithub className='text-lg' />
-                    <Link to={""} className='text-blue-500 font-medium'>https://github.com/devsujoydas</Link>
+                    <Link to={""} className='text-blue-500 '>https://github.com/devsujoydas</Link>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaLink className='text-lg' />
-                    <Link to={""} className='text-blue-500 font-medium'>https://devsujoydas.vercel.app</Link>
+                    <Link to={""} className='text-blue-500 '>https://devsujoydas.vercel.app</Link>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaYoutube className='text-lg' />
-                    <Link to={""} className='text-blue-500 font-medium'>https://youtube.com/@devsujoydas</Link>
+                    <Link to={""} className='text-blue-500 '>https://youtube.com/@devsujoydas</Link>
                 </div>
             </div>
 

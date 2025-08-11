@@ -7,7 +7,7 @@ import { BiSolidMoviePlay } from "react-icons/bi";
 
 const ProfilePostSection = () => {
     return (
-        <div className=' lg:w-3/5 space-y-5 '>
+        <>
             {/* Post Form */}
             <div className="border p-3 bg-white border-zinc-300 rounded-lg grid gap-3">
                 <div className="flex items-center gap-2 text-zinc-500">
@@ -47,7 +47,7 @@ const ProfilePostSection = () => {
                 </div>
             </div>
 
-        </div>
+        </>
     )
 }
 
