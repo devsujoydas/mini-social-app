@@ -3,10 +3,11 @@ import ProfileIntroSection from "./ProfileIntroSection";
 import ProfilePostSection from "./ProfilePostSection";
 import PhotoSection from "./PhotoSection";
 import ProfileFriendSection from "./ProfileFriendSection";
-
-
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const ProiflePage = () => {
+    
     return (
         <div className='p-2 md:pt-2 pt-18 min-h-screen bg-[#F2F4F7] font-family-Poppins'>
             {/* Profile Info */}

@@ -2,17 +2,26 @@ const img = "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/489885147_174
 import { BsFileImage } from "react-icons/bs";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 import { BiSolidMoviePlay } from "react-icons/bi";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useContext } from "react";
 
 
 
 const ProfilePostSection = () => {
+const { userData, setLoading } = useContext(AuthContext) 
+
+    if (!userData) {
+        setLoading(true)
+    }
+
+
     return (
         <>
             {/* Post Form */}
             <div className="border p-3 bg-white border-zinc-300 rounded-lg grid gap-3">
                 <div className="flex items-center gap-2 text-zinc-500">
                     <div className="w-11 h-10 cursor-pointer overflow-hidden">
-                        <img className="h-full w-full object-cover rounded-full" src={img} alt="" />
+                        <img className="h-full w-full object-cover rounded-full" src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
                     </div>
                     <div className="border bg-zinc-100 text-sm hover:bg-zinc-200 active:bg-zinc-300 cursor-pointer border-zinc-200 px-4 py-3 w-full transition-all rounded-full">
                         <h1>Whats on your mind</h1>

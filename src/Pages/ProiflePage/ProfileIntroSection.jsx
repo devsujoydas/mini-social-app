@@ -8,17 +8,23 @@ import { FaLink } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
-
-
+import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { useContext } from 'react';
 
 const ProfileIntroSection = () => {
+const { userData, loading, setLoading } = useContext(AuthContext)
+
+    if (!userData) {
+        setLoading(true)
+    }
+
     return (
         <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg'>
 
             <h1 className='font-semibold text-lg'>Intro</h1>
             <div className=' text-center space-y-1 my-3'>
-                <p className=''>Professional Web Developer || Software Engineers</p>
-                <p className='text-blue-500 font-medium'>https://devsujoydas.vercel.app</p>
+                <p className=''>{userData?.bio}</p>
+                <p className='text-blue-500 font-medium'>{userData?.website}</p>
             </div>
             <button className='font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 cursor-pointer w-full py-2 rounded-sm transition-all'>Edit Bio</button>
 
@@ -29,11 +35,11 @@ const ProfileIntroSection = () => {
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <IoHomeSharp className='text-lg' />
-                    Lives in<span className='font-semibold'>Jamalpur, Dhaka, Bangladesh</span>
+                    Lives in<span className='font-semibold'>{userData?.address}</span>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaLocationDot className='text-lg' />
-                    From <span className='font-semibold'>Jamalpur, Dhaka, Bangladesh</span>
+                    From <span className='font-semibold'>{userData?.address}</span>
                 </div>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaFacebook className='text-lg' />
