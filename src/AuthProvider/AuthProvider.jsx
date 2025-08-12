@@ -15,6 +15,10 @@ const AuthProvider = ({ children }) => {
     const [postsData, setPostsData] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
 
+    if (userData == {}) {
+        setLoading(true)
+    }
+
     const [myFriends, setMyFriends] = useState([])
     const [friendsRequest, setFriendRequests] = useState([])
     const [sentRequests, setSentRequests] = useState([])

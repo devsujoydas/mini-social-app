@@ -6,9 +6,11 @@ import UsersPosts from "../../Components/UsersPosts/UsersPosts"
 
 import { AuthContext } from "../../AuthProvider/AuthProvider"
 import Loading from "../../Components/Loading/Loading"
+import ProfilePostSection from "../ProiflePage/ProfilePostSection"
+import PostFromAndPost from "../../Components/ProfileSidebar/PostFromAndPost"
 
 const Profile = () => {
-  const {user, userData, } = useContext(AuthContext)
+  const { user, userData, } = useContext(AuthContext)
   const [btnStyle, setbtnStyle] = useState(1)
   const [loadingState, setLoadingState] = useState(true)
 
@@ -23,7 +25,7 @@ const Profile = () => {
 
   return (
     <div>
-      {!user?.email?
+      {!user?.email ?
         <div className="h-screen flex justify-center items-center">
           <Loading />
         </div>
@@ -36,7 +38,9 @@ const Profile = () => {
               <button onClick={() => { setbtnStyle(!btnStyle) }} className={`${btnStyle ? inactiveBtn : activeBtn} md:text-lg text-sm`}>Following</button>
             </div>
             <div className="bg-white">
-              <PostForm />
+              {/* <PostForm /> */}
+
+              <PostFromAndPost />
             </div>
             <div className="md:p-5 p-3 ">
               {loadingState ? <Loading /> : <  UsersPosts />}

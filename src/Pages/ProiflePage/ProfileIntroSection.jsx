@@ -12,11 +12,9 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { useContext } from 'react';
 
 const ProfileIntroSection = () => {
-const { userData, loading, setLoading } = useContext(AuthContext)
+    const { userData } = useContext(AuthContext)
 
-    if (!userData) {
-        setLoading(true)
-    }
+  
 
     return (
         <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg'>
@@ -28,7 +26,7 @@ const { userData, loading, setLoading } = useContext(AuthContext)
             </div>
             <button className='font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 cursor-pointer w-full py-2 rounded-sm transition-all'>Edit Bio</button>
 
-            <div className='my-3 grid gap-2 md:gap-5 '>
+            <div className='my-3 grid gap-2 md:gap-3 '>
                 <div className='hover:underline cursor-pointer flex items-center gap-2'>
                     <FaUserCircle className='text-lg' />
                     <span className='font-semibold'>Profile </span>• Digital creator

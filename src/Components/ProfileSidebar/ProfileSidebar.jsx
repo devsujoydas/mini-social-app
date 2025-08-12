@@ -16,6 +16,9 @@ import { IoClose } from "react-icons/io5";
 import UpdateUsernameModal from "./UpdateUsernameModal.jsx";
 import UpdateProfileModal from "./UpdateProfileModal.jsx";
 import { Camera } from "lucide-react";
+import ProfileIntroSection from "../../Pages/ProiflePage/ProfileIntroSection.jsx";
+import ProfileTopSection from "../../Pages/ProiflePage/ProfileTopSection.jsx";
+import ProfileSideTop from "./ProfileSideTop.jsx";
 
 
 const ProfileSidebar = () => {
@@ -126,9 +129,9 @@ const ProfileSidebar = () => {
 
 
       {/* profile section  */}
-      <div className="sticky top-0 ">
+      <div className="flex flex-col h-screen sticky top-0 flex-1 overflow-y-auto">
 
-        <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
+        {/* <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
 
           <div style={{ backgroundImage: `url(${userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
@@ -199,19 +202,17 @@ const ProfileSidebar = () => {
             </div>
           </div>
 
-        </div>
+        </div> */}
 
-        <div className="px-6 space-y-4">
-
-          {/* about me */}
+        {/* <div className="px-6 space-y-4">
+ 
           <div className="">
             <div className="space-y-1">
               <h1 className="font-semibold md:text-xl text-lg ">About Me</h1>
               <p className="text-zinc-500 md:text-lg text-sm">{userData?.bio}</p>
             </div>
           </div>
-
-          {/* contact  */}
+ 
           <div>
             <div className="flex justify-between items-center pt-2">
               <h1 className="md:text-xl text-lg  font-semibold">Contact Infomation</h1>
@@ -271,7 +272,15 @@ const ProfileSidebar = () => {
 
             <hr className="text-zinc-300 my-3" />
           </div >
+        </div> */}
+
+        <ProfileSideTop />
+
+        <div className="w-4/5 mx-auto">
+          <ProfileIntroSection />
+
         </div>
+
       </div>
 
     </div>
