@@ -33,17 +33,17 @@ const Profile = () => {
         <div className="relative min-h-screen flex md:flex-row flex-col-reverse  bg-[#f1f5fa] lg:mt-0 mt-12 lg:h-full">
 
           <div className="md:w-4/5 ">
-            <div className="text-xl bg-white font-semibold flex justify-evenly items-center ">
+            {/* <div className="text-xl bg-white font-semibold flex justify-evenly items-center ">
               <button onClick={() => { setbtnStyle(!btnStyle) }} className={`${btnStyle ? activeBtn : inactiveBtn} md:text-lg text-sm`}>For You</button>
               <button onClick={() => { setbtnStyle(!btnStyle) }} className={`${btnStyle ? inactiveBtn : activeBtn} md:text-lg text-sm`}>Following</button>
-            </div>
-            <div className="bg-white">
+            </div> */}
+            <div className=" md:m-3 m-3">
               {/* <PostForm /> */}
-
               <PostFromAndPost />
             </div>
-            <div className="md:p-5 p-3 ">
-              {loadingState ? <Loading /> : <  UsersPosts />}
+
+            <div className="md:p-3 p-3  ">
+              
             </div>
           </div>
 

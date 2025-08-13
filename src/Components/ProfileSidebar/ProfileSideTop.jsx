@@ -24,8 +24,8 @@ const ProfileSideTop = () => {
                 <div className=' h-full rounded-lg overflow-hidden'>
                     <img className='w-full h-full object-cover' src={userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"} alt="" />
                 </div>
-                <div className="absolute md:bottom-4 bottom-2 md:right-3 right-2 text-xs md:text-[16px]  flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 px-2 md:px-3 py-2 rounded-full md:rounded-md items-center cursor-pointer  transition-all duration-300 border-2 border-white gap-1">
-                    <BsFillCameraFill className="text-xl" /> <span className="md:block hidden">Edit Cover Photo</span>
+                <div className="absolute md:bottom-4  bottom-2 md:right-3 right-2 text-xs flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 px-2 md:px-3 py-1.5 rounded-full md:rounded-md items-center cursor-pointer  transition-all duration-300 border-white gap-1">
+                    <BsFillCameraFill className="text-sm" /> <span className="md:block hidden">Edit Cover Photo</span>
                 </div>
             </div>
 
@@ -35,11 +35,11 @@ const ProfileSideTop = () => {
                 <div className='flex  gap-1 md:gap-3 lg:flex-row flex-col md:items-center md:p-0 p-3 '>
 
                     <div className="relative w-fit ">
-                        <div className='lg:w-46 md:w-40 w-30 lg:h-46 md:h-40 h-30 object-cover border-4 border-white md:-mt-14 -mt-20 rounded-full overflow-hidden '>
+                        <div className='lg:w-30 md: lg:h-30 object-cover border-4 border-white md:-mt-14 -mt-20 rounded-full overflow-hidden '>
                             <img className='w-full h-full' src={userData?.profilephotourl ? `${userData?.profilephotourl}` : `/default.jpg`} alt="" />
                         </div>
 
-                        <div className="absolute  md:bottom-4 bottom-1 md:right-3 right-1 bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-400 active:scale-95 rounded-full border-2 border-white p-2 md:text-xl text-lg  cursor-pointer ">
+                        <div className="absolute  md:bottom-1 md:right-1 bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-400 active:scale-95 rounded-full border-2 border-white p-1 md:text-lg text-lg  cursor-pointer ">
                             <BsFillCameraFill className="" />
                         </div>
                     </div>
@@ -57,7 +57,7 @@ const ProfileSideTop = () => {
 
 
                 <div className="md:block hidden">
-                    <button className='flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95  px-3 py-2 rounded-md items-center cursor-pointer  transition-all duration-300  gap-1'><MdEdit className='text-lg' />Edit</button>
+                    <button className='flex text-sm font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95  px-3 py-2 rounded-md items-center cursor-pointer  transition-all duration-300  gap-1'><MdEdit className='text-lg' />Edit</button>
                 </div>
             </div>
             <hr className='mt-2 border text-zinc-300' />

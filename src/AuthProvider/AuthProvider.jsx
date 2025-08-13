@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from 'react'
 import { createUserWithEmailAndPassword, deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, EmailAuthProvider, linkWithCredential } from 'firebase/auth'
 import auth from '../Firebase/firebase.config'
-import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import axiosInstance from '../services/axiosInstance';
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
@@ -11,25 +11,20 @@ const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({})
     const [userData, setUserData] = useState({})
-    const [friendsData, setFriendsData] = useState([])
-    const [postsData, setPostsData] = useState([])
+    const [savedPosts, setSavedPosts] = useState([])
     const [usersPostsData, setUsersPostsData] = useState([])
-
-    if (userData == {}) {
-        setLoading(true)
-    }
-
     const [myFriends, setMyFriends] = useState([])
-    const [friendsRequest, setFriendRequests] = useState([])
     const [sentRequests, setSentRequests] = useState([])
+    const [friendsRequest, setFriendRequests] = useState([])
     const [youMayKnowFriends, setYouMayKnowFriends] = useState([])
 
-    const [savedPosts, setSavedPosts] = useState([])
+    const [friendsData, setFriendsData] = useState([])
+    const [postsData, setPostsData] = useState([])
 
 
     const addFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/addfriend`, data)
+        axiosInstance.put(`/addfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
                 console.log(res.data.message)
@@ -51,7 +46,7 @@ const AuthProvider = ({ children }) => {
     }
     const unFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/unfriend`, data)
+        axiosInstance.put(`/unfriend`, data)
             .then(res => {
                 toast.success(res.data.message)
                 if (res.data.message === "Unfriend successful") {
@@ -64,7 +59,7 @@ const AuthProvider = ({ children }) => {
     }
     const confrimFriendBtnHanlder = (friend) => {
         const data = { userId: userData._id, friendId: friend._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/confirmFriend`, data)
+        axiosInstance.put(`/confirmFriend`, data)
             .then(res => {
                 toast.success(res.data.message)
                 if (res.data.message == "Request accepted") {
@@ -78,7 +73,7 @@ const AuthProvider = ({ children }) => {
     }
     const cancelReceivedRequestBtnHandler = (friend) => {
         const data = { userId: userData._id, friendId: friend._id };
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/cancelreceivedrequest`, data)
+        axiosInstance.put(`/cancelreceivedrequest`, data)
             .then(res => {
                 toast.success(res.data.message);
                 const remaining = friendsRequest.filter(fr => fr._id !== friend._id);
@@ -89,7 +84,7 @@ const AuthProvider = ({ children }) => {
     }
     const cancelSentRequestBtnHandler = (friend) => {
         const data = { userId: userData._id, friendId: friend._id };
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/cancelsentrequest`, data)
+        axiosInstance.put(`/cancelsentrequest`, data)
             .then(res => {
                 toast.success(res.data.message);
                 const remaining = sentRequests.filter(fr => fr._id !== friend._id);
@@ -100,7 +95,7 @@ const AuthProvider = ({ children }) => {
     }
     const savePostHandler = (post) => {
         const data = { userId: userData._id, postId: post._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/savePost`, data)
+        axiosInstance.put(`/savePost`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -109,7 +104,7 @@ const AuthProvider = ({ children }) => {
     }
     const removeSavedPostHandler = (post) => {
         const data = { userId: userData._id, postId: post._id }
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/removeSavedPost`, data)
+        axiosInstance.put(`/removeSavedPost`, data)
             .then(res => {
                 toast.success(res.data.message)
             })
@@ -138,11 +133,13 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return signInWithPopup(auth, provider)
     }
+
+
     const signOutUser = async () => {
         setLoading(true)
         try {
             await signOut(auth);
-            axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`)
+            await axiosInstance.post(`/logout`, {});
             localStorage.removeItem("email")
             localStorage.removeItem("currentUser")
             navigate("/login");
@@ -150,13 +147,14 @@ const AuthProvider = ({ children }) => {
             console.error("Logout error:", error);
         }
     }
+
     const deleteAccount = async () => {
         try {
             // Step 1: Delete Firebase Auth user
             await deleteUser(user);
 
             // Step 2: Call backend to delete all related data
-            const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/profile/delete/${user.email}`);
+            const res = await axiosInstance.delete(`/profile/delete/${user.email}`);
             console.log("✅ Account & all data deleted:", res.data);
 
             // Step 3: Clear localStorage
@@ -166,7 +164,7 @@ const AuthProvider = ({ children }) => {
 
             // Step 4: Logout from Firebase and backend
             await signOut(auth);
-            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/logout`);
+            await axiosInstance.post(`/logout`);
 
             // Step 5: Redirect to login page
             navigate("/login");
@@ -179,70 +177,70 @@ const AuthProvider = ({ children }) => {
 
 
     useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            if (currentUser) {
+        const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser?.email) {
+                const email = currentUser.email;
                 setUser(currentUser);
                 setLoading(false);
+                localStorage.setItem("email", email);
 
-                if (!currentUser?.email) return;
+                try {
+                    // ১. JWT generate / verify request
+                    await axiosInstance.post(`/jwt`, { email });
 
-                const email = currentUser.email
-                localStorage.setItem("email", email)
+                    // ২. User profile fetch
+                    const { data } = await axiosInstance.get(`/profile/${email}`);
+                    setUserData(data);
+                    if (!data) {
+                        return setLoading(true)
+                    }
 
+                    localStorage.setItem("currentUser", JSON.stringify(data));
 
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/${email}`)
-                    .then(res => {
-                        setUserData(res.data)
-                        localStorage.setItem("currentUser", JSON.stringify(res.data))
-                    })
-                    .catch(err => console.error(err))
+                    // ৩. Friends info
+                    const [friendsRes, myFriendsRes, sentReqRes, reqRes, youMayKnowRes] = await Promise.all([
+                        axiosInstance.get(`/allUsers?email=${email}`),
+                        axiosInstance.get(`/myfriends?email=${email}`),
+                        axiosInstance.get(`/sentrequest?email=${email}`),
+                        axiosInstance.get(`/requests?email=${email}`),
+                        axiosInstance.get(`/youMayKnow?email=${email}`),
+                    ]);
 
+                    setFriendsData(friendsRes.data);
+                    setMyFriends(myFriendsRes.data);
+                    setSentRequests(sentReqRes.data);
+                    setFriendRequests(reqRes.data);
+                    setYouMayKnowFriends(youMayKnowRes.data);
 
-                // friends related
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/allfriends?email=${email}`).then(res => {
-                    setFriendsData(res.data);
-                });
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/myfriends?email=${email}`).then(res => {
-                    setMyFriends(res.data);
-                });
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/sentrequest?email=${email}`).then(res => {
-                    setSentRequests(res.data);
-                });
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/requests?email=${email}`).then(res => {
-                    setFriendRequests(res.data);
-                });
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/youMayKnow?email=${email}`).then(res => {
-                    setYouMayKnowFriends(res.data);
-                });
+                    // ৪. Posts fetch
+                    const postsRes = await axiosInstance.get(`/posts`);
+                    setPostsData(postsRes.data);
+                    setUsersPostsData(postsRes.data.filter(post => post.authorEmail === email));
 
+                    const savedRes = await axiosInstance.get(`/savedPosts?email=${email}`);
+                    setSavedPosts(savedRes.data);
 
-                // Post related get
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/posts`).then(res => {
-                    setPostsData(res.data)
-                    const usersPost = res.data.filter(post => post.authorEmail === email);
-                    setUsersPostsData(usersPost);
-                });
+                    // ৫. Active ping
+                    const ping = async () => {
+                        await axiosInstance.post(`/activeStatus?email=${email}`);
+                    };
+                    const interval = setInterval(ping, 2000);
+                    ping();
+                    return () => clearInterval(interval);
 
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/savedPosts?email=${email}`).then(res => {
-                    setSavedPosts(res.data);
-                });
-
-
-                const ping = () => {
-                    axios.post(`${import.meta.env.VITE_BACKEND_URL}/activeStatus?email=${email}`)
-                        .then(res => { })
-                        .catch(err => console.error("Ping Error:", err));
-                };
-                const interval = setInterval(ping, 2000); ping();
-                return () => clearInterval(interval);
-
-            } else { setUser(null); setUserData(null); setLoading(false); }
+                } catch (err) {
+                    console.error("JWT / Data fetch error:", err);
+                }
+            } else {
+                setUser(null);
+                setUserData(null);
+                setLoading(false);
+            }
         });
 
-        return () => {
-            unSubscribe();
-        };
+        return () => unSubscribe();
     }, []);
+
 
     const dataList = {
         user, setUser, userData, setUserData, usersPostsData, setUsersPostsData,

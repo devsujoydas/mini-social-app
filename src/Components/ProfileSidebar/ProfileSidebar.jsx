@@ -19,6 +19,7 @@ import { Camera } from "lucide-react";
 import ProfileIntroSection from "../../Pages/ProiflePage/ProfileIntroSection.jsx";
 import ProfileTopSection from "../../Pages/ProiflePage/ProfileTopSection.jsx";
 import ProfileSideTop from "./ProfileSideTop.jsx";
+import ProfileSideIntro from "./ProfileSideIntro.jsx";
 
 
 const ProfileSidebar = () => {
@@ -120,21 +121,18 @@ const ProfileSidebar = () => {
 
       {/* UpdateProfile Modal */}
       <UpdateProfileModal showUpdateInfoModal={showUpdateInfoModal} setShowUpdateInfoModal={setShowUpdateInfoModal} />
-
-
       {/* Username Update Modal */}
       <UpdateUsernameModal showUsernameModal={showUsernameModal} setShowUsernameModal={setShowUsernameModal} />
-
-
 
 
       {/* profile section  */}
       <div className="flex flex-col h-screen sticky top-0 flex-1 overflow-y-auto">
 
-        {/* <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
+        <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
 
           <div style={{ backgroundImage: `url(${userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"})` }} className="border border-zinc-300 h-45 w-full bg-center bg-cover absolute top-0">
             <div className=" h-full p-5">
+
 
               <div onClick={() => { setShowEdit(!showEdit) }} className="w-full flex justify-end relative">
                 <div className="border w-fit border-zinc-400 md:text-2xl text-xl md:mt-0 mt-3 md:p-3 p-2 rounded-full cursor-pointer  transition-all bg-zinc-200 hover:bg-zinc-400 ">
@@ -158,6 +156,7 @@ const ProfileSidebar = () => {
                   </button>
                 </div>
               </div>
+
 
             </div>
           </div>
@@ -202,17 +201,17 @@ const ProfileSidebar = () => {
             </div>
           </div>
 
-        </div> */}
+        </div>
 
-        {/* <div className="px-6 space-y-4">
- 
+        <div className="px-6 space-y-4">
+
           <div className="">
             <div className="space-y-1">
               <h1 className="font-semibold md:text-xl text-lg ">About Me</h1>
               <p className="text-zinc-500 md:text-lg text-sm">{userData?.bio}</p>
             </div>
           </div>
- 
+
           <div>
             <div className="flex justify-between items-center pt-2">
               <h1 className="md:text-xl text-lg  font-semibold">Contact Infomation</h1>
@@ -272,12 +271,12 @@ const ProfileSidebar = () => {
 
             <hr className="text-zinc-300 my-3" />
           </div >
-        </div> */}
+        </div>
 
-        <ProfileSideTop />
+        {/* <ProfileSideTop /> */}
 
         <div className="w-4/5 mx-auto">
-          <ProfileIntroSection />
+          <ProfileSideIntro />
 
         </div>
 
