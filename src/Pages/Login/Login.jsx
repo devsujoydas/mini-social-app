@@ -1,8 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 
 const Login = () => {
@@ -19,20 +19,20 @@ const Login = () => {
 
     const submitHandler = async ({ email, password }) => {
         setLoadingSpinner(false);
-        logInUser(email, password)
-            .then((result) => {
-                if (result.user.email) {
-                    setUser(result.user);
-                    setUserData(result.user);
-                    navigate(from, { replace: true });
-                }
-            })
-            .catch((err) => {
-                console.log(err.message);
-                setUserStatus(err.message);
-                setLoading(false);
-                setLoadingSpinner(true);
-            });
+        try {
+            const result = await logInUser(email, password);
+            if (result.user.email) {
+                setUser(result.user);
+                setUserData(result.user);
+                navigate(from, { replace: true });
+            }
+        } catch (err) {
+            console.log(err.message);
+            setUserStatus(err.message);
+            setLoading(false);
+        } finally {
+            setLoadingSpinner(true);
+        }
     };
 
     return (
@@ -48,19 +48,24 @@ const Login = () => {
                             <p className="text-xs md:text-sm">Please fill your details to access your account.</p>
                         </div>
                         <form onSubmit={handleSubmit(submitHandler)} className="w-full space-y-4">
+                            {/* Email */}
                             <div>
                                 <label className="text-slate-800 text-sm font-medium mb-1 block">Email</label>
                                 <input type="email" placeholder="Enter email" {...register("email", { required: true })} className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" />
                                 {errors.email && <p className="text-red-500 text-sm mt-1">Email is required</p>}
                             </div>
+
+                            {/* Password */}
                             <div className="relative">
-                                <label className="text-slate-800 text-sm font-medium mb-1 block ">Password</label>
+                                <label className="text-slate-800 text-sm font-medium mb-1 block">Password</label>
                                 <input type={show ? "text" : "password"} placeholder="Enter password" {...register("password", { required: true })} className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" />
                                 <div onClick={() => setShow(!show)} className="text-xl absolute top-9 right-3 cursor-pointer active:scale-95 transition-all">
                                     {show ? <FaRegEye /> : <FaRegEyeSlash />}
                                 </div>
                                 {errors.password && <p className="text-red-500 text-sm mt-1">Password is required</p>}
                             </div>
+
+                            {/* Remember Me + Forgot Password */}
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center">
                                     <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-blue-600 border-slate-300 rounded cursor-pointer" />
@@ -68,20 +73,29 @@ const Login = () => {
                                 </div>
                                 <Link to="/forgotPass" className="text-violet-600 font-semibold text-sm hover:underline ml-1">Forgot Password?</Link>
                             </div>
+
                             {userStatus && <h1 className="text-sm text-red-500 text-center font-semibold">{userStatus}</h1>}
+
+                            {/* Submit */}
                             <button type="submit" className={`text-white font-medium ${loadingSpinner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5`}>
                                 <p className={`${loadingSpinner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
                                 <p className={`${loadingSpinner ? "block" : "hidden"}`}>Login</p>
                             </button>
                         </form>
+
                         <div className="flex justify-center items-center">
                             <p>---------------- Or ----------------</p>
                         </div>
+
+                        {/* Google Login */}
                         <SignInWithGoogle />
+
                         <p className="text-slate-800 text-sm text-center">Don't have an account? <Link to="/signup" className="text-violet-600 font-semibold hover:underline ml-1">Signup</Link></p>
                     </div>
                 </div>
             </div>
+
+            {/* Right side image */}
             <div className="md:col-span-1 hidden h-screen md:flex justify-center items-center">
                 <img src="./login.png" alt="login banner" />
             </div>
