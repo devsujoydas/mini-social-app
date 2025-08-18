@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../services/axiosInstance';
 export const AuthContext = createContext()
 
-const AuthProvider = ({ children }) => {
+const oldAuthProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true)
 
@@ -186,7 +186,7 @@ const AuthProvider = ({ children }) => {
 
                 try {
                     // ১. JWT generate / verify request
-                    await axiosInstance.post(`/auth/jwt`, { email });
+                    await axiosInstance.post(`/jwt`, { email });
 
                     // ২. User profile fetch
                     const { data } = await axiosInstance.get(`/profile/${email}`);
@@ -261,4 +261,4 @@ const AuthProvider = ({ children }) => {
     )
 }
 
-export default AuthProvider
+export default oldAuthProvider

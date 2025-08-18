@@ -4,6 +4,10 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 import axios from "axios";
+import Lottie from "lottie-react";
+import registerAnimation from "../../../public/LottieAnimations/register.json";
+
+
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -17,10 +21,12 @@ const Signup = () => {
     });
 
     const [errors, setErrors] = useState({});
-    const [show, setShow] = useState(false);
-    const [loadingSpinner, setLoadingSpinner] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [userStatus, setUserStatus] = useState("");
 
+    // handle input change
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData((prev) => ({
@@ -29,6 +35,7 @@ const Signup = () => {
         }));
     };
 
+    // validation check ongso
     const validate = () => {
         const errs = {};
         if (!formData.email) errs.email = "Email is required";
@@ -38,21 +45,23 @@ const Signup = () => {
         else if (formData.password.length < 6) errs.password = "Password must be at least 6 characters";
 
         if (!formData.confirmPassword) errs.confirmPassword = "Please confirm your password";
-        else if (formData.password !== formData.confirmPassword) errs.confirmPassword = "Passwords do not match";
+        else if (formData.password !== formData.confirmPassword)
+            errs.confirmPassword = "Passwords do not match";
 
         return errs;
     };
 
+    // submit handler
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
         setUserStatus("");
-        setLoadingSpinner(false);
+        setIsLoading(true);
 
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            setLoadingSpinner(true);
+            setIsLoading(false);
             return;
         }
 
@@ -64,20 +73,6 @@ const Signup = () => {
             email: formData.email,
             name: displayName,
             username,
-            address: "",
-            bio: "",
-            profilephotourl: "",
-            coverphotourl: "",
-            role: "user",
-            phone: "",
-            website: "",
-            onlineStatus: false,
-            createdDate: new Date(),
-            posts: [],
-            savePosts: [],
-            myFriends: [],
-            friendRequests: [],
-            sentRequests: [],
         };
 
         try {
@@ -86,33 +81,47 @@ const Signup = () => {
             setUser(result.user);
 
             // Send user data to backend
-            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`, userObj);
+            const res = await axios.post(
+                `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
+                userObj
+            );
             setUserData(res.data);
 
             navigate("/profile");
         } catch (err) {
-            setUserStatus(err.message);
+            setUserStatus(err.message || "Signup failed. Try again.");
         } finally {
-            setLoadingSpinner(true);
+            setIsLoading(false);
         }
     };
 
     return (
-        <div className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-2 font-family-primary">
+        <div className="bg-white min-h-screen overflow-hidden grid grid-cols-1 xl:grid-cols-2 font-family-primary">
+            {/* Left side */}
             <div className="p-8">
-                <Link to="/" className="text-3xl font-semibold font-family-secondary text-blue-600">
+                <Link
+                    to="/"
+                    className="text-3xl font-semibold font-family-secondary text-blue-600"
+                >
                     Xenon Media
                 </Link>
-                <div className="h-full flex justify-center items-center">
+
+                <div className="h-full flex justify-center items-center lg:w-2/4 w-full mx-auto">
                     <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-md">
                         <div className="space-y-3">
-                            <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">Signup Now</h1>
-                            <p className="text-sm text-gray-600">Please fill your details to create an account.</p>
+                            <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">
+                                Signup Now
+                            </h1>
+                            <p className="text-sm text-gray-600">
+                                Please fill your details to create an account.
+                            </p>
                         </div>
 
                         {/* Email */}
                         <div>
-                            <label className="text-slate-800 text-sm font-medium mb-1 block">Email</label>
+                            <label className="text-slate-800 text-sm font-medium mb-1 block">
+                                Email
+                            </label>
                             <input
                                 type="email"
                                 name="email"
@@ -121,41 +130,57 @@ const Signup = () => {
                                 placeholder="Enter email"
                                 className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
                             />
-                            {errors.email && <p className="text-red-600 text-sm">{errors.email}</p>}
+                            {errors.email && (
+                                <p className="text-red-600 text-sm">{errors.email}</p>
+                            )}
                         </div>
 
                         {/* Password */}
                         <div className="relative">
-                            <label className="text-slate-800 text-sm font-medium mb-1 block">Password</label>
+                            <label className="text-slate-800 text-sm font-medium mb-1 block">
+                                Password
+                            </label>
                             <input
-                                type={show ? "text" : "password"}
+                                type={showPassword ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder="Enter password"
                                 className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
                             />
-                            <span onClick={() => setShow(!show)} className="absolute top-10 right-3 cursor-pointer">
-                                {show ? <FaRegEye /> : <FaRegEyeSlash />}
+                            <span
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute top-10 right-3 cursor-pointer"
+                            >
+                                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                             </span>
-                            {errors.password && <p className="text-red-600 text-sm">{errors.password}</p>}
+                            {errors.password && (
+                                <p className="text-red-600 text-sm">{errors.password}</p>
+                            )}
                         </div>
 
                         {/* Confirm Password */}
                         <div className="relative">
-                            <label className="text-slate-800 text-sm font-medium mb-1 block">Confirm Password</label>
+                            <label className="text-slate-800 text-sm font-medium mb-1 block">
+                                Confirm Password
+                            </label>
                             <input
-                                type={show ? "text" : "password"}
+                                type={showConfirm ? "text" : "password"}
                                 name="confirmPassword"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 placeholder="Confirm password"
                                 className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
                             />
-                            <span onClick={() => setShow(!show)} className="absolute top-10 right-3 cursor-pointer">
-                                {show ? <FaRegEye /> : <FaRegEyeSlash />}
+                            <span
+                                onClick={() => setShowConfirm(!showConfirm)}
+                                className="absolute top-10 right-3 cursor-pointer"
+                            >
+                                {showConfirm ? <FaRegEye /> : <FaRegEyeSlash />}
                             </span>
-                            {errors.confirmPassword && <p className="text-red-600 text-sm">{errors.confirmPassword}</p>}
+                            {errors.confirmPassword && (
+                                <p className="text-red-600 text-sm">{errors.confirmPassword}</p>
+                            )}
                         </div>
 
                         {/* Remember Me */}
@@ -177,18 +202,28 @@ const Signup = () => {
                         {/* Signup Button */}
                         <button
                             type="submit"
+                            disabled={isLoading}
                             className="bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded w-full flex justify-center"
                         >
-                            {loadingSpinner ? "Signup" : <span className="w-6 h-6 border-2 border-white border-t-blue-500 animate-spin rounded-full"></span>}
+                            {isLoading ? (
+                                <span className="w-6 h-6 border-2 border-white border-t-blue-500 animate-spin rounded-full"></span>
+                            ) : (
+                                "Signup"
+                            )}
                         </button>
 
-                        <div className="text-center text-gray-600">---------------- Or ----------------</div>
+                        <div className="text-center text-gray-600">
+                            ---------------- Or ----------------
+                        </div>
 
                         <SignInWithGoogle />
 
                         <p className="text-center text-sm text-gray-800">
                             Already have an account?{" "}
-                            <Link to="/login" className="text-violet-600 font-semibold hover:underline ml-1">
+                            <Link
+                                to="/login"
+                                className="text-violet-600 font-semibold hover:underline ml-1"
+                            >
                                 Login
                             </Link>
                         </p>
@@ -196,13 +231,12 @@ const Signup = () => {
                 </div>
             </div>
 
-            <div className="hidden md:flex justify-center items-center">
-                <img
-                    className="h-full object-cover"
-                    src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg"
-                    alt="signup banner"
-                />
+           
+            {/* Right side */}
+            <div className="hidden xl:flex justify-center items-center ">
+                <Lottie animationData={registerAnimation} loop={true} className="w-3/4 h-3/4 " />
             </div>
+
         </div>
     );
 };
