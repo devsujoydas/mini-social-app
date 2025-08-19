@@ -1,8 +1,8 @@
-import { useContext, useState, useRef } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { useContext, useState, useRef } from "react"; 
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const API_KEY = "13ea5da7a8e8c3267fd71c7a99988b63"; // imgbb key
 

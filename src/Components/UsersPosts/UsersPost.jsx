@@ -1,8 +1,7 @@
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { Link, useNavigate } from "react-router-dom"; 
 import toast, { Toaster } from 'react-hot-toast';
 import { FaBookmark } from "react-icons/fa";
 import { BiLike } from "react-icons/bi";
@@ -20,6 +19,7 @@ import { BiCommentDots } from "react-icons/bi";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axios from "axios";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const UsersPost = ({ post }) => {
   const { userData, postsData, setPostsData, savePostHandler } = useContext(AuthContext)

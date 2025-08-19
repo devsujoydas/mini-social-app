@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
+import { useContext, useEffect, useState } from 'react' 
 import MyFriendsCard from './FriendsCard/MyFriendsCard.jsx'
 import FriendsRequestCard from './FriendsCard/FriendsRequestCard.jsx'
 import PeopleYouMayKnow from './FriendsCard/PeopleYouMayKnow.jsx'
@@ -8,6 +7,7 @@ import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
 import { FiArrowUpRight } from "react-icons/fi";
 import { RiUserSharedFill } from "react-icons/ri";
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
 
 
 const FriendsPage = () => {

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
+import 'swiper/css/pagination'; 
 import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Storybox = () => {
 

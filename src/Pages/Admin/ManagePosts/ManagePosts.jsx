@@ -2,11 +2,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import axios from "axios"; 
 import UserTableCard from "../ManageUsers/UserTableCard";
 import PostTableCard from "./PostTableCard";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 
 const ManagePosts = () => {

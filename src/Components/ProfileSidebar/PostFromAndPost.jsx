@@ -2,10 +2,10 @@ const img = "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/489885147_174
 import { BsFileImage } from "react-icons/bs";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 import { BiSolidMoviePlay } from "react-icons/bi";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useContext } from "react"; 
 import UsersPosts from "../UsersPosts/UsersPosts";
 import Loading from "../Loading/Loading";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 

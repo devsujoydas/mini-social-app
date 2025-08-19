@@ -7,9 +7,9 @@ import { FaFacebook } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
-import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { FaLocationDot } from "react-icons/fa6"; 
 import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const ProfileIntroSection = () => {
     const { userData } = useContext(AuthContext)

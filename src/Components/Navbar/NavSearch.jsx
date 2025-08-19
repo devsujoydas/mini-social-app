@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { IoSearch } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios"; 
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const NavSearch = () => {

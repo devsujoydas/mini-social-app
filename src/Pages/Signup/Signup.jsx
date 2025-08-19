@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa"; 
 import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 import axios from "axios";
 import Lottie from "lottie-react";
 import registerAnimation from "../../../public/LottieAnimations/register.json";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 

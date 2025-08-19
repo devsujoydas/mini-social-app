@@ -1,9 +1,9 @@
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu"
 import { LuBell } from "react-icons/lu";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Link } from "react-router-dom"; 
 import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const SideNavbar = () => {
   const { user, userData } = useContext(AuthContext)

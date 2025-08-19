@@ -1,7 +1,7 @@
-import { useContext } from 'react'
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
+import { useContext } from 'react' 
 import Post from '../Posts/Post'
 import UsersPost from './UsersPost'
+import { AuthContext } from '../../AuthProvider/AuthProvider'
 
 const UsersPosts = () => {
   const { usersPostsData } = useContext(AuthContext)

@@ -186,7 +186,7 @@ const AuthProvider = ({ children }) => {
 
                 try {
                     // ১. JWT generate / verify request
-                    await axiosInstance.post(`/auth/jwt`, { email });
+                    await axiosInstance.post(`/jwt`, { email });
 
                     // ২. User profile fetch
                     const { data } = await axiosInstance.get(`/profile/${email}`);

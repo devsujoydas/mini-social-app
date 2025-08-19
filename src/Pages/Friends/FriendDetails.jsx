@@ -1,6 +1,5 @@
 import { Link, useLoaderData } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
+import { useContext } from 'react'; 
 import { Toaster } from 'react-hot-toast';
 import AllFriends from './AllFriends';
 import { LuMessageCircleMore } from "react-icons/lu";
@@ -8,6 +7,7 @@ import { FaUserPlus } from "react-icons/fa6";
 import Loading from '../../Components/Loading/Loading.jsx';
 import Post from '../../Components/Posts/Post.jsx';
 import { FaUserAltSlash } from "react-icons/fa";
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 
 const FriendDetails = () => {
     const {

@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { Link, useNavigate } from "react-router-dom"; 
 import { MdEdit } from "react-icons/md";
 import { BsCamera, BsThreeDotsVertical } from "react-icons/bs"
 import { MdOutlineArrowOutward } from "react-icons/md";
@@ -20,6 +19,7 @@ import ProfileIntroSection from "../../Pages/ProiflePage/ProfileIntroSection.jsx
 import ProfileTopSection from "../../Pages/ProiflePage/ProfileTopSection.jsx";
 import ProfileSideTop from "./ProfileSideTop.jsx";
 import ProfileSideIntro from "./ProfileSideIntro.jsx";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 
 const ProfileSidebar = () => {

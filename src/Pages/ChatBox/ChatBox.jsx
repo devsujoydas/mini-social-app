@@ -1,6 +1,5 @@
 import { useContext, useState } from "react"
-import { Link, useLoaderData } from "react-router-dom"
-import { AuthContext } from "../../AuthProvider/AuthProvider"
+import { Link, useLoaderData } from "react-router-dom" 
 import AllFriends from "./AllFriends"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";
@@ -12,6 +11,7 @@ import { IoSend } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import moment from 'moment'
 import Loading from "../../Components/Loading/Loading";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const ChatBox = () => {

@@ -18,9 +18,9 @@ import { BiCommentDots } from "react-icons/bi";
 import { FaCircleMinus } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import axios from "axios";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios"; 
 import { IoBookmark } from "react-icons/io5";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const SavedPostCard = ({ post }) => {
     const { userData, removeSavedPostHandler } = useContext(AuthContext)

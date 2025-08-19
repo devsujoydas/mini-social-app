@@ -1,4 +1,4 @@
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import Nav from "./Nav";
@@ -10,6 +10,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import NavSearch from "./NavSearch.jsx";
+import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 
 const Navbar = () => {

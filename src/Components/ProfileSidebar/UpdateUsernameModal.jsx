@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { useContext, useState } from "react"; 
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {

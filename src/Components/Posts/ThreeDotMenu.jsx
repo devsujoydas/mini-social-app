@@ -5,10 +5,10 @@ import { FaBookmark } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { FaCircleMinus } from "react-icons/fa6";
-import axios from "axios";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios"; 
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const ThreeDotMenu = ({ post, setShowEdit, showEdit }) => {

@@ -2,9 +2,7 @@ import ProfileTopSection from "./ProfileTopSection";
 import ProfileIntroSection from "./ProfileIntroSection";
 import ProfilePostSection from "./ProfilePostSection";
 import PhotoSection from "./PhotoSection";
-import ProfileFriendSection from "./ProfileFriendSection";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import ProfileFriendSection from "./ProfileFriendSection"; 
 
 const ProiflePage = () => {
     

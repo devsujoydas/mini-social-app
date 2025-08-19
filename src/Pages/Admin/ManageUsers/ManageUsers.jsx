@@ -1,9 +1,10 @@
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+ 
 import { useContext, useEffect, useRef, useState } from "react";
 import UserTableCard from "./UserTableCard";
 import { IoSearch } from "react-icons/io5";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 const ManageUsers = () => {
   const { userData, friendsData } = useContext(AuthContext);

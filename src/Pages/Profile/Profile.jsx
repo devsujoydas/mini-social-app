@@ -3,11 +3,11 @@ import PostForm from "../../Components/PostForm/PostForm"
 import Posts from "../../Components/Posts/Posts"
 import ProfileSidebar from "../../Components/ProfileSidebar/ProfileSidebar"
 import UsersPosts from "../../Components/UsersPosts/UsersPosts"
-
-import { AuthContext } from "../../AuthProvider/AuthProvider"
+ 
 import Loading from "../../Components/Loading/Loading"
 import ProfilePostSection from "../ProiflePage/ProfilePostSection"
 import PostFromAndPost from "../../Components/ProfileSidebar/PostFromAndPost"
+import { AuthContext } from "../../AuthProvider/AuthProvider"
 
 const Profile = () => {
   const { user, userData, } = useContext(AuthContext)

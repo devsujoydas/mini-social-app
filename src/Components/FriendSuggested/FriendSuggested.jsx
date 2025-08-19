@@ -1,8 +1,8 @@
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { Link } from "react-router-dom"; 
 import { useContext, useState } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const FriendSuggested = () => {

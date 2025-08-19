@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
-import { AuthContext } from '../../AuthProvider/AuthProvider'
+import { useContext, useState } from 'react' 
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import ProfileSidebar from '../../Components/ProfileSidebar/ProfileSidebar'
 import { IoClose } from "react-icons/io5";
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 
 const UpdateInfo = () => {

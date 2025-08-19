@@ -1,8 +1,7 @@
 import React from 'react'
 import CommentCard from './CommentCard'
 import { useEffect } from "react";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { useContext, useState } from "react"; 
 import { Link } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -24,6 +23,7 @@ import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axios from "axios";
 import ThreeDotMenu from './ThreeDotMenu.jsx';
+import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 
 
 

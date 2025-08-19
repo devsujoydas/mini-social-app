@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider"; 
+import { useContext } from "react"; 
 import NewUsersPerMonthChart from "./Carts/NewUsersPerMonthChart";
 import PostsCreatedPerDayChart from "./Carts/PostsCreatedPerDayChart";
 import TopActiveUsersChart from "./Carts/TopActiveUsersChart";
@@ -7,6 +6,7 @@ import TotalUsersGrowthChart from "./Carts/TotalUsersGrowthChart";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import UsersByRolePieChart from "./Carts/UsersByRolePieChart";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 

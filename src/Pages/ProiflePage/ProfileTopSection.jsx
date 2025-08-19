@@ -4,9 +4,9 @@ import { IoHomeSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 const img = "https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-1/489885147_1748589156033422_9163824150761745252_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeG0rlIcc6qUT_kppGK00LV6Ywxz5YAM5oBjDHPlgAzmgEcBW8f14b_W7ZVja0mePJxDSo4u_MkexazFS7c-iagC&_nc_ohc=Iwxw3BcdXM0Q7kNvwEigN3i&_nc_oc=Adn9djbCWV4S84gcpDmQpZEzVPPecAZGBVLOKOiBNhCr2fZ4Ef70VASo0OsBMscwC0U&_nc_zt=24&_nc_ht=scontent.fdac24-5.fna&_nc_gid=oBQ_p5wFMK5vd7l9ITGufg&oh=00_AfW68mArGsiuVMta6ZNCJrAdEqCkoA8bmpebE4K7rtsgUA&oe=689E1031"
 const coverimg = "https://scontent.fdac24-4.fna.fbcdn.net/v/t39.30808-6/501010111_1782992695926401_7171587082084457487_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=104&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeGFLrMlgGZ6qAe3PMdztBdEbfiU8qTLPtdt-JTypMs-18EfeRKVbVbnAdRM0M_SaylnyytG8sUslzvtLDbswsCX&_nc_ohc=b5Cyq4lsvXsQ7kNvwEAzsPz&_nc_oc=AdluZCNo6fovAjWTk19LBu-Nuxq9V7LqWg0kE-dSKExPniuM486090n2K7d2wZVQ8es&_nc_zt=23&_nc_ht=scontent.fdac24-4.fna&_nc_gid=1WE_TygXFPKFDrYAsUzU-A&oh=00_AfVSI5ighbJd4rl_mxyNPZ_phFZsrI1luxlH-Ud0RlXaLQ&oe=689E0938"
-import { BsFillCameraFill } from "react-icons/bs";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { BsFillCameraFill } from "react-icons/bs"; 
 import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
 const ProfileTopSection = () => {
