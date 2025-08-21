@@ -230,13 +230,10 @@ const Signup = () => {
                     </form>
                 </div>
             </div>
-
-           
             {/* Right side */}
             <div className="hidden xl:flex justify-center items-center ">
                 <Lottie animationData={registerAnimation} loop={true} className="w-3/4 h-3/4 " />
             </div>
-
         </div>
     );
 };

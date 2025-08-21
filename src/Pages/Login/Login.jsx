@@ -38,14 +38,16 @@ const Login = () => {
         }
     };
 
+    
+
     return (
-        <div className="font-family-primary bg-white h-screen overflow-hidden border ">
+        <div className="font-family-primary bg-white h-screen overflow-hidden ">
             <div className="p-8">
                 <Link to="/" className="text-3xl font-semibold font-family-secondary text-blue-600">Xenon Media</Link>
             </div>
-            <div className="border  grid grid-cols-1 xl:grid-cols-2">
+            <div className="grid grid-cols-1 xl:grid-cols-2">
                 <div className="">
-                    <div className="h-full flex justify-center xl:justify-end items-center">
+                    <div className="h-full flex justify-center  items-center">
                         <div className="md:space-y-8 space-y-5 lg:w-2/4 w-full max-w-md">
                             <div>
                                 <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">Login Now</h1>
@@ -99,8 +101,8 @@ const Login = () => {
                     </div>
                 </div>
 
-                <div className="hidden border xl:flex justify-center xl:justify-start items-center  ">
-                    <Lottie animationData={loginAnimation} loop={true} className="w-4/5 h-4/5" />
+                <div className="hidden xl:flex justify-center  items-center  ">
+                    <Lottie animationData={loginAnimation} loop={true} className="w-4/5 h-4/5 " />
                 </div>
             </div>
         </div>
