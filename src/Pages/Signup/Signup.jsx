@@ -81,12 +81,8 @@ const Signup = () => {
             setUser(result.user);
 
             // Send user data to backend
-            const res = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
-                userObj
-            );
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,{userObj});
             setUserData(res.data);
-
             navigate("/profile");
         } catch (err) {
             setUserStatus(err.message || "Signup failed. Try again.");
