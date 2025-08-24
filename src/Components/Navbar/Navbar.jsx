@@ -73,7 +73,7 @@ const Navbar = () => {
 
       {/* nav for lg device  */}
       <div className="">
-        <div className=" px-5 py-5 hidden lg:flex flex-col justify-between h-[100vh] border-r border-zinc-300">
+        <div className=" px-5 py-5 hidden lg:flex flex-col justify-between h-[100dvh] border-r border-zinc-300">
 
           <div className=" space-y-6 ">
             {/* nav logo  */}

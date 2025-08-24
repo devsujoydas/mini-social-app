@@ -50,11 +50,11 @@ const Login = () => {
                     <div className="">
                         <div className="h-full flex justify-center  items-center">
                             <div className="md:space-y-8 space-y-5 lg:w-2/4 w-full max-w-md">
-                                <div>
-                                    <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">Login Now</h1>
-                                    <p className="text-xs md:text-sm">Please fill your details to access your account.</p>
-                                </div>
-                                <form onSubmit={handleSubmit(submitHandler)} className="w-full  space-y-4">
+                                <form onSubmit={handleSubmit(submitHandler)} className="space-y-5 w-full max-w-md">
+                                    <div>
+                                        <h1 className="md:text-5xl text-4xl md:mb-3 mb-2 font-semibold">Login Now</h1>
+                                        <p className="text-xs md:text-sm">Please fill your details to access your account.</p>
+                                    </div>
                                     {/* Email */}
                                     <div>
                                         <label className="text-slate-800 text-sm font-medium mb-1 block">Email</label>
@@ -103,7 +103,7 @@ const Login = () => {
                     </div>
 
                     <div className="hidden xl:flex justify-center  items-center  ">
-                        <Lottie animationData={loginAnimation} loop={true} className="w-4/5 h-4/5 " />
+                        <Lottie animationData={loginAnimation} loop={true} className="w-5/6 h-5/6 " />
                     </div>
                 </div>
             </div>

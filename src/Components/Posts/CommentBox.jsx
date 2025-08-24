@@ -208,7 +208,7 @@ const CommentBox = ({ post }) => {
                             <h1>Comment Loading. . .</h1>
                         </div>
                     ) : (
-                        <div className='md:p-5 p-3 space-y-3 overflow-y-auto h-[calc(100vh-360px)] md:pr-1'>
+                        <div className='md:p-5 p-3 space-y-3 overflow-y-auto h-[calc(100dvh-360px)] md:pr-1'>
                             <CommentCard />
                             <CommentCard />
                             <CommentCard />
