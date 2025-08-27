@@ -16,7 +16,7 @@ const SearchBar = () => {
   const [showResults, setShowResults] = useState(false);
   const [error, setError] = useState(null);
 
-  // সার্চ API কল - debounce সহ
+
   useEffect(() => {
     if (!query.trim()) {
       setResults({ posts: [], users: [] });
@@ -31,7 +31,8 @@ const SearchBar = () => {
     return () => clearTimeout(handler);
   }, [query]);
 
-  // API কল ফাংশন
+
+
   const fetchSearchResults = async (searchText) => {
     setLoading(true);
     setError(null);
@@ -49,7 +50,7 @@ const SearchBar = () => {
     }
   };
 
-  // ক্লিক আউটসাইডে ড্রপডাউন বন্ধ করার জন্য
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
@@ -60,7 +61,7 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // রেজাল্ট আইটেম ক্লিক হ্যান্ডলার
+  
   const handleSelectPost = (post) => {
     setShowResults(false);
     setQuery(post.postContent.length > 50 ? post.postContent.slice(0, 50) + "..." : post.postContent);
