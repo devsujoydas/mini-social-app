@@ -6,7 +6,7 @@ import axios from "axios";
 import Lottie from "lottie-react";
 import registerAnimation from "../../../public/LottieAnimations/register.json";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-
+import toast from 'react-hot-toast';
 
 
 const Signup = () => {
@@ -81,9 +81,10 @@ const Signup = () => {
             setUser(result.user);
 
             // Send user data to backend
-            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,{userObj});
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,{userObj})
             setUserData(res.data);
             navigate("/profile");
+            toast.success("Account Create Successfully")
         } catch (err) {
             setUserStatus(err.message || "Signup failed. Try again.");
         } finally {

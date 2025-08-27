@@ -72,7 +72,7 @@ const Post = ({ post }) => {
   return (
     <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
       <Toaster
-        position="bottom-center"
+        position="top-center"
         reverseOrder={true}
       />
 

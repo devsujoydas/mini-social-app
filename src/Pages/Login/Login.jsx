@@ -6,7 +6,7 @@ import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../public/LottieAnimations/Login.json";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ const Login = () => {
                 setUser(result.user);
                 setUserData(result.user);
                 navigate(from, { replace: true });
+                toast.success("Login Successfully")
             }
         } catch (err) {
             console.log(err.message);
