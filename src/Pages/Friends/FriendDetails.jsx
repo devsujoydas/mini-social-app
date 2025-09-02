@@ -50,7 +50,6 @@ const FriendDetails = () => {
 
     return (
         <div className="md:pt-0 pt-3 min-h-screen">
-            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
 
             <div className="grid grid-cols-1 lg:grid-cols-9 gap-6">
                 {/* Left Side */}

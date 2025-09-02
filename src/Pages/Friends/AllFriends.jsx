@@ -24,8 +24,7 @@ const AllFriends = ({ friend }) => {
 
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
-            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
-
+     
             <div className=' p-2 '>
                 <Link to={`/friends/${friend.username}`}>
                     <img className=' w-20 h-20 object-cover rounded-full' src={!profilephotourl ? `/default.jpg` : `${profilephotourl}`} alt="" />

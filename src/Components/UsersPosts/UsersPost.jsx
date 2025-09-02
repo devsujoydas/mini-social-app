@@ -123,11 +123,6 @@ const UsersPost = ({ post }) => {
 
   return (
     <div className="shadow-xl border-t border-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white ">
-      {/* <Toaster
-        position="top-center"
-        reverseOrder={true}
-      /> */}
-
 
       {/* post author details  */}
       <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">

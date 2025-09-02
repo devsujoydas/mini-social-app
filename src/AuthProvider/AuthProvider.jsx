@@ -233,6 +233,7 @@ const AuthProvider = ({ children }) => {
         setYouMayKnowFriends(youMayKnowRes.data);
 
         setPostsData(postsRes.data);
+        // console.log(postsRes.data)
         setUsersPostsData(
           postsRes.data.filter((post) => post.authorEmail === email)
         );

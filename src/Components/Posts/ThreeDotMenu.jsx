@@ -13,47 +13,12 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const ThreeDotMenu = ({ post, setShowEdit, showEdit }) => {
     const { userData, savePostHandler } = useContext(AuthContext)
-
-
-
-    const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+    
     const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
 
-    const [showUsers, setShowUsers] = useState(false)
-    const [like, setlike] = useState(false)
-    const [reactorsUsers, setReactorsUsers] = useState([])
-    const [likesCount, setLikesCount] = useState(post.likes.length)
+   
 
-    useEffect(() => {
-        if (post?.likes.length > 0 && userData?._id) {
-            setReactorsUsers(post.likes)
-            const likedUser = post?.likes.find(likedUserId => likedUserId.userId == userData?._id);
-            if (!likedUser) return
-            setlike(true)
-        }
-    }, [post.likes, userData]);
-
-    const likeHandler = () => {
-        const userId = userData?._id;
-        const username = userData?.username;
-        const name = userData?.name;
-        const fromData = { name, username, userId };
-
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`, fromData)
-            .then(res => {
-                if (res.data.message === "Liked") {
-                    setlike(true);
-                    setLikesCount(prev => prev + 1);
-                    toast.success('Liked!')
-                }
-                if (res.data.message === "Disliked") {
-                    setlike(false);
-                    setLikesCount(prev => prev - 1);
-                    toast.success('Disliked!')
-                }
-            }).catch(err => console.error(err));
-
-    };
+    
 
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`
 

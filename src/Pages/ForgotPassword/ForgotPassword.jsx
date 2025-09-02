@@ -53,10 +53,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="font-family-primary bg-white h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
-      {/* <Toaster
-        position="top-center"
-        reverseOrder={true}
-      /> */}
+    
       
       <div className="md:col-span-1 h-screen p-8   ">
         <div className="">

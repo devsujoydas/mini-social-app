@@ -23,8 +23,6 @@ const FriendsCard = ({ friend }) => {
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex '>
 
-            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
-
             <div className='md:p-0 p-2 '>
                 <Link to={`/friends/${friend.username}`}>
                     <img className='md:w-full w-24 md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profilephotourl ? `/default.jpg` : `${friend?.profilephotourl}`} alt="" />
