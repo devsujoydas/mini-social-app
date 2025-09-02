@@ -5,7 +5,7 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 const AdminLayout = () => {
     return (
         <div className="min-h-screen font-family-Poppins  bg-gray-50">
-            <Toaster position="bottom-center" reverseOrder={true} />
+            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
 
             {/* Sidebar */}
             <div className=" bg-white shadow-md flex md:flex-row flex-col items-baseline justify-between gap-2 p-3 md:p-6 sticky top-0 z-50">

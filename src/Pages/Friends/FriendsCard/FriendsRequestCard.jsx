@@ -23,7 +23,7 @@ const FriendsCard = ({ friend }) => {
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex '>
 
-            <Toaster position="bottom-center" reverseOrder={true} />
+            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
 
             <div className='md:p-0 p-2 '>
                 <Link to={`/friends/${friend.username}`}>

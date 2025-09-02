@@ -15,21 +15,21 @@ import { IoClose } from "react-icons/io5";
 import UpdateUsernameModal from "./UpdateUsernameModal.jsx";
 import UpdateProfileModal from "./UpdateProfileModal.jsx";
 import { Camera } from "lucide-react";
-import ProfileIntroSection from "../../Pages/ProiflePage/ProfileIntroSection.jsx";
-import ProfileTopSection from "../../Pages/ProiflePage/ProfileTopSection.jsx";
-import ProfileSideTop from "./ProfileSideTop.jsx";
-import ProfileSideIntro from "./ProfileSideIntro.jsx";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import { BsFillCameraFill } from "react-icons/bs";
+import UploadProfilePicture from "./UploadProfilePicture.jsx";
 
 const ProfileSidebar = () => {
   const { signOutUser, userData, usersPostsData, deleteAccount } =
     useContext(AuthContext);
 
-  const [showEdit, setShowEdit] = useState(1);
+  const [showEdit, setShowEdit] = useState(0);
   const navigate = useNavigate();
 
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
+  const [showUploadProfilePicture, setShowUploadProfilePicture] =
+    useState(false);
 
   const accountDeleteHandle = () => {
     const swalWithTailwind = Swal.mixin({
@@ -131,6 +131,12 @@ const ProfileSidebar = () => {
         setShowUsernameModal={setShowUsernameModal}
       />
 
+      <UploadProfilePicture
+        showUploadProfilePicture={showUploadProfilePicture}
+        setShowUploadProfilePicture={setShowUploadProfilePicture}
+      />
+      
+
       {/* profile section  */}
       <div className="flex flex-col h-screen sticky top-0 flex-1 overflow-y-auto">
         <div className=" p-5 flex justify-center items-center flex-col gap-2 md:gap-8">
@@ -208,8 +214,8 @@ const ProfileSidebar = () => {
                 alt=""
               />
             </div>
-            <div className="absolute right-3 bottom-1 bg-[#D6D9DD] p-1 rounded-full ">
-              <Camera />
+            <div className="absolute  md:bottom-4 bottom-1 md:right-3 right-1 bg-zinc-300 hover:bg-zinc-200 active:bg-zinc-400 active:scale-95 rounded-full border-2 border-white p-2 md:text-xl text-lg  cursor-pointer ">
+              <BsFillCameraFill className="" />
             </div>
           </div>
 

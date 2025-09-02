@@ -24,7 +24,7 @@ const AllFriends = ({ friend }) => {
 
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
-            <Toaster position="bottom-center" reverseOrder={true} />
+            {/* <Toaster position="bottom-center" reverseOrder={true} /> */}
 
             <div className=' p-2 '>
                 <Link to={`/friends/${friend.username}`}>
