@@ -6,7 +6,6 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 const SavedPosts = () => {
     const navigate = useNavigate();
     const { savedPosts } = useContext(AuthContext);
-
     return (
         <div className="bg-[#f1f5fa] min-h-screen grid grid-cols-1 lg:grid-cols-9 relative">
 

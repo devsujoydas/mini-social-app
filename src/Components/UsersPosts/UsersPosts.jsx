@@ -1,12 +1,9 @@
-import { useContext } from 'react' 
-import Post from '../Posts/Post'
+import { useContext } from 'react'  
 import UsersPost from './UsersPost'
 import { AuthContext } from '../../AuthProvider/AuthProvider'
 
 const UsersPosts = () => {
   const { usersPostsData } = useContext(AuthContext)
-  // console.log(usersPostsData)
-  
   return (
     <div className=' rounded-2xl  '>
       {usersPostsData.length == 0
@@ -16,7 +13,7 @@ const UsersPosts = () => {
         </div>
         :
         <div className="grid md:gap-5 gap-3">
-          {usersPostsData.map((post, idx) => <UsersPost key={idx} post={post} />)}
+          {usersPostsData?.map((post, idx) => <UsersPost key={idx} post={post} />)}
         </div>
       }
     </div>

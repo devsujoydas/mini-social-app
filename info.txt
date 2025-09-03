@@ -66,3 +66,158 @@ post get korar somoy structure
       // jodi share thake, user info shoho
   ]
 }
+
+
+
+app.get("/posts", verifyJWT, async (req, res) => {
+  try {
+    const count = await postsCollection.countDocuments();
+
+    const posts = await postsCollection.aggregate([
+      // 1. Random posts
+      { $sample: { size: count } },
+
+      // 2. Author info আনবো
+      {
+        $lookup: {
+          from: "users",
+          localField: "authorId",
+          foreignField: "_id",
+          as: "author"
+        }
+      },
+      { $unwind: "$author" },
+
+      // 3. Likes info আনবো
+      {
+        $lookup: {
+          from: "users",
+          localField: "likes",
+          foreignField: "_id",
+          as: "likes"
+        }
+      },
+
+      // 4. দরকারি ফিল্ডগুলোই নেবো + custom rename
+      {
+        $project: {
+          content: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          shares: 1,
+          comments: 1,
+
+          // Author restructure
+          author: {
+            _id: "$author._id",
+            name: "$author.name",
+            username: "$author.username",
+            profilePhoto: "$author.profilephotourl"
+          },
+
+          // Likes restructure
+          likes: {
+            $map: {
+              input: "$likes",
+              as: "u",
+              in: {
+                _id: "$$u._id",
+                name: "$$u.name",
+                username: "$$u.username",
+                profilePhoto: "$$u.profilephotourl"
+              }
+            }
+          }
+        }
+      }
+    ]).toArray();
+
+    res.send(posts);
+  } catch (error) {
+    console.error("Error getting random posts:", error);
+    res.status(500).send("Failed to fetch random posts");
+  }
+});
+
+
+old onstatechange 
+// useEffect(() => {
+  //   const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+  //     if (!currentUser?.email) {
+  //       setUser(null);
+  //       setUserData(null);
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     setUser(currentUser);
+  //     const email = currentUser.email;
+  //     localStorage.setItem("email", email);
+
+  //     try {
+  //       // ১. JWT generate
+  //       await axiosInstance.post("/jwt", { email });
+
+  //       // ২. Parallel API calls
+  //       const [
+  //         profileRes,
+  //         [friendsDataRes, myFriendsRes, sentReqRes, reqRes, youMayKnowRes],
+  //         postsRes, savedPostsRes,
+  //       ] = await Promise.all([
+  //         axiosInstance.get(`/profile/${email}`),
+  //         Promise.all([
+  //           axiosInstance.get(`/allUsers?email=${email}`),
+  //           axiosInstance.get(`/myfriends?email=${email}`),
+  //           axiosInstance.get(`/sentrequest?email=${email}`),
+  //           axiosInstance.get(`/requests?email=${email}`),
+  //           axiosInstance.get(`/youMayKnow?email=${email}`),
+  //         ]),
+  //         axiosInstance.get("/posts"),
+  //         axiosInstance.get(`/savedPosts?email=${email}`),
+  //       ]);
+
+  //       // ৩. Set all states
+  //       const profileData = profileRes.data;
+  //       setUserData(profileData);
+  //       localStorage.setItem("currentUser", JSON.stringify(profileData));
+
+  //       setFriendsData(friendsDataRes.data);
+  //       setMyFriends(myFriendsRes.data);
+  //       setSentRequests(sentReqRes.data);
+  //       setFriendRequests(reqRes.data);
+  //       setYouMayKnowFriends(youMayKnowRes.data);
+
+  //       setPostsData(postsRes.data);
+  //       setUsersPostsData(
+  //         postsRes.data.filter((post) => post.author._id === profileData._id)
+  //       );
+
+  //       setSavedPosts(savedPostsRes.data);
+
+  //       // ৪. Active ping interval
+  //       const ping = async () => {
+  //         try {
+  //           await axiosInstance.post(`/activeStatus?email=${email}`);
+  //         } catch (err) {
+  //           console.error("Active ping error:", err);
+  //         }
+  //       };
+
+  //       ping(); // প্রথমবার ping
+  //       const interval = setInterval(ping, 2000);
+
+  //       // ৫. Loading complete
+  //       setLoading(false);
+
+  //       // Cleanup interval on unmount or user change
+  //       return () => clearInterval(interval);
+  //     } catch (err) {
+  //       console.error("JWT / Data fetch error:", err);
+  //       setLoading(false);
+  //     }
+  //   });
+
+  //   // Cleanup listener on unmount
+  //   return () => unSubscribe();
+  // }, []);
+

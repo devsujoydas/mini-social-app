@@ -3,7 +3,7 @@ import { BsFileImage } from "react-icons/bs";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 import { BiSolidMoviePlay } from "react-icons/bi"; 
 import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { AuthContext } from "../../AuthProvider/AuthProvider"; 
 
 
 
@@ -54,6 +54,7 @@ const { userData, setLoading } = useContext(AuthContext)
                     <button className='mt-3 font-semibold  hover:bg-zinc-300 active:scale-95 cursor-pointer w-full py-2 rounded-sm transition-all'>List View</button>
                     <button className='mt-3 font-semibold  hover:bg-zinc-300 active:scale-95 cursor-pointer w-full py-2 rounded-sm transition-all'>Grid View</button>
                 </div>
+ 
             </div>
 
         </>

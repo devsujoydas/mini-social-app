@@ -15,6 +15,7 @@ import ThreeDotMenu from "./ThreeDotMenu.jsx";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 
 const Post = ({ post }) => {
+  // console.log(post)
   const { userData, savePostHandler } = useContext(AuthContext);
 
   const [like, setLike] = useState(false);

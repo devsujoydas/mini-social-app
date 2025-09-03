@@ -13,6 +13,7 @@ import {
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
 import axiosInstance from "../services/axiosInstance";
+import { CloudHail } from "lucide-react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -187,59 +188,55 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (!currentUser?.email) { 
+    let interval;
+
+    const fetchUserData = async (currentUser) => {
+      if (!currentUser?.email) {
         setUser(null);
         setUserData(null);
         setLoading(false);
         return;
       }
- 
+
       setUser(currentUser);
       const email = currentUser.email;
       localStorage.setItem("email", email);
 
       try {
-        // ১. JWT generate
         await axiosInstance.post("/jwt", { email });
 
-        // ২. Parallel API calls
+        const profileRes = await axiosInstance.get(`/profile?email=${email}`);
+        setUserData(profileRes.data); 
+ 
         const [
-          profileRes,
-          [friendsDataRes, myFriendsRes, sentReqRes, reqRes, youMayKnowRes],
-          postsRes, savedPostsRes,
+          allUsersRes,
+          myFriendsRes,
+          sentReqRes,
+          friendReqRes,
+          youMayKnowRes,
+          postsRes,
+          usersPostsRes,
+          savedPostsRes,
         ] = await Promise.all([
-          axiosInstance.get(`/profile/${email}`),
-          Promise.all([
-            axiosInstance.get(`/allUsers?email=${email}`),
-            axiosInstance.get(`/myfriends?email=${email}`),
-            axiosInstance.get(`/sentrequest?email=${email}`),
-            axiosInstance.get(`/requests?email=${email}`),
-            axiosInstance.get(`/youMayKnow?email=${email}`),
-          ]),
-          axiosInstance.get("/posts"),
+          axiosInstance.get(`/allUsers?email=${email}`),
+          axiosInstance.get(`/myfriends?email=${email}`),
+          axiosInstance.get(`/sentrequest?email=${email}`),
+          axiosInstance.get(`/requests?email=${email}`),
+          axiosInstance.get(`/youMayKnow?email=${email}`),
+          axiosInstance.get(`/posts`),
+          axiosInstance.get(`/posts/user?email=${email}`),
           axiosInstance.get(`/savedPosts?email=${email}`),
         ]);
 
-        // ৩. Set all states
-        const profileData = profileRes.data;
-        setUserData(profileData);
-        localStorage.setItem("currentUser", JSON.stringify(profileData));
-
-        setFriendsData(friendsDataRes.data);
+        setFriendsData(allUsersRes.data);
         setMyFriends(myFriendsRes.data);
         setSentRequests(sentReqRes.data);
-        setFriendRequests(reqRes.data);
+        setFriendRequests(friendReqRes.data);
         setYouMayKnowFriends(youMayKnowRes.data);
-
         setPostsData(postsRes.data);
-        // console.log(postsRes.data)
-        setUsersPostsData(
-          postsRes.data.filter((post) => post.authorEmail === email)
-        );
+        setUsersPostsData(usersPostsRes.data);
         setSavedPosts(savedPostsRes.data);
-
-        // ৪. Active ping interval
+ 
         const ping = async () => {
           try {
             await axiosInstance.post(`/activeStatus?email=${email}`);
@@ -247,23 +244,21 @@ const AuthProvider = ({ children }) => {
             console.error("Active ping error:", err);
           }
         };
-
-        ping(); // প্রথমবার ping
-        const interval = setInterval(ping, 2000);
-
-        // ৫. Loading complete
-        setLoading(false);
-
-        // Cleanup interval on unmount or user change
-        return () => clearInterval(interval);
+        ping();
+        interval = setInterval(ping, 5000);
       } catch (err) {
         console.error("JWT / Data fetch error:", err);
+      } finally {
         setLoading(false);
       }
-    });
+    };
 
-    // Cleanup listener on unmount
-    return () => unSubscribe();
+    const unsubscribe = onAuthStateChanged(auth, fetchUserData);
+
+    return () => {
+      unsubscribe();
+      if (interval) clearInterval(interval);
+    };
   }, []);
 
   const dataList = {
