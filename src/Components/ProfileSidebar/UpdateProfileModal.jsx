@@ -103,7 +103,7 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
   return (
     <div
       className={`${
-        showUpdateInfoModal ? "z-40" : "-z-40"
+        showUpdateInfoModal ? "z-40 opacity-100" : "-z-40 opacity-0"
       } fixed top-0 left-0 w-full h-screen backdrop-blur-sm bg-[#00000059] flex justify-center items-center transition-all`}
     >
       <form

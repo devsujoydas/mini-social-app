@@ -11,8 +11,7 @@ const ThreeDotMenu = ({ post, variant = "feed", onDelete, onRemove, setShowMenu 
   const { userData, savePostHandler } = useContext(AuthContext);
 
   const menuItemStyle =
-    "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition-all " +
-    "hover:bg-zinc-100 active:scale-95 cursor-pointer";
+    "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition-all hover:bg-zinc-100 active:scale-95 cursor-pointer";
 
   const destructiveStyle = "text-red-600 hover:bg-red-50";
 

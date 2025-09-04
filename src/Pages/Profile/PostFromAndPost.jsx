@@ -3,8 +3,8 @@ import { BsFileImage } from "react-icons/bs";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { useContext } from "react"; 
-import UsersPosts from "../UsersPosts/UsersPosts";
-import Loading from "../Loading/Loading";
+import UsersPosts from "../../Components/UsersPosts/UsersPosts";
+import Loading from "../../Components/Loading/Loading";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 
