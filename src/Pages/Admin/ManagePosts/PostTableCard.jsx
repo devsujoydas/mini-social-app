@@ -1,4 +1,4 @@
-import { FaTrashCan } from "react-icons/fa6";
+import { FaRegTrashCan } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useContext } from "react"; 
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
@@ -46,7 +46,7 @@ const PostTableCard = ({ post, deletePost }) => {
                 </td>
                 <td className="md:py-3 px-6 md:text-sm text-xs">
                     <button onClick={() => deletePost(post._id)} className="flex items-center gap-1 border border-zinc-300 rounded-md py-2 px-2 bg-[#a60000] text-white hover:bg-[#ff6565] cursor-pointer active:scale-95 duration-300 transition-all">
-                        <FaTrashCan className="" />
+                        <FaRegTrashCan className="" />
                         <p className="text-xs">Delete</p>
                     </button>
                 </td>

@@ -1,62 +1,37 @@
-// import { useContext, useEffect } from "react"
-// import Post from "./Post"
-// import { AuthContext } from "../../AuthProvider/AuthProvider"
-
-// const Posts = () => {
-//   const { postsData } = useContext(AuthContext)
-
-//   return (
-//     <div className=' rounded-2xl '>
-//       {!postsData
-//         ?
-//         <div className="flex justify-center items-center">
-//           <h1 className="text-zinc-400">No post found...</h1>
-//         </div>
-//         :
-//         <div className="grid md:gap-5 gap-3 ">
-//           {postsData.map((post, idx) => <Post key={idx} post={post} />)}
-//         </div>
-//       }
-//     </div>
-//   )
-// }
-
-// export default Posts
-
 import { useContext } from "react";
-import Post from "./Post";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import PostSkeleton from "./PostSkeleton"; // 👉 একটা skeleton component বানাও
+import PostCard from "../PostCard/PostCard";
+import PostSkeleton from "./PostSkeleton";
 
 const Posts = () => {
   const { postsData, loading } = useContext(AuthContext);
- 
+
+  // Skeleton array for loading state
+  const skeletons = Array.from({ length: 3 });
+
+  if (loading) {
+    return (
+      <div className="grid md:gap-5 gap-3">
+        {skeletons.map((_, idx) => (
+          <PostSkeleton key={idx} />
+        ))}
+      </div>
+    );
+  }
+
+  if (!loading && (!postsData || postsData.length === 0)) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <h1 className="text-zinc-400 text-lg">No posts found...</h1>
+      </div>
+    );
+  }
+
   return (
-    <div className="rounded-2xl">
-      {/* 1. Loading হলে skeleton দেখাবে */}
-      {loading && (
-        <div className="grid md:gap-5 gap-3">
-          {Array.from({ length: 3 }).map((_, idx) => (
-            <PostSkeleton key={idx} />
-          ))}
-        </div>
-      )}
-
-      {/* 2. Loading শেষ, কিন্তু কোনো পোস্ট নাই */}
-      {!loading && postsData?.length === 0 && (
-        <div className="flex justify-center items-center">
-          <h1 className="text-zinc-400">No post found...</h1>
-        </div>
-      )}
-
-      {/* 3. Data থাকলে */}
-      {!loading && postsData?.length > 0 && (
-        <div className="grid md:gap-5 gap-3">
-          {postsData.map((post, idx) => (
-            <Post key={idx} post={post} />
-          ))}
-        </div>
-      )}
+    <div className="grid md:gap-5 gap-2">
+      {postsData.map((post) => (
+        <PostCard key={post._id} post={post} variant="feed" />
+      ))}
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import Swal from "sweetalert2";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { FaTrashCan } from "react-icons/fa6";
+
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
     const [isAdmin, setIsAdmin] = useState(friend.role === "admin");
@@ -126,7 +127,7 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
                     onClick={handleDeleteUser}
                     className="flex items-center gap-1 border border-zinc-300 rounded-md py-2 px-2 bg-[#a60000] text-white hover:bg-[#ff6565] cursor-pointer active:scale-95 duration-300 transition-all"
                 >
-                    <FaTrashCan />
+                    <FaRegTrashCan />
                     <p className="text-xs">Delete</p>
                 </button>
             </td>

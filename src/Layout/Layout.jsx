@@ -10,7 +10,7 @@ const Layout = () => {
 
   return (
     <div>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-center" reverseOrder={false} />
 
       {loading ? (
         <Loading />

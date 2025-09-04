@@ -7,18 +7,14 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  EmailAuthProvider,
-  linkWithCredential,
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
 import axiosInstance from "../services/axiosInstance";
-import { CloudHail } from "lucide-react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  // const navigate = useNavigate()
   const [user, setUser] = useState({});
   const [userData, setUserData] = useState({});
 
@@ -164,23 +160,17 @@ const AuthProvider = ({ children }) => {
 
   const deleteAccount = async () => {
     try {
-      // Step 1: Delete Firebase Auth user
       await deleteUser(user);
-
-      // Step 2: Call backend to delete all related data
       const res = await axiosInstance.delete(`/profile/delete/${user.email}`);
       console.log("✅ Account & all data deleted:", res.data);
 
-      // Step 3: Clear localStorage
       localStorage.removeItem("email");
       localStorage.removeItem("currentUser");
       localStorage.removeItem("filteredFriend");
 
-      // Step 4: Logout from Firebase and backend
       await signOut(auth);
       await axiosInstance.post(`/logout`);
 
-      // Step 5: Redirect to login page
       navigate("/login");
     } catch (error) {
       console.error("❌ Error deleting account:", error);
@@ -204,9 +194,8 @@ const AuthProvider = ({ children }) => {
 
       try {
         await axiosInstance.post("/jwt", { email });
-
-        const profileRes = await axiosInstance.get(`/profile?email=${email}`);
-        setUserData(profileRes.data); 
+        const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
+        setUserData(userDataRes.data); 
  
         const [
           allUsersRes,
@@ -268,8 +257,10 @@ const AuthProvider = ({ children }) => {
     setUserData,
     usersPostsData,
     setUsersPostsData,
+
     loading,
     setLoading,
+
     signUpUser,
     logInUser,
     signOutUser,

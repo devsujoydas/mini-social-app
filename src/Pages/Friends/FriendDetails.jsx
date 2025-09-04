@@ -1,6 +1,5 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import { useContext } from 'react'; 
-import { Toaster } from 'react-hot-toast';
 import AllFriends from './AllFriends';
 import { LuMessageCircleMore } from "react-icons/lu";
 import { FaUserPlus } from "react-icons/fa6"; 

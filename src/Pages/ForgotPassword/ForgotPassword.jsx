@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
 import auth from "../../Firebase/firebase.config";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
 const ForgotPassword = () => {

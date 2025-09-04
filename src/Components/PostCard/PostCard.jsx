@@ -1,64 +1,59 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { BiLike, BiSolidLike, BiCommentDots } from "react-icons/bi";
 import { VscSend } from "react-icons/vsc";
 import { CiBookmark } from "react-icons/ci";
+import { FaBookmark } from "react-icons/fa6";
 import { FaRegSmile } from "react-icons/fa";
 import { ImAttachment } from "react-icons/im";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import axios from "axios";
-import ThreeDotMenu from "./ThreeDotMenu.jsx";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import ThreeDotMenu from "../Posts/ThreeDotMenu";
 
-const Post = ({ post }) => { 
+const PostCard = ({ post, variant = "feed", onDelete, onRemove }) => {
   const { userData, savePostHandler } = useContext(AuthContext);
 
-  const [like, setLike] = useState(false);
-  const [likesCount, setLikesCount] = useState(post.likes.length);
-  const [reactorsUsers, setReactorsUsers] = useState(post.likes);
-  const [showEdit, setShowEdit] = useState(true);
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(post.likes.length || 0);
+  const [reactorsUsers, setReactorsUsers] = useState(post.likesDetails || []); // detailed user info
+  const [showMenu, setShowMenu] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
 
   const likeCommentStyle =
     "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1";
 
-  // Check if current user liked this post
+  // Detect if current user liked this post
   useEffect(() => {
     if (userData?._id) {
-      const liked = post.likes.some((user) => user._id === userData._id);
-      setLike(liked);
+      const liked = post.likes.some((id) => id.toString() === userData._id.toString());
+      setLiked(liked);
     }
   }, [post.likes, userData]);
 
-  // Handle like/unlike
+  // Like/unlike handler
   const likeHandler = async () => {
     if (!userData?._id) return toast.error("Please login first");
 
     try {
       const { data } = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-        {
-          userId: userData._id,
-          name: userData.name,
-          username: userData.username,
-        }
+        { userId: userData._id }
       );
 
       if (data.message === "Liked") {
-        setLike(true);
+        setLiked(true);
         setLikesCount((prev) => prev + 1);
         setReactorsUsers((prev) => [...prev, userData]);
         toast.success("Liked!");
-      } else if (data.message === "Disliked") {
-        setLike(false);
+      } else {
+        setLiked(false);
         setLikesCount((prev) => prev - 1);
-        setReactorsUsers((prev) =>
-          prev.filter((user) => user._id !== userData._id)
-        );
+        setReactorsUsers((prev) => prev.filter((u) => u._id !== userData._id));
         toast.success("Disliked!");
       }
     } catch (err) {
@@ -67,13 +62,9 @@ const Post = ({ post }) => {
     }
   };
 
-  // Handle post share
   const sharePostHandler = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
-    navigator.clipboard
-      .writeText(url)
-      .then(() => toast.success("Post URL Copied!"))
-      .catch((err) => console.error("Copy failed:", err));
+    navigator.clipboard.writeText(url).then(() => toast.success("Post URL Copied!"));
   };
 
   return (
@@ -94,15 +85,11 @@ const Post = ({ post }) => {
               className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
             />
             <div>
-              <h1 className="font-semibold text-md cursor-pointer">
-                {post.author.name}
-              </h1>
+              <h1 className="font-semibold text-md cursor-pointer">{post.author.name}</h1>
               <p className="text-zinc-500 text-sm">
                 {new Date(post.createdAt).toLocaleString()}
                 {post.updatedAt && (
-                  <span className="text-emerald-700 font-semibold ml-2">
-                    Updated
-                  </span>
+                  <span className="text-emerald-700 font-semibold ml-2">Updated</span>
                 )}
               </p>
             </div>
@@ -110,10 +97,18 @@ const Post = ({ post }) => {
         </Link>
 
         <div className="relative">
-          <button onClick={() => setShowEdit(!showEdit)}>
+          <button onClick={() => setShowMenu(!showMenu)}>
             <BsThreeDotsVertical className="text-4xl text-zinc-500 hover:text-black rounded-full transition-all p-2" />
           </button>
-          <ThreeDotMenu post={post} showEdit={showEdit} setShowEdit={setShowEdit} />
+          {showMenu && (
+            <ThreeDotMenu
+              post={post}
+              variant={variant}
+              onDelete={onDelete}
+              onRemove={onRemove}
+              setShowMenu={setShowMenu}
+            />
+          )}
         </div>
       </div>
 
@@ -134,7 +129,7 @@ const Post = ({ post }) => {
           </Link>
         )}
 
-        {/* Likes, Comments, Shares Info */}
+        {/* Likes, Comments, Shares */}
         <div className="flex justify-between items-center mt-2 text-sm px-2">
           <div className="flex items-center gap-1">
             <img src="/like.png" alt="Like" className="w-4 h-4 md:w-5 md:h-5 rounded-full" />
@@ -179,10 +174,10 @@ const Post = ({ post }) => {
 
         {/* Action Buttons */}
         <div className="flex justify-between items-center my-1">
-          <div className="flex items-center md:gap-2">
+          <div className="flex items-center md:gap-2 w-full">
             <button onClick={likeHandler} className={likeCommentStyle}>
-              {like ? <BiSolidLike className="text-blue-500 text-xl" /> : <BiLike className="text-xl" />}
-              <span className={`flex items-center gap-1 ${like ? "text-blue-500" : "text-black"}`}>
+              {liked ? <BiSolidLike className="text-blue-500 text-xl" /> : <BiLike className="text-xl" />}
+              <span className={`flex items-center gap-1 ${liked ? "text-blue-500" : "text-black"}`}>
                 {likesCount} <span className="hidden md:flex">Like</span>
               </span>
             </button>
@@ -192,16 +187,24 @@ const Post = ({ post }) => {
               <span className="hidden md:flex">Comments</span>
             </button>
 
-            <button onClick={sharePostHandler} className={likeCommentStyle}>
+            <button onClick={() => sharePostHandler()} className={likeCommentStyle}>
               <PiShareFatBold className="text-xl" />
               <span className="hidden md:flex">Shares</span>
             </button>
           </div>
 
-          <CiBookmark
-            onClick={() => savePostHandler(post)}
-            className="text-2xl cursor-pointer active:scale-95 transition-all"
-          />
+          {userData?.savedPosts?.some((p) => p._id === post._id) ? (
+  <FaBookmark
+    onClick={() => savePostHandler(post)}
+    className="text-2xl text-blue-600 cursor-pointer active:scale-95 transition-all"
+  />
+) : (
+  <CiBookmark
+    onClick={() => savePostHandler(post)}
+    className="text-2xl cursor-pointer active:scale-95 transition-all"
+  />
+)}
+
         </div>
       </div>
 
@@ -240,4 +243,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default PostCard;

@@ -3,19 +3,12 @@ import CommentCard from './CommentCard'
 import { useEffect } from "react";
 import { useContext, useState } from "react"; 
 import { Link } from "react-router-dom";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
-import { BiLike } from "react-icons/bi";
-import { MdEdit } from "react-icons/md";
-import { FaCopy } from "react-icons/fa";
-import { VscSend } from "react-icons/vsc";
-import { FaArchive } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
-import { CiBookmark } from "react-icons/ci";
+import { BiLike } from "react-icons/bi"; 
+import { VscSend } from "react-icons/vsc"; 
 import { FaRegSmile } from "react-icons/fa";
-import { BiSolidLike } from "react-icons/bi";
-import { FaTrashCan } from "react-icons/fa6";
-import { IoSettings } from "react-icons/io5";
+import { BiSolidLike } from "react-icons/bi";  
 import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
 import { FaCircleMinus } from "react-icons/fa6";

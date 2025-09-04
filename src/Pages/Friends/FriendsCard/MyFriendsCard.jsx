@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom' 
 import { AuthContext } from '../../../AuthProvider/AuthProvider'
 
