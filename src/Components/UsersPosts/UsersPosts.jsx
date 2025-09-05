@@ -3,7 +3,7 @@ import PostCard from "../PostCard/PostCard";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const UsersPosts = () => {
-  const { usersPostsData, deletePostHandler } = useContext(AuthContext);
+  const {usersPostsData, deletePostHandler } = useContext(AuthContext);
 
   const hasPosts = usersPostsData && usersPostsData.length > 0;
 

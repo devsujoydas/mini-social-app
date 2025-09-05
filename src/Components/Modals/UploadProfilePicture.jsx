@@ -117,7 +117,7 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+    <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center ">
       <div
         ref={modalRef}
         className="bg-white rounded-2xl shadow-lg w-[500px] max-w-[95%] animate-fadeIn relative"

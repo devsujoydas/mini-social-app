@@ -56,7 +56,7 @@ const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
     }
 
     return (
-        <div className={`${showUsernameModal ? "z-40 opacity-100 duration-300 transition-all" : "-z-40 opacity-0 duration-300 transition-all"} 
+        <div className={`${showUsernameModal ? "z-40 block opacity-100 duration-300 transition-all" : "-z-40 hidden opacity-0 duration-300 transition-all"} 
         fixed top-0 left-0 w-full h-screen backdrop-blur-sm  bg-[#00000059] flex justify-center items-center transition-all`}>
 
             <div className="relative max-w-96 w-full md:p-10 p-5 md:m-0 m-5 rounded-md bg-white">

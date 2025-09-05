@@ -16,8 +16,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-  const [userData, setUserData] = useState({});
-
+  const [userData, setUserData] = useState({}); 
   const [savedPosts, setSavedPosts] = useState([]);
   const [usersPostsData, setUsersPostsData] = useState([]);
   const [myFriends, setMyFriends] = useState([]);
@@ -152,6 +151,7 @@ const AuthProvider = ({ children }) => {
       await axiosInstance.post(`/logout`, {});
       localStorage.removeItem("email");
       localStorage.removeItem("currentUser");
+      localStorage.removeItem("accessToken");
       navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
@@ -195,7 +195,8 @@ const AuthProvider = ({ children }) => {
       try {
         await axiosInstance.post("/jwt", { email });
         const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
-        setUserData(userDataRes.data); 
+        setUserData(userDataRes.data);  
+
  
         const [
           allUsersRes,

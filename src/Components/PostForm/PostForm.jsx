@@ -31,6 +31,9 @@ const PostForm = () => {
       shares: [],
     };
 
+   
+    
+
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/post`,
@@ -64,6 +67,9 @@ const PostForm = () => {
       });
     }
   };
+
+
+  
 
   return (
     <div className="p-5 border border-zinc-300">
@@ -105,3 +111,5 @@ const PostForm = () => {
 };
 
 export default PostForm;
+
+
