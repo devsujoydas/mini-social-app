@@ -19,7 +19,7 @@ const NewUsersPerMonthChart = () => {
       {
         label: "New Users",
         data: [50, 100, 70, 90, 120, 140, 150],
-        backgroundColor: "rgba(239, 68, 68, 0.7)", // red-500
+        backgroundColor: "rgba(239, 68, 68, 0.7)",
       },
     ],
   };

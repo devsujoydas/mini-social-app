@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 const rawAxios = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true, // শুধু refresh এ দরকার
+  withCredentials: true, 
 });
 
 let isRefreshing = false;
@@ -20,14 +20,12 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
-// 🔹 Request interceptor
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) config.headers["Authorization"] = `Bearer ${token}`;
   return config;
 });
 
-// 🔹 Response interceptor
 axiosInstance.interceptors.response.use(
   (res) => res,
   async (error) => {

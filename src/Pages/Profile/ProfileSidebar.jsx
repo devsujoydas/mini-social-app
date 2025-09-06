@@ -23,7 +23,6 @@ const ProfileSidebar = () => {
   const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // SweetAlert config
   const swalWithTailwind = Swal.mixin({
     customClass: {
       confirmButton:

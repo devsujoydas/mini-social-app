@@ -26,7 +26,6 @@ const Signup = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [userStatus, setUserStatus] = useState("");
 
-    // handle input change
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setFormData((prev) => ({
@@ -35,7 +34,6 @@ const Signup = () => {
         }));
     };
 
-    // validation check ongso
     const validate = () => {
         const errs = {};
         if (!formData.email) errs.email = "Email is required";
@@ -51,7 +49,6 @@ const Signup = () => {
         return errs;
     };
 
-    // submit handler
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
@@ -76,11 +73,9 @@ const Signup = () => {
         };
 
         try {
-            // Firebase Signup
             const result = await signUpUser(formData.email, formData.password);
             setUser(result.user);
 
-            // Send user data to backend
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`,{userObj})
             setUserData(res.data);
             navigate("/profile");

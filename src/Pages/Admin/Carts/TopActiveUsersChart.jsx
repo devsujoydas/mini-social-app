@@ -17,7 +17,7 @@ const TopActiveUsersChart = () => {
       {
         label: "Posts Created",
         data: [120, 98, 86, 75, 60],
-        backgroundColor: "rgba(59, 130, 246, 0.7)", // blue-500
+        backgroundColor: "rgba(59, 130, 246, 0.7)",
       },
     ],
   };

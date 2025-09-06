@@ -13,7 +13,7 @@ const TotalPostsBarChart = ({ labels, postCounts }) => {
       {
         label: "Total Posts",
         data: postCounts,
-        backgroundColor: "rgba(59, 130, 246, 0.7)", // blue-500
+        backgroundColor: "rgba(59, 130, 246, 0.7)",
       },
     ],
   };
@@ -42,7 +42,7 @@ const PostsChartWrapper = () => {
 
     postsData?.forEach(post => {
       const date = new Date(post.createdDate);
-      if (isNaN(date)) return; // ignore invalid dates
+      if (isNaN(date)) return;
 
       const label = date.toLocaleString("en-US", { month: "short", year: "numeric" });
       countsMap[label] = (countsMap[label] || 0) + 1;

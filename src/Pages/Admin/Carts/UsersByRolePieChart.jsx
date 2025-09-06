@@ -17,9 +17,9 @@ const UsersByRolePieChart = ({ adminCount = 1, userCount = 1200,  }) => {
         label: "Users by Role",
         data: [adminCount, userCount],
         backgroundColor: [
-          "rgba(239, 68, 68, 0.7)",   // red
-          "rgba(59, 130, 246, 0.7)",  // blue
-          "rgba(34, 197, 94, 0.7)"    // green
+          "rgba(239, 68, 68, 0.7)",
+          "rgba(59, 130, 246, 0.7)", 
+          "rgba(34, 197, 94, 0.7)" 
         ],
         borderColor: [
           "rgba(239, 68, 68, 1)",

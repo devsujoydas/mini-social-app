@@ -26,15 +26,13 @@ const UsersPost = ({ post }) => {
 
   const likeCommentStyle =
     "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 cursor-pointer flex items-center gap-1";
-
-  // Detect already liked
+ 
   useEffect(() => {
     if (userData?._id) {
       setLiked(post.likes.includes(userData._id));
     }
   }, [post.likes, userData]);
-
-  // Like/Dislike handler
+ 
   const likeHandler = async () => {
     try {
       const { data } = await axios.put(
@@ -58,16 +56,14 @@ const UsersPost = ({ post }) => {
       toast.error("Something went wrong!");
     }
   };
-
-  // Share handler
+ 
   const sharePostHandler = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
     navigator.clipboard
       .writeText(url)
       .then(() => toast.success("Post URL copied!"));
   };
-
-  // Delete handler
+ 
   const deletePost = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -90,8 +86,7 @@ const UsersPost = ({ post }) => {
       }
     });
   };
-
-  // Get user info for likes
+ 
   const reactorsUsers = post.likes
     .map((id) => allUsers.find((u) => u._id === id))
     .filter(Boolean);

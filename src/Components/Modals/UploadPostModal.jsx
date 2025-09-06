@@ -15,7 +15,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
-  // Close modal on outside click
   useEffect(() => {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -27,7 +26,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, setIsOpen]);
 
-  // File select / preview
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -47,7 +45,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
 
   const handleDragOver = (e) => e.preventDefault();
 
-  // Upload image to imgbb
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
@@ -59,7 +56,6 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
     return data.data.url;
   };
 
-  // Handle Post Submit
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,7 +70,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
       }
 
       const postData = {
-        authorId: userData._id, // backend will convert to ObjectId
+        authorId: userData._id,
         content: {
           text: e.target.postContent.value,
           postImageUrl: finalImageUrl || null,

@@ -13,7 +13,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
-  // Close modal on outside click
   useEffect(() => {
     function handleClickOutside(event) {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -25,7 +24,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, setIsOpen]);
 
-  // File select / preview
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
     if (selected) {
@@ -45,7 +43,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
 
   const handleDragOver = (e) => e.preventDefault();
 
-  // Upload file to imgbb and update backend
   const uploadFile = async () => {
     if (!file) return toast.error("Please select a file first!");
     setLoading(true);
@@ -64,7 +61,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
       const finalUrl = data.data.url;
       toast.success("Uploaded Successfully!");
 
-      // Send URL to backend
       await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/users/${userData._id}/profile-photo`,
         { profilePhotoUrl: finalUrl }
@@ -80,7 +76,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
     }
   };
 
-  // Upload by URL
   const uploadByUrl = async () => {
     if (!url) return toast.error("Please enter a valid URL!");
     setLoading(true);
@@ -97,7 +92,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
       const finalUrl = data.data.url;
       toast.success("Uploaded Successfully!");
 
-      // Send URL to backend
       await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/users/${userData._id}/profile-photo`,
         { profilePhotoUrl: finalUrl }
@@ -122,7 +116,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
         ref={modalRef}
         className="bg-white rounded-2xl shadow-lg w-[500px] max-w-[95%] animate-fadeIn relative"
       >
-        {/* Close Button */}
         <button
           onClick={() => setIsOpen(false)}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
@@ -130,13 +123,11 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
           ×
         </button>
 
-        {/* Content */}
         <div className="p-6">
           <h2 className="text-lg font-medium text-gray-800 mb-5">
             Upload Photos
           </h2>
 
-          {/* Drop Zone */}
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
@@ -194,7 +185,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
             <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
-          {/* Import from URL */}
           <p className="text-sm text-gray-600 mb-2">Import from URL</p>
           <div className="flex space-x-2">
             <input
@@ -214,7 +204,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
           </div>
         </div>
 
-        {/* Footer */}
         <div className="px-6 py-4 flex justify-between items-center border-t border-gray-200 rounded-b-2xl">
           <button className="text-sm text-gray-500 hover:text-gray-700">
             Help Centre

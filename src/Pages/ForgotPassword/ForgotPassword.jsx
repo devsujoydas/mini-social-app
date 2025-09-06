@@ -31,7 +31,6 @@ const ForgotPassword = () => {
           setLoadingSpiner(true)
         }
         else {
-          // setLoadingSpiner(true)
           try {
             await sendPasswordResetEmail(auth, email)
               .then(() => {

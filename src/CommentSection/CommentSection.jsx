@@ -12,7 +12,7 @@ const CommentSection = ({ post, setPost }) => {
         text: commentText
       }, { withCredentials: true });
 
-      setPost(res.data); // update post with new comment
+      setPost(res.data);
       setCommentText("");
     } catch (err) {
       console.error(err);

@@ -28,7 +28,6 @@ const FriendDetails = () => {
     const btnStyle =
         "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all";
 
-    // Safely get arrays or fallback empty arrays
     const myFriendsIds = myFriends?.map((f) => f._id) || [];
     const friendsRequestIds = friendsRequest?.map((f) => f._id) || [];
     const sentRequestsIds = sentRequests?.map((f) => f._id) || [];
@@ -36,7 +35,6 @@ const FriendDetails = () => {
 
     const friendId = friend?._id;
 
-    // Check relationships
     const isFriend = myFriendsIds.includes(friendId);
     const hasReceivedRequest = friendsRequestIds.includes(friendId);
     const hasSentRequest = sentRequestsIds.includes(friendId);

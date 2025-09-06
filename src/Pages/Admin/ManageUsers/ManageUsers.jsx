@@ -40,7 +40,6 @@ const ManageUsers = () => {
     }
   };
 
-  // ✅ Make Admin
   const makeAdmin = async (email) => {
     try {
       const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/make-admin/${email}`);
@@ -51,7 +50,6 @@ const ManageUsers = () => {
     }
   };
 
-  // ✅ Remove Admin
   const removeAdmin = async (email) => {
     try {
       const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/remove-admin/${email}`);

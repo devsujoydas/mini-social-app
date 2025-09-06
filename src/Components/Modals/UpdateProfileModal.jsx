@@ -45,7 +45,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
       if (res.data?.modifiedCount > 0) {
         Swal.fire("Profile updated successfully!", "", "success");
 
-        // fresh data fetch
         const refreshed = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/profile?email=${userData?.email}`
         );
@@ -61,7 +60,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
     }
   };
 
-  // 🔹 Reusable Input Component
   const InputField = ({ icon, name, defaultValue, placeholder }) => (
     <div className="flex items-center gap-3 rounded-xl px-4 py-3 
                     bg-white border border-gray-200 shadow-sm
@@ -79,13 +77,13 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
 
   return (
     <div
-      onClick={() => setShowUpdateInfoModal(false)} // backdrop click = close
+      onClick={() => setShowUpdateInfoModal(false)}
       className={`fixed inset-0 flex justify-center items-center 
       backdrop-blur-sm bg-black/40 transition-all duration-300
       ${showUpdateInfoModal ? "z-40 opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <form
-        onClick={(e) => e.stopPropagation()} // modal ভেতরে click করলে বন্ধ হবে না
+        onClick={(e) => e.stopPropagation()}
         onSubmit={updateProfileHandler}
         className="relative bg-white w-full sm:w-[90%] md:w-[70%] lg:w-[55%] xl:w-[45%]
                    mx-4 sm:mx-6 rounded-2xl shadow-2xl 

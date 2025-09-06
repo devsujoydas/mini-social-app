@@ -15,7 +15,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import ThreeDotMenu from "../Posts/ThreeDotMenu";
 
-// -------------------- Subcomponents -------------------- //
 const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, onRemove }) => {
    return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
@@ -81,7 +80,6 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => (
         <div
           className="flex gap-1 cursor-pointer relative"
           onMouseEnter={() => setShowUsers(true)}
-          // onMouseLeave={() => setShowUsers(false)}
         >
           {showUsers && (
             <div className="absolute bottom-8  left-0 z-10 bg-black/70 text-white p-3 rounded-lg flex flex-col space-y-1 shadow-lg">
@@ -216,7 +214,6 @@ const CommentInput = ({ userData }) => (
   </form>
 );
 
-// -------------------- Main Component -------------------- //
 const PostCard = ({ post, variant = "feed", onDelete, onRemove }) => {
   const { userData, savePostHandler } = useContext(AuthContext);
 
@@ -242,7 +239,7 @@ const likeHandler = async () => {
   try {
     const { data } = await axios.put(
       `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-      {}, // ❌ userId পাঠানো লাগবে না
+      {}, 
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access-token")}`,

@@ -9,7 +9,6 @@ const SearchPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // সার্চ করার ফাংশন
     const fetchResults = async (searchQuery, pageNum) => {
         if (!searchQuery.trim()) {
             setResults({ posts: [], users: [] });
@@ -30,7 +29,6 @@ const SearchPage = () => {
         }
     };
 
-    // ডিবাউন্স সহ সার্চ ইফেক্ট (query বা page পরিবর্তনে)
     useEffect(() => {
         const delayDebounce = setTimeout(() => {
             if (query.trim()) {
@@ -43,13 +41,10 @@ const SearchPage = () => {
         return () => clearTimeout(delayDebounce);
     }, [query, page]);
 
-    // পেজ নেভিগেশন হ্যান্ডলার
     const handlePrevPage = () => {
         if (page > 1) setPage(page - 1);
     };
     const handleNextPage = () => {
-        // পেজ শেষ না হলে পরের পেজে যাবে (কাজের জন্য কোন total count দিলে ভাল হয়)
-        // এখানে সরলভাবে next দেয়া হয়েছে, যদি রেজাল্ট কম আসে তাহলে শেষেও যেতে পারবে
         if (results.posts.length === limit || results.users.length === limit) {
             setPage(page + 1);
         }
@@ -64,7 +59,7 @@ const SearchPage = () => {
                 value={query}
                 onChange={(e) => {
                     setQuery(e.target.value);
-                    setPage(1); // নতুন সার্চে পেজ ১ এ নিয়ে যাবে
+                    setPage(1);
                 }}
             />
 

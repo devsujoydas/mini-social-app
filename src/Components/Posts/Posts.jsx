@@ -5,8 +5,7 @@ import PostSkeleton from "./PostSkeleton";
 
 const Posts = () => {
   const { postsData, loading } = useContext(AuthContext);
-
-  // Skeleton array for loading state
+ 
   const skeletons = Array.from({ length: 3 });
 
   if (loading) {

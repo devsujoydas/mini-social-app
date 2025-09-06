@@ -26,7 +26,6 @@ const Post = ({ post }) => {
   const likeCommentStyle =
     "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1";
 
-  // Check if current user liked this post
   useEffect(() => {
     if (userData?._id) {
       const liked = post.likes.some((user) => user._id === userData._id);
@@ -34,7 +33,6 @@ const Post = ({ post }) => {
     }
   }, [post.likes, userData]);
 
-  // Handle like/unlike
   const likeHandler = async () => {
     if (!userData?._id) return toast.error("Please login first");
 
@@ -67,7 +65,6 @@ const Post = ({ post }) => {
     }
   };
 
-  // Handle post share
   const sharePostHandler = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
     navigator.clipboard

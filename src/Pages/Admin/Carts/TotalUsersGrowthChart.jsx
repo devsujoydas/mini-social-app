@@ -19,7 +19,7 @@ const TotalUsersGrowthChart = () => {
                 label: "Total Users",
                 data: [500, 650, 700, 850, 900, 1100, 1240],
                 fill: false,
-                borderColor: "rgba(34, 197, 94, 1)", // green-500
+                borderColor: "rgba(34, 197, 94, 1)",
                 tension: 0.3,
             },
         ],

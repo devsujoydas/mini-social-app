@@ -17,8 +17,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
-  Tooltip,       // **register Tooltip plugin**
-  Legend         // register legend for labels
+  Tooltip,
+  Legend
 );
 
 const ActiveUsersDailyWeeklyChart = () => {
@@ -47,8 +47,8 @@ const ActiveUsersDailyWeeklyChart = () => {
   const options = {
     responsive: true,
     interaction: {
-      mode: 'nearest',  // how the tooltip is triggered
-      intersect: false, // show tooltip even if not exactly on point
+      mode: 'nearest',
+      intersect: false,
     },
     plugins: {
       tooltip: {

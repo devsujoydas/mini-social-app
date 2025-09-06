@@ -16,12 +16,9 @@ const SignInWithGoogle = () => {
             const user = result.user;
 
             if (!user.email) return;
-
-            // 🔹 Check if user already exists with Email/Password
             const methods = await fetchSignInMethodsForEmail(auth, user.email);
 
             if (methods.includes("password")) {
-                // Prompt password for linking
                 const password = prompt("Enter your password to link your Google account:");
                 if (!password) return alert("Password is required to link accounts!");
 
@@ -29,7 +26,6 @@ const SignInWithGoogle = () => {
                 await linkWithCredential(user, credential);
             }
 
-            // 🔹 Prepare user data to send backend
             const formData = {
                 email: user.email,
                 name: user.displayName,
@@ -49,8 +45,6 @@ const SignInWithGoogle = () => {
                 friendRequests: [],
                 sentRequests: [],
             };
-
-            // 🔹 Send to backend
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signinwithgoogle`, formData);
 
             setUserData(res.data);
