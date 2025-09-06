@@ -39,7 +39,7 @@ const ChatBox = () => {
               <div className="border border-zinc-300 rounded-md md:p-1 flex justify-between items-center">
                 <Link to={`/friends/${friend.username}`}>
                   <div className="flex items-center gap-2 hover:bg-zinc-200 cursor-pointer transition-all active:scale-95 p-2 rounded-lg">
-                    <img className="md:w-12 w-10 md:h-12 h-10 object-cover border border-zinc-300 rounded-full" src={friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"} alt="" />
+                    <img className="md:w-12 w-10 md:h-12 h-10 object-cover border border-zinc-300 rounded-full" src={friend?.profile.profilePhotoUrl ? friend?.profile.profilePhotoUrl : "/default.jpg"} alt="" />
                     <div>
                       <h1 className="md:text-lg text-sm font-semibold">{friend.name}</h1>
                       <h1 className="md:text-sm text-xs">@{friend.username}</h1>
@@ -57,13 +57,13 @@ const ChatBox = () => {
                 <div className=" rounded-md md:min-h-[640px] min-h-[450px] md:p-5 p-2 flex flex-col justify-end gap-2">
                   <p className="text-center text-xs ">{moment().subtract(1, 'days').calendar()}</p>
                   <div className=" flex justify-start w-full gap-2">
-                    <Link to={`/friends/${friend.username}`}><img className="md:w-9 w-7 md:h-9 h-7 object-cover border border-zinc-300 rounded-full" src={friend?.profilephotourl ? friend?.profilephotourl : "/default.jpg"} alt="" /></Link>
+                    <Link to={`/friends/${friend.username}`}><img className="md:w-9 w-7 md:h-9 h-7 object-cover border border-zinc-300 rounded-full" src={friend?.profile.profilePhotoUrl ? friend?.profile.profilePhotoUrl : "/default.jpg"} alt="" /></Link>
                     <h1 className="border border-zinc-200 text-white w-fit h-fit px-6  py-1 rounded-full bg-zinc-400">Hi</h1>
                   </div>
                   <p className="text-center text-xs ">{moment().format('LT')}</p>
                   <div className=" flex justify-end w-full gap-2 ">
                     <h1 className="border border-zinc-200 text-white w-fit h-fit px-6  py-1 rounded-b-2xl rounded-l-2xl bg-blue-400">Hello</h1>
-                    <Link to={`/profile`}><img className="md:w-9 w-7 md:h-9 h-7 object-cover border border-zinc-300 rounded-full" src={userData?.profilephotourl ? userData?.profilephotourl : "/default.jpg"} alt="" /></Link>
+                    <Link to={`/profile`}><img className="md:w-9 w-7 md:h-9 h-7 object-cover border border-zinc-300 rounded-full" src={userData?.profile.profilePhotoUrl ? userData?.profile.profilePhotoUrl : "/default.jpg"} alt="" /></Link>
                   </div>
 
                 </div>

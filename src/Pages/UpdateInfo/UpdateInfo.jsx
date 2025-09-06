@@ -34,14 +34,11 @@ const UpdateInfo = () => {
 
         const formData = { name, email, address, bio, profilephotourl, coverphotourl, phone, website }
 
-        console.log("formData", formData)
-
         axios.put(`${import.meta.env.VITE_BACKEND_URL}/update`, formData)
             .then(res => {
                 setLoadingSpiner(true)
 
                 if (res.data) {
-                    console.log(res.data)
                     if (res.data.modifiedCount > 0) {
                         Swal.fire({
                             title: "Profile updated successfully!",
@@ -78,6 +75,9 @@ const UpdateInfo = () => {
                         <div className=''>
                             <label className=" text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Bio</label>
                             <input defaultValue={loaderUser.bio} name="bio" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Enter bio" />
+                        </div>
+                        <div>
+                            hello
                         </div>
                         <div>
                             <label className="text-slate-800 text-sm font-medium mb-1 md:mb-2 block">Website</label>

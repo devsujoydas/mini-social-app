@@ -9,8 +9,7 @@ const ImageUploader = () => {
         if (!file) return alert("Please select an image");
         const imageUrl = await useImageUploader(file);
         if (imageUrl) {
-            alert("Uploaded: " + imageUrl);
-            console.log("Uploaded: ", imageUrl);
+            alert("Uploaded: " + imageUrl); 
         }
     };
 

@@ -239,3 +239,6 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
     </div>
   );
 }
+
+
+ 

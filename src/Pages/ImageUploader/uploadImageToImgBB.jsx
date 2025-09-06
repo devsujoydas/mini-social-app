@@ -11,8 +11,7 @@ const uploadImageToImgBB = async (imageFile) => {
         "Content-Type": "multipart/form-data",
       },
     });
- 
-    console.log("Image URL:", res.data.data.url);
+  
     return res.data.data.url;
   } catch (error) {
     console.error("Image upload failed:", error);

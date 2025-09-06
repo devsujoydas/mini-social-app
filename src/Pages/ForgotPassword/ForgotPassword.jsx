@@ -24,8 +24,7 @@ const ForgotPassword = () => {
       body: JSON.stringify(formData)
     })
       .then(res => res.json())
-      .then(async (data) => {
-        console.log(data)
+      .then(async (data) => { 
 
         if (data.message == "User not found") {
           toast.error(data?.message)

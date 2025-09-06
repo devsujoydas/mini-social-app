@@ -1,67 +1,56 @@
-import { useContext, useState, useRef } from "react"; 
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
-const API_KEY = "13ea5da7a8e8c3267fd71c7a99988b63"; // imgbb key
+import { 
+  FaUserAlt, FaPhoneAlt, FaGlobe, FaFacebook, FaGithub, 
+  FaLinkedin, FaYoutube, FaMapMarkerAlt, FaCity 
+} from "react-icons/fa";
 
 const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => {
-  const { userData } = useContext(AuthContext);
-
+  const { userData, setUserData } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [profilePreview, setProfilePreview] = useState(userData?.profilephotourl || null);
-  const [coverPreview, setCoverPreview] = useState(userData?.coverphotourl || null);
-
-  // refs for hidden file inputs so we can trigger click from div
-  const profileFileInputRef = useRef(null);
-  const coverFileInputRef = useRef(null);
-
-  const handleImageSelect = async (file, type) => {
-    if (!file) return;
-    const previewUrl = URL.createObjectURL(file);
-
-    if (type === "profile") setProfilePreview(previewUrl);
-    if (type === "cover") setCoverPreview(previewUrl);
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const res = await axios.post(`https://api.imgbb.com/1/upload?key=${API_KEY}`, formData);
-      const uploadedUrl = res.data.data.url;
-
-      if (type === "profile") {
-        document.getElementById("profilephotourl").value = uploadedUrl;
-      }
-      if (type === "cover") {
-        document.getElementById("coverphotourl").value = uploadedUrl;
-      }
-    } catch (err) {
-      Swal.fire("Upload Failed!", "Could not upload image", "error");
-    }
-  };
 
   const updateProfileHandler = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     const formData = {
-      name: e.target.name.value,
       email: userData?.email,
-      address: e.target.address.value,
-      bio: e.target.bio.value,
-      profilephotourl: e.target.profilephotourl.value,
-      coverphotourl: e.target.coverphotourl.value,
-      phone: e.target.phone.value,
-      website: e.target.website.value,
+      name: e.target.name.value,
+      profile: { bio: e.target.bio.value },
+      contactInfo: {
+        phone: e.target.phone.value,
+        website: e.target.website.value,
+        facebook: e.target.facebook.value,
+        github: e.target.github.value,
+        linkedin: e.target.linkedin.value,
+        youtube: e.target.youtube.value,
+      },
+      location: {
+        from: e.target.from.value,
+        livesIn: e.target.livesIn.value,
+      },
     };
 
     try {
-      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/update`, formData);
+      const res = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/update`,
+        formData
+      );
       setIsLoading(false);
+
       if (res.data?.modifiedCount > 0) {
-        Swal.fire("Profile info updated successfully!", "", "success");
+        Swal.fire("Profile updated successfully!", "", "success");
+
+        // fresh data fetch
+        const refreshed = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/profile?email=${userData?.email}`
+        );
+        setUserData(refreshed.data);
+
         setShowUpdateInfoModal(false);
       } else {
         Swal.fire("You didn’t change anything!", "", "question");
@@ -72,157 +61,152 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
     }
   };
 
-  // Reusable drag & drop + click file select box
-  const DragDropBox = ({ preview, onFileSelect, fileInputRef }) => (
-    <div
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        e.preventDefault();
-        onFileSelect(e.dataTransfer.files[0]);
-      }}
-      onClick={() => fileInputRef.current.click()}
-      className="border-2 border-dashed border-gray-300 rounded-md p-4 text-center cursor-pointer hover:border-blue-500 transition relative"
-    >
-      {preview ? (
-        <img src={preview} alt="Preview" className="mx-auto max-h-28 object-cover rounded-md" />
-      ) : (
-        <p className="text-sm text-gray-500 select-none">
-          Drag & drop or click to select image
-        </p>
-      )}
+  // 🔹 Reusable Input Component
+  const InputField = ({ icon, name, defaultValue, placeholder }) => (
+    <div className="flex items-center gap-3 rounded-xl px-4 py-3 
+                    bg-white border border-gray-200 shadow-sm
+                    focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100
+                    transition">
+      <span className="text-gray-400">{icon}</span>
       <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        className="hidden"
-        onChange={(e) => onFileSelect(e.target.files[0])}
+        name={name}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        className="flex-1 bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
       />
     </div>
   );
 
   return (
     <div
-      className={`${
-        showUpdateInfoModal ? "z-40 block opacity-100" : "-z-40 hidden opacity-0"
-      } fixed top-0 left-0 w-full h-screen backdrop-blur-sm bg-[#00000059] flex justify-center items-center transition-all`}
+      onClick={() => setShowUpdateInfoModal(false)} // backdrop click = close
+      className={`fixed inset-0 flex justify-center items-center 
+      backdrop-blur-sm bg-black/40 transition-all duration-300
+      ${showUpdateInfoModal ? "z-40 opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <form
+        onClick={(e) => e.stopPropagation()} // modal ভেতরে click করলে বন্ধ হবে না
         onSubmit={updateProfileHandler}
-        className="relative bg-white md:w-1/2 md:p-10 p-5 rounded-md md:space-y-5 space-y-3 w-full md:mx-0 mx-5"
+        className="relative bg-white w-full sm:w-[90%] md:w-[70%] lg:w-[55%] xl:w-[45%]
+                   mx-4 sm:mx-6 rounded-2xl shadow-2xl 
+                   p-4 sm:p-6 md:p-8 lg:p-10 
+                   space-y-6 sm:space-y-8 transform transition-all duration-300 
+                   scale-95 opacity-100 animate-fadeIn overflow-y-auto max-h-[90vh]"
       >
-        <div className="absolute md:top-3 top-1 md:right-3 right-1">
-          <IoClose
-            onClick={() => setShowUpdateInfoModal(false)}
-            className="border hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300 cursor-pointer transition-all"
-          />
-        </div>
+        {/* Close button */}
+        <button
+          type="button"
+          onClick={() => setShowUpdateInfoModal(false)}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 
+                     hover:bg-gray-100 rounded-full p-2 transition"
+        >
+          <IoClose size={26} />
+        </button>
 
-        <h1 className="font-semibold text-3xl md:text-4xl text-center text-blue-600">
-          Complete Your Profile
+        {/* Heading */}
+        <h1 className="text-center text-2xl md:text-3xl font-semibold text-blue-600">
+          Update Profile Info
         </h1>
 
-        <div className="grid md:gap-5 gap-2">
-          <div className="grid grid-cols-2 gap-5">
-            <div>
-              <label className="text-xs md:text-sm font-medium">Name</label>
-              <input
-                defaultValue={userData?.name}
-                name="name"
-                type="text"
-                className="bg-white border border-slate-300 w-full text-xs md:text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter Name"
-              />
-            </div>
-            <div>
-              <label className="text-xs md:text-sm font-medium">Phone</label>
-              <input
-                defaultValue={userData?.phone}
-                name="phone"
-                type="text"
-                className="bg-white border border-slate-300 w-full text-xs md:text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter phone number"
-              />
-            </div>
-            <div>
-              <label className="text-xs md:text-sm font-medium">Website</label>
-              <input
-                defaultValue={userData?.website}
-                name="website"
-                type="text"
-                className="bg-white border border-slate-300 w-full text-xs md:text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter website url"
-              />
-            </div>
-            <div>
-              <label className="text-xs md:text-sm font-medium">Address</label>
-              <input
-                defaultValue={userData?.address}
-                name="address"
-                type="text"
-                className="bg-white border border-slate-300 w-full text-xs md:text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter address"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="text-xs md:text-sm font-medium">Bio</label>
-            <input
-              defaultValue={userData?.bio}
+        {/* Profile Info */}
+        <div>
+          <h2 className="text-sm font-medium text-gray-500 mb-3">Profile Info</h2>
+          <div className="space-y-4">
+            <InputField
+              icon={<FaUserAlt className="text-blue-500" />}
+              name="name"
+              defaultValue={userData?.name}
+              placeholder="Your full name"
+            />
+            <InputField
+              icon={<FaUserAlt />}
               name="bio"
-              type="text"
-              className="bg-white border border-slate-300 w-full text-xs md:text-sm px-4 py-3 rounded-md outline-blue-500"
+              defaultValue={userData?.profile?.bio}
               placeholder="Enter bio"
             />
           </div>
+        </div>
 
-          {/* Profile Photo */}
-          <div>
-            <label className="text-xs md:text-sm font-medium">Profile Photo</label>
-            <DragDropBox
-              preview={profilePreview}
-              onFileSelect={(file) => handleImageSelect(file, "profile")}
-              fileInputRef={profileFileInputRef}
+        {/* Contact Info */}
+        <div>
+          <h2 className="text-sm font-medium text-gray-500 mb-3">Contact Info</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <InputField
+              icon={<FaPhoneAlt className="text-blue-500" />}
+              name="phone"
+              defaultValue={userData?.contactInfo?.phone}
+              placeholder="Phone number"
             />
-            <input
-              id="profilephotourl"
-              name="profilephotourl"
-              type="text"
-              defaultValue={userData?.profilephotourl}
-              className="hidden"
+            <InputField
+              icon={<FaGlobe className="text-green-500" />}
+              name="website"
+              defaultValue={userData?.contactInfo?.website}
+              placeholder="Website URL"
             />
-          </div>
-
-          {/* Cover Photo */}
-          <div>
-            <label className="text-xs md:text-sm font-medium">Cover Photo</label>
-            <DragDropBox
-              preview={coverPreview}
-              onFileSelect={(file) => handleImageSelect(file, "cover")}
-              fileInputRef={coverFileInputRef}
+            <InputField
+              icon={<FaFacebook className="text-blue-600" />}
+              name="facebook"
+              defaultValue={userData?.contactInfo?.facebook}
+              placeholder="Facebook URL"
             />
-            <input
-              id="coverphotourl"
-              name="coverphotourl"
-              type="text"
-              defaultValue={userData?.coverphotourl}
-              className="hidden"
+            <InputField
+              icon={<FaGithub className="text-gray-800" />}
+              name="github"
+              defaultValue={userData?.contactInfo?.github}
+              placeholder="Github URL"
+            />
+            <InputField
+              icon={<FaLinkedin className="text-blue-700" />}
+              name="linkedin"
+              defaultValue={userData?.contactInfo?.linkedin}
+              placeholder="LinkedIn URL"
+            />
+            <InputField
+              icon={<FaYoutube className="text-red-600" />}
+              name="youtube"
+              defaultValue={userData?.contactInfo?.youtube}
+              placeholder="YouTube URL"
             />
           </div>
         </div>
 
+        {/* Location Info */}
+        <div>
+          <h2 className="text-sm font-medium text-gray-500 mb-3">Location</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <InputField
+              icon={<FaMapMarkerAlt className="text-orange-500" />}
+              name="from"
+              defaultValue={userData?.location?.from}
+              placeholder="Your hometown"
+            />
+            <InputField
+              icon={<FaCity className="text-purple-600" />}
+              name="livesIn"
+              defaultValue={userData?.location?.livesIn}
+              placeholder="Current city"
+            />
+          </div>
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
-          className={`${
-            isLoading ? "bg-blue-700" : "bg-blue-500"
-          } text-white hover:bg-blue-500 w-full py-3 rounded-md flex justify-center items-center gap-5`}
           disabled={isLoading}
+          className="w-full py-3 rounded-lg text-white text-sm font-medium
+                     bg-gradient-to-r from-blue-600 to-blue-500
+                     hover:from-blue-700 hover:to-blue-600 
+                     transition-all flex justify-center items-center gap-3
+                     shadow-md hover:shadow-lg disabled:opacity-60"
         >
-          <p
-            className={`${
-              isLoading ? "block" : "hidden"
-            } border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`}
-          />
-          <p className={`${isLoading ? "hidden" : "block"}`}>Update</p>
+          {isLoading ? (
+            <>
+              <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Updating...
+            </>
+          ) : (
+            "Update"
+          )}
         </button>
       </form>
     </div>

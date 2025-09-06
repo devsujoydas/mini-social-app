@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  MdEdit,
-} from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 import { FaUserEdit, FaUserSlash } from "react-icons/fa";
@@ -81,8 +79,7 @@ const ProfileSidebar = () => {
           });
         }
       });
-  };
-
+  }; 
   return (
     <div className="w-full">
       {/* Modals */}
@@ -176,7 +173,9 @@ const ProfileSidebar = () => {
 
           {/* Name & Username */}
           <div className="mt-4 text-center">
-            <h1 className="font-semibold text-xl">{userData?.name || "Your Name"}</h1>
+            <h1 className="font-semibold text-xl">
+              {userData?.name || "Your Name"}
+            </h1>
             <div className="flex items-center justify-center gap-2 text-zinc-500">
               <span>@{userData?.username || "username"}</span>
               <MdEdit
@@ -184,17 +183,23 @@ const ProfileSidebar = () => {
                 className="p-1 text-xl rounded-full hover:bg-zinc-200 cursor-pointer transition"
               />
             </div>
-            <p className="text-sm text-zinc-400">{userData?.location?.livesIn || "Address not added"}</p>
+            <p className="text-sm text-zinc-400">
+              {userData?.location?.livesIn || "Address not added"}
+            </p>
           </div>
 
           {/* Stats */}
           <div className="flex justify-center gap-8 mt-6">
             <div className="text-center">
-              <h1 className="text-lg font-semibold">{usersPostsData?.length || 0}</h1>
+              <h1 className="text-lg font-semibold">
+                {usersPostsData?.length || 0}
+              </h1>
               <p className="text-sm text-zinc-500">Posts</p>
             </div>
             <Link to={"/friends"} className="text-center border-x px-6">
-              <h1 className="text-lg font-semibold">{userData?.myFriends?.length || 0}</h1>
+              <h1 className="text-lg font-semibold">
+                {userData?.myFriends?.length || 0}
+              </h1>
               <p className="text-sm text-zinc-500">Friends</p>
             </Link>
             <div className="text-center">

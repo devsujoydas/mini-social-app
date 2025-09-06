@@ -90,7 +90,7 @@ const SearchPage = () => {
                                     <li
                                         key={post?._id}
                                         className="px-4 py-2 border-b last:border-b-0 cursor-pointer hover:bg-gray-100"
-                                        onClick={() => console.log("Clicked post:", post)}
+                                        
                                     >
                                         {post?.title}
                                     </li>
@@ -108,7 +108,7 @@ const SearchPage = () => {
                                     <li
                                         key={user?._id}
                                         className="px-4 py-2 border-b last:border-b-0 cursor-pointer hover:bg-gray-100"
-                                        onClick={() => console.log("Clicked user:", user)}
+                                       
                                     >
                                         {user?.name}
                                     </li>

@@ -31,7 +31,6 @@ const Login = () => {
                 toast.success("Login Successfully")
             }
         } catch (err) {
-            console.log(err.message);
             setUserStatus(err.message);
             setLoading(false);
         } finally {

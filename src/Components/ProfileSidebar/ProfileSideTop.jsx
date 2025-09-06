@@ -11,8 +11,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const ProfileSideTop = () => {
     const { userData, setLoading } = useContext(AuthContext)
-    console.log(userData);
-
+    
     if (!userData) {
         setLoading(true)
     }

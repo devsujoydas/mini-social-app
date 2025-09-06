@@ -135,7 +135,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b-zinc-300 border-b">
           <img
-            src={userData?.profilephotourl || "/default-avatar.png"}
+            src={userData?.profile?.profilePhotoUrl || "/default-avatar.png"}
             alt="profile"
             className="w-10 h-10 rounded-full"
           />

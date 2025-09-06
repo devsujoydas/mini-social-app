@@ -228,7 +228,7 @@ const CommentBox = ({ post }) => {
                     <div className="flex items-center gap-2 md:gap-4 w-full ">
                         <Link to={`/profile`}>
                             <div className="cursor-pointer w-8 h-8 md:w-10 md:h-10 overflow-hidden rounded-full">
-                                <img className="h-full w-full object-cover" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                                <img className="h-full w-full object-cover" src={!userData?.profile.profilePhotoUrl ? `/default.jpg` : `${userData?.profile.profilePhotoUrl}`} alt="" />
                             </div>
                         </Link>
                         <div className='bg-zinc-200 w-full rounded-xl'>

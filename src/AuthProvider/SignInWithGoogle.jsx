@@ -27,7 +27,6 @@ const SignInWithGoogle = () => {
 
                 const credential = EmailAuthProvider.credential(user.email, password);
                 await linkWithCredential(user, credential);
-                console.log("✅ Accounts linked successfully!");
             }
 
             // 🔹 Prepare user data to send backend

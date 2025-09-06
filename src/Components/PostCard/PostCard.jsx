@@ -17,14 +17,14 @@ import ThreeDotMenu from "../Posts/ThreeDotMenu";
 
 // -------------------- Subcomponents -------------------- //
 const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, onRemove }) => {
-  return (
+   return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
       <Link
         to={post.author.username === userData?.username ? "/profile" : `/friends/${post.author.username}`}
       >
         <div className="flex items-center gap-3">
           <img
-            src={post.author.profilePhoto || "/default.jpg"}
+            src={post.author?.profilePhotoUrl || "/default.jpg"}
             alt={post.author.name}
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
           />
@@ -74,22 +74,22 @@ const PostContent = ({ post }) => (
 );
 
 const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => (
-  <div className="flex justify-between items-center mt-2 text-sm px-2">
+  <div className="flex justify-between items-center mt-2 text-sm px-4 pb-2">
     <div className="flex items-center gap-1">
       <img src="/like.png" alt="Like" className="w-4 h-4 md:w-5 md:h-5 rounded-full" />
       {reactorsUsers.length > 0 && (
         <div
           className="flex gap-1 cursor-pointer relative"
           onMouseEnter={() => setShowUsers(true)}
-          onMouseLeave={() => setShowUsers(false)}
+          // onMouseLeave={() => setShowUsers(false)}
         >
           {showUsers && (
-            <div className="absolute bottom-8 left-0 z-10 bg-black/70 text-white p-3 rounded-lg flex flex-col space-y-1 shadow-lg">
+            <div className="absolute bottom-8  left-0 z-10 bg-black/70 text-white p-3 rounded-lg flex flex-col space-y-1 shadow-lg">
               {reactorsUsers.map((user, idx) => (
                 <Link
                   key={idx}
                   to={user.username}
-                  className="hover:underline"
+                  className="hover:underline w-full"
                 >
                   {user.name}
                 </Link>
@@ -113,61 +113,96 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => (
       <div>{post.shares.length} Shares</div>
     </div>
   </div>
-);
+); 
 
-const ActionButtons = ({ liked, likesCount, likeHandler, likeCommentStyle, sharePostHandler, post, userData, savePostHandler }) => (
-  <div className="flex justify-between items-center my-1">
-    <div className="flex items-center md:gap-2 w-full">
-      <button onClick={likeHandler} className={likeCommentStyle}>
-        {liked ? <BiSolidLike className="text-blue-500 text-xl" /> : <BiLike className="text-xl" />}
-        <span className={`flex items-center gap-1 ${liked ? "text-blue-500" : "text-black"}`}>
-          {likesCount} <span className="hidden md:flex">Like</span>
+const ActionButtons = ({
+  liked,
+  likesCount,
+  likeHandler,
+  likeCommentStyle,
+  sharePostHandler,
+  post,
+  userData,
+  savePostHandler,
+}) => (
+  <div className="flex justify-between items-center py-2 border-t px-2 border-gray-200">
+    {/* Left side: Like, Comment, Share */}
+    <div className="flex items-center w-full justify-around md:justify-start md:gap-4">
+      {/* Like Button */}
+      <button
+        onClick={likeHandler}
+        className={`flex items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-all active:scale-95
+          ${liked ? "text-blue-600 bg-blue-50" : "text-gray-600 hover:bg-gray-100"}
+        `}
+      >
+        {liked ? (
+          <BiSolidLike className="text-xl" />
+        ) : (
+          <BiLike className="text-xl" />
+        )}
+        <span className="flex items-center gap-1 text-sm font-medium">
+          {likesCount}
+          <span className="hidden md:inline">Like</span>
         </span>
       </button>
 
-      <button className={likeCommentStyle}>
+      {/* Comment Button */}
+      <button
+        className="flex items-center gap-1 md:gap-2 px-3 py-2 rounded-lg text-gray-600 
+                   hover:bg-gray-100 transition-all active:scale-95"
+      >
         <BiCommentDots className="text-xl" />
-        <span className="hidden md:flex">Comments</span>
+        <span className="hidden md:inline text-sm font-medium">Comments</span>
       </button>
 
-      <button onClick={sharePostHandler} className={likeCommentStyle}>
+      {/* Share Button */}
+      <button
+        onClick={sharePostHandler}
+        className="flex items-center gap-1 md:gap-2 px-3 py-2 rounded-lg text-gray-600 
+                   hover:bg-gray-100 transition-all active:scale-95"
+      >
         <PiShareFatBold className="text-xl" />
-        <span className="hidden md:flex">Shares</span>
+        <span className="hidden md:inline text-sm font-medium">Shares</span>
       </button>
     </div>
 
-    {userData?.savedPosts?.some((p) => p._id === post._id) ? (
-      <FaBookmark
-        onClick={() => savePostHandler(post)}
-        className="text-2xl text-blue-600 cursor-pointer active:scale-95 transition-all"
-      />
-    ) : (
-      <CiBookmark
-        onClick={() => savePostHandler(post)}
-        className="text-2xl cursor-pointer active:scale-95 transition-all"
-      />
-    )}
+    {/* Right side: Save / Bookmark */}
+    <div className="ml-2">
+      {userData?.savedPosts?.some((p) => p._id === post._id) ? (
+        <FaBookmark
+          onClick={() => savePostHandler(post)}
+          className="text-2xl text-blue-600 cursor-pointer active:scale-95 transition-all"
+        />
+      ) : (
+        <CiBookmark
+          onClick={() => savePostHandler(post)}
+          className="text-2xl text-gray-600 cursor-pointer hover:text-blue-600 active:scale-95 transition-all"
+        />
+      )}
+    </div>
   </div>
 );
 
+
 const CommentInput = ({ userData }) => (
   <form className="p-3 md:p-4 flex justify-between items-center gap-2 md:gap-20">
-    <div className="flex items-center gap-2 md:gap-4 w-full">
-      <Link to="/profile">
+      
+    <div className="flex items-center gap-2 md:gap-4 w-full ">
+      <Link to="/profile" className="w-10 h-10 md:w-12 md:h-12">
         <img
-          src={userData?.profilephotourl || "/default.jpg"}
+          src={userData?.profile.profilePhotoUrl || "/default.jpg"}
           alt={userData?.name}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
+          className="w-full h-full rounded-full object-cover"
         />
       </Link>
       <input
         type="text"
         placeholder="Write your comment..."
-        className="w-full border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
+        className="md:w-full border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
       />
     </div>
 
-    <div className="flex items-center gap-2 md:gap-3">
+    <div className="flex items-center gap-2 md:gap-3 ">
       <div className="p-2 md:p-3 border border-zinc-400 rounded-full cursor-pointer hover:bg-zinc-200">
         <ImAttachment />
       </div>
@@ -201,37 +236,42 @@ const PostCard = ({ post, variant = "feed", onDelete, onRemove }) => {
     }
   }, [post.likes, userData]);
 
-  const likeHandler = async () => {
-    if (!userData?._id) return toast.error("Please login first");
+const likeHandler = async () => {
+  if (!userData?._id) return toast.error("Please login first");
 
-    try {
-      const { data } = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-        { userId: userData._id }
-      );
-
-      if (data.message === "Liked") {
-        setLiked(true);
-        setLikesCount((prev) => prev + 1);
-        setReactorsUsers((prev) => [...prev, userData]);
-        toast.success("Liked!");
-      } else {
-        setLiked(false);
-        setLikesCount((prev) => prev - 1);
-        setReactorsUsers((prev) => prev.filter((u) => u._id !== userData._id));
-        toast.success("Disliked!");
+  try {
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
+      {}, // ❌ userId পাঠানো লাগবে না
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+        },
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong!");
+    );
+
+    if (data.message === "Liked") {
+      setLiked(true);
+      setLikesCount(data.likesCount);
+      setReactorsUsers([...reactorsUsers, userData]);
+      toast.success("Liked!");
+    } else {
+      setLiked(false);
+      setLikesCount(data.likesCount);
+      setReactorsUsers(reactorsUsers.filter((u) => u._id !== userData._id));
+      toast.success("Disliked!");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    toast.error("Something went wrong!");
+  }
+};
+
 
   const sharePostHandler = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
     navigator.clipboard.writeText(url).then(() => toast.success("Post URL Copied!"));
-  };
-
+  }; 
   return (
     <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white">
       {/* Author */}

@@ -11,6 +11,7 @@ import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import NavSearch from "./NavSearch.jsx";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
+import toast from "react-hot-toast";
 
 
 const Navbar = () => {
@@ -40,10 +41,10 @@ const Navbar = () => {
         if (result.isConfirmed) {
           signOutUser()
             .then(() => {
-              // console.log("Sign Out Successfull");
+              toast.success("Sign Out Successfull");
             })
             .catch((error) => {
-              console.log(error.message);
+              toast.success(error.message);
             });
           navigate("/login")
 
@@ -110,7 +111,7 @@ const Navbar = () => {
               <Link to={`/profile`}>
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 overflow-hidden rounded-full">
-                    <img className=" h-full w-full object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                    <img className=" h-full w-full object-cover rounded-full" src={!userData?.profile?.profilePhotoUrl ? `/default.jpg` : `${userData?.profile?.profilePhotoUrl}`} alt="" />
                   </div>
                   <div className="">
                     <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
@@ -151,7 +152,7 @@ const Navbar = () => {
                 <Link to={`/profile`}>
                   <div className="flex items-center gap-2">
                     <div className="w-12 h-12 overflow-hidden rounded-full">
-                      <img className=" h-full w-full object-cover rounded-full" src={!userData?.profilephotourl ? `/default.jpg` : `${userData?.profilephotourl}`} alt="" />
+                      <img className=" h-full w-full object-cover rounded-full" src={!userData?.profile?.profilePhotoUrl ? `/default.jpg` : `${userData?.profile?.profilePhotoUrl}`} alt="" />
                     </div>
                     <div className="">
                       <h1 className="font-semibold">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>

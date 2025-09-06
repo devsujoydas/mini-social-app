@@ -29,7 +29,6 @@ const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
                 setLoadingSpiner(true)
 
                 if (data) {
-                    // console.log(data)
                     if (data.modifiedCount > 0) {
                         Swal.fire({
                             title: "Username updated successfully!",
@@ -40,18 +39,17 @@ const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
                     }
                     else {
                         setUsernameMessage(data.message)
-                        // Swal.fire({
-                        //     title: `${data.message}`,
-                        //     icon: "question",
-                        //     draggable: true
-                        // });
+                        Swal.fire({
+                            title: `${data.message}`,
+                            icon: "question",
+                            draggable: true
+                        });
 
                     }
                 }
             })
 
 
-        // console.log("UsernameMessage:", usernameMessage)
 
     }
 
