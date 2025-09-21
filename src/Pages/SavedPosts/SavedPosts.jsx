@@ -3,9 +3,24 @@ import { useContext } from "react";
 import PostCard from "../../Components/PostCard/PostCard";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
+const SavedPostItem = ({ post }) => (
+  <Link
+    to={`/post/${post._id}`}
+    className="flex gap-3 items-center p-2 border border-zinc-200 rounded-lg hover:shadow-md hover:border-blue-400 transition-all duration-300"
+  >
+    <img
+      src={post?.content?.postImageUrl || post?.postImageUrl}
+      alt={post?.content?.text || "Post"}
+      className="w-20 h-16 object-cover rounded-md flex-shrink-0"
+    />
+    <h1 className="text-sm font-medium line-clamp-2 text-zinc-700">
+      {post?.content?.text || "No Content"}
+    </h1>
+  </Link>
+);
+
 const SavedPosts = () => {
   const { savedPosts, removeSavedPostHandler } = useContext(AuthContext);
-
   const hasSavedPosts = savedPosts && savedPosts.length > 0;
 
   return (
@@ -39,36 +54,23 @@ const SavedPosts = () => {
       </div>
 
       {/* Right: Sidebar */}
-      <div className="lg:col-span-3 bg-white border-l border-zinc-300 flex flex-col h-screen sticky top-0 p-5">
+      <aside className="lg:col-span-3 bg-white border-l border-zinc-200 flex flex-col h-screen sticky top-0 p-5">
         <h1 className="font-semibold text-blue-500 text-lg mb-4">
           Saved Posts List
         </h1>
 
         {!hasSavedPosts ? (
-          <div className="flex justify-center items-center h-full text-zinc-400">
-            <h1>No saved posts found...</h1>
+          <div className="flex-1 flex justify-center items-center text-zinc-400">
+            <h1>No saved posts yet</h1>
           </div>
         ) : (
-          <div className="grid gap-3">
+          <div className="flex-1 overflow-y-auto pr-1 space-y-2">
             {savedPosts.map((post) => (
-              <Link
-                key={post._id}
-                to={`/post/${post._id}`}
-                className="hover:shadow-md transition-all duration-300 flex gap-2 border border-zinc-200 rounded-md p-2"
-              >
-                <img
-                  src={post?.postImageUrl}
-                  alt={post?.content?.text || "Post"}
-                  className="w-36 h-24 object-cover rounded-lg"
-                />
-                <h1 className="px-2 pt-2 text-sm font-semibold line-clamp-3">
-                  {post?.content?.text || "No Content"}
-                </h1>
-              </Link>
+              <SavedPostItem key={post._id} post={post} />
             ))}
           </div>
         )}
-      </div>
+      </aside>
     </div>
   );
 };

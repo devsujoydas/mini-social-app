@@ -18,12 +18,12 @@ const PostForm = () => {
     const form = e.target;
 
     const postData = {
-      authorEmail: userData.email,
-      authorPhoto: userData.profilephotourl,
-      authorName: userData.name,
-      authorUsername: userData.username,
-      postImageUrl: form.postImageUrl.value,
-      postContent: form.postContent.value,
+      authorEmail: userData?.email,
+      authorPhoto: userData?.profilephotourl,
+      authorName: userData?.name,
+      authorUsername: userData?.username,
+      postImageUrl: form?.postImageUrl?.value,
+      postContent: form?.postContent?.value,
       createdDate: new Date(),
       lastUpdateDate: null,
       likes: [],

@@ -16,7 +16,7 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-  const [userData, setUserData] = useState({}); 
+  const [userData, setUserData] = useState({});
   const [savedPosts, setSavedPosts] = useState([]);
   const [usersPostsData, setUsersPostsData] = useState([]);
   const [myFriends, setMyFriends] = useState([]);
@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     axiosInstance
       .put(`/addfriend`, data)
       .then((res) => {
-        toast.success(res.data.message); 
+        toast.success(res.data.message);
 
         if (res.data.message === "Request sent") {
           const remaining = youMayKnowFriends.filter(
@@ -161,7 +161,7 @@ const AuthProvider = ({ children }) => {
     try {
       await deleteUser(user);
       const res = await axiosInstance.delete(`/profile/delete/${user.email}`);
-     
+
       localStorage.removeItem("email");
       localStorage.removeItem("currentUser");
       localStorage.removeItem("filteredFriend");
@@ -193,8 +193,7 @@ const AuthProvider = ({ children }) => {
       try {
         await axiosInstance.post("/jwt", { email });
         const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
-        setUserData(userDataRes.data);  
-
+        setUserData(userDataRes.data); 
  
         const [
           allUsersRes,
@@ -211,9 +210,9 @@ const AuthProvider = ({ children }) => {
           axiosInstance.get(`/sentrequest?email=${email}`),
           axiosInstance.get(`/requests?email=${email}`),
           axiosInstance.get(`/youMayKnow?email=${email}`),
-          axiosInstance.get(`/posts`),
-          axiosInstance.get(`/posts/user?email=${email}`),
-          axiosInstance.get(`/savedPosts?email=${email}`),
+          axiosInstance.get(`/posts`), // সব পোস্ট
+          axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`), // শুধু logged-in user এর পোস্ট
+          axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`), // saved posts
         ]);
 
         setFriendsData(allUsersRes.data);
@@ -223,8 +222,8 @@ const AuthProvider = ({ children }) => {
         setYouMayKnowFriends(youMayKnowRes.data);
         setPostsData(postsRes.data);
         setUsersPostsData(usersPostsRes.data);
-        setSavedPosts(savedPostsRes.data);
- 
+        setSavedPosts(savedPostsRes.data); 
+
         const ping = async () => {
           try {
             await axiosInstance.post(`/activeStatus?email=${email}`);

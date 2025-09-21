@@ -15,11 +15,23 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import ThreeDotMenu from "../Posts/ThreeDotMenu";
 
-const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, onRemove }) => {
-   return (
+const AuthorInfo = ({
+  post,
+  userData,
+  showMenu,
+  setShowMenu,
+  variant,
+  onDelete,
+  onRemove,
+}) => {
+  return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
       <Link
-        to={post.author.username === userData?.username ? "/profile" : `/friends/${post.author.username}`}
+        to={
+          post.author.username === userData?.username
+            ? "/profile"
+            : `/friends/${post.author.username}`
+        }
       >
         <div className="flex items-center gap-3">
           <img
@@ -28,10 +40,16 @@ const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, 
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
           />
           <div>
-            <h1 className="font-semibold text-md cursor-pointer">{post.author.name}</h1>
+            <h1 className="font-semibold text-md cursor-pointer">
+              {post.author.name}
+            </h1>
             <p className="text-zinc-500 text-sm">
               {new Date(post.createdAt).toLocaleString()}
-              {post.updatedAt && <span className="text-emerald-700 font-semibold ml-2">Updated</span>}
+              {post.updatedAt && (
+                <span className="text-emerald-700 font-semibold ml-2">
+                  Updated
+                </span>
+              )}
             </p>
           </div>
         </div>
@@ -75,7 +93,11 @@ const PostContent = ({ post }) => (
 const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => (
   <div className="flex justify-between items-center mt-2 text-sm px-4 pb-2">
     <div className="flex items-center gap-1">
-      <img src="/like.png" alt="Like" className="w-4 h-4 md:w-5 md:h-5 rounded-full" />
+      <img
+        src="/like.png"
+        alt="Like"
+        className="w-4 h-4 md:w-5 md:h-5 rounded-full"
+      />
       {reactorsUsers.length > 0 && (
         <div
           className="flex gap-1 cursor-pointer relative"
@@ -111,7 +133,7 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => (
       <div>{post.shares.length} Shares</div>
     </div>
   </div>
-); 
+);
 
 const ActionButtons = ({
   liked,
@@ -130,7 +152,11 @@ const ActionButtons = ({
       <button
         onClick={likeHandler}
         className={`flex items-center gap-1 md:gap-2 px-3 py-2 rounded-lg transition-all active:scale-95
-          ${liked ? "text-blue-600 bg-blue-50" : "text-gray-600 hover:bg-gray-100"}
+          ${
+            liked
+              ? "text-blue-600 bg-blue-50"
+              : "text-gray-600 hover:bg-gray-100"
+          }
         `}
       >
         {liked ? (
@@ -181,10 +207,8 @@ const ActionButtons = ({
   </div>
 );
 
-
 const CommentInput = ({ userData }) => (
   <form className="p-3 md:p-4 flex justify-between items-center gap-2 md:gap-20">
-      
     <div className="flex items-center gap-2 md:gap-4 w-full ">
       <Link to="/profile" className="w-10 h-10 md:w-12 md:h-12">
         <img
@@ -228,33 +252,31 @@ const PostCard = ({ post, variant = "feed", onDelete, onRemove }) => {
 
   useEffect(() => {
     if (userData?._id) {
-      const liked = post.likes.some((id) => id.toString() === userData._id.toString());
+      const liked = post.likes.some(
+        (id) => id.toString() === userData._id.toString()
+      );
       setLiked(liked);
     }
   }, [post.likes, userData]);
 
-const likeHandler = async () => {
+  const likeHandler = async () => {
   if (!userData?._id) return toast.error("Please login first");
 
   try {
     const { data } = await axios.put(
       `${import.meta.env.VITE_BACKEND_URL}/post/like/${post._id}`,
-      {}, 
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
-        },
-      }
+      { userId: userData._id }
     );
 
-    if (data.message === "Liked") {
-      setLiked(true);
-      setLikesCount(data.likesCount);
+    const { message, likesCount } = data;
+
+    setLiked(message === "Liked");
+    setLikesCount(likesCount);
+
+    if (message === "Liked") {
       setReactorsUsers([...reactorsUsers, userData]);
       toast.success("Liked!");
     } else {
-      setLiked(false);
-      setLikesCount(data.likesCount);
       setReactorsUsers(reactorsUsers.filter((u) => u._id !== userData._id));
       toast.success("Disliked!");
     }
@@ -267,8 +289,10 @@ const likeHandler = async () => {
 
   const sharePostHandler = () => {
     const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
-    navigator.clipboard.writeText(url).then(() => toast.success("Post URL Copied!"));
-  }; 
+    navigator.clipboard
+      .writeText(url)
+      .then(() => toast.success("Post URL Copied!"));
+  };
   return (
     <div className="shadow-xl border-t border-t-zinc-300 md:w-full rounded-2xl md:rounded-3xl bg-white">
       {/* Author */}
