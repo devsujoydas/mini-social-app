@@ -194,6 +194,7 @@ const AuthProvider = ({ children }) => {
         await axiosInstance.post("/jwt", { email });
         const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
         setUserData(userDataRes.data); 
+        console.log(userDataRes.data); 
  
         const [
           allUsersRes,
@@ -210,9 +211,9 @@ const AuthProvider = ({ children }) => {
           axiosInstance.get(`/sentrequest?email=${email}`),
           axiosInstance.get(`/requests?email=${email}`),
           axiosInstance.get(`/youMayKnow?email=${email}`),
-          axiosInstance.get(`/posts`), // সব পোস্ট
-          axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`), // শুধু logged-in user এর পোস্ট
-          axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`), // saved posts
+          axiosInstance.get(`/posts`),
+          axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`),
+          axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`),
         ]);
 
         setFriendsData(allUsersRes.data);
