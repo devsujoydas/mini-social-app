@@ -6,7 +6,6 @@ import Home from '../Pages/Home/Home.jsx';
 import Profile from '../Pages/Profile/Profile.jsx';
 import UpdateInfo from '../Pages/UpdateInfo/UpdateInfo.jsx';
 import PostDetails from '../Components/Posts/PostDetails.jsx';
-import UsersPostDetails from '../Components/UsersPosts/UsersPostDetails.jsx';
 import PostDetailsUpdate from '../Components/Posts/PostDetailsUpdate.jsx';
 import FriendsPage from '../Pages/Friends/FriendsPage.jsx';
 import FriendDetails from '../Pages/Friends/FriendDetails.jsx';
@@ -26,6 +25,7 @@ import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
 import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
 import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
+import App from '../App.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +40,11 @@ export const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />,
+      },
+      {
+        path: '/profile/:id',
+        element: <FriendDetails />,
+        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`),
       },
       {
         path: '/profile-page',
@@ -60,11 +65,6 @@ export const router = createBrowserRouter([
         loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/${params.id}`),
       },
       {
-        path: 'profile/post/:id',
-        element: <UsersPostDetails />,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/post/${params.id}`),
-      },
-      {
         path: '/post/update/:id',
         element: <PostDetailsUpdate />,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/post/update/${params.id}`),
@@ -73,11 +73,7 @@ export const router = createBrowserRouter([
         path: '/friends',
         element: <FriendsPage />,
       },
-      {
-        path: '/friends/:id',
-        element: <FriendDetails />,
-        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`),
-      },
+
       {
         path: '/message/:id',
         element: <ChatBox />,

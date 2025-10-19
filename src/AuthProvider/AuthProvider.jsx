@@ -11,6 +11,7 @@ import {
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
 import axiosInstance from "../services/axiosInstance";
+import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -26,6 +27,7 @@ const AuthProvider = ({ children }) => {
 
   const [friendsData, setFriendsData] = useState([]);
   const [postsData, setPostsData] = useState([]);
+
 
   const addFriendBtnHanlder = (friend) => {
     const data = { userId: userData._id, friendId: friend._id };
@@ -133,10 +135,12 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
+
   const logInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
   const provider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
     setLoading(true);
@@ -157,10 +161,11 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+
   const deleteAccount = async () => {
     try {
       await deleteUser(user);
-      const res = await axiosInstance.delete(`/profile/delete/${user.email}`);
+      await axiosInstance.delete(`/profile/delete/${user.email}`);
 
       localStorage.removeItem("email");
       localStorage.removeItem("currentUser");
@@ -174,6 +179,9 @@ const AuthProvider = ({ children }) => {
       console.error("❌ Error deleting account:", error);
     }
   };
+
+
+
 
   useEffect(() => {
     let interval;
@@ -193,9 +201,8 @@ const AuthProvider = ({ children }) => {
       try {
         await axiosInstance.post("/jwt", { email });
         const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
-        setUserData(userDataRes.data); 
-        console.log(userDataRes.data); 
- 
+        setUserData(userDataRes.data);
+
         const [
           allUsersRes,
           myFriendsRes,
@@ -206,11 +213,11 @@ const AuthProvider = ({ children }) => {
           usersPostsRes,
           savedPostsRes,
         ] = await Promise.all([
-          axiosInstance.get(`/allUsers?email=${email}`),
-          axiosInstance.get(`/myfriends?email=${email}`),
-          axiosInstance.get(`/sentrequest?email=${email}`),
-          axiosInstance.get(`/requests?email=${email}`),
-          axiosInstance.get(`/youMayKnow?email=${email}`),
+          axiosInstance.get(`/allUsers?userId=${userDataRes.data._id}`),
+          axiosInstance.get(`/myfriends?userId=${userDataRes.data._id}`),
+          axiosInstance.get(`/sentrequest?userId=${userDataRes.data._id}`),
+          axiosInstance.get(`/requests?userId=${userDataRes.data._id}`),
+          axiosInstance.get(`/youMayKnow?userId=${userDataRes.data._id}`),
           axiosInstance.get(`/posts`),
           axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`),
           axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`),
@@ -223,11 +230,12 @@ const AuthProvider = ({ children }) => {
         setYouMayKnowFriends(youMayKnowRes.data);
         setPostsData(postsRes.data);
         setUsersPostsData(usersPostsRes.data);
-        setSavedPosts(savedPostsRes.data); 
+        setSavedPosts(savedPostsRes.data);
+ 
 
         const ping = async () => {
           try {
-            await axiosInstance.post(`/activeStatus?email=${email}`);
+            await axiosInstance.post(`/activeStatus?userId=${userDataRes.data._id}`);
           } catch (err) {
             console.error("Active ping error:", err);
           }
@@ -265,11 +273,19 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     signInWithGoogle,
     deleteAccount,
+
     addFriendBtnHanlder,
     unFriendBtnHanlder,
     confrimFriendBtnHanlder,
+
     postsData,
     setPostsData,
+
+    savedPosts,
+    setSavedPosts,
+    savePostHandler,
+    removeSavedPostHandler,
+
     friendsData,
     setFriendsData,
     myFriends,
@@ -282,10 +298,8 @@ const AuthProvider = ({ children }) => {
     setYouMayKnowFriends,
     cancelSentRequestBtnHandler,
     cancelReceivedRequestBtnHandler,
-    savedPosts,
-    setSavedPosts,
-    savePostHandler,
-    removeSavedPostHandler,
+
+
   };
 
   return (

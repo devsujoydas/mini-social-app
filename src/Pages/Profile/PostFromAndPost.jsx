@@ -31,8 +31,8 @@ const PostFromAndPost = () => {
               <img
                 className="h-full w-full object-cover rounded-full"
                 src={
-                  userData?.profile.profilePhotoUrl
-                    ? `${userData?.profile.profilePhotoUrl}`
+                  userData?.profile?.profilePhotoUrl
+                    ? `${userData?.profile?.profilePhotoUrl}`
                     : `/default.jpg`
                 }
                 alt=""

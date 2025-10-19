@@ -24,6 +24,7 @@ const AuthorInfo = ({
   onDelete,
   onRemove,
 }) => {
+
   return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
       <Link
@@ -57,7 +58,7 @@ const AuthorInfo = ({
 
       <div className="relative">
         <button onClick={() => setShowMenu(!showMenu)}>
-          <BsThreeDotsVertical className="text-4xl text-zinc-500 hover:text-black rounded-full transition-all p-2" />
+          <BsThreeDotsVertical className="text-4xl text-zinc-500 hover:text-black rounded-full transition-all p-2 cursor-pointer" />
         </button>
         {showMenu && (
           <ThreeDotMenu
