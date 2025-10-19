@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import PostCard from "../PostCard/PostCard";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import PostCard from "../PostCard/PostCard"; 
+import { useAuth } from "../../hooks/useAuth";
 
 const UsersPosts = () => {
-  const {usersPostsData, deletePostHandler } = useContext(AuthContext);
+  const {usersPostsData, deletePostHandler } = useAuth()
 
   const hasPosts = usersPostsData && usersPostsData.length > 0;
 

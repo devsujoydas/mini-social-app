@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react"; 
 import axios from "axios";
 import { getAuth, GoogleAuthProvider, signInWithPopup, fetchSignInMethodsForEmail, linkWithCredential, EmailAuthProvider } from "firebase/auth";
-import { AuthContext } from "./AuthProvider";
+import { useAuth } from "../hooks/useAuth";
 
 const SignInWithGoogle = () => {
     const navigate = useNavigate();
-    const { setUserData } = useContext(AuthContext);
+    const { setUserData } = useAuth();
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
 

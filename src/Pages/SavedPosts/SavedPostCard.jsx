@@ -1,19 +1,19 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { BiLike, BiSolidLike, BiCommentDots } from "react-icons/bi";
 import { FaCopy, FaArchive, FaBookmark } from "react-icons/fa";
-import { IoBookmark, IoSettings } from "react-icons/io5"; 
+import { IoBookmark, IoSettings } from "react-icons/io5";
 import { VscSend } from "react-icons/vsc";
 import { ImAttachment } from "react-icons/im";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axios from "axios";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { FaRegSmile } from "react-icons/fa";
+import { useAuth } from "../../hooks/useAuth";
 
 const SavedPostCard = ({ post }) => {
-  const { userData, removeSavedPostHandler } = useContext(AuthContext);
+  const { userData, removeSavedPostHandler } = useAuth()
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [like, setLike] = useState(false);

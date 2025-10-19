@@ -5,12 +5,11 @@ import { IoSettings } from "react-icons/io5";
 import { FaCircleMinus } from "react-icons/fa6";
 import { FaArchive } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import toast from "react-hot-toast"; 
+import { useAuth } from "../../hooks/useAuth";
 
 const ThreeDotMenu = ({ post, variant = "feed", onDelete, onRemove, setShowMenu }) => {
-  const { userData, savePostHandler } = useContext(AuthContext);
+  const { userData, savePostHandler } = useAuth()
 
   const menuItemStyle =
     "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition-all hover:bg-zinc-100 active:scale-95 cursor-pointer";

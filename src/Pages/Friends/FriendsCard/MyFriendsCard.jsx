@@ -1,9 +1,9 @@
-import { useContext, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom' 
-import { AuthContext } from '../../../AuthProvider/AuthProvider'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../hooks/useAuth'
 
 const MyFriendsCard = ({ friend }) => {
-    const { unFriendBtnHanlder, } = useContext(AuthContext)
+    const { unFriendBtnHanlder, } = useAuth()
     const btnStyle = "block py-2 text-xs md:text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const navigate = useNavigate()
     const [addStatus, setAddStatus] = useState(true)

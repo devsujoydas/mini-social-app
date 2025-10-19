@@ -1,17 +1,15 @@
-import { useContext } from "react"; 
 import NewUsersPerMonthChart from "./Carts/NewUsersPerMonthChart";
 import PostsCreatedPerDayChart from "./Carts/PostsCreatedPerDayChart";
 import TopActiveUsersChart from "./Carts/TopActiveUsersChart";
 import TotalUsersGrowthChart from "./Carts/TotalUsersGrowthChart";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.js';
-import UsersByRolePieChart from "./Carts/UsersByRolePieChart";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
 
 
 const AdminDashboard = () => {
-  const { userData, postsData, myFriends, friendsData } = useContext(AuthContext);
+  const { userData, postsData, myFriends, friendsData } = useAuth()
 
   if (!userData) return <p>Loading admin info...</p>;
 

@@ -1,12 +1,12 @@
-import { useContext, useState } from "react"; 
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 
 const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
 
-    const { userData, } = useContext(AuthContext)
+    const { userData, } = useAuth()
     const [loadingSpiner, setLoadingSpiner] = useState(true)
     const [usernameMessage, setUsernameMessage] = useState("")
 

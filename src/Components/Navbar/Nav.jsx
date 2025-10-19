@@ -1,18 +1,16 @@
 
-import { NavLink } from "react-router-dom";
-import { useContext } from 'react';
+import { NavLink } from "react-router-dom"; 
 
-import { FaUserFriends } from 'react-icons/fa';
-import { BiSolidMessageRounded } from "react-icons/bi";
+import { FaUserFriends } from 'react-icons/fa'; 
 import { FaLightbulb } from "react-icons/fa";
 import { MdWebStories } from "react-icons/md";
 import { IoHome } from "react-icons/io5";
 import { FaTicketAlt } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { MdDashboard } from "react-icons/md"; 
+import { useAuth } from "../../hooks/useAuth";
 
 const Nav = () => {
-    const { userData, postsData, usersPostsData, myFriends } = useContext(AuthContext)
+    const { userData, postsData, usersPostsData, myFriends } = useAuth()
 
     return (
         <div className="md:space-y-7 space-y-4 md:px-5 px-3">

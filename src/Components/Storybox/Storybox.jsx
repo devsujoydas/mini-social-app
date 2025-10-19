@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/free-mode';
-import 'swiper/css/pagination'; 
-import { useContext } from 'react';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
+import 'swiper/css/pagination';  
+import { useAuth } from '../../hooks/useAuth';
 
 const Storybox = () => {
 
-  const { myFriends } = useContext(AuthContext)
+  const { myFriends } = useAuth()
 
   return (
     <div className='bg-white md:p-5 p-2 rounded-xl shadow-xl'>

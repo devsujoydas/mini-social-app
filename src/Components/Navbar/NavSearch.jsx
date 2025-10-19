@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoSearch } from "react-icons/io5";
-import { IoMdAdd } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; 
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
 const NavSearch = () => {
-  const { userData } = useContext(AuthContext);
+  const { userData } = useAuth();
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
 
@@ -140,7 +139,7 @@ const NavSearch = () => {
         )}
       </div>
 
-     
+
     </div>
   );
 };

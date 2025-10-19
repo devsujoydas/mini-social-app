@@ -10,8 +10,7 @@ import {
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
-import axiosInstance from "../services/axiosInstance";
-import { useNavigate } from "react-router-dom";
+import axiosInstance from "../services/axiosInstance"; 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -155,7 +154,6 @@ const AuthProvider = ({ children }) => {
       localStorage.removeItem("email");
       localStorage.removeItem("currentUser");
       localStorage.removeItem("accessToken");
-      navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -308,3 +306,5 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+
+

@@ -1,14 +1,12 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import toast from "react-hot-toast";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import Swal from "sweetalert2"; 
+import { useAuth } from "../../hooks/useAuth";
 
 const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
 export default function UploadPostModal({ isOpen, setIsOpen }) {
-  const { userData, postsData, setPostsData, usersPostsData, setUsersPostsData } =
-    useContext(AuthContext);
+  const { userData, postsData, setPostsData, usersPostsData, setUsersPostsData } = useAuth();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [url, setUrl] = useState("");

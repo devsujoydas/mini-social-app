@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <FriendDetails />,
-        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/friends/${params.id}`),
+        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/profile/${params.id}`),
       },
       {
         path: '/profile-page',

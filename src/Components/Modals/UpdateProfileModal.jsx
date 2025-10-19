@@ -1,16 +1,16 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 
-import { 
-  FaUserAlt, FaPhoneAlt, FaGlobe, FaFacebook, FaGithub, 
-  FaLinkedin, FaYoutube, FaMapMarkerAlt, FaCity 
+import {
+  FaUserAlt, FaPhoneAlt, FaGlobe, FaFacebook, FaGithub,
+  FaLinkedin, FaYoutube, FaMapMarkerAlt, FaCity
 } from "react-icons/fa";
+import { useAuth } from "../../hooks/useAuth";
 
 const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => {
-  const { userData, setUserData } = useContext(AuthContext);
+  const { userData, setUserData } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const updateProfileHandler = async (e) => {
@@ -56,7 +56,7 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
       }
     } catch (error) {
       setIsLoading(false);
-      Swal.fire("Update Failed!", "Something went wrong", "error");
+      Swal.fire("Update Failed!", "Something went wrong", error);
     }
   };
 

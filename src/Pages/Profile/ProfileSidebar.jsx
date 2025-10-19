@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdEdit } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -7,14 +7,14 @@ import { FaUserEdit, FaUserSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import UpdateUsernameModal from "../../Components/Modals/UpdateUsernameModal.jsx";
 import UpdateProfileModal from "../../Components/Modals/UpdateProfileModal.jsx";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import { BsFillCameraFill } from "react-icons/bs";
 import UploadProfilePicture from "../../Components/Modals/UploadProfilePicture.jsx";
 import ContactInfo from "./ContactInfo.jsx";
+import { useAuth } from "../../hooks/useAuth.js";
 
 const ProfileSidebar = () => {
   const { signOutUser, userData, usersPostsData, deleteAccount } =
-    useContext(AuthContext);
+    useAuth()
 
   const [showEdit, setShowEdit] = useState(false);
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ const ProfileSidebar = () => {
           });
         }
       });
-  }; 
+  };
   return (
     <div className="w-full">
       {/* Modals */}
@@ -97,10 +97,9 @@ const ProfileSidebar = () => {
         {/* Cover */}
         <div
           style={{
-            backgroundImage: `url(${
-              userData?.profile?.coverPhotoUrl ||
+            backgroundImage: `url(${userData?.profile?.coverPhotoUrl ||
               "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"
-            })`,
+              })`,
           }}
           className="relative h-48 w-full bg-center bg-cover"
         >
@@ -123,11 +122,10 @@ const ProfileSidebar = () => {
 
             {/* Dropdown */}
             <div
-              className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${
-                showEdit
+              className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${showEdit
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-2 pointer-events-none"
-              }`}
+                }`}
             >
               <div className="p-2">
                 <button

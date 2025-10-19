@@ -1,12 +1,11 @@
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuMessageCircleMore } from "react-icons/lu"
 import { LuBell } from "react-icons/lu";
-import { Link } from "react-router-dom"; 
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const SideNavbar = () => {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useAuth()
 
   return (
     <div className="md:sticky top-0 bg-white flex items-center justify-between px-5 py-[17px]  border-b border-zinc-400">

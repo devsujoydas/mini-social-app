@@ -1,12 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../Components/Navbar/Navbar";
-import { useContext } from "react";
-import Loading from "../Components/Loading/Loading";
-import { AuthContext } from "../AuthProvider/AuthProvider";
+import Loading from "../Components/Loading/Loading"; 
 import { Toaster } from "react-hot-toast";
+import { useAuth } from "../hooks/useAuth";
 
 const Layout = () => {
-  const { loading } = useContext(AuthContext);
+  const { loading } = useAuth()
 
   return (
     <div>

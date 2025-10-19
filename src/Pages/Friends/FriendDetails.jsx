@@ -1,11 +1,10 @@
 import { Link, useLoaderData } from 'react-router-dom';
-import { useContext } from 'react';
 import AllFriends from './AllFriends';
 import { LuMessageCircleMore } from "react-icons/lu";
-import { FaUserPlus } from "react-icons/fa6"; 
+import { FaUserPlus } from "react-icons/fa6";
 import { FaUserAltSlash } from "react-icons/fa";
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
 import PostCard from '../../Components/PostCard/PostCard.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 
 const FriendDetails = () => {
     const {
@@ -17,7 +16,7 @@ const FriendDetails = () => {
         friendsRequest,
         sentRequests,
         youMayKnowFriends,
-    } = useContext(AuthContext);
+    } = useAuth()
 
     const data = useLoaderData();
     const { friend, friendPost } = data;
@@ -141,7 +140,7 @@ const FriendDetails = () => {
                         <div className="flex justify-center items-center flex-col md:mt-4 mt-3">
                             <div className="flex justify-center items-center md:gap-10 gap-3 text-sm md:text-xl">
                                 <div className="text-center">
-                                    <h1 className=" font-semibold">{friendPost?.length}</h1>
+                                    <h1 className=" font-semibold">{friend?.posts?.length}</h1>
                                     <h1 className="font-medium text-zinc-500">Post</h1>
                                 </div>
                                 <div className="text-center border-zinc-300 border-r-2 border-l-2 md:px-8 px-3">
@@ -158,7 +157,7 @@ const FriendDetails = () => {
 
                     {/* Friend Posts */}
                     <div className="">
-                        {friendPost.length === 0 ? (
+                        {friendPost?.length === 0 ? (
                             <div className="flex justify-center items-center">
                                 <h1 className="text-zinc-400">No post found...</h1>
                             </div>

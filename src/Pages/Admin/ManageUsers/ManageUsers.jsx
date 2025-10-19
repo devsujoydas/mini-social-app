@@ -1,17 +1,17 @@
- 
-import { useContext, useEffect, useRef, useState } from "react";
+
+import { useEffect,  useState } from "react";
 import UserTableCard from "./UserTableCard";
 import { IoSearch } from "react-icons/io5";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { useAuth } from "../../../hooks/useAuth";
 
 const ManageUsers = () => {
-  const { userData, friendsData } = useContext(AuthContext);
+  const { userData, friendsData } = useAuth()
   const [displayUsers, setDisplayUsers] = useState(friendsData);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  const wrapperRef = useRef(null);
+
 
   useEffect(() => {
     if (!query.trim()) {

@@ -1,5 +1,5 @@
-import { useContext, useState } from "react"
-import { Link, useLoaderData } from "react-router-dom" 
+import { useState } from "react"
+import { Link, useLoaderData } from "react-router-dom"
 import AllFriends from "./AllFriends"
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";
@@ -7,19 +7,18 @@ import { IoCall } from "react-icons/io5";
 import { IoAttach } from "react-icons/io5";
 import { IoCameraOutline } from "react-icons/io5";
 import { MdAddReaction } from "react-icons/md";
-import { IoSend } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import moment from 'moment'
 import Loading from "../../Components/Loading/Loading";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 
 const ChatBox = () => {
-  const { friendsData, userData } = useContext(AuthContext) 
+  const { friendsData, userData } = useAuth()
   const [loading, setLoading] = useState(true)
   const [follow, setFollow] = useState(true)
   const data = useLoaderData()
-  const { friend, friendPost } = data; 
+  const { friend, friendPost } = data;
   setTimeout(() => {
     setLoading(false)
   }, 500);

@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from "react";
+import { useMemo } from "react";
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from 'chart.js';
 import { Bar } from "react-chartjs-2";
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { useAuth } from "../../../hooks/useAuth";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -35,7 +35,7 @@ const TotalPostsBarChart = ({ labels, postCounts }) => {
 };
 
 const PostsChartWrapper = () => {
-  const { postsData } = useContext(AuthContext);
+  const { postsData } = useAuth()
 
   const { labels, counts } = useMemo(() => {
     const countsMap = {};

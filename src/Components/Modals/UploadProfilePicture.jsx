@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import toast from "react-hot-toast";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useState, useRef, useEffect } from "react";
+import toast from "react-hot-toast"; 
 import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
 const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
 export default function UploadProfilePicture({ isOpen, setIsOpen }) {
-  const { userData, setUserData } = useContext(AuthContext);
+  const { userData, setUserData } = useAuth();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [url, setUrl] = useState("");

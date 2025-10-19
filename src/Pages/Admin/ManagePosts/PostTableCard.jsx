@@ -1,13 +1,12 @@
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useContext } from "react"; 
-import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import { useAuth } from "../../../hooks/useAuth";
 
 
 const PostTableCard = ({ post, deletePost }) => {
-    const { userData } = useContext(AuthContext)
+    const { userData } = useAuth()
 
-    const { postImageUrl, postContent, createdDate, authorEmail, authorName, authorPhoto, likes, shares, comments } = post;
+    const { postImageUrl, postContent, createdDate, authorName, authorPhoto, likes, shares, comments } = post;
 
     return (
         <>

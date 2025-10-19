@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'; 
-import { AuthContext } from '../../../AuthProvider/AuthProvider';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuth';
 
 
 const PeopleYouMayKnow = ({ friend }) => {
-    const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
+    const { addFriendBtnHanlder } = useAuth()
     const btnStyle = "block py-2  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
     const [addStatus, setAddStatus] = useState(true)
 
@@ -22,7 +22,7 @@ const PeopleYouMayKnow = ({ friend }) => {
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg md:block flex '>
 
             <div className='md:p-0 p-2 '>
-                <Link to={`/friends/${friend.username}`}>
+                <Link to={`/profile/${friend?._id}`}>
                     <img className='md:w-full w-24 md:h-52 h-22 object-cover scale md:rounded-none rounded-full' src={!friend?.profile.profilePhotoUrl ? `/default.jpg` : `${friend?.profile.profilePhotoUrl}`} alt="" />
                 </Link>
             </div>

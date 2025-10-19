@@ -1,18 +1,17 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { Link } from 'react-router-dom'
-import toast from 'react-hot-toast'; 
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import toast from 'react-hot-toast';
+import { useAuth } from "../../hooks/useAuth";
 
 const AllFriends = ({ friend }) => {
-    const { addFriendBtnHanlder, unFriendBtnHanlder, } = useContext(AuthContext)
- 
+    const { addFriendBtnHanlder } = useAuth()
+
     const [addStatus, setAddStatus] = useState(true)
     const btnStyle = "block  py-1.5  text-sm font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all "
 
 
 
     const addFriendHandler = () => {
-        
         addFriendBtnHanlder(friend)
         setAddStatus(false)
     }
@@ -23,9 +22,9 @@ const AllFriends = ({ friend }) => {
 
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
-     
+
             <div className=' p-2 '>
-                <Link to={`/friends/${friend.username}`}>
+                <Link to={`/profile/${friend._id}`}>
                     <img className=' w-20 h-20 object-cover rounded-full' src={!friend?.profile?.profilePhotoUrl ? `/default.jpg` : `${friend?.profile?.profilePhotoUrl}`} alt="" />
                 </Link>
             </div>

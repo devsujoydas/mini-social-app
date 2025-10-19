@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+
 import PostCard from "../PostCard/PostCard";
 import PostSkeleton from "./PostSkeleton";
+import { useAuth } from "../../hooks/useAuth";
 
 const Posts = () => {
-  const { postsData, loading } = useContext(AuthContext);
- 
+  const { postsData, loading } = useAuth();
+
 
   const skeletons = Array.from({ length: 3 });
 

@@ -1,24 +1,16 @@
-import { useContext, useState } from 'react' 
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
 import { IoClose } from "react-icons/io5";
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
 import ProfileSidebar from '../Profile/ProfileSidebar';
 
 
 const UpdateInfo = () => {
 
-    const { user } = useContext(AuthContext)
     const loaderUser = useLoaderData()
-    const navigate = useNavigate()
     const [loadingSpiner, setLoadingSpiner] = useState(true)
-
-    const [showUsernameModal, setShowUsernameModal] = useState(false)
     const [showUpdateInfoModal, setShowUpdateInfoModal] = useState(false)
-    const [usernameMessage, setUsernameMessage] = useState("")
-
-
 
     const updateProfileHandler = async (e) => {
         e.preventDefault();

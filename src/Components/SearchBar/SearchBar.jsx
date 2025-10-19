@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoSearch } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"; 
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import axios from "axios";
+import { useAuth } from "../../hooks/useAuth";
 
 const SearchBar = () => {
-  const { userData } = useContext(AuthContext);
+  const { userData } = useAuth();
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
 
@@ -61,7 +61,7 @@ const SearchBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  
+
   const handleSelectPost = (post) => {
     setShowResults(false);
     setQuery(post.postContent.length > 50 ? post.postContent.slice(0, 50) + "..." : post.postContent);

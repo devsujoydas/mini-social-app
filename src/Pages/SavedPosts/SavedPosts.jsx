@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 import PostCard from "../../Components/PostCard/PostCard";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { useAuth } from "../../hooks/useAuth";
 
 const SavedPostItem = ({ post }) => (
   <Link
@@ -20,7 +19,7 @@ const SavedPostItem = ({ post }) => (
 );
 
 const SavedPosts = () => {
-  const { savedPosts, removeSavedPostHandler } = useContext(AuthContext);
+  const { savedPosts, removeSavedPostHandler } = useAuth()
   const hasSavedPosts = savedPosts && savedPosts.length > 0;
 
   return (

@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom'; 
-import { AuthContext } from '../AuthProvider/AuthProvider';
+import { Navigate, useLocation } from 'react-router-dom';  
+import { useAuth } from '../hooks/useAuth';
 
 const AuthPrivateRoutes = ({ children }) => {
-    const { user } = useContext(AuthContext);
+    const { user } = useAuth();
     const location = useLocation();
 
     if (user) return <Navigate to="/" replace state={{ from: location }} />;

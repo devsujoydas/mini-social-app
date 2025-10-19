@@ -7,14 +7,11 @@ import { FaFacebook } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6"; 
-import { useContext } from 'react';
-import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { FaLocationDot } from "react-icons/fa6";   
+import { useAuth } from '../../hooks/useAuth';
 
 const ProfileIntroSection = () => {
-    const { userData } = useContext(AuthContext)
-
-  
+    const { userData } = useAuth()
 
     return (
         <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg'>

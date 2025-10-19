@@ -1,18 +1,18 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import SignInWithGoogle from "../../AuthProvider/SignInWithGoogle";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../public/LottieAnimations/Login.json";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast from 'react-hot-toast';
+import { useAuth } from "../../hooks/useAuth";
 
 const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/profile";
-    const { setUser, logInUser, setUserData, setLoading } = useContext(AuthContext);
+    const { setUser, logInUser, setUserData, setLoading } = useAuth()
 
     const [show, setShow] = useState(false);
     const [loadingSpinner, setLoadingSpinner] = useState(true);

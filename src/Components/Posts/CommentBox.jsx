@@ -1,29 +1,27 @@
-import React from 'react'
 import CommentCard from './CommentCard'
 import { useEffect } from "react";
-import { useContext, useState } from "react"; 
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import toast from 'react-hot-toast';
 
-import { BiLike } from "react-icons/bi"; 
-import { VscSend } from "react-icons/vsc"; 
+import { BiLike } from "react-icons/bi";
+import { VscSend } from "react-icons/vsc";
 import { FaRegSmile } from "react-icons/fa";
-import { BiSolidLike } from "react-icons/bi";  
+import { BiSolidLike } from "react-icons/bi";
 import { ImAttachment } from "react-icons/im";
 import { BiCommentDots } from "react-icons/bi";
-import { FaCircleMinus } from "react-icons/fa6";
 import { PiShareFatBold } from "react-icons/pi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import axios from "axios";
 import ThreeDotMenu from './ThreeDotMenu.jsx';
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx';
+import { useAuth } from '../../hooks/useAuth.js';
 
 
 
 const CommentBox = ({ post }) => {
-    const { userData, savePostHandler } = useContext(AuthContext)
+    const { userData } = useAuth()
     const likeCommentStyle = "md:text-[16px] active:scale-95 w-full transition-all px-3 py-1 md:py-2 rounded-md hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
-    const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
+    // const editTrashBtnStyle = "active:scale-95 w-full transition-all px-3 py-1 rounded-md  hover:bg-zinc-200 active:bg-zinc-200 cursor-pointer flex items-center gap-1"
 
     const [showEdit, setShowEdit] = useState(1)
     const [showUsers, setShowUsers] = useState(false)

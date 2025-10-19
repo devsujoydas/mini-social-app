@@ -1,21 +1,20 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Nav from "./Nav";
 import Swal from "sweetalert2";
 
-import { IoSearch } from "react-icons/io5";
 import { FiAlertTriangle } from "react-icons/fi";
 import { IoCloseSharp } from "react-icons/io5";
 import { RxExit } from "react-icons/rx";
 import { IoMenu } from "react-icons/io5";
 import NavSearch from "./NavSearch.jsx";
-import { AuthContext } from "../../AuthProvider/AuthProvider.jsx";
 import toast from "react-hot-toast";
+import { useAuth } from "../../hooks/useAuth.js";
 
 
 const Navbar = () => {
-  const { user, userData, signOutUser } = useContext(AuthContext)
+  const { userData, signOutUser } = useAuth()
   const [gopro, setGopro] = useState(1)
   const [humbarger, setHumbarger] = useState(1)
   const navigate = useNavigate()
@@ -115,7 +114,7 @@ const Navbar = () => {
                   </div>
                   <div className="">
                     <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
-                    <p>Basic Member</p>
+                    <p>{userData.role == "admin" ? "Admin" : "Basic member"}</p>
                   </div>
                 </div>
               </Link>

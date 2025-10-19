@@ -1,17 +1,15 @@
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 
 import { FaRegSmile } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
 import { IoMicOutline } from "react-icons/io5";
 import axios from "axios";
-import { AuthContext } from "../../AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
+import { useAuth } from "../../hooks/useAuth";
 
 const PostForm = () => {
   const { userData, postsData, setPostsData, setUsersPostsData, usersPostsData } =
-    useContext(AuthContext);
-  const navigate = useNavigate();
+    useAuth()
+
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
@@ -31,8 +29,8 @@ const PostForm = () => {
       shares: [],
     };
 
-   
-    
+
+
 
     try {
       const res = await axios.post(
@@ -48,7 +46,7 @@ const PostForm = () => {
           showConfirmButton: false,
         });
 
-        
+
         const newPost = {
           _id: res.data.result.insertedId,
           ...postData,
@@ -69,7 +67,7 @@ const PostForm = () => {
   };
 
 
-  
+
 
   return (
     <div className="p-5 border border-zinc-300">

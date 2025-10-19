@@ -1,17 +1,16 @@
-import { useContext, useEffect, useState } from 'react' 
+import { useState } from 'react'
 import MyFriendsCard from './FriendsCard/MyFriendsCard.jsx'
 import FriendsRequestCard from './FriendsCard/FriendsRequestCard.jsx'
 import PeopleYouMayKnow from './FriendsCard/PeopleYouMayKnow.jsx'
 import SentRequestCard from './FriendsCard/SentRequestCard.jsx'
 import { HiUsers } from "react-icons/hi";
 import { RiUserReceived2Fill } from "react-icons/ri";
-import { FiArrowUpRight } from "react-icons/fi";
 import { RiUserSharedFill } from "react-icons/ri";
-import { AuthContext } from '../../AuthProvider/AuthProvider.jsx'
+import { useAuth } from '../../hooks/useAuth.js'
 
 
 const FriendsPage = () => {
-    const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useContext(AuthContext)
+    const { youMayKnowFriends, sentRequests, friendsRequest, myFriends, } = useAuth()
     const btnStyle = "border border-zinc-200 md:text-[16px] text-xs py-1 md:px-4 px-2 rounded-md hover:bg-zinc-100 cursor-pointer active:scale-95 transition-all duration-300 font-family-secondary"
 
     const [displayFriendBlock, setDisplayFriendBlock] = useState("friend")
