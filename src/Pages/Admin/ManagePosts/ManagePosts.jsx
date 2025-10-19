@@ -1,9 +1,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import axios from "axios"; 
+import axios from "axios";
 import PostTableCard from "./PostTableCard";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import { useAuth } from "../../../hooks/useAuth";
 
 
@@ -97,7 +97,7 @@ const ManagePosts = () => {
       }
     });
   }
-
+ 
 
   return (
     <div>

@@ -9,7 +9,6 @@ import PostDetails from '../Components/Posts/PostDetails.jsx';
 import PostDetailsUpdate from '../Components/Posts/PostDetailsUpdate.jsx';
 import FriendsPage from '../Pages/Friends/FriendsPage.jsx';
 import FriendDetails from '../Pages/Friends/FriendDetails.jsx';
-import ChatBox from '../Pages/ChatBox/ChatBox.jsx';
 import SavedPosts from '../Pages/SavedPosts/SavedPosts.jsx';
 import EventsPage from '../Pages/EventsPage/EventsPage.jsx';
 import Memories from '../Pages/Memories/Memories.jsx';
@@ -25,7 +24,9 @@ import ManageUsers from '../Pages/Admin/ManageUsers/ManageUsers.jsx';
 import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
 import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
-import App from '../App.jsx';
+import Chats from '../Pages/ChatBox/Chats.jsx';
+import ChatBox from '../Pages/ChatBox/ChatBox.jsx';
+
 
 export const router = createBrowserRouter([
   {
@@ -75,10 +76,16 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: '/message/:id',
-        element: <ChatBox />,
-        loader: async ({ params }) => await fetch(`${import.meta.env.VITE_BACKEND_URL}/message/${params.id}`),
+        path: "/message",
+        element: <Chats />,
+        children: [
+          {
+            path: ":id",
+            element: <ChatBox />,
+          },
+        ],
       },
+
       {
         path: '/savedposts',
         element: <SavedPosts />,

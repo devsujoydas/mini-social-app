@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
-import axiosInstance from "../services/axiosInstance"; 
+import axiosInstance from "../services/axiosInstance";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -229,7 +229,7 @@ const AuthProvider = ({ children }) => {
         setPostsData(postsRes.data);
         setUsersPostsData(usersPostsRes.data);
         setSavedPosts(savedPostsRes.data);
- 
+
 
         const ping = async () => {
           try {

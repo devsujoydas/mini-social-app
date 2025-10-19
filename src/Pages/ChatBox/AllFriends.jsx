@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { Link } from 'react-router-dom'
 import { HiDotsHorizontal } from "react-icons/hi";
-import { RiUserFollowFill } from "react-icons/ri";
-import { RiUserUnfollowFill } from "react-icons/ri";
+import { RiUserFollowFill } from "react-icons/ri"; 
 import { MdReport } from "react-icons/md";
 import { RiUserForbidFill } from "react-icons/ri";
 
@@ -15,9 +14,9 @@ const AllFriends = ({ friend }) => {
     return (
         <div className='border cursor-pointer border-zinc-300 rounded-md px-5 py-3 flex justify-center items-center  gap-3 hover:shadow-lg active:shadow-none duration-300 transition-all  '>
 
-            <Link to={`/message/${friend?.username}`} className='flex w-full justify- items-center gap-5'>
+            <Link to={`/message/${friend?._id}`} className='flex w-full justify- items-center gap-5'>
                 <div className='w-18 h-18  rounded-full overflow-hidden'>
-                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profilephotourl?friend?.profilephotourl:"/default.jpg"} alt="" />
+                    <img className='w-full object-cover h-full scale-105 ' src={friend?.profile?.profilePhotoUrl ? friend?.profile?.profilePhotoUrl : "/default.jpg"} alt="" />
                 </div>
 
                 <div className=''>

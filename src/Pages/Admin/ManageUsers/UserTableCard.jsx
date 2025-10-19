@@ -70,6 +70,7 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
         });
     };
 
+    console.log(friend)
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
             <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -77,7 +78,7 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
                     <div className="flex items-center gap-3">
                         <img
                             className="w-14 h-14 rounded-full border-3 border-zinc-300 object-cover"
-                            src={friend.profilephotourl || "/default.jpg"}
+                            src={friend?.profile?.profilePhotoUrl || "/default.jpg"}
                             alt="Admin Profile"
                         />
                         <div className="space-y-1">

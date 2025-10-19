@@ -15,7 +15,7 @@ import { useAuth } from "../../hooks/useAuth.js";
 
 const Navbar = () => {
   const { userData, signOutUser } = useAuth()
-  const [gopro, setGopro] = useState(1)
+  // const [gopro, setGopro] = useState(1)
   const [humbarger, setHumbarger] = useState(1)
   const navigate = useNavigate()
 
@@ -86,7 +86,7 @@ const Navbar = () => {
           </div>
 
           <div className="space-y-5">
-            <div className={gopro ? "block" : "hidden"}>
+            {/* <div className={gopro ? "block" : "hidden"}>
               <div className="text-lg p-4 rounded-2xl bg-[#f4f6f8] space-y-5">
                 <div className="flex justify-between items-start  text-2xl">
                   <div className="font-semibold bg-[#d7dfeb]  rounded-full p-4">
@@ -102,7 +102,7 @@ const Navbar = () => {
                   <button className="text-[#2b1fff] cursor-pointer active:scale-95 transition-all">Go Pro</button>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <hr className="text-zinc-300" />
 

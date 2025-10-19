@@ -126,7 +126,7 @@ const FriendDetails = () => {
 
                                     <div>
                                         <Link
-                                            to={`/message/${friend?.username}`}
+                                            to={`/message/${friend?._id}`}
                                             className={`${btnStyle} bg-gray-200 text-gray-700 hover:bg-gray-300 flex items-center justify-center md:gap-2 gap-1`}
                                         >
                                             <LuMessageCircleMore className="md:text-lg text-sm" /> Message
