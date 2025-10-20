@@ -21,8 +21,6 @@ const FriendDetails = () => {
     const data = useLoaderData();
     const { friend, friendPost } = data;
 
-    console.log(data)
-
     const btnStyle =
         "block md:px-6 px-2 py-2 md:text-sm text-xs font-medium rounded-sm w-full text-center cursor-pointer active:scale-95 transition-all";
 
@@ -56,7 +54,7 @@ const FriendDetails = () => {
                             className="md:h-96 h-40 rounded-lg border border-zinc-300 md:mt-0 mt-14 bg-no-repeat bg-cover bg-center"
                             style={{
                                 backgroundImage: `url(${friend?.profile?.coverPhotoUrl ||
-                                    "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"
+                                    "/default-cover.jpg"
                                     })`,
                             }}
                         >

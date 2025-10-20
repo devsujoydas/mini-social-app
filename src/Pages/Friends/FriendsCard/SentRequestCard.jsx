@@ -26,7 +26,7 @@ const SentRequestCard = ({ friend }) => {
             <div className='md:p-3 p-2 w-full relative'>
                 <div className='flex flex-col justify-between h-full   '>
                     <div className='flex flex-col gap-2'>
-                        <Link to={`/friends/${friend.username}`}>
+                        <Link to={`/profile/${friend._id}`}>
                             <h1 className='text-[16px] flex items-center gap-2 text-wrap font-semibold'>{friend?.name}
                                 {friend?.onlineStatus && (
                                     <p className='bg-green-400 h-3.5 w-3.5 rounded-full  border border-white'></p>

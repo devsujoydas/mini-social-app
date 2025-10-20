@@ -26,7 +26,7 @@ const FriendSuggested = () => {
             youMayKnowFriends[0] &&
             <div>
               <hr className="text-zinc-300 my-3 md:my-5" />
-              <Link to={`/friends/${youMayKnowFriends[0]?.username}`} className="flex w-full justify-between items-center">
+              <Link to={`/profile/${youMayKnowFriends[0]?._id}`} className="flex w-full justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="active:scale-95 transition-all cursor-pointer">
                     <img className="w-10 h-10 object-cover rounded-full" src={!youMayKnowFriends[0]?.profile?.profilePhotoUrl ? `/default.jpg` : `${youMayKnowFriends[0]?.profile?.profilePhotoUrl}`} alt="" />
@@ -45,7 +45,7 @@ const FriendSuggested = () => {
           {
             youMayKnowFriends[1] &&
             <div>
-              <Link to={`/friends/${youMayKnowFriends[1]?.username}`} className="flex w-full justify-between items-center">
+              <Link to={`/profile/${youMayKnowFriends[1]?._id}`} className="flex w-full justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="active:scale-95 transition-all cursor-pointer">
                     <img className="w-10 h-10 object-cover rounded-full" src={!youMayKnowFriends[1]?.profile?.profilePhotoUrl ? `/default.jpg` : `${youMayKnowFriends[1]?.profile?.profilePhotoUrl}`} alt="" />
@@ -64,7 +64,7 @@ const FriendSuggested = () => {
           {
             youMayKnowFriends[2] &&
             <div>
-              <Link to={`/friends/${youMayKnowFriends[2]?.username}`} className="flex w-full justify-between items-center">
+              <Link to={`/profile/${youMayKnowFriends[2]?._id}`} className="flex w-full justify-between items-center">
                 <div className="flex items-center gap-3">
                   <div className="active:scale-95 transition-all cursor-pointer">
                     <img className="w-10 h-10 object-cover rounded-full" src={!youMayKnowFriends[2]?.profile?.profilePhotoUrl ? `/default.jpg` : `${youMayKnowFriends[2]?.profile?.profilePhotoUrl}`} alt="" />

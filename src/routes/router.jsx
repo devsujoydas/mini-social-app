@@ -25,9 +25,9 @@ import ManagePosts from '../Pages/Admin/ManagePosts/ManagePosts.jsx';
 import ImageUploader from '../Pages/ImageUploader/ImageUploader.jsx';
 import ProiflePage from '../Pages/ProiflePage/ProiflePage.jsx';
 import Chats from '../Pages/ChatBox/Chats.jsx';
-import ChatBox from '../Pages/ChatBox/ChatBox.jsx';
+import ChatBox from '../Pages/ChatBox/ChatBox.jsx'; 
 
-
+ 
 export const router = createBrowserRouter([
   {
     path: '/',

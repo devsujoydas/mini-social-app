@@ -16,7 +16,7 @@ const ProfileSideTop = () => {
 
             <div className='w-full h-[150px] md:h-[250px] lg:h-[250px] relative overflow-hidden'>
                 <div className=' h-full rounded-lg overflow-hidden'>
-                    <img className='w-full h-full object-cover' src={userData?.coverphotourl != "" ? userData?.coverphotourl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"} alt="" />
+                    <img className='w-full h-full object-cover' src={userData?.coverphotourl != "" ? userData?.coverphotourl : "/default-cover.jpg"} alt="" />
                 </div>
                 <div className="absolute md:bottom-4  bottom-2 md:right-3 right-2 text-xs flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 px-2 md:px-3 py-1.5 rounded-full md:rounded-md items-center cursor-pointer  transition-all duration-300 border-white gap-1">
                     <BsFillCameraFill className="text-sm" /> <span className="md:block hidden">Edit Cover Photo</span>

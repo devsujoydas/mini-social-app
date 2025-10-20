@@ -13,7 +13,7 @@ const ProfileTopSection = () => {
 
             <div className='w-full h-[150px] md:h-[250px] lg:h-[380px] relative overflow-hidden'>
                 <div className=' h-full rounded-lg overflow-hidden'>
-                    <img className='w-full h-full object-cover' src={userData?.profile.coverPhotoUrl != "" ? userData?.profile.coverPhotoUrl : "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"} alt="" />
+                    <img className='w-full h-full object-cover' src={userData?.profile.coverPhotoUrl != "" ? userData?.profile.coverPhotoUrl : "/default-cover.jpg"} alt="" />
                 </div>
                 <div className="absolute md:bottom-4 bottom-2 md:right-3 right-2 text-xs md:text-[16px]  flex font-semibold bg-zinc-200 hover:bg-zinc-300 active:scale-95 px-2 md:px-3 py-2 rounded-full md:rounded-md items-center cursor-pointer  transition-all duration-300 border-2 border-white gap-1">
                     <BsFillCameraFill className="text-xl" /> <span className="md:block hidden">Edit Cover Photo</span>

@@ -28,7 +28,7 @@ const PeopleYouMayKnow = ({ friend }) => {
             </div>
             <div className='md:p-3 p-2 md:w-full w-3/4'>
                 <div className='flex flex-col justify-between h-full '>
-                    <Link to={`/friends/${friend.username}`} className='space-y-1 '>
+                    <Link to={`/profile/${friend._id}`} className='space-y-1 '>
                         <div className='flex flex-col gap-2'>
                             <h1 className='text-[16px] flex items-center gap-2 text-wrap font-semibold'>{friend?.name}
                                 {friend?.onlineStatus && (

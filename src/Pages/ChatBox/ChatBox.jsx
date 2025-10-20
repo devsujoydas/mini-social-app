@@ -20,25 +20,39 @@ const ChatBox = () => {
   const [editingText, setEditingText] = useState("");
   const [dropdownOpenId, setDropdownOpenId] = useState(null);
   const scrollRef = useRef();
+  const pollingRef = useRef(null);
 
-  // Fetch messages
-  useEffect(() => {
-    if (!params.id) return;
-    axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/message/${params.id}?userId=${userData._id}`)
-      .then((res) => {
-        setFriend(res.data.friend);
-        setMessages(res.data.messages);
-        scrollToBottom();
-      })
-      .catch(console.error);
-  }, [params.id, userData._id]);
+  const fetchMessages = async () => {
+    if (!params.id || !userData?._id) return;
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/message/${params.id}?userId=${userData._id}`
+      );
+      setFriend(res.data.friend);
+      setMessages(res.data.messages);
+      scrollToBottom();
+    } catch (err) {
+      console.error("Failed to fetch messages:", err);
+    }
+  };
 
   const scrollToBottom = () => {
     setTimeout(() => {
-      scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }, 100);
   };
+
+  useEffect(() => {
+    fetchMessages();
+
+    // auto re-fetch every 5 seconds
+    pollingRef.current = setInterval(fetchMessages, 5000);
+
+    return () => clearInterval(pollingRef.current);
+  }, [params.id, userData?._id]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -50,32 +64,33 @@ const ChatBox = () => {
         receiverId: friend._id,
         message: newMessage,
       });
+
       if (res.data.success) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            _id: Date.now(),
-            message: newMessage,
-            createdAt: new Date(),
-            senderId: userData._id,
-            receiverId: friend._id,
-            sender: userData,
-            receiver: friend,
-          },
-        ]);
+        const msg = {
+          _id: Date.now(),
+          message: newMessage,
+          createdAt: new Date(),
+          senderId: userData._id,
+          receiverId: friend._id,
+        };
+        setMessages((prev) => [...prev, msg]);
         setNewMessage("");
         scrollToBottom();
       }
-    } catch (err) {
+    } catch {
       toast.error("Failed to send message");
-      console.error(err);
     }
   };
 
   const updateMessage = async (msgId) => {
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/message/update`, { messageId: msgId, message: editingText });
-      setMessages((prev) => prev.map((msg) => (msg._id === msgId ? { ...msg, message: editingText } : msg)));
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/message/update`, {
+        messageId: msgId,
+        message: editingText,
+      });
+      setMessages((prev) =>
+        prev.map((m) => (m._id === msgId ? { ...m, message: editingText } : m))
+      );
       setEditingMsgId(null);
       setEditingText("");
       setDropdownOpenId(null);
@@ -88,7 +103,7 @@ const ChatBox = () => {
   const deleteMessage = async (msgId) => {
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/message/delete/${msgId}`);
-      setMessages((prev) => prev.filter((msg) => msg._id !== msgId));
+      setMessages((prev) => prev.filter((m) => m._id !== msgId));
       setDropdownOpenId(null);
       toast.success("Message deleted!");
     } catch {
@@ -113,148 +128,163 @@ const ChatBox = () => {
   return (
     <div className="flex flex-col h-full w-full">
       {/* Header */}
-      <div className="flex justify-between items-center border-b border-gray-300 p-2">
+      <div className="flex justify-between items-center border-b border-gray-300 p-3 bg-white shadow-sm">
         <Link to={`/profile/${friend?._id}`} className="flex items-center gap-2">
           <img
-            className="w-12 h-12 object-cover rounded-full border border-gray-300"
+            className="w-11 h-11 object-cover rounded-full border border-gray-300"
             src={friend?.profile?.profilePhotoUrl || "/default.jpg"}
             alt=""
           />
           <div>
-            <h1 className="font-semibold">{friend?.name}</h1>
-            <h1 className="text-xs text-gray-500">@{friend?.username}</h1>
+            <h1 className="font-semibold text-sm md:text-base">{friend?.name}</h1>
+            <p className="text-xs text-gray-500">@{friend?.username}</p>
           </div>
         </Link>
-        <div className="flex items-center gap-3 text-xl">
-          <IoCall className="cursor-pointer hover:bg-gray-200 p-2 rounded-full" />
-          <FaVideo className="cursor-pointer hover:bg-gray-200 p-2 rounded-full" />
+        <div className="flex items-center gap-2 text-gray-600">
+          <IoCall className="cursor-pointer text-3xl hover:bg-gray-200 p-2 rounded-full" />
+          <FaVideo className="cursor-pointer text-3xl hover:bg-gray-200 p-2 rounded-full" />
         </div>
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 flex flex-col-reverse gap-3 overflow-y-auto p-2">
-        {messages.map((msg) => {
-          const isSender = msg.senderId === userData._id;
-          return (
-            <div key={msg._id} className="flex flex-col">
-              <p className="text-center text-xs text-gray-400 my-1">{formatDateTime(msg.createdAt)}</p>
-              <div className={`flex gap-2 ${isSender ? "justify-end" : "justify-start"} relative`}>
-                {!isSender && (
-                  <img
-                    className="w-9 h-9 object-cover rounded-full border border-gray-300"
-                    src={friend?.profile?.profilePhotoUrl || "/default.jpg"}
-                    alt=""
-                  />
-                )}
-                <div className="relative group">
-                  <div
-                    className={`px-4 py-2 max-w-xs md:max-w-md break-words rounded-full shadow ${
-                      isSender ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
-                    }`}
-                  >
-                    {editingMsgId === msg._id ? (
-                      <div className="flex gap-2">
-                        <input
-                          type="text"
-                          value={editingText}
-                          onChange={(e) => setEditingText(e.target.value)}
-                          className="px-4 py-1 rounded-full border w-full"
-                        />
-                        <button
-                          onClick={() => updateMessage(msg._id)}
-                          className="px-3 bg-blue-500 text-white rounded-full"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    ) : (
-                      msg.message
-                    )}
-                  </div>
-
-                  {/* Dropdown */}
-                  <div className={`absolute ${isSender ? "-left-10" : "-right-10"} top-0`}>
-                    <BsThreeDotsVertical
-                      className="cursor-pointer text-gray-500 hover:text-black"
-                      onClick={() => setDropdownOpenId(dropdownOpenId === msg._id ? null : msg._id)}
+      <div className="flex-1 flex flex-col justify-between overflow-hidden bg-[#f3f4f6]">
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto flex flex-col justify-end gap-3 p-4 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+        >
+          {messages.map((msg) => {
+            const isSender = msg.senderId === userData._id;
+            return (
+              <div key={msg._id} className="flex flex-col">
+                <p className="text-center text-xs text-gray-400 my-1">
+                  {formatDateTime(msg.createdAt)}
+                </p>
+                <div
+                  className={`flex items-end gap-2 ${isSender ? "justify-end" : "justify-start"}`}
+                >
+                  {!isSender && (
+                    <img
+                      className="w-8 h-8 object-cover rounded-full border border-gray-300"
+                      src={friend?.profile?.profilePhotoUrl || "/default.jpg"}
+                      alt=""
                     />
-                    {dropdownOpenId === msg._id && (
-                      <div className="absolute top-5 bg-white border rounded-md shadow-lg flex flex-col z-50 w-32">
-                        {!isSender ? (
-                          <>
-                            <button
-                              className="px-4 py-2 hover:bg-gray-100 text-left text-sm"
-                              onClick={() => copyText(msg.message)}
-                            >
-                              Copy
-                            </button>
-                            <button
-                              className="px-4 py-2 hover:bg-gray-100 text-left text-sm"
-                              onClick={() => deleteMessage(msg._id)}
-                            >
-                              Delete
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              className="px-4 py-2 hover:bg-gray-100 text-left text-sm"
-                              onClick={() => {
-                                setEditingMsgId(msg._id);
-                                setEditingText(msg.message);
-                                setDropdownOpenId(null);
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="px-4 py-2 hover:bg-gray-100 text-left text-sm"
-                              onClick={() => deleteMessage(msg._id)}
-                            >
-                              Delete
-                            </button>
-                            <button
-                              className="px-4 py-2 hover:bg-gray-100 text-left text-sm"
-                              onClick={() => copyText(msg.message)}
-                            >
-                              Copy
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  )}
+                  <div className="relative max-w-[70%]">
+                    <div
+                      className={`px-4 py-2 rounded-2xl shadow-sm ${
+                        isSender
+                          ? "bg-blue-500 text-white rounded-br-none"
+                          : "bg-white text-black rounded-bl-none"
+                      }`}
+                    >
+                      {editingMsgId === msg._id ? (
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={editingText}
+                            onChange={(e) => setEditingText(e.target.value)}
+                            className="px-3 py-1 rounded-full border w-full text-black"
+                          />
+                          <button
+                            onClick={() => updateMessage(msg._id)}
+                            className="bg-blue-500 text-white px-3 rounded-full text-sm"
+                          >
+                            Save
+                          </button>
+                        </div>
+                      ) : (
+                        msg.message
+                      )}
+                    </div>
 
-                {isSender && (
-                  <img
-                    className="w-9 h-9 object-cover rounded-full border border-gray-300"
-                    src={userData?.profile?.profilePhotoUrl || "/default.jpg"}
-                    alt=""
-                  />
-                )}
+                    {/* Dropdown */}
+                    <div className={`absolute top-2 ${isSender ? "-left-6" : "-right-6"}`}>
+                      <BsThreeDotsVertical
+                        className="cursor-pointer text-gray-500 hover:text-black"
+                        onClick={() =>
+                          setDropdownOpenId(dropdownOpenId === msg._id ? null : msg._id)
+                        }
+                      />
+                      {dropdownOpenId === msg._id && (
+                        <div className="absolute top-6 right-0 bg-white border rounded-lg shadow-lg z-50 w-32">
+                          {isSender ? (
+                            <>
+                              <button
+                                onClick={() => {
+                                  setEditingMsgId(msg._id);
+                                  setEditingText(msg.message);
+                                  setDropdownOpenId(null);
+                                }}
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => deleteMessage(msg._id)}
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                              >
+                                Delete
+                              </button>
+                              <button
+                                onClick={() => copyText(msg.message)}
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                              >
+                                Copy
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                onClick={() => copyText(msg.message)}
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                              >
+                                Copy
+                              </button>
+                              <button
+                                onClick={() => deleteMessage(msg._id)}
+                                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
+                              >
+                                Delete
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {isSender && (
+                    <img
+                      className="w-8 h-8 object-cover rounded-full border border-gray-300"
+                      src={userData?.profile?.profilePhotoUrl || "/default.jpg"}
+                      alt=""
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* Input */}
-      <div className="border border-gray-300 rounded-full p-2 mt-2 flex items-center gap-2">
+      <form onSubmit={sendMessage} className="p-3 border-t bg-white flex items-center gap-3">
         <MdAddReaction className="text-xl cursor-pointer" />
         <input
           type="text"
-          placeholder="Message"
-          className="flex-1 outline-none px-2 text-sm md:text-lg"
+          placeholder="Message..."
+          className="flex-1 border rounded-full px-4 py-2 outline-none"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
         <IoAttach className="text-xl cursor-pointer" />
         <IoCameraOutline className="text-xl cursor-pointer" />
-        <button className="bg-blue-500 text-white px-3 py-1 rounded-full" onClick={sendMessage}>
-          <IoIosSend />
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600"
+        >
+          <IoIosSend size={20} />
         </button>
-      </div>
+      </form>
     </div>
   );
 };

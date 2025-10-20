@@ -19,7 +19,7 @@ const AllFriends = ({ friend }) => {
         toast.success('Cencel!')
         setAddStatus(true)
     }
-
+ 
     return (
         <div className='border border-zinc-200 shadow-md overflow-hidden rounded-lg flex'>
 
@@ -30,7 +30,7 @@ const AllFriends = ({ friend }) => {
             </div>
             <div className=' p-2  w-3/4'>
                 <div className=''>
-                    <Link to={`/friends/${friend?.username}`} className='space-y-1 mb-2'>
+                    <Link to={`/profile/${friend?._id}`} className='space-y-1 mb-2'>
                         <div className='flex flex-col gap-2'>
                             <h1 className='text-[16px]  text-wrap font-semibold'>{friend?.name}</h1>
                             <h1 className='md:text-sm text-xs -mt-2 mb-2'>@ {friend?.username}</h1>

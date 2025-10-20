@@ -32,7 +32,7 @@ const SignInWithGoogle = () => {
                 address: "",
                 bio: "",
                 profilephotourl: user.photoURL || "",
-                coverphotourl: "",
+                coverphotourl: "default-cover.jpg",
                 phone: "",
                 website: "",
                 role: "user",

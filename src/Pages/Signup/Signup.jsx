@@ -62,24 +62,16 @@ const Signup = () => {
             return;
         }
 
-        const username = formData.email.split("@")[0].split("+")[0];
-        const name = username.replace(/\d+/g, "").trim();
-        const displayName = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
-        const userObj = {
-            email: formData.email,
-            name: displayName,
-            username,
-        };
 
         try {
             const result = await signUpUser(formData.email, formData.password);
             setUser(result.user);
-
-            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, { userObj })
+            const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, { email: formData.email })
             setUserData(res.data);
-            navigate("/profile");
+            console.log(res.data);
             toast.success("Account Create Successfully")
+            navigate("/profile");
         } catch (err) {
             setUserStatus(err.message || "Signup failed. Try again.");
         } finally {

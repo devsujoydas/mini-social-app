@@ -19,7 +19,7 @@ const Storybox = () => {
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide px-2 py-2">
             {myFriends.map((friend, idx) => (
               <div key={idx} className="shrink-0">
-                <Link to={`/friends/${friend?.username}`} className="relative">
+                <Link to={`/profile/${friend?._id}`} className="relative">
                   <img
                     className={`md:w-20 w-16 md:h-20 h-16 object-cover border-3 border-purple-500 ${friend?.onlineStatus ? "hover:border-emerald-500 border-emerald-500" : "hover:border-red-500"} active:scale-95 transition-all duration-500 cursor-pointer rounded-full`}
                     src={friend?.profilephotourl || "/default.jpg"} alt=""

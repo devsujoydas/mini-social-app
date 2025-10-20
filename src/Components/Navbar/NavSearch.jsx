@@ -65,7 +65,7 @@ const NavSearch = () => {
   const handleSelectUser = (user) => {
     setShowResults(false);
     setQuery(user.name);
-    navigate(`/friends/${user.username}`);
+    navigate(`/profile/${user._id}`);
   };
 
   return (

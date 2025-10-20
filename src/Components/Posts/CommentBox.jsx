@@ -81,7 +81,7 @@ const CommentBox = ({ post }) => {
             <div className='flex-1 overflow-y-auto'>
                 {/* post img and menus */}
                 <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
-                    <Link to={post?.authorUsername === userData?.username ? "/profile" : `/friends/${post?.authorUsername}`}>
+                    <Link to={post?.authorUsername === userData?.username ? "/profile" : `/profile/${post?.authorUsername}`}>
                         <div className="flex items-center gap-3">
                             <div className="active:scale-95 transition-all cursor-pointer w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
                                 <img className="h-full w-full rounded-full object-cover" src={!post?.authorPhoto ? `/default.jpg` : `${post?.authorPhoto}`} alt="" />
@@ -127,7 +127,7 @@ const CommentBox = ({ post }) => {
 
                                     <div className={`absolute bottom-8 -left-7 ${showUsers ? "z-10 opacity-100" : "-z-10 opacity-0"} transition-all text-xs  shadow-xl bg-[#000000a4] p-3 space-y-1 rounded-lg flex flex-col text-white font-semibold`}>
                                         {reactorsUsers.map((user, idx) => (
-                                            <Link to={user?.username == userData?.username ? "/profile" : `/friends/${user.username}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
+                                            <Link to={user?.username == userData?.username ? "/profile" : `/profile/${user._id}`} key={idx} className="cursor-pointer hover:underline transition-all">{user.name}</Link>
                                         ))}
                                     </div>
 

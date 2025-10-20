@@ -98,7 +98,7 @@ const ProfileSidebar = () => {
         <div
           style={{
             backgroundImage: `url(${userData?.profile?.coverPhotoUrl ||
-              "https://www.deped.gov.ph/wp-content/uploads/placeholder.png"
+              "/default-cover.jpg"
               })`,
           }}
           className="relative h-48 w-full bg-center bg-cover"
