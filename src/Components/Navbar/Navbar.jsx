@@ -15,7 +15,6 @@ import { useAuth } from "../../hooks/useAuth.js";
 
 const Navbar = () => {
   const { userData, signOutUser } = useAuth()
-  // const [gopro, setGopro] = useState(1)
   const [humbarger, setHumbarger] = useState(1)
   const navigate = useNavigate()
 

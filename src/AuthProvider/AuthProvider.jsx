@@ -11,6 +11,8 @@ import {
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
 import axiosInstance from "../services/axiosInstance";
+import api from "../services/axiosInstance";
+import Swal from "sweetalert2";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -111,11 +113,74 @@ const AuthProvider = ({ children }) => {
       })
       .catch((err) => console.error("Cancel sent request failed:", err));
   };
+
+
+
+  const deletePostHandler = async (postId, onSuccess) => {
+    if (!postId) return toast.error("Invalid post ID");
+    try {
+
+      const swalWithTailwind = Swal.mixin({
+        customClass: {
+          confirmButton:
+            "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
+          cancelButton:
+            "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer text-white font-bold py-2 px-4 rounded",
+        },
+        buttonsStyling: false,
+      });
+
+
+      swalWithTailwind
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, delete Post!",
+          cancelButtonText: "No, cancel!",
+          reverseButtons: true,
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            const res = await api.delete(`/post/${postId}`);
+
+            if (res.data?.deletedCount > 0) {
+              api.get(`/posts?authorId=${userData?._id}`)
+                .then(res => {
+                  setUsersPostsData(res.data)
+                  // swalWithTailwind.fire({
+                  //   title: "Post Deleted!",
+                  //   text: "Post has been deleted.",
+                  //   icon: "success",
+                  // });
+                  toast.success("Post deleted successfully!");
+                })
+              if (onSuccess) onSuccess(); 
+            } else {
+              toast.error(res.data?.message || "Failed to delete post.");
+            }
+
+
+          }
+        });
+
+    } catch (error) {
+      console.error("Delete post error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong.");
+    }
+  };
+
   const savePostHandler = (post) => {
     const data = { userId: userData._id, postId: post._id };
     axiosInstance
       .put(`/savePost`, data)
       .then((res) => {
+        axiosInstance.get(`/savedPosts?userId=${userData._id}`)
+          .then(res => {
+            setSavedPosts(res.data)
+          })
+
         toast.success(res.data.message);
       })
       .catch((err) => console.error("Friend confirm failed:", err));
@@ -125,6 +190,10 @@ const AuthProvider = ({ children }) => {
     axiosInstance
       .put(`/removeSavedPost`, data)
       .then((res) => {
+        axiosInstance.get(`/savedPosts?userId=${userData._id}`)
+          .then(res => {
+            setSavedPosts(res.data)
+          })
         toast.success(res.data.message);
       })
       .catch((err) => console.error("Friend confirm failed:", err));
@@ -134,7 +203,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-
   const logInUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
@@ -152,22 +220,18 @@ const AuthProvider = ({ children }) => {
       await signOut(auth);
       await axiosInstance.post(`/logout`, {});
       localStorage.removeItem("email");
-      localStorage.removeItem("currentUser");
       localStorage.removeItem("accessToken");
     } catch (error) {
       console.error("Logout error:", error);
     }
   };
-
-
   const deleteAccount = async () => {
     try {
       await deleteUser(user);
-      await axiosInstance.delete(`/profile/delete/${user.email}`);
+      await axiosInstance.delete(`/profile/delete/${userData._id}`);
 
       localStorage.removeItem("email");
-      localStorage.removeItem("currentUser");
-      localStorage.removeItem("filteredFriend");
+      localStorage.removeItem("accessToken");
 
       await signOut(auth);
       await axiosInstance.post(`/logout`);
@@ -197,7 +261,10 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("email", email);
 
       try {
-        await axiosInstance.post("/jwt", { email });
+        await axiosInstance.post("/jwt", { email })
+          .then(res => {
+            localStorage.setItem("accessToken", res.data.accessToken)
+          })
         const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
         setUserData(userDataRes.data);
 
@@ -276,6 +343,7 @@ const AuthProvider = ({ children }) => {
     unFriendBtnHanlder,
     confrimFriendBtnHanlder,
 
+    deletePostHandler,
     postsData,
     setPostsData,
 

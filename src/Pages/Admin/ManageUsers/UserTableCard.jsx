@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaRegTrashCan } from "react-icons/fa6";
+import api from "../../../services/axiosInstance";
 
 const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
     const [isAdmin, setIsAdmin] = useState(friend.role === "admin");
@@ -52,13 +53,13 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#a60000",
-            cancelButtonColor: "#3085d6",
+            cancelButtonColor: "#3085d6",   
             confirmButtonText: "Yes, Delete!",
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.delete(
-                        `${import.meta.env.VITE_BACKEND_URL}/profile/delete/${friend.email}`
+                    const res = await api.delete(
+                        `/profile/delete/${friend._id}`
                     );
                     Swal.fire("Deleted!", res.data.message || "User account deleted.", "success");
                     refetch?.();
@@ -69,10 +70,9 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
             }
         });
     };
-
-    console.log(friend)
+  
     return (
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+        <tr className="bg-white border-b border-gray-200">
             <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <Link to={`/profile/${friend._id}`}>
                     <div className="flex items-center gap-3">
@@ -82,7 +82,7 @@ const UserTableCard = ({ friend, makeAdmin, removeAdmin, refetch }) => {
                             alt="Admin Profile"
                         />
                         <div className="space-y-1">
-                            <h1 className="font-semibold">{friend.name}</h1>
+                            <h1 className="font-semibold text-black">{friend?.name}</h1>
                             <p className="text-zinc-500 text-xs">
                                 Joined on{" "}
                                 {new Date(friend.createdDate).toLocaleDateString("en-US", {

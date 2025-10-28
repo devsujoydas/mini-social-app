@@ -1,107 +1,158 @@
-
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { VscSend } from "react-icons/vsc";
 import { FaRegSmile } from "react-icons/fa";
 import { IoMicOutline } from "react-icons/io5";
-import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 const PostDetailsUpdate = () => {
-  const post = useLoaderData()
-  const navigate = useNavigate()
+  const post = useLoaderData();
+  const navigate = useNavigate();
 
-  const handlePostDetailsUpdate = (e) => {
-    e.preventDefault()
+  const { content } = post || {};
+  const postImageUrl = content?.postImageUrl || "";
+  const postText = content?.text || "";
+
+  const swalWithTailwind = Swal.mixin({
+    customClass: {
+      confirmButton:
+        "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-semibold py-2 px-4 rounded",
+      cancelButton:
+        "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer text-white font-semibold py-2 px-4 rounded",
+    },
+    buttonsStyling: false,
+  });
+
+  const handlePostDetailsUpdate = async (e) => {
+    e.preventDefault();
     const form = e.target;
-    const postContent = form.postContent.value;
-    const postImageUrl = form.postImageUrl.value;
-    const lastUpdateDate = new Date();
+    const updatedText = form.postContent.value.trim();
 
-    const postData = { postImageUrl, postContent, lastUpdateDate }
+    if (!updatedText) {
+      Swal.fire("Warning", "Please write something to update!", "warning");
+      return;
+    }
 
-    const swalWithTailwind = Swal.mixin({
-      customClass: {
-        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-      },
-      buttonsStyling: false
-    });
+    const updatedData = {
+      postContent: updatedText,
+      postImageUrl,
+      lastUpdateDate: new Date(),
+    };
 
-    swalWithTailwind.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Update!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    })
-      .then((result) => {
-        if (result.isConfirmed) {
-          axios.put(`${import.meta.env.VITE_BACKEND_URL}/post/update/${post._id}`, postData)
-            .then(res => {
-              navigate(-1)
-            })
-          swalWithTailwind.fire({
-            title: "Post Updated!",
-            text: "Post Updated Successfully.",
-            icon: "success"
-          })
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithTailwind.fire({
-            title: "Cancelled",
-            text: "Your imaginary file is safe :)",
-            icon: "error"
-          });
-        }
+    try {
+      const confirm = await swalWithTailwind.fire({
+        title: "Are you sure?",
+        text: "You want to update this post?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, update it!",
+        cancelButtonText: "Cancel",
+        reverseButtons: true,
       });
-  }
 
+      if (!confirm.isConfirmed) {
+        return swalWithTailwind.fire({
+          title: "Cancelled",
+          text: "Your post remains unchanged.",
+          icon: "info",
+        });
+      }
+
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/post/update/${post._id}`,
+        updatedData
+      );
+
+      await swalWithTailwind.fire({
+        title: "Updated!",
+        text: "Post has been updated successfully.",
+        icon: "success",
+      });
+
+      navigate(-1);
+    } catch (error) {
+      console.error("Post update failed:", error);
+      Swal.fire({
+        title: "Error!",
+        text: error.response?.data?.message || "Something went wrong.",
+        icon: "error",
+      });
+    }
+  };
 
   return (
-    <div className="md:mt-10 min-h-[90vh] mt-23 md:mx-10 mx-5 flex justify-center gap-5 md:flex-row flex-col">
-
-      <div className="w-full  space-y-5">
-        <div className="rounded-md overflow-hidden">
-          <img className="hover:scale-105 active:scale-150 cursor-zoom-in duration-500 transition-all" src={post.postImageUrl} alt="" />
+    <div className="md:mt-10 min-h-[90vh] mt-24 md:mx-10 mx-5 flex justify-center gap-6 md:flex-row flex-col">
+      {/* Post Preview */}
+      <div className="w-full space-y-5">
+        <div className="rounded-lg overflow-hidden border border-zinc-200 shadow-sm">
+          <img
+            src={postImageUrl}
+            alt="Post"
+            className="hover:scale-105 active:scale-110 duration-500 transition-transform cursor-zoom-in w-full object-cover"
+          />
         </div>
-        <h1 className="">{post.postContent}</h1>
+        <p className="text-lg text-zinc-700">{postText}</p>
       </div>
 
-      <div className='w-full'>
-        <form onSubmit={handlePostDetailsUpdate} className="space-y-4  border  md:p-10 p-5 rounded-md">
+      {/* Update Form */}
+      <div className="w-full">
+        <form
+          onSubmit={handlePostDetailsUpdate}
+          className="space-y-6 border border-zinc-200 shadow-md bg-white md:p-10 p-5 rounded-lg"
+        >
+          <h1 className="font-semibold text-3xl text-center text-blue-700 font-family-secondary">
+            Edit Post
+          </h1>
 
-          <h1 className="font-semibold text-4xl text-center font-family-secondary text-blue-600">Edit Post</h1>
+          <div className="flex flex-col gap-3">
+            <label className="font-medium text-zinc-700">Post Image URL</label>
+            <input
+              name="postImageUrl"
+              value={postImageUrl}
+              disabled
+              type="text"
+              className="outline-none p-3 bg-zinc-100 border border-zinc-300 rounded-md cursor-not-allowed text-zinc-500"
+            />
 
-
-          <div className="flex w-full flex-col items-start gap-2 text-sm">
-            <label className="w-full" htmlFor="">Post URL </label>
-            <input disabled defaultValue={post?.postImageUrl} required name="postImageUrl" type="text" className="outline-none p-2 bg-white border cursor-not-allowed border-zinc-300 rounded-sm w-full  " placeholder="Image Url" />
-
-
-            <label className="w-full" htmlFor="">Content</label>
-            <input defaultValue={post?.postContent} required name="postContent" type="text" className="outline-none p-2 bg-white  border border-zinc-300 rounded-sm w-full pb-4  " placeholder="Whats on your mind right now?"></input>
+            <label className="font-medium text-zinc-700">Post Content</label>
+            <textarea
+              name="postContent"
+              defaultValue={postText}
+              required
+              rows="3"
+              autoFocus
+              className="outline-none p-3 bg-white border border-zinc-300 rounded-md focus:ring-2 focus:ring-blue-400 resize-none"
+              placeholder="What's on your mind?"
+            />
           </div>
 
-          <div className="flex items-center justify-end gap-2 ">
-            <label className="border border-zinc-400 text-xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+          <div className="flex items-center justify-end gap-2">
+            <button
+              type="button"
+              className="border border-zinc-400 text-xl p-3 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200"
+            >
               <FaRegSmile />
-            </label>
+            </button>
 
-            <label className="border border-zinc-400 text-2xl p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200">
+            <button
+              type="button"
+              className="border border-zinc-400 text-2xl p-2 rounded-full cursor-pointer active:scale-95 transition-all hover:bg-zinc-200"
+            >
               <IoMicOutline />
-            </label>
+            </button>
 
-
-            <label className="lg:w-fit flex items-center gap-2 bg-blue-700 hover:bg-blue-600  text-white text-center px-6 py-3 rounded-full cursor-pointer active:scale-95 transition-all">
-              <input type="submit" value={"Update"} className="cursor-pointer" /><VscSend className="text-2xl cursor-pointer" />
-            </label>
+            <button
+              type="submit"
+              className="flex items-center gap-2 bg-blue-700 hover:bg-blue-600 text-white px-6 py-3 rounded-full cursor-pointer active:scale-95 transition-all"
+            >
+              <span>Update</span>
+              <VscSend className="text-2xl" />
+            </button>
           </div>
         </form>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default PostDetailsUpdate
+export default PostDetailsUpdate;

@@ -121,7 +121,7 @@ const ProfileSidebar = () => {
             </div>
 
             {/* Dropdown */}
-            <div
+            <div  onClick={() => setShowEdit(!showEdit)}
               className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${showEdit
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-2 pointer-events-none"
@@ -130,19 +130,19 @@ const ProfileSidebar = () => {
               <div className="p-2">
                 <button
                   onClick={() => setShowUpdateInfoModal(true)}
-                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100"
+                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
                   <FaUserEdit className="text-emerald-600" /> Edit Profile
                 </button>
                 <button
                   onClick={signOutHandler}
-                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100"
+                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition hover:bg-zinc-100 cursor-pointer"
                 >
                   <FiLogOut className="text-zinc-500" /> Log Out
                 </button>
                 <button
                   onClick={accountDeleteHandle}
-                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition text-red-600 hover:bg-red-50"
+                  className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition text-red-600 hover:bg-red-50 cursor-pointer"
                 >
                   <FaUserSlash /> Delete Account
                 </button>

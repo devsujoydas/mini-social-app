@@ -2,81 +2,133 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { IoClose } from "react-icons/io5";
 import { useAuth } from "../../hooks/useAuth";
-
+import api from "../../services/axiosInstance";
 
 const UpdateUsernameModal = ({ showUsernameModal, setShowUsernameModal }) => {
+    const { userData, setUserData } = useAuth();
+    const [loading, setLoading] = useState(false);
+    const [usernameMessage, setUsernameMessage] = useState("");
 
-    const { userData, } = useAuth()
-    const [loadingSpiner, setLoadingSpiner] = useState(true)
-    const [usernameMessage, setUsernameMessage] = useState("")
+    const updateUsernameHandler = async (e) => {
+        e.preventDefault();
+        setLoading(true);
 
-
-    const updateUsernameHandler = (e) => {
-        e.preventDefault()
-        setLoadingSpiner(false)
-        const username = e.target.username.value;
+        const username = e.target.username.value.trim();
         const email = userData?.email;
-        const formData = { email, username }
 
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/updateUsername`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        })
-            .then(res => res.json())
-            .then(data => {
+        if (!username) {
+            setUsernameMessage("Username cannot be empty!");
+            setLoading(false);
+            return;
+        }
 
-                setLoadingSpiner(true)
+        try {
 
-                if (data) {
-                    if (data.modifiedCount > 0) {
+
+            api.put("/updateUsername", { email, username })
+                .then(res => {
+                    setLoading(false);
+
+                    if (res.data?.modifiedCount > 0) {
                         Swal.fire({
                             title: "Username updated successfully!",
                             icon: "success",
-                            draggable: true
+                            timer: 1500,
+                            showConfirmButton: false,
                         });
-                        setShowUsernameModal(false)
-                    }
-                    else {
-                        setUsernameMessage(data.message)
+                        api.get(`/profile?email=${email}`)
+                            .then(res => setUserData(res.data))
+
+                        setShowUsernameModal(false);
+                    } else {
+                        setUsernameMessage("Something went wrong!");
                         Swal.fire({
-                            title: `${data.message}`,
-                            icon: "question",
-                            draggable: true
+                            title: "Username already taken!",
+                            icon: "warning",
                         });
-
                     }
-                }
-            })
+                })
 
 
 
-    }
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                title: "Error updating username!",
+                icon: "error",
+            });
+            setLoading(false);
+        }
+    };
+
+    if (!showUsernameModal) return null;
 
     return (
-        <div className={`${showUsernameModal ? "z-40 block opacity-100 duration-300 transition-all" : "-z-40 hidden opacity-0 duration-300 transition-all"} 
-        fixed top-0 left-0 w-full h-screen backdrop-blur-sm  bg-[#00000059] flex justify-center items-center transition-all`}>
-
-            <div className="relative max-w-96 w-full md:p-10 p-5 md:m-0 m-5 rounded-md bg-white">
-                <button className="absolute md:top-3 top-1 md:right-3 right-1">
-                    <IoClose onClick={() => setShowUsernameModal(!showUsernameModal)} className="border border-transparent hover:border-zinc-300 rounded-full p-1 text-4xl hover:bg-zinc-300  cursor-pointer transition-all  " />
+        <div
+            onClick={() => setShowUsernameModal(false)}
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-all animate-fadeIn"
+        >
+            {/* Modal Box */}
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className="relative bg-white w-full max-w-md mx-4 rounded-2xl shadow-xl p-6 md:p-8 transition-all"
+            >
+                {/* Close Button */}
+                <button
+                    onClick={() => setShowUsernameModal(false)}
+                    className="absolute top-3 right-3 p-2 rounded-full hover:bg-gray-100 transition-all"
+                >
+                    <IoClose className="text-2xl text-gray-700 hover:text-gray-900" />
                 </button>
 
-                <form onSubmit={(e) => updateUsernameHandler(e)} className="">
-                    <h1 className="text-3xl font-semibold font-family-secondary text-blue-600 text-center mb-4 ">Update User Name </h1>
-                    <div className='mb-2'>
-                        <input onClick={() => setUsernameMessage("")} defaultValue={userData?.username} name="username" type="text" className="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500 " placeholder="Enter Username" />
-                        <p className={usernameMessage ? `mt-2 md:text-sm text-xs text-red-700 font-semibold` : "hidden"} >{usernameMessage}</p>
+                {/* Title */}
+                <h1 className="text-2xl md:text-3xl font-semibold text-center text-blue-600 mb-6">
+                    Update Username
+                </h1>
+
+                {/* Form */}
+                <form onSubmit={updateUsernameHandler} className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-medium text-gray-600 mb-1">
+                            Username
+                        </label>
+                        <input
+                            onClick={() => setUsernameMessage("")}
+                            defaultValue={userData?.username}
+                            name="username"
+                            type="text"
+                            placeholder="Enter new username"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
+                        />
+                        {usernameMessage && (
+                            <p className="text-sm text-red-600 font-medium mt-2">
+                                {usernameMessage}
+                            </p>
+                        )}
                     </div>
-                    <button type="submit" className={`text-white font-medium ${loadingSpiner ? "bg-blue-700" : "bg-blue-500"} hover:bg-blue-500 w-full py-3 rounded-md cursor-pointer active:scale-95 transition-all flex justify-center items-center gap-5 `}>
-                        <p className={`${loadingSpiner ? "hidden" : "block"} border-t-2 border-b-2 rounded-full w-6 h-6 animate-spin`} />
-                        <p className={`${loadingSpiner ? "block" : "hidden"}`}>Update</p>
+
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`w-full py-3 rounded-lg text-white font-medium flex justify-center items-center gap-3 transition-all active:scale-95 ${loading
+                            ? "bg-blue-500 cursor-not-allowed"
+                            : "bg-blue-600 hover:bg-blue-500"
+                            }`}
+                    >
+                        {loading ? (
+                            <>
+                                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                <span>Updating...</span>
+                            </>
+                        ) : (
+                            "Update"
+                        )}
                     </button>
                 </form>
-
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UpdateUsernameModal
+export default UpdateUsernameModal;

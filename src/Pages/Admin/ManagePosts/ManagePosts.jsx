@@ -58,46 +58,7 @@ const ManagePosts = () => {
   }, []);
 
 
-  const deletePost = (postId) => {
-    const swalWithTailwind = Swal.mixin({
-      customClass: {
-        confirmButton: "bg-green-600 hover:bg-green-700 ml-2 cursor-pointer text-white font-bold py-2 px-4 rounded mr-2",
-        cancelButton: "bg-red-600 hover:bg-red-700 mr-2 cursor-pointer  text-white font-bold py-2 px-4 rounded"
-      },
-      buttonsStyling: false
-    });
-    swalWithTailwind.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`${import.meta.env.VITE_BACKEND_URL}/post/delete/${postId}`,)
-          .then(res => {
-            if (res.data.deletedCount > 0) {
-              swalWithTailwind.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-              });
-              const remaining = postsData.filter(posts => posts._id != postId)
-              setDisplayPosts(remaining)
-            }
-          })
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        swalWithTailwind.fire({
-          title: "Cancelled",
-          text: "Your imaginary file is safe :)",
-          icon: "error"
-        });
-      }
-    });
-  }
- 
+
 
   return (
     <div>
@@ -158,8 +119,8 @@ const ManagePosts = () => {
           )}
 
           {!loading && displayPosts.length > 0 && (
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-left rtl:text-right ">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th scope="col" className="px-6 md:py-3">Image</th>
                   <th scope="col" className="px-6 md:py-3">Content</th>
@@ -172,8 +133,8 @@ const ManagePosts = () => {
                 </tr>
               </thead>
               <tbody className="">
-                {displayPosts.map(post => (
-                  <PostTableCard key={post.postImageUrl} post={post} deletePost={deletePost} />
+                {displayPosts.map((post,idx) => (
+                  <PostTableCard key={idx} post={post} />
                 ))}
               </tbody>
             </table>

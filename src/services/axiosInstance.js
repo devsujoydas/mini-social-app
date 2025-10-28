@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL; // e.g. "http://localhost:5000"
+const BASE_URL = import.meta.env.VITE_BACKEND_URL; 
 
 const api = axios.create({
   baseURL: BASE_URL,
-  withCredentials: true, // important for sending refresh cookies
+  withCredentials: true,
 });
 
-// Attach access token to requests
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
   if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -21,8 +21,7 @@ api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
-
-    // Handle 401 Unauthorized (token expired)
+ 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 

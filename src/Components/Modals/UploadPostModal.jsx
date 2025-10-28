@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import { useAuth } from "../../hooks/useAuth";
+import api from "../../services/axiosInstance";
 
 const API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
@@ -13,12 +14,11 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
   const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
+  
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) setIsOpen(false);
+    };
     if (isOpen) document.addEventListener("mousedown", handleClickOutside);
     else document.removeEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -42,35 +42,43 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
   };
 
   const handleDragOver = (e) => e.preventDefault();
-
+ 
   const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
-    const { data } = await axios.post(
-      `https://api.imgbb.com/1/upload?key=${API_KEY}`,
-      formData
-    );
-    if (!data.success) throw new Error("Upload failed");
+    const { data } = await axios.post(`https://api.imgbb.com/1/upload?key=${API_KEY}`, formData);
+    if (!data.success) throw new Error("Image upload failed");
     return data.data.url;
   };
-
+ 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       let finalImageUrl = "";
-
+ 
       if (file) {
         finalImageUrl = await uploadImage(file);
       } else if (url) {
         finalImageUrl = url;
       }
 
+      const text = e.target.postContent.value.trim();
+      if (!text && !finalImageUrl) {
+        Swal.fire({
+          title: "Nothing to post 😅",
+          text: "Please write something or upload an image.",
+          icon: "warning",
+        });
+        setLoading(false);
+        return;
+      }
+ 
       const postData = {
         authorId: userData._id,
         content: {
-          text: e.target.postContent.value,
+          text,
           postImageUrl: finalImageUrl || null,
         },
         createdAt: new Date(),
@@ -80,26 +88,34 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         shares: [],
       };
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/post`,
-        postData
-      );
-
+      // Send to backend
+      const res = await api.post(`/post`, postData);
+ 
+      if (res.status === 409) {
+        Swal.fire({
+          title: "Duplicate Image ❌",
+          text: "This Image URL was already taken. Try another one.",
+          icon: "error",
+        });
+        return;
+      }
+ 
       if (res.data?.result?.insertedId) {
+
+        api.get(`/posts?authorId=${userData._id}`)
+        .then(res=>{setUsersPostsData(res.data)})
+
+        api.get(`/posts`)
+        .then(res=>{setPostsData(res.data)})
+
+
         Swal.fire({
           title: "Post Successful 🎉",
           icon: "success",
           timer: 1500,
           showConfirmButton: false,
         });
-
-        const newPost = {
-          _id: res.data.result.insertedId,
-          ...postData,
-        };
-
-        setPostsData([newPost, ...postsData]);
-        setUsersPostsData([newPost, ...usersPostsData]);
+        
         setIsOpen(false);
         e.target.reset();
         setFile(null);
@@ -107,10 +123,11 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
         setUrl("");
       }
     } catch (error) {
-      console.error("Error submitting post:", error);
+      console.error("Error creating post:", error);
+      const errMsg = error.response?.data || "Failed to create post";
       Swal.fire({
         title: "Error!",
-        text: "Failed to create post",
+        text: errMsg,
         icon: "error",
       });
     } finally {
@@ -121,13 +138,13 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center">
+    <div className="fixed z-50 inset-0 bg-black/40 flex justify-center items-center animate-fadeIn">
       <div
         ref={modalRef}
-        className="bg-white rounded-2xl shadow-lg w-[500px] max-w-[95%] animate-fadeIn relative flex flex-col"
+        className="bg-white rounded-2xl shadow-xl w-[500px] max-w-[95%] relative flex flex-col overflow-hidden"
       >
         {/* Header */}
-        <div className="flex items-center gap-3 p-4 border-b-zinc-300 border-b">
+        <div className="flex items-center gap-3 p-4 border-b border-zinc-200">
           <img
             src={userData?.profile?.profilePhotoUrl || "/default-avatar.png"}
             alt="profile"
@@ -138,7 +155,7 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           </h2>
           <button
             onClick={() => setIsOpen(false)}
-            className="ml-auto text-gray-400 hover:text-gray-600 text-xl"
+            className="ml-auto text-gray-400 hover:text-gray-600 text-2xl"
           >
             ×
           </button>
@@ -157,16 +174,12 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            className="border-2 border-dashed border-gray-300 rounded-xl m-4 p-6 text-center cursor-pointer relative hover:bg-gray-50 transition"
+            className="border-2 border-dashed border-gray-300 rounded-xl m-4 p-6 text-center cursor-pointer hover:bg-gray-50 transition"
             onClick={() => document.getElementById("fileInput").click()}
           >
             {preview ? (
               <div className="relative inline-block">
-                <img
-                  src={preview}
-                  alt="preview"
-                  className="mx-auto max-h-52 rounded-lg"
-                />
+                <img src={preview} alt="preview" className="mx-auto max-h-52 rounded-lg" />
                 <button
                   type="button"
                   onClick={() => {
@@ -230,21 +243,21 @@ export default function UploadPostModal({ isOpen, setIsOpen }) {
           </div>
 
           {/* Footer */}
-          <div className="flex justify-end gap-3 p-4 border-t-zinc-300 border-t">
+          <div className="flex justify-end gap-3 p-4 border-t border-zinc-200">
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm"
+              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm flex items-center gap-2"
+              className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm flex items-center gap-2 cursor-pointer"
             >
               {loading && (
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin "></span>
               )}
               {loading ? "Posting..." : "Post"}
             </button>

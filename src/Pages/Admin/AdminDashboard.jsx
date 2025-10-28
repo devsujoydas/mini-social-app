@@ -30,7 +30,7 @@ const AdminDashboard = () => {
           <div>
             <img
               className="md:w-20 w-14 md:h-20 h-14 rounded-full border-3 border-zinc-300"
-              src={userData.profilephotourl}
+              src={userData?.profile?.profilePhotoUrl}
               alt="Admin Profile"
             />
           </div>

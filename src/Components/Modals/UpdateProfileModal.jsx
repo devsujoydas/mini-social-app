@@ -8,57 +8,54 @@ import {
   FaLinkedin, FaYoutube, FaMapMarkerAlt, FaCity
 } from "react-icons/fa";
 import { useAuth } from "../../hooks/useAuth";
+import api from "../../services/axiosInstance";
 
 const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => {
   const { userData, setUserData } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const updateProfileHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+  e.preventDefault();
+  setIsLoading(true);
 
-    const formData = {
-      email: userData?.email,
-      name: e.target.name.value,
-      profile: { bio: e.target.bio.value },
-      contactInfo: {
-        phone: e.target.phone.value,
-        website: e.target.website.value,
-        facebook: e.target.facebook.value,
-        github: e.target.github.value,
-        linkedin: e.target.linkedin.value,
-        youtube: e.target.youtube.value,
-      },
-      location: {
-        from: e.target.from.value,
-        livesIn: e.target.livesIn.value,
-      },
-    };
-
-    try {
-      const res = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/update`,
-        formData
-      );
-      setIsLoading(false);
-
-      if (res.data?.modifiedCount > 0) {
-        Swal.fire("Profile updated successfully!", "", "success");
-
-        const refreshed = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/profile?email=${userData?.email}`
-        );
-        setUserData(refreshed.data);
-
-        setShowUpdateInfoModal(false);
-      } else {
-        Swal.fire("You didn’t change anything!", "", "question");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      Swal.fire("Update Failed!", "Something went wrong", error);
-    }
+  const formData = {
+    email: userData?.email,
+    name: e.target.name.value,
+    profile: { bio: e.target.bio.value },
+    contactInfo: {
+      phone: e.target.phone.value,
+      website: e.target.website.value,
+      facebook: e.target.facebook.value,
+      github: e.target.github.value,
+      linkedin: e.target.linkedin.value,
+      youtube: e.target.youtube.value,
+    },
+    location: {
+      from: e.target.from.value,
+      livesIn: e.target.livesIn.value,
+    },
   };
+
+  try {
+    const res = await api.put("/update", formData);
+    setIsLoading(false);
+
+    if (res.data?.modifiedCount > 0) {
+      Swal.fire("Profile updated successfully!", "", "success");
+
+      const refreshed = await api.get(`/profile?email=${userData?.email}`);
+      setUserData(refreshed.data);
+
+      setShowUpdateInfoModal(false);
+    } else {
+      Swal.fire("You didn’t change anything!", "", "question");
+    }
+  } catch (error) {
+    setIsLoading(false);
+    Swal.fire("Update Failed!", "Something went wrong", "error");
+  }
+};
+
 
   const InputField = ({ icon, name, defaultValue, placeholder }) => (
     <div className="flex items-center gap-3 rounded-xl px-4 py-3 
@@ -91,7 +88,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
                    space-y-6 sm:space-y-8 transform transition-all duration-300 
                    scale-95 opacity-100 animate-fadeIn overflow-y-auto max-h-[90vh]"
       >
-        {/* Close button */}
         <button
           type="button"
           onClick={() => setShowUpdateInfoModal(false)}
@@ -101,12 +97,10 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
           <IoClose size={26} />
         </button>
 
-        {/* Heading */}
         <h1 className="text-center text-2xl md:text-3xl font-semibold text-blue-600">
           Update Profile Info
         </h1>
 
-        {/* Profile Info */}
         <div>
           <h2 className="text-sm font-medium text-gray-500 mb-3">Profile Info</h2>
           <div className="space-y-4">
@@ -125,7 +119,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
           </div>
         </div>
 
-        {/* Contact Info */}
         <div>
           <h2 className="text-sm font-medium text-gray-500 mb-3">Contact Info</h2>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -168,7 +161,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
           </div>
         </div>
 
-        {/* Location Info */}
         <div>
           <h2 className="text-sm font-medium text-gray-500 mb-3">Location</h2>
           <div className="grid sm:grid-cols-2 gap-4">
@@ -187,7 +179,6 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
           </div>
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           disabled={isLoading}
@@ -195,7 +186,7 @@ const UpdateProfileModal = ({ showUpdateInfoModal, setShowUpdateInfoModal }) => 
                      bg-gradient-to-r from-blue-600 to-blue-500
                      hover:from-blue-700 hover:to-blue-600 
                      transition-all flex justify-center items-center gap-3
-                     shadow-md hover:shadow-lg disabled:opacity-60"
+                     shadow-md hover:shadow-lg disabled:opacity-60 cursor-pointer"
         >
           {isLoading ? (
             <>

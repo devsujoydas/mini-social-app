@@ -211,14 +211,14 @@ export default function UploadProfilePicture({ isOpen, setIsOpen }) {
           <div className="space-x-3">
             <button
               onClick={() => setIsOpen(false)}
-              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm"
+              className="px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={uploadFile}
               disabled={loading}
-              className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm"
+              className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-sm cursor-pointer"
             >
               {loading ? "Uploading..." : "Import"}
             </button>

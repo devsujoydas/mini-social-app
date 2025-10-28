@@ -3,8 +3,7 @@ import Login from '../Pages/Login/Login.jsx';
 import Signup from '../Pages/Signup/Signup.jsx';
 import Layout from '../Layout/Layout.jsx';
 import Home from '../Pages/Home/Home.jsx';
-import Profile from '../Pages/Profile/Profile.jsx';
-import UpdateInfo from '../Pages/UpdateInfo/UpdateInfo.jsx';
+import Profile from '../Pages/Profile/Profile.jsx'; 
 import PostDetails from '../Components/Posts/PostDetails.jsx';
 import PostDetailsUpdate from '../Components/Posts/PostDetailsUpdate.jsx';
 import FriendsPage from '../Pages/Friends/FriendsPage.jsx';
@@ -54,11 +53,6 @@ export const router = createBrowserRouter([
       {
         path: '/imgupload',
         element: <ImageUploader />,
-      },
-      {
-        path: '/updateInfo/:id',
-        element: <UpdateInfo />,
-        loader: ({ params }) => fetch(`${import.meta.env.VITE_BACKEND_URL}/updateInfo/${params.id}`),
       },
       {
         path: '/post/:id',

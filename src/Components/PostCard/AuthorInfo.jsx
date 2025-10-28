@@ -3,25 +3,25 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
  
-const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, onRemove, }) => {
+const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onRemove, }) => {
   return (
     <div className="md:px-5 md:py-3 p-3 flex justify-between items-center">
       <Link
         to={
-          post.author._id === userData?._id
+          post?.author?._id === userData?._id
             ? "/profile"
-            : `/profile/${post.author._id}`
+            : `/profile/${post?.author?._id}`
         }
       >
         <div className="flex items-center gap-3">
           <img
             src={post.author?.profilePhotoUrl || "/default.jpg"}
-            alt={post.author.name}
+            alt={post?.author?.name}
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
           />
           <div>
             <h1 className="font-semibold text-md cursor-pointer">
-              {post.author.name}
+              {post?.author?.name}
             </h1>
             <p className="text-zinc-500 text-sm">
               {new Date(post.createdAt).toLocaleString()}
@@ -43,7 +43,6 @@ const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onDelete, 
           <ThreeDotMenu
             post={post}
             variant={variant}
-            onDelete={onDelete}
             onRemove={onRemove}
             setShowMenu={setShowMenu}
           />

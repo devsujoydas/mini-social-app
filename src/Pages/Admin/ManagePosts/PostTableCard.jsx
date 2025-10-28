@@ -3,21 +3,19 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 
 
-const PostTableCard = ({ post, deletePost }) => {
-    const { userData } = useAuth()
-    console.log(post)
-
-
+const PostTableCard = ({ post }) => {
+    const { userData, deletePostHandler } = useAuth()
+  
     return (
         <>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <td scope="row" className=" md:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr className="bg-white border-b border-gray-200">
+                <td scope="row" className=" md:py-3 font-medium  whitespace-nowrap">
                     <Link to={`/post/${post._id}`}>
                         <img className="w-28 h-18 object-cover" src={post?.content.postImageUrl} alt="" />
                     </Link>
                 </td>
 
-                <td className="px-6 md:py-3">
+                <td className="px-6 md:py-3 text-black">
                     {post?.content?.text?.length > 12
                         ? post.content.text.slice(0, 12) + "..."
                         : post?.content?.text}
@@ -49,7 +47,7 @@ const PostTableCard = ({ post, deletePost }) => {
                     })}
                 </td>
                 <td className="md:py-3 px-6 md:text-sm text-xs">
-                    <button onClick={() => deletePost(post._id)} className="flex items-center gap-1 border border-zinc-300 rounded-md py-2 px-2 bg-[#a60000] text-white hover:bg-[#ff6565] cursor-pointer active:scale-95 duration-300 transition-all">
+                    <button onClick={() => deletePostHandler(post._id)} className="flex items-center gap-1 border border-zinc-300 rounded-md py-2 px-2 bg-[#a60000] text-white hover:bg-[#ff6565] cursor-pointer active:scale-95 duration-300 transition-all">
                         <FaRegTrashCan className="" />
                         <p className="text-xs">Delete</p>
                     </button>

@@ -319,7 +319,7 @@ const ChatBox = () => {
   const [friend, setFriend] = useState({});
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [menuOpen, setMenuOpen] = useState(null); // track which msg's menu is open
+  const [menuOpen, setMenuOpen] = useState(null);
   const scrollRef = useRef();
 
   const fetchMessages = async () => {

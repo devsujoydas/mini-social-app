@@ -11,7 +11,7 @@ const CommentInput = ({ userData }) => (
     <div className="flex items-center gap-2 md:gap-4 w-full ">
       <Link to="/profile" className="w-10 h-10 md:w-12 md:h-12">
         <img
-          src={userData?.profile.profilePhotoUrl || "/default.jpg"}
+          src={userData?.profile?.profilePhotoUrl || "/default.jpg"}
           alt={userData?.name}
           className="w-full h-full rounded-full object-cover"
         />
