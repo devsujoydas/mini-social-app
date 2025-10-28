@@ -6,7 +6,9 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  reauthenticateWithCredential,
   signOut,
+  EmailAuthProvider,
 } from "firebase/auth";
 import auth from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
@@ -14,6 +16,7 @@ import axiosInstance from "../services/axiosInstance";
 import api from "../services/axiosInstance";
 import Swal from "sweetalert2";
 export const AuthContext = createContext();
+
 
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -156,7 +159,7 @@ const AuthProvider = ({ children }) => {
                   // });
                   toast.success("Post deleted successfully!");
                 })
-              if (onSuccess) onSuccess(); 
+              if (onSuccess) onSuccess();
             } else {
               toast.error(res.data?.message || "Failed to delete post.");
             }
@@ -225,22 +228,62 @@ const AuthProvider = ({ children }) => {
       console.error("Logout error:", error);
     }
   };
+
+
   const deleteAccount = async () => {
     try {
+      // confirm before delete
+      const confirm = await Swal.fire({
+        title: "Are you sure?",
+        text: "This will permanently delete your account and all related data!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (!confirm.isConfirmed) return;
+
+      const password = await Swal.fire({
+        title: "Re-enter your password",
+        input: "password",
+        inputLabel: "You must confirm your identity before deleting your account.",
+        inputPlaceholder: "Enter your password",
+        inputAttributes: { autocapitalize: "off", autocorrect: "off" },
+        showCancelButton: true,
+      });
+
+      if (!password.value) {
+        Swal.fire("Cancelled", "Account deletion was cancelled.", "info");
+        return;
+      }
+
+      // 🔑 Reauthenticate
+      const credential = EmailAuthProvider.credential(user.email, password.value);
+      await reauthenticateWithCredential(user, credential);
+
+      // 🗑️ Delete from Firebase Auth
       await deleteUser(user);
+
+      // 🗃️ Delete from MongoDB backend
       await axiosInstance.delete(`/profile/delete/${userData._id}`);
 
-      localStorage.removeItem("email");
-      localStorage.removeItem("accessToken");
-
+      // 🚪 Sign out
       await signOut(auth);
       await axiosInstance.post(`/logout`);
 
-      navigate("/login");
+      // 🧹 Clean up local storage
+      localStorage.removeItem("email");
+      localStorage.removeItem("accessToken");
+
+      Swal.fire("Deleted!", "Your account and data have been removed.", "success");
     } catch (error) {
       console.error("❌ Error deleting account:", error);
+      Swal.fire("Error", error.message || "Failed to delete account.", "error");
     }
   };
+
 
 
 

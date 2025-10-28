@@ -22,7 +22,7 @@ const Storybox = () => {
                 <Link to={`/profile/${friend?._id}`} className="relative">
                   <img
                     className={`md:w-20 w-16 md:h-20 h-16 object-cover border-3 border-purple-500 ${friend?.onlineStatus ? "hover:border-emerald-500 border-emerald-500" : "hover:border-red-500"} active:scale-95 transition-all duration-500 cursor-pointer rounded-full`}
-                    src={friend?.profilephotourl || "/default.jpg"} alt=""
+                    src={friend?.profile?.profilePhotoUrl || "/default.jpg"} alt=""
                   />
                   {friend?.onlineStatus && (
                     <div className="bg-green-400 h-3.5 w-3.5 rounded-full  border border-white absolute bottom-1 right-2"></div>

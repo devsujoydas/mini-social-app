@@ -19,7 +19,7 @@ const CommentInput = ({ userData }) => (
       <input
         type="text"
         placeholder="Write your comment..."
-        className="md:w-full border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
+        className="md:w-full w-33 border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
       />
     </div>
 

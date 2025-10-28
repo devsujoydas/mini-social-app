@@ -459,10 +459,10 @@ const ChatBox = () => {
             const isSender = msg.senderId === userData._id;
             return (
               <div key={msg._id} className="flex flex-col">
-                <p className="text-center text-xs text-gray-400 my-1">
+                <p className="text-center text-[10px] md:text-xs text-gray-400 my-1">
                   {formatDateTime(msg.createdAt)}
                 </p>
-                <div className={`flex items-end gap-2 ${isSender ? "justify-end" : "justify-start"}`}>
+                <div className={`flex items-end gap-2 ${isSender ? "justify-end" : "justify-start"} md:text-[16px] text-xs`}>
                   {!isSender && (
                     <img
                       className="w-8 h-8 object-cover rounded-full border border-gray-300"
@@ -472,7 +472,7 @@ const ChatBox = () => {
                   )}
                   <div className="relative max-w-[70%]">
                     <div
-                      className={`px-4 py-2 rounded-2xl shadow-sm ${isSender ? "bg-blue-500 text-white rounded-br-none" : "bg-white text-black rounded-bl-none"
+                      className={`px-4 py-2 rounded-2xl shadow-sm ${isSender ? "bg-blue-500 text-white rounded-br-none" : "bg-white text-black rounded-bl-none "
                         }`}
                     >
                       {msg.message}
@@ -530,7 +530,7 @@ const ChatBox = () => {
         <input
           type="text"
           placeholder="Message..."
-          className="flex-1 border rounded-full px-4 py-2 outline-none"
+          className="flex-1 border w-30 rounded-full px-4 py-2 outline-none"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />

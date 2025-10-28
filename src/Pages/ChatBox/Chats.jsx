@@ -212,6 +212,7 @@ const Chats = () => {
     return () => {
       socket.off("receive_message");
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?._id]);
 
   const handleSelectFriend = (chat) => {
@@ -219,12 +220,12 @@ const Chats = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50 md:flex-row flex-col-reverse">
       <div className="flex-1 flex flex-col bg-gray-100">
         <Outlet />
       </div>
 
-      <div className="w-[360px] border-r border-gray-300 bg-white flex flex-col">
+      <div className="md:w-[360px]  border-r border-gray-300 bg-white flex flex-col">
         <h2 className="text-lg font-semibold p-4 py-5 border-b bg-gray-50">Chats</h2>
         <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 p-2">
           {chatList.length > 0 ? (

@@ -28,7 +28,7 @@ const Posts = () => {
   }
 
   return (
-    <div className="grid md:gap-5 gap-2">
+    <div className="grid md:gap-5 gap-2 ">
       {postsData.map((post) => (
         <PostCard key={post._id} post={post} variant="feed" />
       ))}

@@ -20,10 +20,10 @@ const AuthorInfo = ({ post, userData, showMenu, setShowMenu, variant, onRemove, 
             className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover cursor-pointer"
           />
           <div>
-            <h1 className="font-semibold text-md cursor-pointer">
+            <h1 className="font-semibold text-sm md:text-[16px] cursor-pointer ">
               {post?.author?.name}
             </h1>
-            <p className="text-zinc-500 text-sm">
+            <p className="text-zinc-500 text-xs md:text-sm">
               {new Date(post.createdAt).toLocaleString()}
               {post.updatedAt && (
                 <span className="text-emerald-700 font-semibold ml-2">

@@ -38,6 +38,14 @@ const Nav = () => {
                 </div>
             </NavLink>
 
+            <NavLink to={"/message"}
+                className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
+                <div className="flex items-center gap-2 md:text-xl ">
+                    <AiFillMessage className="text-zinc-500 text-2xl" />
+                    <span className="font-semibold ">Message</span>
+                </div>
+            </NavLink>
+
             {
                 userData.role == "admin" &&
                 <>
@@ -48,13 +56,7 @@ const Nav = () => {
                             <span className="font-semibold ">Profile Page</span>
                         </div>
                     </NavLink> */}
-                    <NavLink to={"/message"}
-                        className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
-                        <div className="flex items-center gap-2 md:text-xl ">
-                            <AiFillMessage className="text-zinc-500 text-2xl" />
-                            <span className="font-semibold ">Message</span>
-                        </div>
-                    </NavLink>
+
                     <NavLink to={"/admin/dashboard"}
                         className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">
                         <div className="flex items-center gap-2 md:text-xl ">

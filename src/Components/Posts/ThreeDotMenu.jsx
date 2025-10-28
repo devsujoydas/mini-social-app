@@ -21,8 +21,8 @@ const ThreeDotMenu = ({ post, variant = "feed",  setShowMenu }) => {
   const isSaved = savedPosts?.some((p) => p._id === post._id);
 
   const menuItemStyle =
-    "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition-all hover:bg-zinc-100 active:scale-95 cursor-pointer";
-  const destructiveStyle = "text-red-600 hover:bg-red-50";
+    "flex items-center gap-2 w-full px-3 py-2 rounded-lg text-xs md:text-sm transition-all hover:bg-zinc-100 active:scale-95 cursor-pointer";
+  const destructiveStyle = "text-red-600 hover:bg-red-50 ";
 
   const url = `${import.meta.env.VITE_FRONTEND_URL}/post/${post._id}`;
 
@@ -36,12 +36,12 @@ const ThreeDotMenu = ({ post, variant = "feed",  setShowMenu }) => {
 
   return (
     <div
-      className="absolute top-10 right-0 w-56 bg-white border border-zinc-200 shadow-xl rounded-xl p-2 z-20"
+      className="absolute  top-10 right-0 w-40 md:w-56 bg-white border border-zinc-200 shadow-xl rounded-xl p-2 z-20"
       onMouseLeave={() => setShowMenu(false)}
     >
       {/* Copy URL */}
       <button onClick={sharePostHandler} className={menuItemStyle}>
-        <FaCopy className="text-zinc-600" /> Copy URL
+        <FaCopy className="text-zinc-600 " /> Copy URL
       </button>
 
       {/* If author */}

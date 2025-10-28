@@ -33,29 +33,7 @@ const ProfileSidebar = () => {
     buttonsStyling: false,
   });
 
-  const accountDeleteHandle = () => {
-    swalWithTailwind
-      .fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete account!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          deleteAccount();
-          navigate("/login");
-          swalWithTailwind.fire({
-            title: "Account Deleted!",
-            text: "Your account has been deleted.",
-            icon: "success",
-          });
-        }
-      });
-  };
+
 
   const signOutHandler = () => {
     swalWithTailwind
@@ -121,10 +99,10 @@ const ProfileSidebar = () => {
             </div>
 
             {/* Dropdown */}
-            <div  onClick={() => setShowEdit(!showEdit)}
+            <div onClick={() => setShowEdit(!showEdit)}
               className={`absolute right-0 z-50 mt-3 w-52 bg-white rounded-xl shadow-lg border border-zinc-200 transition-all duration-300 overflow-hidden ${showEdit
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-2 pointer-events-none"
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-2 pointer-events-none"
                 }`}
             >
               <div className="p-2">
@@ -141,7 +119,7 @@ const ProfileSidebar = () => {
                   <FiLogOut className="text-zinc-500" /> Log Out
                 </button>
                 <button
-                  onClick={accountDeleteHandle}
+                  onClick={() => deleteAccount()}
                   className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition text-red-600 hover:bg-red-50 cursor-pointer"
                 >
                   <FaUserSlash /> Delete Account
