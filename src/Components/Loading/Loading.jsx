@@ -2,7 +2,10 @@
 const Loading = () => {
     return (
         <div className="h-[100dvh] w-full flex justify-center items-center">
-            <div className="w-16 h-16 border-t-2 border-b-2 rounded-full animate-spin "></div>
+            
+                <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin" />
+           
+
         </div>
     )
 }

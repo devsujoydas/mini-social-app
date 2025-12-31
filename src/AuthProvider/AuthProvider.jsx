@@ -288,82 +288,202 @@ const AuthProvider = ({ children }) => {
 
 
 
-  useEffect(() => {
-    let interval;
 
-    const fetchUserData = async (currentUser) => {
-      if (!currentUser?.email) {
-        setUser(null);
-        setUserData(null);
-        setLoading(false);
-        return;
-      }
 
+  // useEffect(() => {
+  //   let interval;
+
+  //   const fetchUserData = async (currentUser) => {
+  //     if (!currentUser?.email) {
+  //       setUser(null);
+  //       setUserData(null);
+  //       setLoading(false);
+  //       return;
+  //     }
+
+  //     setUser(currentUser);
+  //     const email = currentUser.email;
+  //     localStorage.setItem("email", email);
+
+  //     try {
+  //       await axiosInstance.post("/jwt", { email })
+  //         .then(res => {
+  //           localStorage.setItem("accessToken", res.data.accessToken)
+  //         })
+  //       const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
+  //       setUserData(userDataRes.data);
+
+        
+  //         const [
+  //           allUsersRes,
+  //           myFriendsRes,
+  //           sentReqRes,
+  //           friendReqRes,
+  //           youMayKnowRes,
+  //           postsRes,
+  //           usersPostsRes,
+  //           savedPostsRes,
+  //         ] = await Promise.all([
+  //           axiosInstance.get(`/allUsers?userId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/myfriends?userId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/sentrequest?userId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/requests?userId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/youMayKnow?userId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/posts`),
+  //           axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`),
+  //           axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`),
+  //         ]);
+
+  //         setFriendsData(allUsersRes.data);
+  //         setMyFriends(myFriendsRes.data);
+  //         setSentRequests(sentReqRes.data);
+  //         setFriendRequests(friendReqRes.data);
+  //         setYouMayKnowFriends(youMayKnowRes.data);
+  //         setPostsData(postsRes.data);
+  //         setUsersPostsData(usersPostsRes.data);
+  //         setSavedPosts(savedPostsRes.data);
+
+
+  //       const ping = async () => {
+  //         try {
+  //           await axiosInstance.post(`/activeStatus?userId=${userDataRes.data._id}`);
+  //         } catch (err) {
+  //           console.error("Active ping error:", err);
+  //         }
+  //       };
+  //       ping();
+  //       interval = setInterval(ping, 5000);
+  //     } catch (err) {
+  //       console.error("JWT / Data fetch error:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   const unsubscribe = onAuthStateChanged(auth, fetchUserData);
+
+  //   return () => {
+  //     unsubscribe();
+  //     if (interval) clearInterval(interval);
+  //   };
+  // }, []);
+
+
+
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+    if (!currentUser?.email) {
+      setUser(null);
+      setUserData(null);
+      setLoading(false);
+      return;
+    }
+
+    try {
       setUser(currentUser);
       const email = currentUser.email;
       localStorage.setItem("email", email);
 
-      try {
-        await axiosInstance.post("/jwt", { email })
-          .then(res => {
-            localStorage.setItem("accessToken", res.data.accessToken)
-          })
-        const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
-        setUserData(userDataRes.data);
+      // JWT
+      const jwtRes = await axiosInstance.post("/jwt", { email });
+      localStorage.setItem("accessToken", jwtRes.data.accessToken);
 
-        const [
-          allUsersRes,
-          myFriendsRes,
-          sentReqRes,
-          friendReqRes,
-          youMayKnowRes,
-          postsRes,
-          usersPostsRes,
-          savedPostsRes,
-        ] = await Promise.all([
-          axiosInstance.get(`/allUsers?userId=${userDataRes.data._id}`),
-          axiosInstance.get(`/myfriends?userId=${userDataRes.data._id}`),
-          axiosInstance.get(`/sentrequest?userId=${userDataRes.data._id}`),
-          axiosInstance.get(`/requests?userId=${userDataRes.data._id}`),
-          axiosInstance.get(`/youMayKnow?userId=${userDataRes.data._id}`),
-          axiosInstance.get(`/posts`),
-          axiosInstance.get(`/posts?authorId=${userDataRes.data._id}`),
-          axiosInstance.get(`/savedPosts?userId=${userDataRes.data._id}`),
-        ]);
+      // Profile
+      const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
+      setUserData(userDataRes.data);
 
-        setFriendsData(allUsersRes.data);
-        setMyFriends(myFriendsRes.data);
-        setSentRequests(sentReqRes.data);
-        setFriendRequests(friendReqRes.data);
-        setYouMayKnowFriends(youMayKnowRes.data);
-        setPostsData(postsRes.data);
-        setUsersPostsData(usersPostsRes.data);
-        setSavedPosts(savedPostsRes.data);
+    } catch (err) {
+      console.error("Auth/Profile error:", err);
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
 
 
-        const ping = async () => {
-          try {
-            await axiosInstance.post(`/activeStatus?userId=${userDataRes.data._id}`);
-          } catch (err) {
-            console.error("Active ping error:", err);
-          }
-        };
-        ping();
-        interval = setInterval(ping, 5000);
-      } catch (err) {
-        console.error("JWT / Data fetch error:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  if (!userData?._id) return;
 
-    const unsubscribe = onAuthStateChanged(auth, fetchUserData);
+  const fetchPrimaryData = async () => {
+    try {
+      const [
+        allUsersRes,
+        myFriendsRes,
+        postsRes,
+      ] = await Promise.all([
+        axiosInstance.get(`/allUsers?userId=${userData._id}`),
+        axiosInstance.get(`/myfriends?userId=${userData._id}`),
+        axiosInstance.get(`/posts`),
+      ]);
 
-    return () => {
-      unsubscribe();
-      if (interval) clearInterval(interval);
-    };
-  }, []);
+      setFriendsData(allUsersRes.data);
+      setMyFriends(myFriendsRes.data);
+      setPostsData(postsRes.data);
+    } catch (err) {
+      console.error("Primary data error:", err);
+    }
+  };
+
+  fetchPrimaryData();
+}, [userData?._id]);
+
+
+useEffect(() => {
+  if (!userData?._id) return;
+
+  const fetchSecondaryData = async () => {
+    try {
+      const [
+        sentReqRes,
+        friendReqRes,
+        youMayKnowRes,
+        usersPostsRes,
+        savedPostsRes,
+      ] = await Promise.all([
+        axiosInstance.get(`/sentrequest?userId=${userData._id}`),
+        axiosInstance.get(`/requests?userId=${userData._id}`),
+        axiosInstance.get(`/youMayKnow?userId=${userData._id}`),
+        axiosInstance.get(`/posts?authorId=${userData._id}`),
+        axiosInstance.get(`/savedPosts?userId=${userData._id}`),
+      ]);
+
+      setSentRequests(sentReqRes.data);
+      setFriendRequests(friendReqRes.data);
+      setYouMayKnowFriends(youMayKnowRes.data);
+      setUsersPostsData(usersPostsRes.data);
+      setSavedPosts(savedPostsRes.data);
+    } catch (err) {
+      console.error("Secondary data error:", err);
+    }
+  };
+
+  fetchSecondaryData();
+}, [userData?._id]);
+
+
+useEffect(() => {
+  if (!userData?._id) return;
+
+  const ping = async () => {
+    try {
+      await axiosInstance.post(`/activeStatus?userId=${userData._id}`);
+    } catch (err) {
+      console.error("Active ping error:", err);
+    }
+  };
+
+  ping();
+  const interval = setInterval(ping, 5000);
+
+  return () => clearInterval(interval);
+}, [userData?._id]);
+
+
+
+
+
 
   const dataList = {
     user,

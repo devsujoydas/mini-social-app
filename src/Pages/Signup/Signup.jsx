@@ -63,13 +63,11 @@ const Signup = () => {
         }
 
 
-
         try {
             const result = await signUpUser(formData.email, formData.password);
             setUser(result.user);
             const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, { email: formData.email })
-            setUserData(res.data);
-            console.log(res.data);
+            setUserData(res.data.user); 
             toast.success("Account Create Successfully")
             navigate("/profile");
         } catch (err) {

@@ -47,7 +47,7 @@ const Nav = () => {
             </NavLink>
 
             {
-                userData.role == "admin" &&
+                userData?.role == "admin" &&
                 <>
                     {/* <NavLink to={"/profile-page"}
                         className="flex justify-between w-full cursor-pointer   transition-all hover:text-blue-500 ">

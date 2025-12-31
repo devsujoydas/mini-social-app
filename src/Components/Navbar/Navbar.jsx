@@ -113,7 +113,7 @@ const Navbar = () => {
                   </div>
                   <div className="">
                     <h1 className="font-semibold text-xl">{userData?.name ? `${userData?.name}` : "Your Name"}</h1>
-                    <p>{userData.role == "admin" ? "Admin" : "Basic member"}</p>
+                    <p>{userData?.role == "admin" ? "Admin" : "Basic member"}</p>
                   </div>
                 </div>
               </Link>
