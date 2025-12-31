@@ -1,11 +1,13 @@
 import { IoMdAdd } from "react-icons/io";
 import { MdOutlineArrowOutward } from "react-icons/md";
-import { Link } from "react-router-dom";  
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import FriendSuggestedSkeleton from "./FriendSuggestedSkeleton";
 
 
 const FriendSuggested = () => {
-  const { youMayKnowFriends } = useAuth()
+  const { youMayKnowFriends } = useAuth() 
+  const skeletons = Array.from({ length: 3 });
 
   return (
 
@@ -15,10 +17,13 @@ const FriendSuggested = () => {
         <Link to="/friends" className="flex items-center text-sm md:text-lg gap-1 text-blue-600 hover:text-black font-semibold">See All <MdOutlineArrowOutward className="md:text-2xl" /></Link>
       </div>
 
-      {youMayKnowFriends == ""
-        ?
-        <div className="min-h-40 flex justify-center items-center">
-          <div className="">no suggesion here...</div>
+      {youMayKnowFriends.length == 0
+        ? 
+        <div className="grid md:gap-5 gap-3 my-5">
+          {skeletons.map((_, idx) => (
+            <FriendSuggestedSkeleton key={idx} />
+          ))}
+          <hr className="text-zinc-300 " />
         </div>
         :
         <div>

@@ -75,7 +75,11 @@ const PostFromAndPost = () => {
       </div>
 
       <div className="mt-3">
-        {!usersPostsData ? <Loading /> : <UsersPosts />}
+        {!usersPostsData ? <Loading /> :
+          <div>
+            <UsersPosts />
+          </div>
+        }
       </div>
     </>
   );

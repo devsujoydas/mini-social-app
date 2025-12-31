@@ -12,7 +12,7 @@ const PostSkeleton = () => {
 
       {/* Post content */}
       <div className="w-3/4 h-4 bg-zinc-300 rounded"></div>
-      <div className="w-full h-56 md:h-[400px] bg-zinc-200 rounded-lg"></div>
+      <div className="w-full md:h-[530px] h-56 bg-zinc-200 rounded-lg"></div>
 
       {/* Actions */}
       <div className="flex justify-around">

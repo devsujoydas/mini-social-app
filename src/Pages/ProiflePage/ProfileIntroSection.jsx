@@ -14,7 +14,7 @@ const ProfileIntroSection = () => {
     const { userData } = useAuth()
 
     return (
-        <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg'>
+        <div className='text-xs md:text-[14px]  text-zinc-600 bg-white  border p-4 border-zinc-300 rounded-lg h-fit'>
 
             <h1 className='font-semibold text-lg'>Intro</h1>
             <div className=' text-center space-y-1 my-3'>

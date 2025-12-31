@@ -9,7 +9,7 @@ const Posts = () => {
 
   const skeletons = Array.from({ length: 3 });
 
-  if (loading) {
+  if (loading || postsData.length === 0) {
     return (
       <div className="grid md:gap-5 gap-3">
         {skeletons.map((_, idx) => (

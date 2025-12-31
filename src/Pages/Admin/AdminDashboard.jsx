@@ -1,22 +1,19 @@
-import NewUsersPerMonthChart from "./Carts/NewUsersPerMonthChart";
-import PostsCreatedPerDayChart from "./Carts/PostsCreatedPerDayChart";
-import TopActiveUsersChart from "./Carts/TopActiveUsersChart";
-import TotalUsersGrowthChart from "./Carts/TotalUsersGrowthChart";
-
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.js';
-import { useAuth } from "../../hooks/useAuth";
 ChartJS.register(CategoryScale, LinearScale, BarElement);
+import { useAuth } from "../../hooks/useAuth";
+import NewUsersPerMonthChart from "./Charts/NewUsersPerMonthChart";
+import PostsPerMonthChart from "./Charts/PostsPerMonthChart";
 
 
 const AdminDashboard = () => {
-  const { userData, postsData, myFriends, friendsData } = useAuth()
+  const { userData, postsData,  friendsData } = useAuth()
+  console.log(friendsData,)
 
   if (!userData) return <p>Loading admin info...</p>;
 
   const totalUsers = friendsData?.length || 0;
   const totalPosts = postsData?.length || 0;
-  const totalFriends = myFriends?.length || 0;
-
+  const totalLikes = postsData.reduce((sum, p) => sum + p.likes.length, 0);
   return (
     <div>
       <header className="mb-3 md:mb-8 flex justify-between items-center">
@@ -58,7 +55,7 @@ const AdminDashboard = () => {
         {[
           { title: "Total Users", value: totalUsers, bgColor: "#1F6EFF" },
           { title: "Total Posts", value: totalPosts, bgColor: "#00AB72" },
-          { title: "Total Friends", value: totalFriends, bgColor: "#8740FF" },
+          { title: "Total Likes", value: totalLikes, bgColor: "#8740FF" },
         ].map((card) => (
           <div key={card.title} className={`bg-white p-3 md:p-6 rounded-lg shadow`}>
             <p className="md:text-sm text-xs  text-gray-500">{card.title}</p>
@@ -68,10 +65,8 @@ const AdminDashboard = () => {
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-        <NewUsersPerMonthChart />
-        <TotalUsersGrowthChart />
-        <PostsCreatedPerDayChart />
-        <TopActiveUsersChart />
+        <NewUsersPerMonthChart users={friendsData} />
+        <PostsPerMonthChart posts={postsData} />
       </section>
     </div>
   );

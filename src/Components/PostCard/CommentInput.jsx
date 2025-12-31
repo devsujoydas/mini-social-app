@@ -20,15 +20,15 @@ const CommentInput = ({ userData }) => (
           />
         </Link>
       </div>
- 
-        <input
-          type="text"
-          placeholder="Write your comment..."
-          className="md:w-full w-33 border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
-        /> 
+
+      <input
+        type="text"
+        placeholder="Write your comment..."
+        className="md:w-full w-33 border border-zinc-400 outline-none text-xs md:text-sm py-2 md:py-3 px-2 md:px-4 rounded-full"
+      />
     </div>
 
-    <div className="flex items-center gap-2 md:gap-3 border">
+    <div className="flex items-center gap-2 md:gap-3">
       <div className="p-2 md:p-3 border border-zinc-400 rounded-full cursor-pointer hover:bg-zinc-200">
         <ImAttachment />
       </div>

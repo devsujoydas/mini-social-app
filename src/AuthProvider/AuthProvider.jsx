@@ -383,12 +383,11 @@ useEffect(() => {
       setUser(currentUser);
       const email = currentUser.email;
       localStorage.setItem("email", email);
-
-      // JWT
+ 
       const jwtRes = await axiosInstance.post("/jwt", { email });
       localStorage.setItem("accessToken", jwtRes.data.accessToken);
 
-      // Profile
+      
       const userDataRes = await axiosInstance.get(`/profile?email=${email}`);
       setUserData(userDataRes.data);
 
@@ -409,18 +408,18 @@ useEffect(() => {
   const fetchPrimaryData = async () => {
     try {
       const [
+        postsRes,
         allUsersRes,
         myFriendsRes,
-        postsRes,
       ] = await Promise.all([
+        axiosInstance.get(`/posts`),
         axiosInstance.get(`/allUsers?userId=${userData._id}`),
         axiosInstance.get(`/myfriends?userId=${userData._id}`),
-        axiosInstance.get(`/posts`),
       ]);
 
+      setPostsData(postsRes.data);
       setFriendsData(allUsersRes.data);
       setMyFriends(myFriendsRes.data);
-      setPostsData(postsRes.data);
     } catch (err) {
       console.error("Primary data error:", err);
     }

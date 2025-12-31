@@ -41,7 +41,7 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
                                             ? "/profile"
                                             : `/profile/${user?._id}`
                                         }
-                                        className="hover:underline w-full truncate md:text-[16px] text-xs"
+                                        className="hover:underline w-full truncate md:text-[14px] text-xs"
                                     >
 
                                         {user.name}
@@ -49,7 +49,7 @@ const PostStats = ({ reactorsUsers, showUsers, setShowUsers, post }) => {
                                 ))}
                             </div>
                         )}
-                        <p className="text-zinc-600 md:block hidden md:text-[16px] text-xs">{getDisplayNames()}</p>
+                        <p className="text-zinc-600 md:block hidden md:text-[14px] text-xs">{getDisplayNames()}</p>
                         <p className="text-zinc-600 block md:hidden md:text-[16px] text-[11px]">{getDisplayNamesSm()}</p>
                     </div>
                 )}

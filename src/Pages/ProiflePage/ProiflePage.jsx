@@ -3,6 +3,7 @@ import ProfileIntroSection from "./ProfileIntroSection";
 import ProfilePostSection from "./ProfilePostSection";
 import PhotoSection from "./PhotoSection";
 import ProfileFriendSection from "./ProfileFriendSection"; 
+import PostFromAndPost from "../Profile/PostFromAndPost";
 
 const ProiflePage = () => {
     
@@ -13,14 +14,18 @@ const ProiflePage = () => {
 
             {/* Post info */}
             <div className='md:mt-5 mt-2 lg:mx-20 md:mx-10 flex lg:flex-row flex-col gap-5'>
-                <div className="lg:w-2/5 grid gap-5">
+                <div className="lg:w-2/5">
+                <div className="grid gap-5">
+
                     <ProfileIntroSection />
                     <PhotoSection />
                     <ProfileFriendSection />
                 </div>
+                </div>
 
                 <div className="lg:w-3/5 space-y-5">
-                    <ProfilePostSection />
+                    {/* <ProfilePostSection /> */}
+                    <PostFromAndPost/>
                 </div>
             </div>
         </div>
